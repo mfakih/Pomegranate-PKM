@@ -1,0 +1,31 @@
+.westRegion {
+    background: #D8D4C9 !important;
+
+}
+.eastRegion {
+    background: #D8D4C9 !important;
+
+}
+
+.northRegion {
+    background: #6d6d74 !important;
+}
+
+.commandBarRegion {
+    /*background: #D8D4C9 !important;*/
+}
+
+.southRegion {
+    background: #6d6d74 !important;
+    color: white;
+}
+
+.southRegion a {
+    color: #ffffff !important;
+}
+
+h4 {
+    color: #5b5b5b;
+}
+
+

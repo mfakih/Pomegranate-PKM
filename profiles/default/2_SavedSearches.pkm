@@ -1,0 +1,228 @@
+A x  !hql dR ; Recent book ;; from mcs.Book where lastUpdated >= current_date() -1 and lastUpdated <= current_date() +1 order by lastUpdated desc
+select count(*) from mcs.Book where lastUpdated >= current_date() -1 and lastUpdated <= current_date() +1
+***
+A x  !hql dG ; Courses list ;; from Course order by code asc
+select count(*) from Course
+***
+A x  !hql dG ; Departments list ;; from Department order by departmentCode asc
+select count(*) from Department
+***
+A x  !hql dK ; Indicators list ;; from Indicator i order by i.category
+select count(*) from Indicator
+***
+A x  !hql dQ ; Payment categories list ;; from PaymentCategory order by name
+select count(*) from PaymentCategory
+***
+A x  !hql dS ; People list ;; from Contact order by summary
+select count(*) from Contact
+***
+A x  !hql dN ; Index cards (Recent first) ;; from app.IndexCard order by id desc
+select count(*) from app.IndexCard
+***
+A x  !adhoc dR ; Books for Shelfrari ;; select id, isbn, title from Book where isPublic = true
+select count(*) from Book where isPublic = true
+***
+A x  !hql dN ; Exercises ;; from IndexCard where type.code = 'exe'
+select count(*) from IndexCard where type.code = 'exe'
+***
+A x  !hql dP ; Assigned goals ;; from Planner p where p.goal is not null and datediff(p.startDate, current_date()) >= 0
+select count(*) from Planner p where p.goal is not null and datediff(p.startDate, current_date()) >= 0
+***
+A x  !hql dT ; Uncompleted high priority tasks ;; from Task t where t.priority >= 4 and t.status.code != 'completed' and t.status.code != 'dismissed' and t.status.code != 'deferred'
+select count(*) from Task t where t.priority >= 4 and t.status.code != 'completed' and t.status.code != 'dismissed' and t.status.code != 'deferred'
+***
+A x  !adhoc dG ; Table of all goals ;; select g.id, g.priority, g.department.code, g.course.code, g.status.code, g.type.code, g.summary, g.description, g.notes from Goal g order by g.course.code, g.type.code asc
+select count(*)  from Goal g
+***
+A x  !adhoc dT ; Table of all tasks ;; select g.id, g.department.code, g.status.code, g.location.code, g.summary, g.priority from Task g order by g.location asc
+select count(*) from Task g
+***
+A x  !hql dR ; Book with tag  dup  ;; select b from Book b join b.tags t where t.name = 'dup'
+select count(*) from Book b join b.tags t where t.name = 'dup'
+***
+A x  !adhoc dG ; Table of p4 Goals ;; select g.id, g.department, g.summary, g.status from Goal g where g.priority = 4
+select count(*) from Goal g where g.priority = 4
+***
+A x  !adhoc dE ; Table of excerpts ;; select g.id, g.title, g.book from Excerpt g order by g.dateCreated desc
+select count(*) from Excerpt g
+***
+A x  !hql dG ; Goals assigned in the next 7 days ;; from Planner p where p.goal is not null and datediff(p.startDate, current_date()) >= 0 and datediff(p.startDate, current_date()) <= 7
+select count(*) from Planner p where p.goal is not null and datediff(p.startDate, current_date()) >= 0 and datediff(p.startDate, current_date()) <= 7
+***
+A x  !hql dG ; Goals assigned in 7 days from now ;; from Planner p where p.goal is not null and datediff(p.startDate, current_date()) >= 7 and datediff(p.startDate, current_date()) <= 14
+select count(*) from Planner p where p.goal is not null and datediff(p.startDate, current_date()) >= 7 and datediff(p.startDate, current_date()) <= 14
+***
+A x  !hql dE ; Read exceprts ;; from Excerpt where readOn is not null
+select count(*) from Excerpt where readOn is not null
+***
+A x  !adhoc dP ; Bookmarked courses ;; select code, summary from Course where bookmarked = true
+select count(*) from Course where bookmarked = true
+***
+A x  !adhoc dS ; People table ;; select d.department.code, d.summary from Contact d
+select count(*) from Contact d
+***
+A x  !hql dE ; Assigned excerpts ;; select p.excerpt from Planner p group by p.excerpt
+select count(*) from Planner p group by p.excerpt
+***
+A x  !adhoc dP ; Milestone todo ;; select description, DATE_FORMAT(startDate,'%d.%m.%Y'), datediff(current_date(), startDate) from Journal where type.code = 'milestone'
+select count(*) from Journal where type.code = 'milestone'
+***
+A x  !hql dR ; Recent books ;; from mcs.Book where resourceType = 'ebk' order by dateCreated desc
+select count(*) from mcs.Book where resourceType = 'ebk' 
+***
+A x  !hql dR ; Recent articles ;; from mcs.Book where resourceType = 'art' order by dateCreated desc
+select count(*) from mcs.Book where resourceType = 'art' 
+***
+A x  !hql dR ; Recent news ;; from mcs.Book where type.code = 'nws' order by dateCreated desc
+select count(*) from mcs.Book where type.code = 'nws'
+***
+A x  !hql dR ; Recent periodicals ;; from mcs.Book where resourceType = 'prd' order by dateCreated desc
+select count(*) from mcs.Book where resourceType = 'prd' order by dateCreated desc
+***
+A x  !hql dR ; Recent sites ;; from mcs.Book where type.code = 'site' order by dateCreated desc
+select count(*) from mcs.Book where type.code = 'site'
+***
+A x  !hql dR ; Recently bookmarked resources ;; from Book where bookmarked = true order by lastUpdated desc
+select count(*) from Book where bookmarked = true order by lastUpdated desc
+***
+A x  !hql dT ; Bookmarked tasks ;; from Task where bookmarked = true order by lastUpdated desc
+select count(*) from Task where bookmarked = true 
+***
+A x  !hql dG ; Bookmarked goals ;; from Goal where bookmarked = true order by lastUpdated desc
+select count(*) from Goal where bookmarked = true
+***
+A x  !hql dW ; Recently bookmarked writings ;; from Writing where bookmarked = true order by lastUpdated desc
+select count(*) from Writing where bookmarked = true
+***
+A x  !hql dN ; Recently bookmarked cards ;; from IndexCard where bookmarked = true order by lastUpdated desc
+select count(*) from IndexCard where bookmarked = true
+***
+A x  !hql dR ; Books with ISBN and without titles ;; from Book where isbn is not null and title is null
+select count(*) from Book where isbn is not null and title is null
+***
+A x  !hql dG ; Active courses ;; from Course where isActive = true
+select count(*) from Course where isActive = true
+***
+A x  !hql dR ; Books in journal ;; select e.book from Journal e group by e.book
+select count(*) from Journal e group by e.book
+***
+A x  !hql dR ; Textbooks without course ;; from Book b where b.status.code = 'tbk' and b.course is null
+select count(*) from Book b where b.status.code = 'tbk' and b.course is null
+***
+A x  !hql dR ; Books with excerpts ;; select t.book from Excerpt t group by t.book
+select count(*) from Excerpt t group by t.book
+***
+A x  !hql dJ ; Happened in this day ;; from Journal j where day(j.startDate) = day(current_date()) and month(j.startDate) = day(current_date()) and j.type.code = 'cron'
+select count(*) from Journal j where day(j.startDate) = day(current_date()) and month(j.startDate) = day(current_date()) and j.type.code = 'cron'
+***
+A x  !hql dE ; Excerpts to read ;; from Excerpt where bookmarked = true
+select count(*) from Excerpt where bookmarked = true
+***
+A x  !hql dR ; Books with cards ;; select r.book from IndexCard r group by r.book
+select count(*) from IndexCard r group by r.book
+***
+A x  !hql dN ; K session ;; from IndexCard r where r.type.code = 'K'
+select count(*) from IndexCard r where r.type.code = 'K'
+***
+A x  !hql dG ; Top priority goals grouped by department ;; from Goal where priority = 4 {department
+select count(*) from Goal where priority = 4
+***
+A x  !hql dT ; Tasks without department ;; from Task t where t.department is null and t.status.code != 'completed' and t.status.code != 'dismissed'
+select count(*) from Task t where t.department is null and t.status.code != 'completed' and t.status.code != 'dismissed'
+***
+A x  !hql dG ; Goals without department ;; from Goal where department is null
+select count(*) from Goal where department is null
+***
+A x  !hql dR ; Book with only legacy title ;; from Book where legacyTitle is not null and title is null
+select count(*) from Book where legacyTitle is not null and title is null
+***
+A x  !hql dT ; Challenging tasks ;; select t from Task t join t.tags g where g.name = 'chl'
+select count(*) from Task t join t.tags g where g.name = 'chl'
+***
+A x  !hql dG ; Challenging goals ;; select t from Goal t join t.tags g where g.name = 'chl'
+select count(*) from Goal t join t.tags g where g.name = 'chl'
+***
+A x  !hql dG ; Goals without status ;; from Goal t where t.status = null
+select count(*) from Goal t where t.status = null
+***
+A x  !hql dT ; Tasks without status ;; from Task t where t.status = null
+select count(*) from Task t where t.status = null
+***
+A x  !hql dN ; Cards waiting posting ;; from IndexCard where  blog != null and publishedNodeId = null
+select count(*) from IndexCard where  blog != null and publishedNodeId = null
+***
+A x  !hql dN ; Posts on blog1 ;; from IndexCard where blog.code = 'blog1' and publishedNodeId != null order by publishedOn desc
+select count(*) from IndexCard where blog.code = 'blog1' and publishedNodeId != null order by publishedOn desc
+***
+A x  !adhoc dA ; Saved searches to add ;; select concat('A x ', ' !', queryType, ' d', entity, ' ; ' , summary, ' ;; ' , query, '@', countQuery, '@**')  from SavedSearch
+select count(*) from SavedSearch
+***
+A x  !hql dP ; Assigned goals ;; from Planner p where p.goal is not null and datediff(p.startDate, current_date()) <= 0 and datediff(p.endDate, current_date()) >= 0
+select count(*) from Planner p where p.goal is not null and datediff(p.startDate, current_date()) <= 0 and datediff(p.endDate, current_date()) >= 0
+***
+A x  !hql dT ; Uncompleted high priority tasks ;; from Task t where t.priority >= 4 and t.status.code != 'completed'
+select count(*) from Task t where t.priority >= 4 and t.status.code != 'completed'
+***
+A x  !adhoc dT ; All tasks in a table ;; select t.id, t.course.code, t.summary, t.status.name, t.location.name, t.priority from Task t order by t.course.code, t.status, t.priority
+select count(*) from Task t
+***
+A x  !hql dP ; Active projects/courses ;; from Course where bookmarked = true
+select count(*) from Course where bookmarked = true
+***
+A x  !hql dG ; Goals by department ;; from Goal {department
+select count(*) from Goal
+***
+A x  !hql dP ; Bookmarked courses ;; from Course where bookmarked = true
+select count(*) from Course where bookmarked = true
+***
+A x  !hql dP ; All courses (list) ;; from Course
+select count(*) from Course
+***
+A x  !hql dK ; Indicators ;; from Indicator
+select count(*) from Indicator
+***
+A x  !hql dT ; Task pile ;; from Task t where t.bookmarked = true and t.status.code != 'completed' order by t.priority asc
+select count(*) from Task t where t.bookmarked = true and t.status.code != 'completed' 
+***
+A x  !hql dG ; Active Projects ;; from Course where bookmarked = true order by code
+select count(*) from Course where bookmarked = true
+***
+A x  !hql dT ; Important tasks by course ;; from Task t where t.course.bookmarked = true and t.priority >= 3 {course
+select count(*) from Task t where t.course.bookmarked = true and t.priority >= 3
+***
+A x  !adhoc dT ; List of bookmarked tasks for printning ;; select 'T', t.id, t.course.code, t.priority, t.summary from Task t where bookmarked = true order by t.course.code
+select count(*) from Task t where bookmarked = true
+***
+A x  !adhoc dT ; Print bookmarked tasks ;; select 'T', t.id, t.course.code, t.priority, t.summary from Task t where bookmarked = true order by t.course.code
+select count(*) from Task t where bookmarked = true
+***
+A x  !hql dT ; Bookmarked tasks ;; from Task t where bookmarked = true order by t.course.code
+select count(*) from Task t where bookmarked = true
+***
+A x  !hql dG ; All departments ;; from Department
+select count(*) from Department
+***
+A x  !hql dG ; All courses ;; from Course order by code
+select count(*) from Course
+***
+A x  !hql dT ; Tasks without status ;; from Task where status = null
+select count(*) from Task where status = null
+***
+A x  !hql dG ; Goals without status ;; from Goal where status = null
+select count(*) from Goal where status = null
+***
+A x  !hql dR ; Books without status ;; from Book where status = null
+select count(*) from Book where status = null
+***
+A x  !hql dW ; Writings without type ;; from Writing where type = null
+select count(*) from Writing where type = null
+***
+A x  !hql dN ; Notes without type ;; from IndexCard where type = null
+select count(*) from IndexCard where type = null
+***
+A x  !hql dG ; Goals by courses ;; from Goal {course
+select count(*) from Goal
+***
+A x  !hql dT ; Tasks - List (recent first) ;; from Task order by dateCreated desc
+select count(*) from Task
+***

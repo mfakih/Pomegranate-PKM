@@ -1,0 +1,178 @@
+.nicelisting {
+    font-size: 12px;
+    font-family: "DejaVu Sans Mono";
+    line-height: 20px;
+}
+
+.ui-tabs .ui-tabs-panel {
+    height: 580px;
+    overflow-y: auto;
+    z-index: 3 !important;
+}
+
+#panoramasTab > a {
+    margin-right: 10px;
+    font-size: 11px;
+    padding: 10px;
+    font-family: "DejaVu Sans Mono";
+}
+
+#panoramasTab a:hover {
+    text-decoration: underline;
+    background: #a3bdd0;
+}
+
+.accordion ul li {
+    padding: 0px;
+    font-size: 11px;
+    font-family: "DejaVu Sans Mono";
+}
+
+.goalType1 {
+    color: green;
+}
+
+.goalType2 {
+    color: blue;
+}
+
+.goalType3 {
+    color: #ff4500;
+}
+
+.goalType4 {
+    color: #9d860a;
+}
+
+.goalType17 {
+    color: #585441;
+}
+
+.exrNotRead {
+    color: #040f29 !important;
+    font-size: 12px !important;
+    font-family: verdana !important;
+    font-weight: bold !important;
+}
+
+.exrRead {
+    color: #006666 !important;
+    font-size: 11px !important;
+    font-family: tahoma !important;
+}
+
+.urgent {
+    background: #dfd2c1;
+}
+
+.writing {
+    background: #ecf0f0;
+    color: black;
+}
+
+.writing2 {
+    background: #babbbb;
+    color: black;
+}
+
+/*.ui-datepicker {*/
+    /*width: 15em;*/
+    /*height: 15em;*/
+/*}*/
+
+.heading {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.published {
+    background: #ececc8;
+}
+
+.bookmarked {
+    text-decoration: underline;
+}
+
+.activeCourse {
+    background: #ececc8;
+
+}
+
+.reality {
+    color: #660000;
+}
+
+.req {
+    font-size: 12px;
+    color: red;
+}
+
+.fullTextPopup {
+    font-size: 12px;
+    font-family: "DejaVu Sans Mono";
+    line-height: 20px;
+}
+
+.outputTab {
+    background: #7d8d9c !important;
+}
+
+.outputTab a {
+    color: white !important;
+}
+
+.inputTab {
+    background: #d4a9ae !important;
+}
+
+.inputTab a{
+    color: white !important;
+}
+
+.browserTab {
+    background: #d4d095 !important;
+}
+
+.browserTab a{
+    color: white !important;
+}
+
+.journalTab {
+    background: #9ed4bb !important;
+}
+
+.journalTab a{
+    color: white !important;
+}
+
+
+.agendaTab {
+    background: #c2b184 !important;
+}
+
+.agendaTab a{
+    color: white !important;
+}
+
+.addTab {
+    background: #b87f55 !important;
+}
+
+.addTab a{
+    color: white !important;
+}
+
+.reportTab {
+    background: #49a0d6 !important;
+}
+
+.reportTab a{
+    color: white !important;
+}
+
+.count {
+    font-style: italic;
+}

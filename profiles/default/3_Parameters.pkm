@@ -1,0 +1,10 @@
++ mcs.parameters.WorkStatus =ns ; Not started
++ mcs.parameters.WorkStatus =ready ; Ready
++ mcs.parameters.WorkStatus =90 ; Almost completed
++ mcs.parameters.WorkStatus =pr ; In progress
++ mcs.parameters.WorkStatus =done ; Done
++ mcs.parameters.Context =test ; Testing
++ mcs.parameters.Context =doc ; Documentation
++ mcs.parameters.Context =dev ; Development
++ mcs.parameters.Context =data ; Data
++ mcs.parameters.Context =cmm ; Communication
