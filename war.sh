@@ -1,8 +1,8 @@
-cd /mhi/mdd/dev/prj/mcs
+cd /mhi/dev/pkm
 
-export PATH=$PATH:/mhi/mdd/app/jdk1.7.0_25/jre/bin/:/mhi/mdd/app/grails-2.2.3/bin/
-export GRAILS_HOME=/mhi/mdd/app/grails-2.2.3
-export JAVA_HOME=/mhi/mdd/app/jdk1.7.0_25
+export PATH=$PATH:/mhi/app/jre/bin/:/mhi/app/grails-2.2.3/bin/
+export GRAILS_HOME=/mhi/app/grails-2.2.3
+export JAVA_HOME=/mhi/app/jre
 export JAVA_OPTS="-client -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m"
 
 grails war
