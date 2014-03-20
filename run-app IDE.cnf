@@ -1,6 +1,9 @@
+
+IDEA run configuration
+
 Command line:
 
--Dserver.port=2008  -Dgrails.env=bdl -reloading -Dgrails.gsp.enable.reload=true run-app  --stacktrace
+-Dserver.port=2008  -Dgrails.env=h2 -reloading -Dgrails.gsp.enable.reload=true run-app  --stacktrace
 
 VM options:
 
