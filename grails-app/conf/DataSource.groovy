@@ -23,14 +23,14 @@ environments {
             password = "root"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             dbCreate = "update" // one of 'create', 'create-drop','update'
-            url = "jdbc:mysql://localhost:3306/db_pkm_fa"
+            url = "jdbc:mysql://localhost:3306/db_pkm_dev"
         }
     }
 
 
-    h21 {
+    h2 {
         dataSource {
-            dbdir = "${System.properties['catalina.base'] ?: '.'}/database/db_pkm1"
+            dbdir = "${System.properties['catalina.base'] ?: '.'}/database/db_pkm"
 //            dbdir = "./database/pkm"
             dialect = org.hibernate.dialect.H2Dialect
             driverClassName = "org.h2.Driver"
@@ -108,6 +108,25 @@ environments {
             dbCreate = "update"
             driverClassName = "com.mysql.jdbc.Driver"
             jndiName = "java:comp/env/jdbc/db_pkm_prod"
+            pooled = true
+            properties {
+                maxActive = -1
+                minEvictableIdleTimeMillis = 1800000
+                timeBetweenEvictionRunsMillis = 1800000
+                numTestsPerEvictionRun = 3
+                testOnBorrow = true
+                testWhileIdle = true
+                testOnReturn = true
+                validationQuery = "SELECT 1"
+            }
+        }
+    }
+
+    mysql2 {
+        dataSource {
+            dbCreate = "update"
+            driverClassName = "com.mysql.jdbc.Driver"
+            jndiName = "java:comp/env/jdbc/db_pkm_prod2"
             pooled = true
             properties {
                 maxActive = -1
