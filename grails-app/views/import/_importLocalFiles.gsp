@@ -1,14 +1,14 @@
 <%@ page import="ker.OperationController; app.parameters.ResourceType; cmn.Setting; mcs.parameters.PlannerType; mcs.parameters.JournalType; mcs.Planner; mcs.Journal; mcs.parameters.ResourceStatus; mcs.Book" %>
 
-<h3>Import location files</h3>
+<h3>Import local files</h3>
 
 <table border="1" style="border-collapse: collapse">
-<thead>
-    <th>Resources and excerpts</th>
-    <th>Smart files</th>
-    </thead>
+%{--<thead>--}%
+    %{--<th>Resources and excerpts</th>--}%
+    %{--<th>Smart files</th>--}%
+    %{--</thead>--}%
     <tr>
-<td style="width: 50%">
+<td style="width: 99%">
 <g:each in="${ResourceType.list()}" var="ry">
 
           <b>${ry.name}</b> @ ${ry.newFilesPath}
@@ -17,9 +17,23 @@
             <g:if test="${ry.newFilesPath && new File(ry.newFilesPath).exists()}">
                 <g:each in="${new File(ry.newFilesPath).listFiles()}" var="i">
                     <g:if test="${i.isFile()}">
-                        <li style="color: #096ca8; font-size: small">
+                        <g:formRemote name="importIndividualFile"
+                                      url="[controller: 'import', action: 'importIndividualFile']"
+
+                                      update="file${i.name.replaceAll(' ', '').replace(',', '')}"
+
+                                      onComplete="jQuery('#quickAddXcdField').val('')"
+                                      method="post">
+                            <g:hiddenField name="entityCode" value="E"></g:hiddenField>
+                            <g:hiddenField name="smart" value="yes"></g:hiddenField>
+                            <g:hiddenField name="type" value="${ry.code}"></g:hiddenField>
+                            <g:hiddenField name="name" value="${i.name}"></g:hiddenField>
+                            <g:hiddenField name="path"
+                                           value="${ry.path + '/' + i.name}"></g:hiddenField>
                             ${i.name}
-                        </li>
+                            <g:actionSubmit value="+"></g:actionSubmit>
+
+                        </g:formRemote>
                     </g:if>
                 </g:each>
             </g:if><g:else>
@@ -30,7 +44,7 @@
     <div style="text-align: right;">
     <g:remoteLink controller="import" action="importResources" update="notificationArea"
                   params="[type: ry.id]">
-        Import
+        Import all
     </g:remoteLink>
     </div>
     <br/>
@@ -40,39 +54,13 @@
 
 </g:each>
 
-    <b>Excerpts</b> @ ${OperationController.getPath('excerpts.sandbox.path')}<br/>
-    Filename format: r [book id] [ch] [title] e.g. r 234 12 title of chapter.pdf
-    <br/>
-    <ul>
-
-        <g:if test="${Setting.findByName('excerpts.sandbox.path') && new File(OperationController.getPath('excerpts.sandbox.path')).exists()}">
-            <g:each in="${new java.io.File(OperationController.getPath('excerpts.sandbox.path')).listFiles()}" var="i">
-                <g:if test="${i.isFile() && i.name.startsWith('r')}">
-                    <li style="color: #096ca8; font-size: small">
-                        ${i.name}
-                    </li>
-                </g:if>
-            </g:each>
-        </g:if>
-        <g:else>
-            Setting value "module.E.sandbox.path" is not defined or folder not exits
-        </g:else>
-    </ul>
-
-    <div style="text-align: right;">
-    <g:remoteLink controller="import" action="importExcerpts"
-                  title="r [book id] [ch] [title]"
-                  update="notificationArea">
-        Import   </g:remoteLink>
-        </div>
 
 
 
-
-<g:each in="${['J','N']}" var="m">
+<g:each in="${['G', 'T', 'P', 'J', 'I', 'Q', 'W', 'N', 'E']}" var="m">
 
     %{--<b>Excerpts</b> @ ${OperationController.getPath('excerpts.sandbox.path')}<br/>--}%
-    Module:    ${m}
+  <h4>  Module:    ${m} @ ${OperationController.getPath('module.' + m + '.sandbox.path')}</h4>
 
     <br/>
     <ul>
@@ -80,9 +68,27 @@
         <g:if test="${OperationController.getPath('module.' + m + '.sandbox.path') && new File(OperationController.getPath('module.' + m + '.sandbox.path')).exists()}">
             <g:each in="${new File(OperationController.getPath('module.' + m + '.sandbox.path')).listFiles()}" var="i">
                 <g:if test="${i.isFile()}">
-                    <li style="color: #096ca8; font-size: small">
-                        ${i.name}
-                    </li>
+                    <div id="file${i.name.replaceAll(' ', '').replace(',', '')}">
+
+                    <g:formRemote name="importIndividualFile"
+                                  url="[controller: 'import', action: 'importIndividualFile']"
+
+                                  update="file${i.name.replaceAll(' ', '').replace(',', '')}"
+
+                                  onComplete="jQuery('#quickAddXcdField').val('')"
+                                  method="post">
+                        <g:hiddenField name="entityCode" value="${m}"></g:hiddenField>
+                        <g:hiddenField name="type" value="${null}"></g:hiddenField>
+                        <g:hiddenField name="name" value="${i.name}"></g:hiddenField>
+                        <g:hiddenField name="path" value="${OperationController.getPath('module.' + m + '.sandbox.path') + '/' + i.name}"></g:hiddenField>
+                        <g:actionSubmit value="+"></g:actionSubmit> ${i.name}
+
+
+                   </g:formRemote>
+
+                    </div>
+<br/>
+<br/>
                 </g:if>
             </g:each>
         </g:if>
@@ -95,13 +101,17 @@
         <g:remoteLink controller="import" action="importModuleFiles" params="[module: m]"
                       title="r [book id] [ch] [title]"
                       update="notificationArea">
-            Import   </g:remoteLink>
+            Import all
+        </g:remoteLink>
+        &nbsp;
     </div>
-
+    <br/>
+  <hr/>
 </g:each>
 
 </td>
-
+  </tr>
+<tr>
 <td style="vertical-align: top">
 
     %{--<g:remoteLink controller="import" action="importExcercises" update="notificationArea"--}%
@@ -111,21 +121,43 @@
     %{--</g:remoteLink>--}%
 
 
-        <g:if test="${Setting.findByName('smartFiles.newFiles.path') && new File(OperationController.getPath('smartFiles.newFiles.path')).exists()}">
+        <g:if test="${Setting.findByName('smartFiles.sandbox.path') && new File(OperationController.getPath('smartFiles.sandbox.path')).exists()}">
 
             <ul>
-                <g:each in="${new java.io.File(OperationController.getPath('smartFiles.newFiles.path')).listFiles()}"
+                <g:each in="${new java.io.File(OperationController.getPath('smartFiles.sandbox.path')).listFiles()}"
                         var="i">
-                    <g:if test="${i.isFile() && i.name.startsWith('n')}">
-                        <li style="color: #096ca8; font-size: small">
-                            ${i.name}
-                        </li>
+                    <g:if test="${i.isFile()}">
+
+                        <g:formRemote name="importIndividualFile"
+                                      url="[controller: 'import', action: 'importIndividualFile']"
+
+                                      update="file${i.name.replaceAll(' ', '').replace(',', '')}"
+
+                                      onComplete="jQuery('#quickAddXcdField').val('')"
+                                      method="post">
+                            <g:hiddenField name="entityCode" value="${m}"></g:hiddenField>
+                            <g:hiddenField name="type" value="${null}"></g:hiddenField>
+                            <g:hiddenField name="name" value="${i.name}"></g:hiddenField>
+                            <g:hiddenField name="path"
+                                           value="${OperationController.getPath('smartFiles.sandbox.path') + '/' + i.name}">
+
+                            </g:hiddenField>
+                            <g:actionSubmit value="+">
+
+                                ${i.name}
+
+
+                            </g:actionSubmit>
+
+                        </g:formRemote>
+
+
                     </g:if>
                 </g:each>
             </ul>
         </g:if>
         <g:else>
-           <i style="color: red"> Setting name "smartFiles.newFiles.path" is not defined or folder not exits
+           <i style="color: red"> Setting name 'smartFiles.sandbox.path' is not defined or folder not exits.
            </i>
             <br/>
         </g:else>
@@ -134,7 +166,7 @@
     <g:remoteLink controller="import" action="importSmartFiles"
                   title="Import smart files"
                   update="notificationArea">
-        Import
+        Import all
     </g:remoteLink>
         </div>
 

@@ -736,7 +736,7 @@ ll
     def showBookmarkedRecords() {
         def results = []
         allClasses.each() {
-            results += it.findAllByBookmarked(true)
+            results += it.findAllByBookmarked(true, [max: 10])
         }
         render(template: '/gTemplates/recordListing', model: [list: results, title: 'Bookmarked records'])
     }
@@ -2337,10 +2337,6 @@ def addContactToRecord() {
 
 
             def input = StringUtils.removeStart(notation?.trim(), entityCode.toLowerCase())?.trim()
-                //notation.substring(1)
-            println 'ntt: ' + notation
-            println 'code: ' + entityCode
-            println 'input: ' + input
 
             def result = [:]
             def properties = [:]

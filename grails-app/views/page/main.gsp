@@ -235,21 +235,21 @@
                         + jQuery('#range_end').val())//      + '&level=d')
             }})
 
-        Mousetrap.bindGlobal('f1', function (e) {
+        Mousetrap.bindGlobal('esc', function (e) {
             jQuery("html, body").animate({ scrollTop: 0 }, "fast");
             jQuery('#quickAddTextField').focus();
             jQuery('#quickAddTextField').select();
             jQuery('#quickAddTextField').scrollTop(0);
         });
 
-        Mousetrap.bindGlobal('esc', function (e) {
-
-//            jQuery('#centralArea').html('');
-//            jQuery('#quickAddTextField').focus();
-//            jQuery('#quickAddTextField').select();
-            jQuery('#quickAddRecordTextArea').select().focus();
-
-        });
+//        Mousetrap.bindGlobal('esc', function (e) {
+//
+////            jQuery('#centralArea').html('');
+////            jQuery('#quickAddTextField').focus();
+////            jQuery('#quickAddTextField').select();
+//            jQuery('#quickAddRecordTextArea').select().focus();
+//
+//        });
 
         Mousetrap.bindGlobal('f6', function (e) {
             jQuery('#centralArea').html('');

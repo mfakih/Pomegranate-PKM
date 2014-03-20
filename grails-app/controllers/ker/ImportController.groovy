@@ -129,10 +129,9 @@ class ImportController {
                             b.description = it.text
                     } else {
                         def ant = new AntBuilder()
-                        if (entityCode.toUpperCase() == 'N') {
-                            def sandboxPath = OperationController.getPath('attachments.sandbox.path')
+//                        if (entityCode.toUpperCase() == 'N') {
+                            def sandboxPath = OperationController.getPath('module.' + entityCode.toUpperCase() + '.sandbox.path')
                             ant.move(file: path + '/' + it.name, tofile: sandboxPath + '/' + b.id + entityCode + '.' + ext)
-                        }
                     }
 //                    println b.dump()
 //                if (Book.get(id) && title && title.length() > 2) {
@@ -177,6 +176,22 @@ class ImportController {
                 def f = new File(OperationController.getPath('tmp.path') + '/' + tmpFilename) << request.inputStream
 
                 b.properties = GenericsController.transformMcsNotation(entityCode + ' ' + title.trim())['properties']
+
+                if (ext == 'txt') {
+                    if (entityCode.toLowerCase() == 'r')
+                        b.fullText = f.text
+                    else
+                        b.description = f.text
+                }
+                else {
+                    def ant = new AntBuilder()
+//                        if (entityCode.toUpperCase() == 'N') {
+                    def sandboxPath = OperationController.getPath('module.' + entityCode.toUpperCase() + '.sandbox.path')
+                    ant.move(file: f.path, tofile: sandboxPath + '/' + b.id + entityCode + '.' + ext)
+
+                }
+
+
                 if (entityCode.toLowerCase() == 'b')
                     b.fullText = f.text
                 else
@@ -548,6 +563,36 @@ String importModuleFiles(String entityCode) {
 
     }
     render(template: '/layouts/achtung', model: [message: count + " resources imported"])
+}
+
+def importIndividualFile() {
+
+    def entityCode = params.entityCode
+    def path = params.path
+    def count = 0
+    def folder = new File(path)
+   def name = params.name
+
+    def b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).newInstance()
+    b.summary = name
+
+    b.description = 'Imported on ' + new Date().format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')
+
+//    b.properties = GenericsController.transformMcsNotation(entityCode + ' ' + title.trim())['properties']
+
+                if (!b.hasErrors() && b.save(flush: true)) {
+                    render(template: '/gTemplates/recordSummary', model: [record: b])
+                    def ant = new AntBuilder()
+                    ant.move(file: path, tofile: OperationController.getPath('module.' + entityCode + '.sandbox.path') + '/' + b.id + ' '  + name)
+
+                }
+                else {
+                    b.errors.each() {
+                        println 'error ' + it
+                    }
+                    println 'Error saving the resource'
+                }
+
 }
 
 String importResources(Long typeId) {

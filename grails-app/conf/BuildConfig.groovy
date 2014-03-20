@@ -57,7 +57,6 @@ grails.project.dependency.resolution = {
 //        compile ":spring-security-ui:1.0-RC1"
 //        compile ":spring-security-core:2.0-RC2"
 
-
         //runtime 'antlr:antlr:2.7.6' // post about it
         compile ":jquery:1.8.0"
         compile ":jquery-ui:1.8.15"

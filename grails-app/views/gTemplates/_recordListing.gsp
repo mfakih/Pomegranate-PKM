@@ -20,37 +20,40 @@
 
 
 
+   <g:if test="${request.action != 'main'}">
+
+<a id="selectAll" class="fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+   title="Edit box">
+    <span class="ui-icon ui-icon-arrow-1-s"></span> Select all
+</a>
+
+
+&nbsp;
+&nbsp;
+<a id="deselectAll"
+   class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+   title="Edit box">
+    <span class="ui-icon ui-icon-arrow-1-n"></span> Deselect all
+</a>
+
+&nbsp;
+&nbsp;
+<g:remoteLink controller="generics" action="deselectAll"
+              update="centralArea"
+              class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+              before="if(!confirm('Are you sure you want to deselect all selected records from all current and previous listings? Click on Selected records to see your selections')) return false"
+              title="Selected records">
+    <span class="ui-icon ui-icon-arrow-1-n"></span> Clear all selections
+</g:remoteLink>
+<br/>
+<br/>
+   </g:if>
+
 %{--ToDo fix select all<input type="checkbox" id="selectAll" value="selectAll"> Select / Deselect All<br/><br/>--}%
 
 <g:if test="${ssId && searchResultsTotal}">
 
 
-
-    <a id="selectAll" class="fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-       title="Edit box">
-        <span class="ui-icon ui-icon-arrow-1-s"></span> Select all
-    </a>
-
-
-    &nbsp;
-    &nbsp;
-    <a id="deselectAll"
-       class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-       title="Edit box">
-        <span class="ui-icon ui-icon-arrow-1-n"></span> Deselect all
-    </a>
-
-    &nbsp;
-    &nbsp;
-    <g:remoteLink controller="generics" action="deselectAll"
-                  update="centralArea"
-                  class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-                  before="if(!confirm('Are you sure you want to deselect all selected records from all current and previous listings? Click on Selected records to see your selections')) return false"
-                  title="Selected records">
-        <span class="ui-icon ui-icon-arrow-1-n"></span> Clear all selections
-    </g:remoteLink>
-    <br/>
-    <br/>
 
     <div class="paginateButtons" style="display:inline !important;">
         <util:remotePaginate controller="generics" action="executeSavedSearch" total="${searchResultsTotal}"
@@ -64,31 +67,6 @@
 <g:elseif test="${searchResultsTotal}">
 
 
-    <a id="selectAll" class="fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-       title="Edit box">
-        <span class="ui-icon ui-icon-arrow-1-s"></span> Select all
-    </a>
-
-
-    &nbsp;
-    &nbsp;
-    <a id="deselectAll"
-       class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-       title="Edit box">
-        <span class="ui-icon ui-icon-arrow-1-n"></span> Deselect all
-    </a>
-
-    &nbsp;
-    &nbsp;
-    <g:remoteLink controller="generics" action="deselectAll"
-                  update="centralArea"
-                  class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-                  before="if(!confirm('Are you sure you want to deselect all selected records from all current and previous listings? Click on Selected records to see your selections')) return false"
-                  title="Selected records">
-        <span class="ui-icon ui-icon-arrow-1-n"></span> Clear all selections
-    </g:remoteLink>
-    <br/>
-    <br/>
 
     <div class="paginateButtons" style="display:inline !important;">
         <util:remotePaginate controller="generics" action="hqlSearch" total="${searchResultsTotal}"

@@ -15,7 +15,7 @@
                 <g:textArea cols="80" rows="5" name="block" id="quickAddTextField" value=""
                             autocomplete="off"
                             placeholder="Command bar (Add, update, search, assign records...) Type ? for more info"
-                            onkeyup="if (jQuery('#quickAddTextField').val().search('###')== -1){jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))}"
+                            onkeyup="if (jQuery('#quickAddTextField').val().search(';')== -1){jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))}"
                             onblur="jQuery('#hintArea').html('')"
                             onfocus="jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))"
                             style="font-family: monospace; width:98%; height: 60px; background: #eeeeee; margin: 0px!important;"/>

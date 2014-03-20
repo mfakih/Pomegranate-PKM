@@ -338,7 +338,7 @@
 
         <g:if test="${fields.contains('entity')}">
             <td>
-            <g:textField id="entity" name="entity" value="${record?.entity}" style="width: 30px;"/>
+            <g:textField id="entity" name="entity" placehoder="Panel" style="width: 50px;" value="${record?.entity}"/>
             </td>
         </g:if>
 
@@ -346,9 +346,9 @@
 
         <g:if test="${fields.contains('priority')}">
           <td>
-            p<g:select name="priority"
+            p<g:select name="priority" placehoder="Priority" style="width: 50px;"
                        from="${[1, 2, 3, 4]}"
-                       value="${2}"/>
+                       value="${record?.priority}"/>
           </td>
         </g:if>
 
