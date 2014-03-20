@@ -30,7 +30,7 @@
   [ enabled : OperationController . getPath ( 'tasks.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'T' , name : 'Tasks' ] ,
   [ enabled : OperationController . getPath ( 'planner.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'P' , name : 'Planner' ] ,
   [ enabled : OperationController . getPath ( 'journal.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'J' , name : 'Journal' ] ,
-  [ enabled : OperationController . getPath ( 'writing.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'W' , name : 'Writing' ] ,
+  [ enabled : OperationController . getPath ( 'writings.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'W' , name : 'Writing' ] ,
   [ enabled : OperationController . getPath ( 'notes.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'N' , name : 'Notes' ] ,
   [ enabled : OperationController . getPath ( 'resources.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'R' , name : 'Resources' ],
   [ enabled : OperationController . getPath ( 'contacts.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'S' , name : 'Contact' ]
@@ -77,7 +77,7 @@
                         [enabled: OperationController.getPath('journal.enabled')?.toLowerCase() == 'yes', code: 'J', name: 'Journal', controller: 'mcs.Journal'],
                         [enabled: OperationController.getPath('indicators.enabled')?.toLowerCase() == 'yes', code: 'I', name: 'Indicator', controller: 'app.IndicatorData'],
                         [enabled: OperationController.getPath('Payment.enabled')?.toLowerCase() == 'yes', code: 'Q', name: 'Payment', controller: 'app.Payment'],
-                        [enabled: OperationController.getPath('writing.enabled')?.toLowerCase() == 'yes', code: 'W', name: 'Writing', controller: 'mcs.Writing'],
+                        [enabled: OperationController.getPath('writings.enabled')?.toLowerCase() == 'yes', code: 'W', name: 'Writing', controller: 'mcs.Writing'],
                         [enabled: OperationController.getPath('notes.enabled')?.toLowerCase() == 'yes', code: 'N', name: 'Notes', controller: 'app.IndexCard',],
                         [enabled: OperationController.getPath('resources.enabled')?.toLowerCase() == 'yes', code: 'R', name: 'Resources', controller: 'mcs.Book'],
                         [enabled: OperationController.getPath('contacts.enabled')?.toLowerCase() == 'yes', code: 'S', name: 'Contact', controller: 'app.Contact']
@@ -243,8 +243,11 @@
             <g:render template="/layouts/savedSearches" model="[entity: 'A']"/>
     </ul>
     </div>
-</div>
+
  </sec:ifAnyGranted>
+
+</div>
+
 
 <g:if test="${OperationController.getPath('coursesPanel.enabled')?.toLowerCase() == 'yes' ? true : false}">
 <h4 onclick="toggleAdd('#accordionCourses', 'coursesPanel')">Projects & Courses</h4>

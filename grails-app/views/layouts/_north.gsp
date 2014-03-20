@@ -23,7 +23,7 @@
 </sub>
       </g:if>
 &nbsp;
-<g:if test="${OperationController.getPath('enable.kanban')?.toLowerCase() == 'yes' ? true : false}">
+<g:if test="${OperationController.getPath('kanban.enabled')?.toLowerCase() == 'yes' ? true : false}">
 <g:link controller="page" action="kanbanCrs"
         class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
         target="_blank"
@@ -44,7 +44,7 @@
 %{--&nbsp;--}%
 
 
-<g:if test="${OperationController.getPath('enable.fullCalendar')?.toLowerCase() == 'yes' ? true : false}">
+<g:if test="${OperationController.getPath('fullCalendar.enabled')?.toLowerCase() == 'yes' ? true : false}">
 <g:link controller="page" action="calendar"
         class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
         target="_blank"
@@ -54,7 +54,7 @@
 
 &nbsp;
     </g:if>
-<g:if test="${OperationController.getPath('enable.kpi')?.toLowerCase() == 'yes' ? true : false}">
+<g:if test="${OperationController.getPath('kpi.enabled')?.toLowerCase() == 'yes' ? true : false}">
 <g:link controller="page" action="indicators"
         class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
         target="_blank"

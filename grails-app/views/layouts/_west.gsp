@@ -35,7 +35,7 @@
                                             [enabled: OperationController.getPath('tasks.enabled')?.toLowerCase() == 'yes', code: 'T', name: 'Tasks'],
                                             [enabled: OperationController.getPath('planner.enabled')?.toLowerCase() == 'yes', code: 'P', name: 'Planner'],
                                             [enabled: OperationController.getPath('journal.enabled')?.toLowerCase() == 'yes', code: 'J', name: 'Journal'],
-                                            [enabled: OperationController.getPath('writing.enabled')?.toLowerCase() == 'yes', code: 'W', name: 'Writing'],
+                                            [enabled: OperationController.getPath('writings.enabled')?.toLowerCase() == 'yes', code: 'W', name: 'Writing'],
                                             [enabled: OperationController.getPath('notes.enabled')?.toLowerCase() == 'yes', code: 'N', name: 'Notes'],
                                             [enabled: OperationController.getPath('resources.enabled')?.toLowerCase() == 'yes', code: 'R', name: 'Resources']
 
@@ -311,7 +311,7 @@
 </g:if>
 
 <br/>
-<g:if test="${OperationController.getPath('writing.enabled')?.toLowerCase() == 'yes' ? true : false}">
+<g:if test="${OperationController.getPath('writings.enabled')?.toLowerCase() == 'yes' ? true : false}">
     <h3><a>
         <span class="W-bkg"
               style="font-family: 'Lucida Console'; margin-right: 3px; padding-right: 2px; font-weight: bold;">W</span>

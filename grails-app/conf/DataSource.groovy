@@ -28,10 +28,10 @@ environments {
     }
 
 
-    h2 {
+    h21 {
         dataSource {
-            dbdir = "${System.properties['catalina.base'] ?: '.'}/database/db_pkm"
-            dbdir = "./database/pkm"
+            dbdir = "${System.properties['catalina.base'] ?: '.'}/database/db_pkm1"
+//            dbdir = "./database/pkm"
             dialect = org.hibernate.dialect.H2Dialect
             driverClassName = "org.h2.Driver"
             testConnectionOnCheckout = true
@@ -54,6 +54,33 @@ environments {
                 validationQuery = "SELECT 1"
             }
 
+        }
+    }
+  h22 {
+        dataSource {
+            dbdir = "${System.properties['catalina.base'] ?: '.'}/database/db_pkm2"
+//            dbdir = "./database/pkm"
+            dialect = org.hibernate.dialect.H2Dialect
+            driverClassName = "org.h2.Driver"
+            testConnectionOnCheckout = true
+            testConnectionOnCheckin = true
+
+            dbCreate = "update"
+            url = "jdbc:h2:file:${dbdir};MVCC=TRUE;LOCK_TIMEOUT=10000;MODE=MySQL;IGNORECASE=TRUE;"
+            pooled = true
+            username = "admin"
+            password = "admin"
+
+            properties {
+                maxActive = -1
+                minEvictableIdleTimeMillis = 1800000
+                timeBetweenEvictionRunsMillis = 1800000
+                numTestsPerEvictionRun = 3
+                testOnBorrow = true
+                testWhileIdle = true
+                testOnReturn = true
+                validationQuery = "SELECT 1"
+            }
         }
     }
 
