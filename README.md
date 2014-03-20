@@ -28,3 +28,5 @@ In technical terms, Pomegranate PKM is a combination of:
 * Powerful task management
 * Time tracking
 * Blog (e.g. WordPress) client
+
+My in-progress book at [LeanPub](https://leanpub.com/pomegranate) outlines the motivations, design principles and the features of Pomegranate PKM.
