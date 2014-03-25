@@ -22,6 +22,9 @@ package ker
 import app.IndexCard
 import app.Indicator
 import app.parameters.ResourceType
+import com.gravity.goose.Article
+import com.gravity.goose.Configuration
+import com.gravity.goose.Goose
 import de.undercouch.citeproc.CSL
 import de.undercouch.citeproc.bibtex.BibTeXConverter
 import de.undercouch.citeproc.bibtex.BibTeXItemDataProvider
@@ -681,4 +684,24 @@ def importLocalFiles() {
     render(template: '/import/importLocalFiles', model: [])
 }
 
+    def scrapHtmlPage (){
+        def r = Book.get(params.id)
+        String url = r.url
+        Configuration configuration = new Configuration()
+        configuration.setMinBytesForImages(4500)
+        configuration.setLocalStoragePath("/tmp/goose")
+        // i don't care about the image, just want text, this is much faster!
+        configuration.setEnableImageFetching(false);
+     //   configuration.setImagemagickConvertPath("/opt/local/bin/convert");
+        Goose goose = new Goose(configuration);
+        Article article = goose.extractContent(url)
+        r.fullText = article.rawHtml()
+        println ('text ' + article.rawHtml())
+        r.publishedOn = article.publishDate()
+        r.title = article.title()
+        r.description = article.metaDescription()
+        r.textTags = article.metaKeywords()
+        r.imageUrl = article.topImage().getImageSrc()
+        render(template: '/gTemplates/recordSummary', model: [record: r, expandedView: true])
+    }
 } // end of class

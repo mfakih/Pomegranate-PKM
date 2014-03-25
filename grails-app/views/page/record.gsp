@@ -212,11 +212,17 @@
                 <g:if test="${record.entityCode() == 'C'}">
 
 
-                    <g:link url="[controller: 'export', action: 'generateCourseWritings', id: record.id]"
+                    <g:link url="[controller: 'export', action: 'generateCourseWritingsAsHtml', id: record.id]"
                               class="actionLink"
                     target="_blank"
                               title="Convert to HTML">
-                    Convert to HTML (new tab)
+                    Combine writings in HTML format (new tab)
+                </g:link>
+                    <g:link url="[controller: 'export', action: 'generateCourseWritingsAsIs', id: record.id]"
+                              class="actionLink"
+                    target="_blank"
+                              title="Convert to HTML">
+                    Combine writings as is (new tab)
                 </g:link>
 <br/>
 <br/>

@@ -254,7 +254,7 @@
 
 
 
-<g:if test="${'WN'.contains(entityCode)}">
+<g:if test="${'JWN'.contains(entityCode)}">
     <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
                   params="[entityCode: entityCode, field: 'blog',
                           valueId: (record.blog?.id ?: null), updateDiv: 'quickEditBlog' + record.id]"
@@ -262,6 +262,15 @@
                   title="ID ${record.publishedNodeId ?: '?'} ${record.publishedOn ? ' on ' + record.publishedOn?.format('dd.MM.yyyy HH:mm') : ''}">
         &
     </g:remoteLink><span id="quickEditBlog${record.id}"><span>${record.blog?.code ? record.blog?.code : '...'}</span> </span>
+</g:if>
+<g:if test="${'JWN'.contains(entityCode)}">
+    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
+                  params="[entityCode: entityCode, field: 'pomegranate',
+                          valueId: (record.pomegranate?.id ?: null), updateDiv: 'quickEditpomegranate' + record.id]"
+                  update="quickEditpomegranate${record.id}"
+                  title="ID ${record.syncedId ?: '?'} ${record.syncedOn ? ' on ' + record.syncedOn?.format('dd.MM.yyyy HH:mm') : ''}">
+        &
+    </g:remoteLink><span id="quickEditpomegranate${record.id}"><span>${record.pomegranate?.code ? record.pomegranate?.code : '...'}</span> </span>
 </g:if>
 
 

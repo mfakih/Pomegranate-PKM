@@ -10,9 +10,9 @@
 
 <div class="recordDetailsBody" style="margin-left: 20px;" id="detailsRegion${record.entityCode()}${record.id}">
 
-       <table style="border-collapse: collapse" border="0">
+       <table style="border-collapse: collapse; width: 99%" border="0">
            <tr style="width: 95%">
-               <td style="width: 60%">
+               <td style="width: 60%; vertical-align: top">
 
                    <g:render template="/tag/addTag" model="[instance: record, entity: record.entityCode()]"/>
 <g:if test="${'T'.contains(record.entityCode())}">
@@ -22,7 +22,7 @@
 
                    <g:if test="${record.class.declaredFields.name.contains('description')}">
 
-                       ${StringUtils.abbreviate(record.description?.replaceAll('\n', '<br/>')?.replace('Product Description', '')?.decodeHTML(), 140)}
+                       ${StringUtils.abbreviate(record.description?.replaceAll('\n', '<br/>')?.replace('Product Description', '')?.decodeHTML(), 240)}
 
                    </g:if>
 
@@ -46,7 +46,8 @@
                            <g:submitButton name="scheduleTask" value="ok" style="display: none;"
                                            class="fg-button ui-widget ui-state-default ui-corner-all"/>
                        </g:formRemote>
-
+                    <br/>
+                    <br/>
                    </g:if>
 
                    <h4>Relate to other records</h4>
@@ -58,17 +59,28 @@
 
                    <div id="publish${record.id}" style="display: inline;  margin-left: 10px;">
 
-                       <g:if test="${'WNJ'.contains(record.entityCode())}">
+                       <g:if test="${'WNJ'.contains(entityCode)}">
                            <div id="postResult${record.id}" style="display: inline">
-                               %{--<g:if test="${record.blogCode}">--}%
-                               %{--<g:remoteLink controller="generics" action="publish" id="${record.id}"--}%
-                               %{--params="[entityCode: record.entityCode()]"--}%
-                               %{--update="postResult${record?.id}"--}%
-                               %{--title="Publish record"--}%
-                               %{--class="fg-button ui-widget ui-state-default ui-corner-all">--}%
-                               %{--For <b> ${record.blogCode}</b>--}%
-                               %{--</g:remoteLink>--}%
-                               %{--</g:if>--}%
+                               <g:if test="${record.blog?.code}">
+                               <g:remoteLink controller="generics" action="publish" id="${record.id}"
+                               params="[entityCode: entityCode]"
+                               update="postResult${record?.id}"
+                               title="Publish record"
+                               class="fg-button ui-widget ui-state-default ui-corner-all">
+                               Publish on <b> ${record.blog?.code}</b>
+                               </g:remoteLink>
+                               </g:if>
+                           </div>
+                           <div id="syncResult${record.id}" style="display: inline">
+                               <g:if test="${record.pomegranate?.code}">
+                                   <g:remoteLink controller="export" action="syncNote" id="${record.id}"
+                                                 params="[entityCode: entityCode]"
+                                                 update="syncResult${record?.id}"
+                                                 title="Sync record"
+                                                 class="fg-button ui-widget ui-state-default ui-corner-all">
+                                       Sync on <b> ${record.pomegranate?.code}</b>
+                                   </g:remoteLink>
+                               </g:if>
                            </div>
                            <g:if test="${1 == 2}">
                                <g:formRemote name="setBlogCode" style="display: inline"
@@ -103,7 +115,7 @@
 
                </td>
 
-               <td>
+           <td style="width: 40%; vertical-align: top">
 
 
                <g:if test="${'R'.contains(record.entityCode())}">
@@ -143,6 +155,25 @@
                            <br/>
                        </g:if>
                        <span style="">
+                           <b>Link:</b>
+                           <span id="linkBloc${record.id}"
+                           ${record.url}
+                           </span>
+                           %{--${record.author},${record.title ?: record.legacyTitle} ${record.edition} ed--}%
+                           %{--(${record.publisher},--}%
+                           %{--${record.publicationDate})--}%
+                           <g:if test="${record.type.code == 'link'}">
+                               <br/>
+                           <g:remoteLink controller="import" action="scrapHtmlPage" id="${record.id}"
+                                         update="RRecord${record.id}"
+                                         class="actionLink"
+                                         title="Scrap HTML">
+                               Scrape HTML page
+                           </g:remoteLink>
+                               <br/>
+                               <br/>
+                           </g:if>
+   <span style="">
                            <b>Citation:</b>
                            <span id="citationBloc${record.id}"
                            ${record.citationHtml}
@@ -152,13 +183,14 @@
                            %{--${record.publicationDate})--}%
 
 
-
+                       <br/>
                            <g:remoteLink controller="import" action="generateCitation" id="${record.id}"
                                          update="citationBloc${record.id}"
                                          class="actionLink"
                                          title="Update metadata">
                                Generate citations
                            </g:remoteLink>
+                           <br/>
                            <br/>
 
 
@@ -173,7 +205,6 @@
                        </span>
 
 
-                       <br/>
                        <br/>
 
                        <g:remoteLink controller="operation" action="addBibtex" id="${record.id}"
@@ -281,15 +312,12 @@
                                       folder="${OperationController.getPath('video.excerpts.repository.path')}/${record.resourceType}/${record.id}"
                                       initial=""/>
 
-                       <pkm:listFiles fileClass="libFile"
-                                      folder="${record?.type?.repositoryPath}/${(record.id / 100).toInteger()}"
-                                      initial="${record.id}[a-z]"/>
-                       <pkm:listFiles fileClass="libFile"
-                                      folder="/todo/lib/${record?.type?.code}/${(record.id / 100).toInteger()}"
-                                      initial="${record.id}[a-z]"/>
-                       <pkm:listFiles fileClass="libFile"
-                                      folder="/todo/lib/${record?.type?.code}/${(record.id / 100).toInteger()}"
-                                      initial="${record.id}[a-z]"/>
+                       %{--<pkm:listFiles fileClass="libFile"--}%
+                                      %{--folder="/todo/lib/${record?.type?.code}/${(record.id / 100).toInteger()}"--}%
+                                      %{--initial="${record.id}[a-z]"/>--}%
+                       %{--<pkm:listFiles fileClass="libFile"--}%
+                                      %{--folder="/todo/lib/${record?.type?.code}/${(record.id / 100).toInteger()}"--}%
+                                      %{--initial="${record.id}[a-z]"/>--}%
                        <pkm:listFiles fileClass="libFile"
                                        folder="${record?.type?.repositoryPath}/${(record.id / 100).toInteger()}/${record.id}"
                                        initial=""/>

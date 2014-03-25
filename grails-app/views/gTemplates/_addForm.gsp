@@ -1,4 +1,4 @@
-<%@ page import="mcs.Department; mcs.parameters.WorkStatus;" %>
+<%@ page import="app.parameters.Blog; mcs.Department; mcs.parameters.WorkStatus;" %>
 
 <g:if test="${record}">
     <g:render template="/gTemplates/recordSummary" model="[record: record]"/>
@@ -173,6 +173,13 @@
                         style="width: 95%;  height: 100px;"/>
         </td>
     </g:if>
+  <g:if test="${fields.contains('fullText')}">
+        <td colspan="2">
+            <g:textArea cols="80" rows="5" placeholder="Full text" name="fullText"
+                        value="${record?.fullText}"
+                        style="width: 95%;  height: 100px;"/>
+        </td>
+    </g:if>
 
 
    
@@ -291,6 +298,14 @@
         </td>
     </g:if>
 
+<g:if test="${fields.contains('blog')}">
+        <td>
+            <g:select name="blog.id" style="width: 150px;"
+                      from="${Blog.list([sort: 'code'])}" optionKey="id" optionValue="summary"
+                      value="${record?.blog?.id}"
+                      noSelection="${['null': 'No blog']}"/>
+        </td>
+    </g:if>
 
 
 

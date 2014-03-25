@@ -23,7 +23,7 @@ environments {
             password = "root"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             dbCreate = "update" // one of 'create', 'create-drop','update'
-            url = "jdbc:mysql://localhost:3306/db_pkm_tracker"
+            url = "jdbc:mysql://localhost:3306/db_pkm_dev"
         }
     }
 

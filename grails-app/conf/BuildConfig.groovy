@@ -27,18 +27,73 @@ grails.project.dependency.resolution = {
         // from public Maven repositories
         mavenLocal()
         mavenCentral()
+        mavenRepo "http://repository.codehaus.org/"
+        mavenRepo "https://oss.sonatype.org/content/repositories/releases/org/asciidoctor/asciidoctor-maven-plugin/0.1.4"
+        mavenRepo "https://wordpress-java.googlecode.com/svn/repo"
+        mavenRepo "http://repo.jenkins-ci.org/releases/org/eclipse/mylyn/wikitext/wikitext.core/1.7.4.v20130429"
+        mavenRepo "http://repo1.maven.org/maven2/net/sourceforge/jexcelapi/jxl/2.6.12"
+        mavenRepo "http://repo1.maven.org/maven2/org/jbibtex/jbibtex/1.0.11"
+        mavenRepo "https://oss.sonatype.org/content/repositories/releases/de/undercouch/citeproc-java/0.6/"
+        mavenRepo "https://oss.sonatype.org/content/repositories/releases/com/itextpdf/itextpdf/5.5.0/"
+        mavenRepo "http://mirrors.ibiblio.org/maven2/org/ocpsoft/prettytime/prettytime/3.2.4.Final/"
+        mavenRepo "http://repo1.maven.org/maven2/de/l3s/boilerpipe/boilerpipe/1.1.0/"
+        mavenRepo "http://repo.jenkins-ci.org/releases/org/eclipse/mylyn/wikitext/wikitext/1.7.4.v20130429-0100/"
 //        mavenRepo "http://snapshots.repository.codehaus.org"
         // mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
+//        mavenRepo "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
+//        mavenRepo "https://repository.jboss.org/nexus/content/repositories/scala-tools-releases"
     }
     dependencies {
         // specify dependencies here under either 'runtime', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-        runtime "mysql:mysql-connector-java:5.1.27"
+        compile "mysql:mysql-connector-java:5.1.29"
+		compile "com.gravity:goose:2.1.23"
+        compile "wordpress-java:jwordpress:0.5.1"
+
+//        compile 'org.eclipse.mylyn.wikitext:wikitext:1.7.4.v20130429-0100'
+        compile 'de.l3s.boilerpipe:boilerpipe:1.1.0'
+
+        compile 'com.itextpdf:itextpdf:5.5.0'
+
+
+
+
+        compile 'org.ocpsoft.prettytime:prettytime:3.2.4.Final'
+
+
+
+        compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
+
+
+
+        compile 'de.undercouch:citeproc-java:0.6'
+
+
+        compile 'org.jbibtex:jbibtex:1.0.11'
+
+
+
+
+//        compile "org.springframework:spring-core:4.0.2"
+//        compile 'org.eclipse.mylyn.wikitext:wikitext.core:1.7.4.v20130429'
+
+
+
+        compile 'org.asciidoctor:asciidoctor-maven-plugin:0.1.4'
+
+
+
+
+//compile  "org.codehaus.groovy.modules.http-builder:http-builder:0.7"
+
+
+
 
     }
     plugins {
 
+        compile ":oauth:2.1.0"
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
         //runtime ":cached-resources:1.0"
@@ -79,5 +134,10 @@ grails.project.dependency.resolution = {
         compile ":searchable:0.6.4"
         compile ":audit-logging:0.5.5.3"
 
+
+        compile ":rest-client-builder:2.0.1"
+
+        compile ":jasypt-encryption:1.1.0"
+//        compile ":rest:0.8"
     }
 }

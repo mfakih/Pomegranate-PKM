@@ -1,4 +1,4 @@
-<%@ page import="app.parameters.Blog" %>
+<%@ page import="app.parameters.Pomegranate; app.parameters.Blog" %>
 %{--<g:formRemote name="addTag" url="[controller: 'generics', action: 'quickSave']"--}%
     %{--update="TRecord312"--}%
               %{--style="display: inline;">--}%
@@ -82,6 +82,11 @@
     </g:if>
 
 
+     <g:if test="${field == 'pomegranate'}">
+    <g:select name="newValue" from="${Pomegranate.list([sort: 'code'])}" optionKey="id" optionValue="code"
+              onchange="jQuery('#${updateDiv}').load('generics/quickSave/' + '${id}-${entityCode}-${field}-' + this.value)"
+              value="${valueId}" style="overflow: visible; z-index: 200" noSelection="${['null': '']}"/>
+    </g:if>
 
   <g:if test="${field == 'department'}">
     <g:select name="newValue" from="${mcs.Department.list([sort: 'code'])}"

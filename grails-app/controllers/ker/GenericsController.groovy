@@ -23,6 +23,7 @@ import app.IndexCard
 import app.Indicator
 import app.PaymentCategory
 import app.Tag
+import app.parameters.Pomegranate
 import app.parameters.WordSource
 import app.parameters.ResourceType
 import app.parameters.Blog
@@ -1281,7 +1282,7 @@ def addContactToRecord() {
                     break
 
 
-                case 'B': ResourceStatus.list([sort: 'name']).each() {
+                case 'R': ResourceStatus.list([sort: 'name']).each() {
                     statuses.add([id: it.id, value: it.name + ' (' + Book.countByStatus(it) + ')'])
                 }
                     Book.executeQuery("select count(*), t.course from Book t where t.course is not null group by t.course order by t.course.code asc").each() {
@@ -1655,7 +1656,14 @@ def addContactToRecord() {
                     title: 'HQL Query: ' + input]
             )
         } else {
-
+            def fullquery
+            def fullquerySort
+            def queryKey
+           if (input.startsWith('_')){
+               fullquery = session[input]
+               fullquerySort = 'select count(*) ' + fullquery
+               queryKey = input
+           }  else{
             def entityCode = input.split(/[ ]+/)[0]?.toUpperCase()
 
 //        input = params.input.substring(params.input.indexOf(' '))
@@ -1665,26 +1673,31 @@ def addContactToRecord() {
 
             def queryParams = ''
 
+            fullquery = queryHead + (queryCriteria ? ' where ' + queryCriteria : '')
 
+            fullquerySort = 'select count(*) ' + queryHead + (queryCriteria ? ' where ' + queryCriteria : '')
+            queryKey = '_' + new Date().format('ddMMyyHHmmss')
+             session[queryKey] = fullquery
 
-            def list = Task.executeQuery(queryHead + (queryCriteria ? ' where ' + queryCriteria : '') + ' order by lastUpdated desc', [],
-                    [max: 100])
-            if (OperationController.getPath('enable.autoselectResults') == 'yes'){
-                selectedRecords.keySet().each() {
-                    session[it] = 0
                 }
-                selectedRecords = [:]
-
-                for (r in list) {
-                selectedRecords[r.entityCode() + r.id] = 1
-                session[r.entityCode() + r.id] = 1
-            }
-            }
+            params.max = 10
+            def list = Task.executeQuery(fullquery  + ' order by lastUpdated desc', [], params)
+//            if (OperationController.getPath('enable.autoselectResults') == 'yes'){
+//                selectedRecords.keySet().each() {
+//                    session[it] = 0
+//                }
+//                selectedRecords = [:]
+//
+//                for (r in list) {
+//                selectedRecords[r.entityCode() + r.id] = 1
+//                session[r.entityCode() + r.id] = 1
+//            }
+//            }
 
             render(template: '/gTemplates/recordListing', model: [
-                    totalHits: Task.executeQuery('select count(*) ' + queryHead + (queryCriteria ? ' where ' + queryCriteria : ''))[0], //.size(),
-                    list: list,
-                    title: queryHead + (queryCriteria ? ' where ' + queryCriteria : '')
+                    totalHits: Task.executeQuery(fullquerySort)[0], //.size(),
+                    list: list,    queryKey: queryKey, fullquery: fullquery,
+                    title: fullquery
             ])
 
         }
@@ -2671,6 +2684,10 @@ def addContactToRecord() {
                         properties['blog.code'] = it.substring(1)
                         queryCriteria.add("blog.code = '" + it.substring(1) + "'")
                     }
+                    if (it.startsWith('/')) {
+                        properties['url'] = it.substring(1)
+                        queryCriteria.add("url like '" + it.substring(1) + "'")
+                    }
                     if ((it.startsWith('*') || it.startsWith('x')) && it.length() == 1) {
                         properties['bookmarked'] = true
                         queryCriteria.add("bookmarked = true")
@@ -3361,7 +3378,18 @@ def addContactToRecord() {
             }
 
         }
+ if (field == 'pomegranate') {
+            if (valueId != 'null') {
+            def b = Pomegranate.get(valueId)
+            record.pomegranate = b
+            render "" + b.code
+            }
+            else{
+                record.pomegranate = null
+                render ''
+            }
 
+        }
     }
 
 }

@@ -140,6 +140,9 @@ class PageController {
         render(view: '/page/kanbanCrs', model: [])
     }
 
+    def mobile() {
+        render(view: '/page/mobile', model: [])
+    }
     def colors() {
         def colors = """AliceBlue;#F0F8FF
 AntiqueWhite;#FAEBD7

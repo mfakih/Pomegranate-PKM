@@ -10,6 +10,12 @@ class UrlMappings {
 		  }
 	  }
   
+        "/sync"(controller: "sync") {
+            action = [PUT: "syncNote", POST: "syncNote", DELETE: "unsupported"]
+        }
+   "/m"(controller: "page") {
+            action = [GET: 'mobile', DELETE: "unsupported"]
+        }
    	  "500"(view:'/error')
 	}
 }

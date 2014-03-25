@@ -445,6 +445,14 @@
     <g:render template="/page/regions"/>
 </browser:isFirefox>
 
+<browser:isOpera>
+    <g:render template="/page/regions"/>
+</browser:isOpera>
 
+<browser:isMobile>
+    <g:javascript>
+    document.location = 'page/mobile'
+    </g:javascript>
+</browser:isMobile>
 </body>
 </html>

@@ -11,6 +11,8 @@ grails.config.locations = [
 //        "file:${userHome}/.pomegranate.properties"
 ]
 
+def configFilePath = System.getenv('pkm.config') ?: "file:${userHome}/.pkm.properties"
+grails.config.locations = [configFilePath]
 // if (System.properties["${appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
@@ -67,7 +69,7 @@ environments {
     }
     development {
         grails.logging.jul.usebridge = true
-//        grails.serverURL = "http://localhost:2008/${appName}"
+        grails.serverURL = "https://localhost:2015/${appName}"
     }
     test {
 //        grails.serverURL = "http://localhost:2008/${appName}"
@@ -162,16 +164,40 @@ grails.plugins.springsecurity.authority.className = 'security.Role'
 
 
 
+grails.plugins.springsecurity.useBasicAuth = true
+grails.plugins.springsecurity.basic.realmName = "HTTP Basic Auth"
 
+grails.plugin.springsecurity.filterChain.chainMap = [
+        '/sync/**': 'JOINED_FILTERS,-exceptionTranslationFilter',
+        '/rss/**': 'JOINED_FILTERS,-exceptionTranslationFilter',
+        '/book/viewImage/**': 'JOINED_FILTERS,-exceptionTranslationFilter',
+        '/': 'JOINED_FILTERS,-basicAuthenticationFilter,-basicExceptionTranslationFilter',
+        '/*': 'JOINED_FILTERS,-basicAuthenticationFilter,-basicExceptionTranslationFilter',
+        '/**': 'JOINED_FILTERS,-basicAuthenticationFilter,-basicExceptionTranslationFilter'
+]
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = [
         '/login/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
         '/logout/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-        '/rss/feeds**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+//        '/rss/feeds**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
         '/book/viewImage**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
      '/book/viewImage/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
-        
+//     '/sync/**': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+     '/register/index/*': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+     '/register/forgotPassword': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/': ['IS_AUTHENTICATED_FULLY'],
+        '/*': ['IS_AUTHENTICATED_FULLY'],
         '/**': ['IS_AUTHENTICATED_FULLY']
+]
+grails.plugin.springsecurity.secureChannel.definition = [
+        '/login/**':         'REQUIRES_SECURE_CHANNEL',
+        '/maps/**':          'REQUIRES_INSECURE_CHANNEL',
+        '/images/login/**':  'REQUIRES_SECURE_CHANNEL',
+        '/images/**':        'ANY_CHANNEL',
+        '/sync/**':        'ANY_CHANNEL',
+        '/rss/**':        'ANY_CHANNEL',
+        '/book/viewImage/**':        'ANY_CHANNEL',
+        '/**':        'REQUIRES_SECURE_CHANNEL'
 ]
 
 // Uncomment and edit the following lines to start using Grails encoding & escaping improvements
@@ -197,3 +223,5 @@ grails {
     }
 }
 remove this line */
+grails.dbconsole.enabled=true
+grails.dbconsole.urlRoot='/admin/dbconsole'

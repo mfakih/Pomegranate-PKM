@@ -20,7 +20,7 @@ package app.parameters
 import cmn.DataChangeAudit
 import com.bloomhealthco.jasypt.GormEncryptedStringType
 
-class Blog implements Comparable {  // entity id = 20
+class Pomegranate implements Comparable {  // entity id = 20
 
 
     // static searchable = [only:['name', 'notes' ]]

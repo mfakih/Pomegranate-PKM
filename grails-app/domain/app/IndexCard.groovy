@@ -18,6 +18,7 @@
 package app
 
 import app.parameters.Blog
+import app.parameters.Pomegranate
 import app.parameters.WordSource
 import cmn.DataChangeAudit
 import mcs.Book
@@ -27,6 +28,7 @@ import mcs.Writing
 import mcs.parameters.WritingType
 //import app.parameters.WordSource
 import mcs.parameters.WritingStatus
+import com.bloomhealthco.jasypt.GormEncryptedStringType
 
 class IndexCard implements Comparable {  // entity id = 16
 
@@ -55,6 +57,7 @@ class IndexCard implements Comparable {  // entity id = 16
     String summary = ''
     String shortDescription
     String description = '?'
+    String password
 
 
     Writing writing
@@ -93,6 +96,10 @@ class IndexCard implements Comparable {  // entity id = 16
     String blogCode
     Date publishedOn
     Integer publishedNodeId
+    Pomegranate pomegranate
+    Date syncedOn
+    Integer syncedId
+    Integer originalId
 
     String mainHighlights
 
@@ -138,6 +145,7 @@ class IndexCard implements Comparable {  // entity id = 16
         reaction(sqlType: 'longtext')
         extractedWords(sqlType: 'longtext')
         notes(sqlType: 'longtext')
+        password type: GormEncryptedStringType
     }
 
     static namedQueries = {

@@ -77,8 +77,13 @@
 <td colspan="10" class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
     style="font-family: Arial; width: 90% !important;: font-size: 14px; color: #105CB6; line-height: 20px; ">
 
+<g:remoteLink controller="generics" action="showDetails"
+              params="${[id: record.id, entityCode: entityCode]}"
+              update="below${entityCode}Record${record.id}"
+              title="Details">
 <g:render template="/gTemplates/summaryField" model="[record: record, entityCode: entityCode]"/>
 
+    </g:remoteLink>
 
 </td>
 

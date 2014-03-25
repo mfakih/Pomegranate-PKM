@@ -19,10 +19,16 @@
 
 package ker
 
+import org.scribe.model.Response
+import org.scribe.model.Token
+import uk.co.desirableobjects.oauth.scribe.OauthService
+import app.IndexCard
+import grails.converters.XML
 import app.Indicator
 import app.IndicatorData
 import app.Payment
 import grails.converters.JSON
+import grails.plugins.rest.client.RestBuilder
 import jxl.write.NumberFormat
 import mcs.*
 import mcs.parameters.ResourceStatus
@@ -664,7 +670,7 @@ class ExportController {
 
 
 
-    def generateCourseWritings() {
+    def generateCourseWritingsAsHtml() {
         def path = "/host/new/C/9155/book.adoc"
         def file = new File(path)
         def c = Course.get(params.id)
@@ -701,6 +707,21 @@ v0.3, 12.03.2014:
         render header + '\n' + asciidoctor.render(file.text, options) + '\n' + footer
     }
 
+    def generateCourseWritingsAsIs() {
+      //  def path = "/host/new/C/9155/book.md"
+        //def file = new File(path)
+        def c = Course.get(params.id)
+        def text = """
+"""
+                Writing.findAllByCourseAndDeletedOnIsNull(c, [sort: 'orderInCourse', order: 'asc']).each() {
+                        //text += "\n## " + it.summary + '\n'
+                        text += it.description//.replaceAll(';; ' , '').replaceAll(';;--' , '')
+                    }
+       // file.text = text + '\n'
+//        response.setHeader("Content-disposition", "attachment; filename='toc-generated.tex'")
+//        response.outputStream << new FileInputStream(path)
+        render '<pre>' + text + '</pre>'
+    }
     def generateCoursePresentation() {
         // todo if !.adoc generate else leave
         def path = "/host/todo/new/C/9155/prs.gen" // /mdd/tmp/${new Date().format('yyMMddHHmmss')}"
@@ -764,4 +785,61 @@ This presentation aims to give an overview of Pomegranate PKM system.
     }
 
 
+    def syncNote(){
+        def n = IndexCard.get(params.id)
+        def url = n.pomegranate?.link + '/sync'
+        def p
+        if (params.id && IndexCard.exists(params.id)) {
+            p = IndexCard.get(params.id)
+        }
+      try{
+        def rest = new RestBuilder()
+        def resp = rest.put(url){
+            auth n.pomegranate?.username, n.pomegranate?.password
+            contentType "application/json"
+            json p
+        }
+//            contentType "application/xml"
+//            xml {
+//                name = "test-group"
+//                description = "A temporary test group"
+//            }
+//            [name: 'moh']
+//        }
+          render  resp.xml//.name == 'acegi'
+      }
+      catch(Exception e){
+          println e.printStackTrace()
+      }
+    }
+    OauthService oauthService
+    def googleCalendar(){
+        Token token = (Token) session[oauthService.findSessionKeyForAccessToken('google')]
+//        Token token = new Token(
+//                '384961145713-81j9daaqq9pus3uek9tp1ba4edb5frtn.apps.googleusercontent.com',
+//                'MW-xzcvpEkyRg9oTDyJQPLsB')
+//
+        println 'token ' + token.dump()
+        def text = "Test Data".encodeAsURL()
+        def calendarId = "1e1cgt5h3mf263idugc8kq47e0@group.calendar.google.com"//.encodeAsURL()
+        def  event = [
+                'summary': 'Appointment',
+                'description': 'description of the event',
+                'location': 'Somewhere']
+//                'start': ['date': new Date().format('yyyy-MM.dd')],
+//                'end': ['date':(new Date() +2).format('yyyy-MM.dd')]]
+        //Response accessResource(String serviceName, Token accessToken, String verbName, String url, Map body) {
+      try{
+        def calendars = oauthService.accessResource('google', token,'POST',
+                "https://www.googleapis.com/calendar/v3/calendars/1e1cgt5h3mf263idugc8kq47e0%40group.calendar.google.com/events?fields=description%2Cend%2Clocation%2Cstart%2Csummary", event)
+          def calendarsJSON = JSON.parse(calendars.body)
+          render calendarsJSON.toString()
+          println calendarsJSON.toString()
+      }
+      catch (Exception e){
+          println e.printStackTrace()
+      }
+        //String serviceName, Token accessToken, String verbName, String url, Map body) {
+        //def response = oauthService.accessResource(url:grailsApplication.config.oauth.providers.google.api,consumer:'consumer_name',token:[key:'accesskey',secret:'accesssecret'], method:'POST')
+    }
 } // end of class

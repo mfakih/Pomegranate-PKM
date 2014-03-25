@@ -165,6 +165,8 @@
 
                     <g:each in="${[
                             ['app.parameters.Blog', 'Blog'],
+                            ['app.parameters.Markup', 'Markup'],
+                            ['app.parameters.Pomegranate', 'Pomegranate'],
                             ['mcs.parameters.WorkStatus', 'Work status'],
                             ['mcs.parameters.WritingStatus', 'Writing status'],
                             ['mcs.parameters.ResourceStatus', 'Resource status'],

@@ -21,42 +21,17 @@
 <g:if test="${queryKey}">
 
 
+
+
     <div class="paginateButtons" style="display:inline !important;">
         <util:remotePaginate controller="generics" action="findRecords" total="${totalHits}"
                              params="[input: queryKey]" update="centralArea"/>
     </div>
+
+
 %{--<hr/>--}%
 </g:if>
-   <g:if test="${request.action != 'main' && list.size() > 4}">
 
-<a id="selectAll" class="fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-   title="Edit box">
-    <span class="ui-icon ui-icon-arrow-1-s"></span> Select all
-</a>
-
-
-&nbsp;
-&nbsp;
-<a id="deselectAll"
-   class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-   title="Edit box">
-    <span class="ui-icon ui-icon-arrow-1-n"></span> Deselect all
-</a>
-
-&nbsp;
-&nbsp;
-<g:remoteLink controller="generics" action="deselectAll"
-              update="centralArea"
-              class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-              before="if(!confirm('Are you sure you want to deselect all selected records from all current and previous listings? Click on Selected records to see your selections')) return false"
-              title="Selected records">
-    <span class="ui-icon ui-icon-arrow-1-n"></span> Clear all selections
-</g:remoteLink>
-<br/>
-<br/>
-   </g:if>
-
-%{--ToDo fix select all<input type="checkbox" id="selectAll" value="selectAll"> Select / Deselect All<br/><br/>--}%
 
 <g:if test="${ssId && searchResultsTotal}">
 
@@ -90,8 +65,7 @@
 %{--<i>No record.</i>--}%
 %{--</g:if>--}%
 <g:each in="${list}" status="i" var="record">
-    <g:render template="/gTemplates/recordSummary" model="[record: record,
-            context: (highlights && highlights[i] ? highlights[i] : null)]"/>
+    <g:render template="/gTemplates/box" model="[record: record]"/>
 </g:each>
 
 <g:if test="${ssId && searchResultsTotal}">

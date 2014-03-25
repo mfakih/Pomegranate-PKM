@@ -50,7 +50,7 @@
 
                                 <i style="font-size: smaller">${record?.type?.code} ${record.department?.code}</i>&nbsp;
                             </g:if>
-                            <g:if test="${'C'.contains(record.entityCode())}">
+                            <g:if test="${'E'.contains(record.entityCode())}">
                                 <i style="font-size: smaller">
                                     B-${record?.book?.id}
                                     ${record?.book?.author},
@@ -59,7 +59,7 @@
                                     ${record?.book?.publicationDate})
                                 </i>&nbsp;
                                 <br/>
-                                <i style="font-size: smaller">${record?.type?.code} ${record.department?.code}</i>&nbsp;
+                                <i style="font-size: smaller">${record.class.declaredFields.name.contains('type') ? record?.type?.code: ''} ${record.class.declaredFields.name.contains('department') ? record.department?.code: ''}</i>&nbsp;
                             </g:if>
                         </span>
 
@@ -67,7 +67,7 @@
                         <g:if test="${'P'.contains(record.entityCode()) && record.task}">
                             <span title="${record?.summary}">${record.task?.summary}</span>
                         </g:if>
-                        <g:elseif test="${'C'.contains(record.entityCode())}">
+                        <g:elseif test="${'N'.contains(record.entityCode())}">
                             ${record?.orderInWriting ? '#' + record?.orderInWriting + ' ' : ''} ${record?.summary}
                         </g:elseif>
                         <g:elseif test="${'R'.contains(record.entityCode())}">
@@ -91,7 +91,7 @@
                         <g:if test="${'C'.contains(record.entityCode())}">
                             <b>${record.code}
                                 ${record.code}</b>
-                            ${record.title}
+                            ${record.summary}
                         </g:if>
 
                         <br/>

@@ -42,9 +42,9 @@
                                     ].grep { it.enabled == true }
                                 }" optionKey="code" optionValue="name"
                                 style="direction: ltr; text-align: left; width: 185px !important"
-
+                                noSelection="${['null': 'Choose type']}"
                                 onchange="jQuery('#searchForm').load('generics/hqlSearchForm/' + this.value);"
-                                value="G"/>
+                                value=""/>
 
 
         <br/>
