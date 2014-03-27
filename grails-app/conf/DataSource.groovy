@@ -19,8 +19,13 @@ environments {
     development {
         dataSource {
             driverClassName = "com.mysql.jdbc.Driver"
-            username = "root"
-            password = "root"
+            /* MySql user created using:
+	    CREATE USER 'pkmuser'@'localhost' IDENTIFIED BY 'password';
+            GRANT ALL PRIVILEGES ON db_pkm_dev.* To 'pkmuser' @'localhost' IDENTIFIED BY 'password';
+            FLUSH PRIVILEGES;
+            */
+           username = "pkmuser"
+            password = "password"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             dbCreate = "update" // one of 'create', 'create-drop','update'
             url = "jdbc:mysql://localhost:3306/db_pkm_dev"
