@@ -111,6 +111,11 @@ class PageController {
         ])
     }
 
+    def panel() {
+        render(template: '/page/panel', model: [record:
+                grailsApplication.classLoader.loadClass(entityMapping[params.entityCode]).get(params.id)
+        ])
+    }
     def publish() {
         render(view: '/page/publish', model: [record:
                 grailsApplication.classLoader.loadClass(entityMapping[params.entityCode]).get(params.id)

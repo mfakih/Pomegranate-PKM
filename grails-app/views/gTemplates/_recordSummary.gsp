@@ -59,23 +59,10 @@
 %{--</g:remoteLink>--}%
 
 </td>
-%{--<g:if test="${record.class.declaredFields.name.contains('summary')}">--}%
 
-
-<td class="record-selection">
-
-    <g:checkBox name="select-${record.id}-${entityCode}" title="Select record" class="acheckbox"
-                value="${session[entityCode + record.id] == 1}"
-                onchange="jQuery('#logRegion').load('generics/selectOnly/${entityCode}${record.id}')"
-                onclick="jQuery('#logRegion').load('generics/selectOnly/${entityCode}${record.id}')"/>
-    <!--a style="width: 10px; color: #000000"
-           onclick="jQuery('#below${entityCode}Record${record.id}').html('')">&chi;</a-->
-
-</td>
-
-
-<td colspan="10" class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
+<td colspan="10" rowspan="2" class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
     style="font-family: Arial; width: 90% !important;: font-size: 14px; color: #105CB6; line-height: 20px; ">
+
 
 <g:remoteLink controller="generics" action="showDetails"
               params="${[id: record.id, entityCode: entityCode]}"
@@ -86,9 +73,6 @@
     </g:remoteLink>
 
 </td>
-
-%{-- end of record summary --}%
-
 
 
 <td class="actionTd" style="${justUpdated ? 'background: YellowGreen !important' : ''}">
@@ -105,38 +89,22 @@
 <td class="actionTd">
 
 %{--<span style="float: right">--}%
-<a class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-   onclick="jQuery('#appendRow${entityCode}-${record.id}').removeClass('navHidden'); jQuery('#appendTextFor${entityCode}${record.id}').select(); jQuery('#appendTextFor${entityCode}${record.id}').focus();">
-    <span class="ui-icon ui-icon-arrowreturn-1-e"></span>
-</a>
+%{--<a class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"--}%
+   %{--onclick="jQuery('#appendRow${entityCode}-${record.id}').removeClass('navHidden'); jQuery('#appendTextFor${entityCode}${record.id}').select(); jQuery('#appendTextFor${entityCode}${record.id}').focus();">--}%
+    %{--<span class="ui-icon ui-icon-arrowreturn-1-e"></span>--}%
+%{--</a>--}%
+
+
+    <g:remoteLink controller="page" action="panel"
+                  params="${[id: record.id, entityCode: entityCode]}"
+                  update="3rdPanel"
+                  class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                  title="Go to page">
+        <span class="ui-icon ui-icon-extlink"></span>
+
+    </g:remoteLink>
+
   </td>
-
-
-
-
-
-<td class="actionTd">
-<g:if test="${record.class.declaredFields.name.contains('bookmarked')}">
-    <g:if test="${!record.bookmarked}">
-        <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"
-           value="${record.bookmarked}"
-           onclick="jQuery('#${entityCode}Record${record.id}').load('generics/quickBookmark/${entityCode}-${record.id}')">
-            <span class="icon-star-gm"></span>
-        </a>
-    </g:if>
-
-    <g:if test="${record.bookmarked}">
-        <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"
-           value="${record.bookmarked}"
-           onclick="jQuery('#${entityCode}Record${record.id}').load('generics/quickBookmark/${entityCode}-${record.id}')">
-            <span class="icon-starred-gm"></span>
-        </a>
-
-    </g:if>
-    </g:if>
-
-</td>
-
 
 
 <g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
@@ -155,8 +123,6 @@
     </td>
 </g:if>
 
-
-
 <g:if test="${entityCode == 'E'}">
 
     <td>
@@ -172,6 +138,44 @@
 
     </td>
 </g:if>
+
+
+</tr>
+
+<tr>
+
+    <td class="record-selection">
+
+        <g:checkBox name="select-${record.id}-${entityCode}" title="Select record" class="acheckbox"
+                    value="${session[entityCode + record.id] == 1}"
+                    onchange="jQuery('#logRegion').load('generics/selectOnly/${entityCode}${record.id}')"
+                    onclick="jQuery('#logRegion').load('generics/selectOnly/${entityCode}${record.id}')"/>
+        <!--a style="width: 10px; color: #000000"
+           onclick="jQuery('#below${entityCode}Record${record.id}').html('')">&chi;</a-->
+
+    </td>
+
+    <td class="actionTd">
+        <g:if test="${record.class.declaredFields.name.contains('bookmarked')}">
+            <g:if test="${!record.bookmarked}">
+                <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"
+                   value="${record.bookmarked}"
+                   onclick="jQuery('#${entityCode}Record${record.id}').load('generics/quickBookmark/${entityCode}-${record.id}')">
+                    <span class="icon-star-gm"></span>
+                </a>
+            </g:if>
+
+            <g:if test="${record.bookmarked}">
+                <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"
+                   value="${record.bookmarked}"
+                   onclick="jQuery('#${entityCode}Record${record.id}').load('generics/quickBookmark/${entityCode}-${record.id}')">
+                    <span class="icon-starred-gm"></span>
+                </a>
+
+            </g:if>
+        </g:if>
+
+    </td>
 
 </tr>
 

@@ -353,15 +353,25 @@
 
         <g:if test="${fields.contains('entity')}">
             <td>
-            <g:textField id="entity" name="entity" placehoder="Panel" style="width: 50px;" value="${record?.entity}"/>
+            <g:textField id="entity" name="entity" placeholder="Panel" style="width: 50px;" value="${record?.entity}"/>
             </td>
         </g:if>
 
+        <g:if test="${fields.contains('module')}">
+            <td>
+            <g:textField id="module" name="module" placeholder="Module" style="width: 50px;" value="${record?.module}"/>
+            </td>
+        </g:if>
 
+        <g:if test="${fields.contains('prefix')}">
+            <td>
+            <g:textField id="prefix" name="prefix" placeholder="Prefix" style="width: 150px;" value="${record?.prefix}"/>
+            </td>
+        </g:if>
 
         <g:if test="${fields.contains('priority')}">
           <td>
-            p<g:select name="priority" placehoder="Priority" style="width: 50px;"
+            p<g:select name="priority" placeholder="Priority" style="width: 50px;"
                        from="${[1, 2, 3, 4]}"
                        value="${record?.priority}"/>
           </td>
@@ -507,6 +517,11 @@
       <g:if test="${fields.contains('captureIsbn')}">
         <td>    <g:checkBox id="captureIsbn" name="captureIsbn" value="${record?.captureIsbn}"
                         style="width: 15px;"/> Capture ISBN in file names?
+        </td>
+        </g:if>
+   <g:if test="${fields.contains('multiLine')}">
+        <td>    <g:checkBox id="multiLine" name="multiLine" value="${record?.multiLine}"
+                        style="width: 15px;"/> MultiLine
         </td>
         </g:if>
 

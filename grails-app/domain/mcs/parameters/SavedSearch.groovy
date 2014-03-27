@@ -24,6 +24,7 @@ import mcs.*
       import cmn.*
       import grails.converters.*
       import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
+import security.Role
       import java.text.SimpleDateFormat
     
 
@@ -50,10 +51,12 @@ class SavedSearch implements Comparable {  // entity id = 451
 
     String style
 
+    Role role
 
 
 
   String entity
+  String panel
     String orderNumber
 
     Boolean onHomepage = false

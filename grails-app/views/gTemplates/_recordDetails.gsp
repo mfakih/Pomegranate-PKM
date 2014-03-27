@@ -58,8 +58,8 @@
 
 
                    <div id="publish${record.id}" style="display: inline;  margin-left: 10px;">
-
-                       <g:if test="${'WNJ'.contains(entityCode)}">
+<!--todo-->
+                       <g:if test="${'N'.contains(entityCode)}">
                            <div id="postResult${record.id}" style="display: inline">
                                <g:if test="${record.blog?.code}">
                                <g:remoteLink controller="generics" action="publish" id="${record.id}"
@@ -437,68 +437,29 @@
 
 
 
-<table style="border: 0px solid; vertical-align: top; border-collapse: collapse; width: 99%" border="0">
-<tr>
-<td style="vertical-align: top; width: 75%">
-
-%{--<g:if test="${'B'.contains(record.entityCode())}">--}%
-%{--<b>Description</b>--}%
-%{--<br/>--}%
-%{----}%
-
-    <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
 
 
 
 
 
-%{--</g:if>--}%
-%{--<br/>--}%
 
 
-            <g:if test="${'R'.contains(record.entityCode())}">
-                <div style="font-family: tahoma; line-height: 20px; font-size: 14px; margin: 5px;">
-                    <g:if test="${record.highlights}">
-                        <i style="color: #48802C">
-                            ${record.highlights?.replaceAll('\n', '<br/>')}
-                        </i>
-                        <br/>
-                    </g:if>
-                    <g:if test="${record.comments}">
-                        <br/>
-                        <i style="color: #1d806f">${record.comments?.replaceAll('\n', '<br/>')}</i>
-                    %{--<br/><hr/><br/>--}%
-                        <br/><hr/><br/>
-                    </g:if>
-                    <g:if test="${record.fullText}">
-                        <div class="${record.language == 'ar' ? 'arabicText' : ''}">
-                            ${record.fullText?.replaceAll('\n', '<br/>')}
+
+
                         </div>
-                    </g:if>
-                </div>
-            </g:if>
-        </div>
-
-</td>
-<td style="vertical-align: top;">
-
-    <div style="display: inline; margin: 1px;">
-
-        %{--&nbsp; <g:render template="/tag/tags" model="[instance: record, entity: record.entityCode()]"/>--}%
-
-    </div>
 
 
 
-</td>
-</tr>
-</table>
+<g:render template="/indexCard/add" model="[recordId: id, recordEntityCode: entityCode]"/>
 
 
 
 
 
-</div>
+
+
+
+
 
 
 <div id="relationshipRegion${record.entityCode()}${record.id}">

@@ -263,7 +263,7 @@
         &
     </g:remoteLink><span id="quickEditBlog${record.id}"><span>${record.blog?.code ? record.blog?.code : '...'}</span> </span>
 </g:if>
-<g:if test="${'JWN'.contains(entityCode)}">
+<g:if test="${'N'.contains(entityCode)}">
     <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
                   params="[entityCode: entityCode, field: 'pomegranate',
                           valueId: (record.pomegranate?.id ?: null), updateDiv: 'quickEditpomegranate' + record.id]"

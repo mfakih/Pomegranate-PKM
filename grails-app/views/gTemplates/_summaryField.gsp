@@ -357,16 +357,7 @@
     </g:if>
 </g:if>
 
-<g:if test="${record.class.declaredFields.name.contains('status')}">
-<span style="${record.status?.style} ; border: 0.5px solid; float: right; border-radius: 3px; padding: 1px;">
-    ${record.status?.name}
-</span>
-    </g:if>
-<g:if test="${record.class.declaredFields.name.contains('type')}">
-<span style="${record.type?.style} ; border: 0.5px solid; float: right; border-radius: 3px; padding: 1px;">
-    ${record.type?.name}
-</span>
-    </g:if>
+
 
 <span style="float: right;">
     <g:if test="${record.class.declaredFields.name.contains('orderInCourse')}">
@@ -388,4 +379,15 @@
     &nbsp; <g:render template="/tag/peopleTags" model="[instance: record, entity: entityCode]"/>
 </g:if>
 
+    <br/>
+<g:if test="${record.class.declaredFields.name.contains('status')}">
+    <span style="${record.status?.style} ; border: 0.5px solid;  border-radius: 3px; padding: 1px; margin-right: 3px;">
+        ${record.status?.name}
+    </span>
+</g:if>
+<g:if test="${record.class.declaredFields.name.contains('type')}">
+    <span style="${record.type?.style} ; border: 0.5px solid;  border-radius: 3px;  padding: 1px;  margin-right: 3px;">
+        ${record.type?.name}
+    </span>
+</g:if>
 </g:else>

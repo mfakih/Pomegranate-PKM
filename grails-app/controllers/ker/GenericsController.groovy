@@ -23,6 +23,7 @@ import app.IndexCard
 import app.Indicator
 import app.PaymentCategory
 import app.Tag
+import app.parameters.CommandPrefix
 import app.parameters.Pomegranate
 import app.parameters.WordSource
 import app.parameters.ResourceType
@@ -177,6 +178,19 @@ class GenericsController {
     }
 
     // this now the used action dispatcher
+    def batchAddPreprocessor(Long commandPrefix, String block) {
+        println 'pre ' + commandPrefix
+        def prefixRecord = CommandPrefix.get(commandPrefix)
+        def prefix = prefixRecord.prefix ?: ''
+        println 'pre ' + prefix
+        if (prefixRecord.multiLine){
+             block.eachLine(){
+                 batchAdd(prefix + block.trim())
+             }
+        }
+        else
+        batchAdd(prefix + block.trim())
+    }
     def batchAdd(String block) {
         def metaType = block.trim().split(/[ ]+/)[0]
         if (metaType == 'A') {
@@ -1595,7 +1609,7 @@ def addContactToRecord() {
     }
 
     def findRecords(String input) {
-
+           println ' input ' + input
         if (input.contains(' {')) {
 
             def groupBy = input.split(/ \{/)[1]
@@ -3009,7 +3023,7 @@ def addContactToRecord() {
 
     def executeSavedSearch(Long id) {
 
-        render(template: '/savedSearch/actions', model: [recordId: id])
+//        render(template: '/savedSearch/actions', model: [recordId: id])
 
         def savedSearch = SavedSearch.get(id)
         if (savedSearch.queryType == 'random' || params.reportType == 'random') {
@@ -3037,7 +3051,7 @@ def addContactToRecord() {
                         groups = Department.list([sort: 'code'])
                         break
                     case 'course':
-                        groups = Course.list([sort: 'title'])
+                        groups = Course.list([sort: 'summary'])
                         break
                     case 'type':
                         if (input.contains('from mcs.Goal')) {

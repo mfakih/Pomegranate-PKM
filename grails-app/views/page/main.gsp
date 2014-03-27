@@ -141,7 +141,7 @@
         west__initClosed: false,
         west__initHidden: false,
         east__resizable: true,
-        east__size: "auto",
+//        east__size: "auto",
         east__initClosed: false,
         east__initHidden: false
     };
@@ -351,14 +351,14 @@
             , north__togglerLength_closed: '100%'	// toggle-button is full-width of resizer-bar
             , north__spacing_closed: 20		// big resizer-bar when open (zero height)
             , north__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
-            , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+            , south__resizable: true	// OVERRIDE the pane-default of 'resizable=true'
             , south__spacing_open: 0		// no resizer-bar when open (zero height)
             , south__spacing_closed: 20		// big resizer-bar when open (zero height)
 
             //	some pane-size settings
             , west__minSize: 100, east__minSize: 100, east__maxSize: .5 // 50% of layout width
             , west__size: 230
-            , east__size: 230
+//            , east__size: 230
             , center__minWidth: 100
                     ,east__resizable: true
                     ,west__resizable: true
@@ -391,7 +391,8 @@
                     center__paneSelector: ".inner-center",
 //                    west__paneSelector: ".inner-west",
 //                    east__paneSelector: ".inner-east",
-//                    north__paneSelector: ".inner-north",
+                    south__paneSelector: ".inner-southInner",
+                    south__resizable: true,
 //                    west__size: 75, east__size: 75,
 //                    north_size: 'auto',
                     spacing_open: 8  // ALL panes

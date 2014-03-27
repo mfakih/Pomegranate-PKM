@@ -476,10 +476,10 @@
 </div>
 
 
-<g:if test="${ker.OperationController.getPath('twoPanels') == 'off' || ker.OperationController.getPath('twoPanels') == null}">
+%{--<g:if test="${ker.OperationController.getPath('twoPanels') == 'off' || ker.OperationController.getPath('twoPanels') == null}">--}%
 
     <g:render template="/layouts/east"/>
-   </g:if>
+   %{--</g:if>--}%
 
 <script type="text/javascript">
 

@@ -43,6 +43,7 @@ class Journal implements Comparable {  // entity id = 125
     Integer priority = 2
 //  String title
 
+    Integer weight
     String summary
     String description
 

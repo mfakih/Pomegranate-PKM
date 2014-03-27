@@ -141,7 +141,9 @@
 <g:each in="${[
         ['app.Tag', 'Tag'],
         ['cmn.Setting', 'Setting'],
-        ['mcs.parameters.SavedSearch', 'Saved search']]}" var="i">
+        ['mcs.parameters.SavedSearch', 'Saved search'],
+        ['app.parameters.CommandPrefix', 'Command prefix']
+]}" var="i">
 
     <li>
         <g:remoteLink controller="generics" action="getAddForm"

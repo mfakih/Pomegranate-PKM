@@ -18,20 +18,12 @@
 %{--<hr/>--}%
 </g:if>
 
-<g:if test="${queryKey}">
 
 
-    <div class="paginateButtons" style="display:inline !important;">
-        <util:remotePaginate controller="generics" action="findRecords" total="${totalHits}"
-                             params="[input: queryKey]" update="centralArea"/>
-    </div>
-%{--<hr/>--}%
-</g:if>
    <g:if test="${request.action != 'main' && list.size() > 4}">
-
 <a id="selectAll" class="fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
    title="Edit box">
-    <span class="ui-icon ui-icon-arrow-1-s"></span> Select all
+    <span class="ui-icon ui-icon-arrow-1-s"></span>
 </a>
 
 
@@ -40,7 +32,7 @@
 <a id="deselectAll"
    class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
    title="Edit box">
-    <span class="ui-icon ui-icon-arrow-1-n"></span> Deselect all
+    <span class="ui-icon ui-icon-arrow-1-n"></span>
 </a>
 
 &nbsp;
@@ -50,37 +42,38 @@
               class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
               before="if(!confirm('Are you sure you want to deselect all selected records from all current and previous listings? Click on Selected records to see your selections')) return false"
               title="Selected records">
-    <span class="ui-icon ui-icon-arrow-1-n"></span> Clear all selections
+    <span class="ui-icon ui-icon-arrow-1-n"></span> Clear
 </g:remoteLink>
-<br/>
 <br/>
    </g:if>
 
 %{--ToDo fix select all<input type="checkbox" id="selectAll" value="selectAll"> Select / Deselect All<br/><br/>--}%
 
-<g:if test="${ssId && searchResultsTotal}">
+%{--<g:if test="${ssId && searchResultsTotal}">--}%
 
 
 
-    <div class="paginateButtons" style="display:inline !important;">
-        <util:remotePaginate controller="generics" action="executeSavedSearch" total="${searchResultsTotal}"
-                             params="[id: ssId]" update="centralArea"/>
-    </div>
-    <br/>
-</g:if>
+    %{--<div class="paginateButtons" style="display:inline !important;">--}%
+        %{--<util:remotePaginate controller="generics" action="executeSavedSearch" total="${searchResultsTotal}"--}%
+                             %{--maxsteps="5"--}%
+                             %{--params="[id: ssId]" update="centralArea"/>--}%
+    %{--</div>--}%
+    %{--<br/>--}%
+%{--</g:if>--}%
 
 
 
-<g:elseif test="${searchResultsTotal}">
+%{--<g:elseif test="${searchResultsTotal}">--}%
 
 
 
-    <div class="paginateButtons" style="display:inline !important;">
-        <util:remotePaginate controller="generics" action="hqlSearch" total="${searchResultsTotal}"
-                             update="centralArea"/>
-    </div>
-    <br/>
-</g:elseif>
+    %{--<div class="paginateButtons" style="display:inline !important;">--}%
+        %{--<util:remotePaginate controller="generics" action="hqlSearch" total="${searchResultsTotal}"--}%
+                             %{--maxsteps="5"--}%
+                             %{--update="centralArea"/>--}%
+    %{--</div>--}%
+    %{--<br/>--}%
+%{--</g:elseif>--}%
 
 
 
@@ -99,7 +92,8 @@
     <br/>
     <br/> <div class="paginateButtons" style="display:inline !important;">
         <util:remotePaginate controller="generics" action="executeSavedSearch" total="${searchResultsTotal}"
-                             params="[id: ssId]" update="centralArea"/>
+                             maxsteps="5"
+                             params="[id: ssId, maxsteps: 5]" update="centralArea"/>
     </div>
     <br/>
 </g:if>
@@ -110,11 +104,27 @@
     <br/>
     <br/>  <div class="paginateButtons" style="display:inline !important;">
         <util:remotePaginate controller="generics" action="hqlSearch" total="${searchResultsTotal}"
+
                              update="centralArea"/>
     </div>
     <br/>
 </g:elseif>
 
+
+<g:if test="${queryKey}">
+
+
+
+
+    <div class="paginateButtons" style="display:inline !important;">
+        <util:remotePaginate controller="generics" action="findRecords" total="${totalHits}"
+                             maxsteps="5"
+                             params="[input: queryKey]" update="centralArea"/>
+    </div>
+
+
+%{--<hr/>--}%
+</g:if>
 
 
 <sec:ifLoggedIn>

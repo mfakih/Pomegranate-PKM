@@ -1,7 +1,15 @@
 <%@ page import="mcs.parameters.SavedSearch; mcs.Task" %>
 <g:if test="${!params.disableSavedSearch}">
     <g:each in="${SavedSearch.findAllByEntityLike(entity, [sort: 'summary'])}" var="i">
-        <li>
+
+            <g:remoteLink controller="generics" action="getAddForm" id="${i.id}"
+                          params="[entityController: 'mcs.parameters.SavedSearch',
+                                  updateRegion: 'centralArea',
+                                  finalRegion: 'centralArea']"
+                          update="centralArea"
+                          title="Edit">
+                *
+            </g:remoteLink>
             <g:set var="split" value="\\{"/>
 
             <g:set var="count"
@@ -27,7 +35,7 @@
             </g:if>
 
 
-        </li>
+       <br/>
 
     </g:each>
 </g:if>

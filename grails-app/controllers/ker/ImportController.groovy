@@ -704,4 +704,30 @@ def importLocalFiles() {
         r.imageUrl = article.topImage().getImageSrc()
         render(template: '/gTemplates/recordSummary', model: [record: r, expandedView: true])
     }
+    def upload = {
+//        if (new File(CH.config.data.location + '/' + params.name).exists())
+//            new File(CH.config.data.location + '/' + params.name).renameTo(
+//                    CH.config.data.location + '/' + params.name + '-' + new Date().format('dd.MM.yyyy-hh.mm'))
+        def status = ''
+        try {
+            def a = new IndexCard([recordId: params.recordId, entityCode: params.entityCode, fileName: params.qqfile])
+            a.type = WritingType.findByCode('doc')
+            a.summary = 'Doc'//params.qqfile//'File'
+            a.description = '?'
+            a.save(flush: true)
+            new File(OperationController.getPath('module.N.sandbox.path') + '/' + a.id) << request.inputStream
+            if (new File(OperationController.getPath('module.N.sandbox.path') + '/' + a.id).exists()){
+                status = 'File uploaded successfully'
+            }
+        } catch (Exception e) {
+            println 'problem uploading the file ' + params.qqfile
+            status = 'File could not be saved!'
+            e.printStackTrace()
+        }
+//        render(contentType: "text/json") {
+//            [status]
+//        }
+        //render(text: [success: true] as JSON, contentType: 'text/json')
+        render(template: '/layouts/achtung', model: [message: 'Document deleted'])
+    }
 } // end of class

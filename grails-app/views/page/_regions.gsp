@@ -20,21 +20,21 @@
     %{--<button class="south-toggler">Hide</button>--}%
 </div>
 
-<g:if test="${ker.OperationController.getPath('twoPanels') == 'on'}">
+
     <div class="ui-layout-east eastRegion">
 
-        <g:render template="/layouts/east"/>
-
+        <div id="3rdPanel"></div>
+        %{--<g:if test="${ker.OperationController.getPath('twoPanels') == 'on'}">--}%
+        %{--<g:render template="/layouts/east"/>--}%
+    %{--</g:if>--}%
     </div>
-</g:if>
+
 
 
 <div class="outer-center">
 
     <div class="middle-center">
 
-        %{--<div class="ui-layout-north commandBarRegion" style="">--}%
-        %{--</div>--}%
 
         <div class="inner-center">
             <div id="spinner2" style="display:none; z-index: 10000 !important">
@@ -74,6 +74,9 @@
 
         </div>
 
+        %{--<div class="inner-southInner" style="">--}%
+%{----}%
+        %{--</div>--}%
 
 
 
