@@ -83,9 +83,13 @@
 
     <g:if test="${fields.contains('title')}">
         <td colspan="3">
-            <g:textField placeholder="Title" name="title" value="${record?.title}" style="width: 150px;"/>
+            <g:textField placeholder="Title" name="title" value="${record?.title}" style="width: 95%;"/>
         </td>
     </g:if>
+
+</tr>
+<tr>
+
     <g:if test="${fields.contains('isbn')}">
         <td colspan="1">
             <g:textField placeholder="ISBN" name="isbn" value="${record?.isbn}" style="width: 150px;"/>
@@ -111,7 +115,7 @@
 
 
     <g:if test="${fields.contains('query')}">
-        <td colspan="4">
+        <td colspan="2">
             <g:textField placeholder="Query" rows="5" name="query" value="${record?.query}"
                          style="width: 95%;"/>
 
@@ -165,7 +169,8 @@
                         style="width: 95%; height: 100px;"/>
         </td>
     </g:if>
-
+    </tr>
+    <tr>
     <g:if test="${fields.contains('shortDescription')}">
         <td colspan="2">
             <g:textArea cols="80" rows="5" placeholder="Short description for presentation" name="shortDescription"
@@ -208,7 +213,8 @@
         </td>
     </g:if>
 
-
+</tr>
+<tr>
         <g:if test="${fields.contains('source')}">
             <td>
             <g:select name="source.id" class="ui-corner-all"
@@ -278,6 +284,8 @@
                          value="${record?.newFilesPath ?: null}"/>
         </td>
     </g:if>
+</tr>
+<tr>
     <g:if test="${fields.contains('repositoryPath')}">
         <td>
             <g:textField placeholder="Path of its location in the repository" id="repositoryPath" name="repositoryPath" style="width: 200px"
@@ -300,6 +308,7 @@
 
 <g:if test="${fields.contains('blog')}">
         <td>
+
             <g:select name="blog.id" style="width: 150px;"
                       from="${Blog.list([sort: 'code'])}" optionKey="id" optionValue="summary"
                       value="${record?.blog?.id}"
@@ -307,6 +316,8 @@
         </td>
     </g:if>
 
+</tr>
+<tr>
 
 
 
@@ -347,7 +358,8 @@
 </td>
         </g:if>
 
-
+</tr>
+<tr>
 
 
 
@@ -369,6 +381,8 @@
             </td>
         </g:if>
 
+
+
         <g:if test="${fields.contains('priority')}">
           <td>
             p<g:select name="priority" placeholder="Priority" style="width: 50px;"
@@ -377,7 +391,8 @@
           </td>
         </g:if>
 
-
+</tr>
+<tr>
 
 
 
@@ -412,7 +427,8 @@
         </g:if>
 
 
-
+</tr>
+<tr>
 
 
         <g:if test="${fields.contains('pages')}">
@@ -422,7 +438,8 @@
            </td>
         </g:if>
 
-
+</tr>
+<tr>
 
 
         <g:if test="${fields.contains('language')}">
@@ -483,7 +500,8 @@
         </g:if>
 
 
-
+</tr>
+<tr>
 
 
         <g:if test="${fields.contains('isDayChallenge')}">
@@ -501,13 +519,14 @@
     </td>
       </g:if>
 
+</tr>
+<tr>
       <g:if test="${fields.contains('bookmarked')}">
     <td>
         <g:checkBox id="bookmarked" name="bookmarked" value="${record?.bookmarked}"
                         style="width: 15px;"/> Bookmarked?
     </td>
       </g:if>
-
 
         %{--<g:if test="${fields.contains('onHomepage')}">--}%
         %{--<td>    <g:checkBox id="onHomepage" name="onHomepage" value="${record?.onHomepage}"--}%
@@ -536,8 +555,6 @@
             </td>
         </g:if>
 
-
-
     <g:if test="${fields.contains('bibEntry')}">
         <td colspan="1">
             <g:textArea cols="80" rows="5" id="bibEntry" placeholder="bibEntry" name="bibEntry"
@@ -545,6 +562,7 @@
                         value="${record?.bibEntry}"/>
         </td>
     </g:if>
+
      <g:if test="${fields.contains('notes')}">
         <td colspan="1">
             <g:textArea cols="80" rows="5" id="notes" placeholder="Notes" name="notes"
@@ -560,21 +578,21 @@
 
  <g:if test="${fields.contains('citationText')}">
      <tr>
-    <td colspan="4">
+    <td colspan="2">
         <g:textField placeholder="citationText" rows="5" name="citationText" value="${record?.citationText}"
                      style="width: 95%;"/>
     </td>
 
      </tr>
      <tr>
-    <td colspan="4">
+    <td colspan="2">
         <g:textField placeholder="citationHtml" rows="5" name="citationHtml" value="${record?.citationHtml}"
                      style="width: 95%;"/>
     </td>
 
      </tr>
      <tr>
-    <td colspan="4">
+    <td colspan="2">
         <g:textField placeholder="citationAsciicode" rows="5" name="citationAsciicode" value="${record?.citationAsciicode}"
                      style="width: 95%;"/>
     </td>

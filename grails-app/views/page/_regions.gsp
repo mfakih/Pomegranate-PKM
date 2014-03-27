@@ -23,7 +23,9 @@
 
     <div class="ui-layout-east eastRegion">
 
+
         <div id="3rdPanel"></div>
+
         %{--<g:if test="${ker.OperationController.getPath('twoPanels') == 'on'}">--}%
         %{--<g:render template="/layouts/east"/>--}%
     %{--</g:if>--}%

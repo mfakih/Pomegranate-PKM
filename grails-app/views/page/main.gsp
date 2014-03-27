@@ -455,5 +455,7 @@
     document.location = 'page/mobile'
     </g:javascript>
 </browser:isMobile>
+
+
 </body>
 </html>

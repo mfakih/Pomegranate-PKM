@@ -164,7 +164,6 @@ class ImportController {
     }
 
     def importSmartFilesAjax() {
-        println 'Current processing exe: ' + params.qqfile
         try {
             try {
                 java.util.regex.Matcher matcher = params.qqfile =~ /(?i)([\S]) ([\S\s ;-_]*)\.([\S]*)/
@@ -409,33 +408,6 @@ class ImportController {
 //         searchableService.reindex()
         render 'Your writings have been committed'
     }
-
-
-    def upload() {
-
-//        if (new File(CH.config.data.location + '/' + params.name).exists())
-//            new File(CH.config.data.location + '/' + params.name).renameTo(
-//                    CH.config.data.location + '/' + params.name + '-' + new Date().format('dd.MM.yyyy-hh.mm'))
-
-        def status = ''
-//        try {
-//
-//            new File(CH.config.data.location + '/' + a.id) << request.inputStream
-//
-//            if (new File(CH.config.data.location + '/' + a.id).exists())
-//                status = 'File uploaded successfully'
-//        } catch (Exception e) {
-//            status = 'File could not be saved!'
-//            println e.printStackTrace()
-//        }
-//        render(contentType: "text/json") {
-//            [status]
-//        }
-
-        return render(text: [success: true] as JSON, contentType: 'text/json')
-
-    }
-
 
     def chooseImportType() {
         session['import-type'] = params.id
@@ -687,6 +659,7 @@ def importLocalFiles() {
     def scrapHtmlPage (){
         def r = Book.get(params.id)
         String url = r.url
+
         Configuration configuration = new Configuration()
         configuration.setMinBytesForImages(4500)
         configuration.setLocalStoragePath("/tmp/goose")
@@ -694,6 +667,7 @@ def importLocalFiles() {
         configuration.setEnableImageFetching(false);
      //   configuration.setImagemagickConvertPath("/opt/local/bin/convert");
         Goose goose = new Goose(configuration);
+
         Article article = goose.extractContent(url)
         r.fullText = article.rawHtml()
         println ('text ' + article.rawHtml())
@@ -703,11 +677,17 @@ def importLocalFiles() {
         r.textTags = article.metaKeywords()
         r.imageUrl = article.topImage().getImageSrc()
         render(template: '/gTemplates/recordSummary', model: [record: r, expandedView: true])
+
     }
-    def upload = {
+
+
+    def upload () {
+
+
 //        if (new File(CH.config.data.location + '/' + params.name).exists())
 //            new File(CH.config.data.location + '/' + params.name).renameTo(
 //                    CH.config.data.location + '/' + params.name + '-' + new Date().format('dd.MM.yyyy-hh.mm'))
+
         def status = ''
         try {
             def a = new IndexCard([recordId: params.recordId, entityCode: params.entityCode, fileName: params.qqfile])
@@ -715,9 +695,12 @@ def importLocalFiles() {
             a.summary = 'Doc'//params.qqfile//'File'
             a.description = '?'
             a.save(flush: true)
-            new File(OperationController.getPath('module.N.sandbox.path') + '/' + a.id) << request.inputStream
-            if (new File(OperationController.getPath('module.N.sandbox.path') + '/' + a.id).exists()){
-                status = 'File uploaded successfully'
+            println 'here ???' + a.dump()
+            new File(OperationController.getPath('module.sandbox.N.path') + '/' + a.id) << request.inputStream
+
+            if (new File(OperationController.getPath('module.sandbox.N.path') + '/' + a.id).exists()){
+                return render(text: [id: a.id, entityCode: a.entityCode()] as JSON, contentType: 'text/json')
+
             }
         } catch (Exception e) {
             println 'problem uploading the file ' + params.qqfile
@@ -727,7 +710,11 @@ def importLocalFiles() {
 //        render(contentType: "text/json") {
 //            [status]
 //        }
+
         //render(text: [success: true] as JSON, contentType: 'text/json')
-        render(template: '/layouts/achtung', model: [message: 'Document deleted'])
+//        render(template: '/layouts/achtung', model: [message: 'Document uploaded'])
+
     }
+
+
 } // end of class

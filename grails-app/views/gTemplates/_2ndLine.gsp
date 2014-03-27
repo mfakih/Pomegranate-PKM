@@ -263,6 +263,9 @@
         &
     </g:remoteLink><span id="quickEditBlog${record.id}"><span>${record.blog?.code ? record.blog?.code : '...'}</span> </span>
 </g:if>
+
+
+
 <g:if test="${'N'.contains(entityCode)}">
     <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
                   params="[entityCode: entityCode, field: 'pomegranate',
@@ -406,25 +409,7 @@
 </g:if>
 
 
-<g:if test="${'TPGRE'.contains(entityCode)}">
-    <td class="actionTd">
 
-
-        <g:remoteLink controller="generics" action="markCompleted" id="${record.id}"
-                      params="[entityCode: entityCode]"
-                      class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-                      update="${entityCode}Record${record.id}"
-                      title="Mark completed">
-            <span class="ui-icon ui-icon-check"></span>
-
-
-
-        </g:remoteLink>
-
-
-
-    </td>
-</g:if>
 
 
 <g:if test="${'CW'.contains(entityCode)}">
@@ -462,6 +447,7 @@
         <span class="ui-icon ui-icon-extlink"></span>
 
     </g:link>
+
 </td>
 
 

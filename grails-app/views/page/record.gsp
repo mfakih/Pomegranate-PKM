@@ -218,12 +218,18 @@
                               title="Convert to HTML">
                     Combine writings in HTML format (new tab)
                 </g:link>
+                
+                
+                
                     <g:link url="[controller: 'export', action: 'generateCourseWritingsAsIs', id: record.id]"
                               class="actionLink"
                     target="_blank"
                               title="Convert to HTML">
                     Combine writings as is (new tab)
                 </g:link>
+                
+                
+                
 <br/>
 <br/>
   <g:link url="[controller: 'export', action: 'generateCoursePresentation', id: record.id]"

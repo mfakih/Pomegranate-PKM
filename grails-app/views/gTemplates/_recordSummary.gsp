@@ -85,6 +85,13 @@
                   title="Edit">
         <span class="ui-icon ui-icon-pencil"></span>
     </g:remoteLink>
+
+%{--<g:remoteLink controller="generics" action="getAddForm"--}%
+              %{--params="[entityController: i.controller, updateRegion: 'centralArea']"--}%
+              %{--update="centralArea">--}%
+    %{--+ note--}%
+    %{--</g:remoteLink>--}%
+
 </td>
 <td class="actionTd">
 
@@ -154,6 +161,19 @@
            onclick="jQuery('#below${entityCode}Record${record.id}').html('')">&chi;</a-->
 
     </td>
+
+    <g:if test="${'TPGRE'.contains(entityCode)}">
+        <td class="actionTd">
+            <g:remoteLink controller="generics" action="markCompleted" id="${record.id}"
+                          params="[entityCode: entityCode]"
+                          class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                          update="${entityCode}Record${record.id}"
+                          title="Mark completed">
+                <span class="ui-icon ui-icon-check"></span>
+            </g:remoteLink>
+
+        </td>
+    </g:if>
 
     <td class="actionTd">
         <g:if test="${record.class.declaredFields.name.contains('bookmarked')}">

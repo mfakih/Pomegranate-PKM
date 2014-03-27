@@ -10,10 +10,12 @@
                           title="Edit">
                 *
             </g:remoteLink>
+
             <g:set var="split" value="\\{"/>
 
             <g:set var="count"
                    value="${i.countQuery ? Task.executeQuery(i.countQuery)[0] : null}"/>
+
 
             <g:remoteLink controller="generics" action="executeSavedSearch"
                           style=" color: #${count > 0 ? '003366' : (count == 0 ? 'ccc' : 'aaa')}"

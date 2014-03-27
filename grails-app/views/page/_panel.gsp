@@ -31,41 +31,43 @@
         <uploader:uploader id="yourUploaderId${record.id}"
                            url="${[controller: 'import', action: 'upload']}"
                            params="${[recordId: record.id, entityCode: record.entityCode()]}">
-            <uploader:onComplete>
-            %{--jQuery('#notificationArea').html(responseJSON[0]);--}%
-                jQuery('#notificationArea').html('Ok');
-            </uploader:onComplete>
+                <uploader:onComplete>
+                    jQuery('#subUploadInPanel').load('generics/showSummary/' + responseJSON.id + '?entityCode=' +  responseJSON.entityCode)
+                </uploader:onComplete>
             Attach...
         </uploader:uploader>
     </div>
-</g:if>
 
-<br/>
-<br/>
+    <div id="subUploadInPanel"></div>
+</g:if>
 <g:if test="${record.entityCode() == 'R'}">
-    <h2>Book page</h2>
+    <h2>Resource</h2>
+    ${record.title}
 </g:if>
 
 <g:if test="${record.entityCode() == 'G'}">
-    <h2>Goal page</h2>
+    <h2>Goal</h2>
+    ${record.summary}
+
 </g:if>
 
 <g:if test="${record.entityCode() == 'W'}">
-    <h2>Writing page</h2>
+    <h2>Writing</h2>
+    ${record.summary}
 </g:if>
 
 
-        <g:if test="${record.class.declaredFields.name.contains('shortDescription')}">
-            <span style="font-size: 12px; font-style: italic; color: #4A5C69">
-                <b>Summary:</b> ${record?.shortDescription?.replaceAll('\n', '<br/>')}
-            </span>
-        </g:if>
+        %{--<g:if test="${record.class.declaredFields.name.contains('shortDescription')}">--}%
+            %{--<span style="font-size: 12px; font-style: italic; color: #4A5C69">--}%
+                %{--<b>Summary:</b> ${record?.shortDescription?.replaceAll('\n', '<br/>')}--}%
+            %{--</span>--}%
+        %{--</g:if>--}%
 
 
 
         <g:if test="${record.class.declaredFields.name.contains('description')}">
 
-            <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
+            <div style="padding: 3px; font-size: 13px; font-family: georgia; margin: 5px; line-height: 20px; text-align: justify">
                 <span id="descriptionBloc${record.id}">
                     ${record.description?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}
                     %{--${?.encodeAsHTML()?.replaceAll('\n', '<br/>')}--}%
@@ -94,8 +96,7 @@
                     Combine writings in HTML format (new tab)
                 </g:link>
                 
-                
-                
+              <br/>
                     <g:link url="[controller: 'export', action: 'generateCourseWritingsAsIs', id: record.id]"
                               class="actionLink"
                     target="_blank"
@@ -131,8 +132,31 @@
     %{--direction: ${record?.source?.language == 'ar' ? 'rtl' : 'ltr'}; text-align: ${record?.source?.language == 'ar' ? 'right' : 'left'}--}%
     %{--todo--}%
 
-    </div>
-<g:if test="${record.entityCode() == 'R'}">
+    %{--</div>--}%
+
+
+
+
+
+%{--<g:each in="${app.IndexCard.findAllByEntityCodeAndRecordId(entityCode, record.id)}" var="c">--}%
+    %{--<g:render template="/gTemplates/box" model="[record: c]"/>--}%
+%{--</g:each>--}%
+
+%{--<g:if test="${'R'.contains(record.entityCode())}">--}%
+    %{--<g:each in="${app.IndexCard.findAllByBook(record)}" var="c">--}%
+        %{--<g:render template="/gTemplates/box" model="[record: c]"/>--}%
+    %{--</g:each>--}%
+%{--</g:if>--}%
+%{--<g:if test="${'W'.contains(record.entityCode())}">--}%
+    %{--<g:each in="${app.IndexCard.findAllByWriting(record)}" var="c">--}%
+        %{--<g:render template="/gTemplates/box" model="[record: c]"/>--}%
+    %{--</g:each>--}%
+%{--</g:if>--}%
+
+</div>
+
+
+<g:if test="${record.entityCode() == 'todoR'}">
     <div id="type-4" style="">
 
         <g:if test="${'R'.contains(record.entityCode())}">
@@ -169,14 +193,18 @@
 
 
 
-
+            <g:if test="${record.notes}">
+                <br/>
+                <i style="color: #1d806f">${record.notes?.replaceAll('\n', '<br/>')}</i>
+                <br/><hr/><br/>
+            </g:if>
 
             %{--</g:if>--}%
             %{--<br/>--}%
 
 
                 <g:if test="${'R'.contains(record.entityCode())}">
-                    <div style="font-family: tahoma; line-height: 20px; font-size: 14px; margin: 5px;">
+                    <div style="font-family: tahoma; text-align: justify; line-height: 20px; font-size: 14px; margin: 5px;">
                         <g:if test="${record.highlights}">
                             <i style="color: #48802C">
                                 ${record.highlights?.replaceAll('\n', '<br/>')}
@@ -227,29 +255,41 @@
         </g:if>
 </div>
 
-<div id="type-5" style="">
-        <span id="commentArea${record.entityCode()}${record.id}" style="display: inline;  margin-left: 10px;">
+%{--<div id="type-5" style="">--}%
+        %{--<span id="commentArea${record.entityCode()}${record.id}" style="display: inline;  margin-left: 10px;">--}%
 
-            <h4>Notes</h4>
-            <g:each in="${app.IndexCard.findAllByEntityCodeAndRecordId(record.entityCode(), record.id)}" var="c">
-                <g:render template="/gTemplates/recordSummary" model="[record: c, expandedView: false]"/>
-            </g:each>
-            <g:if test="${'R'.contains(record.entityCode())}">
-                <g:each in="${app.IndexCard.findAllByBook(record)}" var="c">
-                    <g:render template="/gTemplates/recordSummary" model="[record: c]"/>
-                </g:each>
-            </g:if>
-        </span>
 
-    </div>
+        %{--</span>--}%
+
+    %{--</div>--}%
+
+
+
+<h4>Notes</h4>
+
+<div id="panelComments${entityCode}Record${record.id}">
+<g:render template="/indexCard/add" model="[recordId: record.id, recordEntityCode: entityCode]"/>
 
 
 <div id="type-7" style="">
 
-<g:each in="${DataChangeAudit.findAllByEntityIdAndRecordId(144,record.id, [sort: 'dateCreated', order: 'desc'])}" var="c">
-<br/>
-<br/>
-   ${c.userName}: ${c.datePerformed}     ${c.operationType}<br/>
+    todo
+%{--<g:each in="${DataChangeAudit.findAllByEntityIdAndRecordId(144,record.id, [sort: 'dateCreated', order: 'desc'])}" var="c">--}%
+%{--<br/>--}%
+%{--<br/>--}%
+   %{--${c.userName}: ${c.datePerformed}     ${c.operationType}<br/>--}%
+      todo
+
+
+
+
+
+
+
+
+
+
+
 %{--<g:each in="${c.operationDetails.split(';;')}" var="f">--}%
     %{--<g:if test="${c.operationType == 'Update'}">--}%
     %{--<b>${f.split(/\|\|/)[0]}:</b>--}%
@@ -261,7 +301,7 @@
      %{--</g:else>--}%
 %{--</g:each>--}%
 
-</g:each>
+%{--</g:each>--}%
 
 
 

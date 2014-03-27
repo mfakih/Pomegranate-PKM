@@ -803,5 +803,22 @@ puts "Hello, World!"
 
     }
 
+    def downloadNoteFile = {
+        def file = IndexCard.get(params.id)
+
+        if (new File(OperationController.getPath('module.sandbox.N.path') + '/' + file.id).exists()) {
+            response.setHeader("Content-disposition", "attachment; filename=\"${file.fileName}\"")
+            //   response.contentType = "application/vnd.ms-word"
+            response.outputStream << new FileInputStream(OperationController.getPath('module.sandbox.N.path')+ '/' + file.id)
+        }
+        else if (new File(OperationController.getPath('module.repository.N.path') + '/' + file.id).exists()) {
+            response.outputStream << new FileInputStream(OperationController.getPath('module.repository.N.path') + '/' + file.id)
+        }
+        else{
+            render "Document was not found."
+        }
+
+    }
+
 
 } // end of class

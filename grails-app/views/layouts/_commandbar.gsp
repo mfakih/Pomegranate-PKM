@@ -12,12 +12,25 @@
 
         <g:hiddenField name="sth2" value="${new java.util.Date()}"/>
         <table style="width: 98%; padding: 0px; margin: 0px;">
-            <td style=" padding: 0px; margin: 0px;">
+            <td style=" padding: 0px; margin: 0px; width: 70%">
+              Choose action:
                 <g:select name="commandPrefix"
                           from="${CommandPrefix.list()}" optionKey="id" optionValue="name"
-                          style="direction: ltr; text-align: left; display: inline;"
-                          onchange="jQuery('#quickAddTextField').placeholder('new one')"
+                          style="direction: ltr; text-align: left; display: inline; width: 150px;"
+                          onchange="jQuery('#quickAddTextField').val(jQuery.getJSON('generics/commandNotes?q=' + this.value))"
                           value=""/>
+
+                </td>
+        <td>
+            <g:submitButton name="batch" value="Execute"
+                            style="height: 2    0px; margin: 0px; width: 100px;"
+                            id="quickAddXcdSubmit"
+                            class="fg-button ui-widget ui-state-default"/>
+
+        </td>
+        </tr>
+        <tr>
+        <td colspan="2">
                 %{--(Add, update, search, assign records...) Type ? for more info--}%
                 <g:textArea cols="80" rows="5" name="block" id="quickAddTextField" value=""
                             autocomplete="off"
@@ -28,14 +41,10 @@
                             style="font-family: monospace; width:98%; height: 60px; background: #eeeeee; margin: 0px!important;"/>
 
             </td>
-            <td style="width: 25px !important ; padding: 0px; margin: 0px;">
+            %{--<td style="width: 25px !important ; padding: 0px; margin: 0px;">--}%
 
-                <g:submitButton name="batch" value="+"
-                                style="height: 60px; margin: 0px; width: 25px;"
-                                id="quickAddXcdSubmit"
-                                class="fg-button ui-widget ui-state-default"/>
 
-            </td>
+            %{--</td>--}%
         </table>
 
     </g:formRemote>

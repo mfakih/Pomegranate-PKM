@@ -6,7 +6,7 @@
 %{--<h4>Attach index card</h4> recordEntityCode != 'Bx' && recordEntityCode != 'Wx' &&  --}%
 <g:if test="${recordEntityCode != 'C'}">
 
-<g:formRemote name="save" url="[controller: 'indexCard', action: 'attach']" update="below${recordEntityCode}Record${recordId}" method="post"
+<g:formRemote name="save" url="[controller: 'indexCard', action: 'attach']" update="panelComments${recordEntityCode}Record${recordId}" method="post"
               onComplete="">
 
               
@@ -38,19 +38,19 @@
 <g:if test="${recordEntityCode && recordId}">
 
 <g:each in="${app.IndexCard.findAllByEntityCodeAndRecordId(recordEntityCode, recordId, [sort: 'dateCreated', order: 'desc'])}" var="c">
-    <g:render template="/gTemplates/recordSummary" model="[record: c]"/>
+    <g:render template="/gTemplates/box" model="[record: c]"/>
 </g:each>
 </g:if>
 
 <g:if test="${writingId && Writing.get(writingId) != null}">
 <g:each in="${app.IndexCard.findAllByWriting(Writing.get(writingId), [sort: 'dateCreated', order: 'desc'])}" var="c">
-    <g:render template="/gTemplates/recordSummary" model="[record: c]"/>
+    <g:render template="/gTemplates/box" model="[record: c]"/>
 </g:each>
 </g:if>
 
 <g:if test="${bookId && Book.get(bookId) != null }">
 
 <g:each in="${app.IndexCard.findAllByBook(Book.get(bookId),  [sort: 'dateCreated', order: 'desc'])}" var="c">
-    <g:render template="/gTemplates/recordSummary" model="[record: c]"/>
+    <g:render template="/gTemplates/box" model="[record: c]"/>
 </g:each>
 </g:if>

@@ -2,7 +2,7 @@
 
 
 <g:if test="${OperationController.getPath('rangeCalendar.enabled')?.toLowerCase() == 'yes' ? true : false}">
-<h4 onclick="toggleAdd('#dateRange1', 'calendarPanel')">Calendar</h4>
+<h4 class="accordionHeader" onclick="toggleAdd('#dateRange1', 'calendarPanel')">Calendar</h4>
 <div id="dateRange1" style="">
     <input type="hidden" class="startDate" id="range_start">
     <input type="hidden" class="endDate" id="range_end">
@@ -11,7 +11,7 @@
 
 
 
-<h4 onclick="toggleAdd('#accordionSearch', 'searchPanel')">Search</h4>
+<h4 class="accordionHeader" onclick="toggleAdd('#accordionSearch', 'searchPanel')">Search</h4>
 <div id="accordionSearch"
      style="width: 200px; padding: 3px;">
 
@@ -157,7 +157,7 @@
 
 
 
-<h4 onclick="toggleAdd('#accordionModules', 'modulesPanel')">Modules</h4>
+<h4 class="accordionHeader" onclick="toggleAdd('#accordionModules', 'modulesPanel')">Modules</h4>
 
 <div id="accordionModules"
      style="width: 200px; padding: 3px;">

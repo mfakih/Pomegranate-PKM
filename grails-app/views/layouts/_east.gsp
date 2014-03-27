@@ -1,7 +1,6 @@
 <%@ page import="ker.OperationController; mcs.Course; mcs.Department; org.apache.commons.lang.StringUtils; cmn.Setting" %>
 
-
-<h4 onclick="toggleAdd('#accordionAdd', 'addPanel')">Data entry & import</h4>
+<h4 class="accordionHeader" onclick="toggleAdd('#accordionAdd', 'addPanel')">Data entry & import</h4>
 
 
 <div id="accordionAdd"
@@ -254,7 +253,7 @@
 
 
 <g:if test="${OperationController.getPath('coursesPanel.enabled')?.toLowerCase() == 'yes' ? true : false}">
-<h4 onclick="toggleAdd('#accordionCourses', 'coursesPanel')">Projects & Courses</h4>
+<h4 class="accordionHeader" onclick="toggleAdd('#accordionCourses', 'coursesPanel')">Projects & Courses</h4>
 <div id="accordionCourses"
      style="width: 200px; padding: 3px;">
 

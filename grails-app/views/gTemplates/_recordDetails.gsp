@@ -14,7 +14,7 @@
            <tr style="width: 95%">
                <td style="width: 60%; vertical-align: top">
 
-                   <g:render template="/tag/addTag" model="[instance: record, entity: record.entityCode()]"/>
+
 <g:if test="${'T'.contains(record.entityCode())}">
                    %{--<g:render template="/tag/addContact" model="[instance: record, entity: record.entityCode()]"/>--}%
 </g:if>
@@ -26,13 +26,19 @@
 
                    </g:if>
 
+
+                   <g:render template="/tag/addTag" model="[instance: record, entity: record.entityCode()]"/>
+
                    <g:if test="${'TGRE'.contains(record.entityCode())}">
                        <h4>Add journal or planner record</h4>
                        <g:formRemote name="scheduleTask" url="[controller: 'task', action: 'assignRecordToDate']"
                                      style="display: inline;" update="below${record.entityCode()}Record${record.id}"
                                      method="post">
+                           Type/Level/Weight
+                           <br/>
                            <g:select name="type" from="['J', 'P']" value="P"/>
                            <g:select name="level" from="['e', 'y', 'M', 'W', 'd', 'm']" value="d"/>
+                           <g:select name="weight" from="${1..4}" value="1"/>
                            <input type="text" name="date" title="Format: wwd [hh]" placeholder="Date"
                                   style="width: 70px;"
                                   value="${mcs.Utils.toWeekDate(new Date())}"/>
@@ -71,7 +77,10 @@
                                </g:remoteLink>
                                </g:if>
                            </div>
+
+
                            <div id="syncResult${record.id}" style="display: inline">
+
                                <g:if test="${record.pomegranate?.code}">
                                    <g:remoteLink controller="export" action="syncNote" id="${record.id}"
                                                  params="[entityCode: entityCode]"
@@ -81,7 +90,9 @@
                                        Sync on <b> ${record.pomegranate?.code}</b>
                                    </g:remoteLink>
                                </g:if>
+
                            </div>
+
                            <g:if test="${1 == 2}">
                                <g:formRemote name="setBlogCode" style="display: inline"
                                              url="[controller: 'generics', action: 'setRecordBlog', params: [id: record.id, entityCode: record.entityCode()]]"
@@ -154,6 +165,8 @@
                            <b>Edition</b>: ${record.edition}
                            <br/>
                        </g:if>
+
+               <g:if test="${record.url}">
                        <span style="">
                            <b>Link:</b>
                            <span id="linkBloc${record.id}"
@@ -162,7 +175,9 @@
                            %{--${record.author},${record.title ?: record.legacyTitle} ${record.edition} ed--}%
                            %{--(${record.publisher},--}%
                            %{--${record.publicationDate})--}%
-                           <g:if test="${record.type.code == 'link'}">
+                   </g:if>
+
+                           <g:if test="${record?.type?.code == 'link'}">
                                <br/>
                            <g:remoteLink controller="import" action="scrapHtmlPage" id="${record.id}"
                                          update="RRecord${record.id}"
@@ -173,6 +188,8 @@
                                <br/>
                                <br/>
                            </g:if>
+
+                       <g:if test="${record.citationHtml}">
    <span style="">
                            <b>Citation:</b>
                            <span id="citationBloc${record.id}"
@@ -184,6 +201,8 @@
 
 
                        <br/>
+                       </g:if>
+               <g:if test="${record.isbn}">
                            <g:remoteLink controller="import" action="generateCitation" id="${record.id}"
                                          update="citationBloc${record.id}"
                                          class="actionLink"
@@ -192,28 +211,29 @@
                            </g:remoteLink>
                            <br/>
                            <br/>
+                   </g:if>
 
 
                        %{--Amazon tags: ${record.tags}--}%
+               <span id="bibTexBloc${record.id}">
+               <g:if test="${record.bibEntry}">
                        <b>Bib entry:</b>
-                       <span id="bibTexBloc${record.id}">
-                       <g:if test="${record.bibEntry}">
+
                            <br/>
                            ${record.bibEntry}
 
                        </g:if>
                        </span>
 
-
                        <br/>
-
+               <g:if test="${record.isbn}">
                        <g:remoteLink controller="operation" action="addBibtex" id="${record.id}"
                                      update="bibTexBloc${record.id}"
                                      class="actionLink"
                                      title="Update metadata">
                            Fetch Bib entry
                        </g:remoteLink>
-
+                      </g:if>
                    %{--Amazon tags: ${record.tags}--}%
 
                        <g:if test="${record.withAudiobook}">
@@ -240,16 +260,16 @@
 
                <g:if test="${record.entityCode() == 'N'}">
                        <pkm:listFiles
-                               folder="${OperationController.getPath('attachments.repository.path')}"
+                               folder="${OperationController.getPath('module.sandbox.N.path')}"
                                initial="${record.id}n"/>
 
                        <pkm:listAudios fileClass="vxrFile"
-                                       folder="${OperationController.getPath('attachments.sandbox.path')}"
+                                       folder="${OperationController.getPath('module.sandbox.N.path')}"
                                        initial="${record.id}n"/>
 
 
                        <pkm:listFiles
-                               folder="${OperationController.getPath('attachments.sandbox.path')}"
+                               folder="${OperationController.getPath('module.sandbox.N.path')}"
                                initial="${record.id}n"/>
 
                    </g:if>
@@ -397,22 +417,6 @@
                    </g:if>
 
 
-                   <div style="font-size: small;">
-                       <br/>
-                     <b>  Created </b>${record.dateCreated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')}
-
-                   (${new PrettyTime()?.format(record.dateCreated)})
-                   %{--(<prettytime:display--}%
-                   %{--date="${record.dateCreated}"/>)--}%
-                       %{--by ${record.insertedBy}--}%
-                       %{--editedBy ${record.editedBy}--}%
-                   <br/>
-                     <b> Updated </b>${record.lastUpdated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')} (<prettytime:display
-                           date="${record.lastUpdated}"/>)
-                       <br/>
-                       <b>Version</b> <span style="font-weight: normal">${record.version}</span>
-                   </div>
-
 
                </td>
            </tr>
@@ -440,26 +444,7 @@
 
 
 
-
-
-
-
-
-
-                        </div>
-
-
-
-<g:render template="/indexCard/add" model="[recordId: id, recordEntityCode: entityCode]"/>
-
-
-
-
-
-
-
-
-
+</div>
 
 
 <div id="relationshipRegion${record.entityCode()}${record.id}">
@@ -576,4 +561,22 @@
     </g:if>
 </div>
     </g:if>
+
+
+<div style="font-size: 11px;">
+    <br/>
+
+    <b> Updated </b>${record.lastUpdated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')} (<prettytime:display
+        date="${record.lastUpdated}"/>)
+
+%{--(<prettytime:display--}%
+%{--date="${record.dateCreated}"/>)--}%
+%{--by ${record.insertedBy}--}%
+%{--editedBy ${record.editedBy}--}%
+    <br/>
+    <b>  Created </b>${record.dateCreated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')}
+(${new PrettyTime()?.format(record.dateCreated)})
+    <br/>
+    <b>Version</b> <span style="font-weight: normal">${record.version}</span>
+</div>
 

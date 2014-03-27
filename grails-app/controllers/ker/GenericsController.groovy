@@ -32,6 +32,7 @@ import cmn.Setting
 import mcs.*
 import mcs.parameters.*
 import org.apache.commons.lang.StringUtils
+import grails.converters.JSON
 
 class GenericsController {
 
@@ -191,6 +192,9 @@ class GenericsController {
         else
         batchAdd(prefix + block.trim())
     }
+
+
+
     def batchAdd(String block) {
         def metaType = block.trim().split(/[ ]+/)[0]
         if (metaType == 'A') {
@@ -674,7 +678,10 @@ ll
             record.completedOn = new Date()
 //        record.percentComplete = new Date()
             record.status = WorkStatus.findByCode('completed')
-        } else {
+        } else if ('JN'.contains(entityCode)) {
+            record.lastReviewed = new Date()
+        }
+        else {
             record.readOn = new Date()
         }
 
@@ -1688,13 +1695,12 @@ def addContactToRecord() {
             def queryParams = ''
 
             fullquery = queryHead + (queryCriteria ? ' where ' + queryCriteria : '')
-
             fullquerySort = 'select count(*) ' + queryHead + (queryCriteria ? ' where ' + queryCriteria : '')
             queryKey = '_' + new Date().format('ddMMyyHHmmss')
              session[queryKey] = fullquery
 
-                }
-            params.max = 10
+           }
+            params.max = 5
             def list = Task.executeQuery(fullquery  + ' order by lastUpdated desc', [], params)
 //            if (OperationController.getPath('enable.autoselectResults') == 'yes'){
 //                selectedRecords.keySet().each() {
@@ -3404,6 +3410,10 @@ def addContactToRecord() {
             }
 
         }
+
     }
 
+    def commandNotes(){
+        render [CommandPrefix.get(params.q)?.notes] as JSON
+    }
 }

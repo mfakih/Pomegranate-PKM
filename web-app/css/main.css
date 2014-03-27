@@ -104,7 +104,7 @@ h4 {
     font-weight: bold;
     font-size: 12px;
     /*margin: .2em 0 .2em 0;*/
-    padding: 5px;
+    padding: 3px;
     /*margin-left: 1em;*/
     font-family: "DejaVu Sans Mono";
 
@@ -931,9 +931,9 @@ ul.ui-tabs-nav {
     overflow: auto !important;
 
     border-bottom: 1px #000000;
-    /*width: 230px !important;*/
-    margin: 2px;
-    padding: 5px;
+    width: 300px !important;
+    margin: 1px;
+    padding: 1px;
 
 
 }
@@ -945,8 +945,8 @@ ul.ui-tabs-nav {
 
     border-bottom: 1px #000000;
     /*width: 230px !important;*/
-    margin: 2px;
-    padding: 5px;
+    /*margin: 2px;*/
+    /*padding: 5px;*/
 
 }
 
@@ -1523,4 +1523,12 @@ border-radius: 2px;
 
 ul.ui-autocomplete.ui-menu {
     z-index: 100000;
+}
+.accordionHeader{
+    color: white;
+background: #95959e;
+border-top: 1px solid #6d6d74;
+border-bottom: 1px solid #6d6d74;
+margin-top: 3px;
+margin-bottom: 3px;
 }

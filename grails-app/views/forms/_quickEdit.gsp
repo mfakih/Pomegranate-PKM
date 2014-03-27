@@ -88,6 +88,8 @@
               value="${valueId}" style="overflow: visible; z-index: 200" noSelection="${['null': '']}"/>
     </g:if>
 
+
+
   <g:if test="${field == 'department'}">
     <g:select name="newValue" from="${mcs.Department.list([sort: 'code'])}"
               onchange="jQuery('#${updateDiv}').load('generics/quickSave/' + '${id}-${entityCode}-${field}-' + this.value)"

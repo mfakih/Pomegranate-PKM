@@ -69,6 +69,15 @@
                         </g:if>
                         <g:elseif test="${'N'.contains(record.entityCode())}">
                             ${record?.orderInWriting ? '#' + record?.orderInWriting + ' ' : ''} ${record?.summary}
+                            ${StringUtils.abbreviate(record.description?.decodeHTML(), 240)}
+
+                                <g:if test="${record.fileName}">
+                                    <a href="${createLink(controller: 'operation', action: 'downloadNoteFile', id: record.id)}" target="_blank">
+                                        <span style="font-size: 12px;">
+                                            ${record.fileName}
+                                        </span></a>
+                                </g:if>
+
                         </g:elseif>
                         <g:elseif test="${'R'.contains(record.entityCode())}">
 

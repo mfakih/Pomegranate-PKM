@@ -30,9 +30,12 @@
                        length="60"/>
     </span>
 
-    <span style="${record.status?.style} ; border: 0.5px solid; float: right; border-radius: 3px; padding: 1px;">
+    <span style="${record.status?.style}; font-size: 11px; border: 0.5px solid;  border-radius: 3px; padding: 1px; margin-right: 3px;">
         ${record.status?.name}
     </span>
+
+
+
 
         <g:if test="${record.orderInCourse}">
             <span styl="font-size: 12px;">#${record.orderInCourse}</span>
@@ -52,6 +55,19 @@
 <g:else>
 
 
+<g:if test="${record.class.declaredFields.name.contains('type') && record.type}">
+    <span style="${record.type?.style}; font-size: 11px; border-top: 0.5px solid; border-bottom: 0.5px solid; padding: 1px;  margin-right: 3px;">
+        ${record.type?.name}
+    </span>
+
+
+</g:if>
+
+<g:if test="${record.class.declaredFields.name.contains('status') && record.status}">
+    <span style="${record.status?.style}; font-size: 11px; border: 0.5px solid;  border-radius: 3px; padding: 1px; margin-right: 3px;">
+        ${record.status?.name}
+    </span>
+</g:if>
 
 <g:if test="${record.class.declaredFields.name.contains('goal') && record.goal}">
     <g:remoteLink controller="generics" action="showSummary" id="${record.goal?.id}"
@@ -116,7 +132,10 @@
         <g:if test="${entityCode == 'E'}">
             <br/>
         </g:if>
-        <pkm:summarize text="${record.summary}" length="80"/>
+
+        <bdi>
+            <pkm:summarize text="${record.summary}" length="80"/>
+        </bdi>
 
     </span>
 
@@ -160,11 +179,12 @@
 
 <g:if test="${'N'.contains(entityCode)}">
     <g:if test="${record.fileName}">
-        <a href="${createLink(controller: 'attachment', action: 'download', id: record.id)}" target="_blank">
+        <a href="${createLink(controller: 'operation', action: 'downloadNoteFile', id: record.id)}" target="_blank">
             <span style="font-size: 12px;">
                 ${record.fileName}
             </span></a>
     </g:if>
+
 
     <g:if test="${record.sourceFree}">
         ${record.sourceFree}
@@ -205,11 +225,11 @@
 
 
 
-<g:if test="${record.class.declaredFields.name.contains('notes') && record.notes}">
-    <span style="color:#7588b2 ">
-        ${record.notes}
-    </span>
-</g:if>
+%{--<g:if test="${record.class.declaredFields.name.contains('notes') && record.notes}">--}%
+    %{--<span style="color:#7588b2 ">--}%
+        %{--${record.notes}--}%
+    %{--</span>--}%
+%{--</g:if>--}%
 
 
 
@@ -228,8 +248,10 @@
 
 <g:if test="${entityCode == 'R'}">
 
+    <bdi>
     <pkm:summarize text="${(record.title ?: '') + ' ' + (record.author ?: '')}" length="100"/>
 
+    </bdi>
     <g:if test="${!record.title && record.legacyTitle}">
         _ ${record.legacyTitle}
     </g:if>
@@ -237,6 +259,7 @@
     <g:if test="${record.url}">
         ${record.url}
     </g:if>
+
 </g:if>
 
 
@@ -379,15 +402,5 @@
     &nbsp; <g:render template="/tag/peopleTags" model="[instance: record, entity: entityCode]"/>
 </g:if>
 
-    <br/>
-<g:if test="${record.class.declaredFields.name.contains('status')}">
-    <span style="${record.status?.style} ; border: 0.5px solid;  border-radius: 3px; padding: 1px; margin-right: 3px;">
-        ${record.status?.name}
-    </span>
-</g:if>
-<g:if test="${record.class.declaredFields.name.contains('type')}">
-    <span style="${record.type?.style} ; border: 0.5px solid;  border-radius: 3px;  padding: 1px;  margin-right: 3px;">
-        ${record.type?.name}
-    </span>
-</g:if>
+
 </g:else>
