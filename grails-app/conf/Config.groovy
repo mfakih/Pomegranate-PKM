@@ -228,7 +228,7 @@ grails.dbconsole.urlRoot='/admin/dbconsole'
 
 
 jasypt {
-    algorithm = " PBEWithMD5AndDES"
+    algorithm = "PBEWithMD5AndDES"
     providerName = "BC"
     password = "<your very secret passphrase>"
     keyObtentionIterations = 1000

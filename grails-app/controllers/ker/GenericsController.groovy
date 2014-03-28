@@ -192,9 +192,6 @@ class GenericsController {
         else
         batchAdd(prefix + block.trim())
     }
-
-
-
     def batchAdd(String block) {
         def metaType = block.trim().split(/[ ]+/)[0]
         if (metaType == 'A') {

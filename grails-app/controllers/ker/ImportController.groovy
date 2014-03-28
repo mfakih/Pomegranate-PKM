@@ -695,7 +695,6 @@ def importLocalFiles() {
             a.summary = 'Doc'//params.qqfile//'File'
             a.description = '?'
             a.save(flush: true)
-            println 'here ???' + a.dump()
             new File(OperationController.getPath('module.sandbox.N.path') + '/' + a.id) << request.inputStream
 
             if (new File(OperationController.getPath('module.sandbox.N.path') + '/' + a.id).exists()){
