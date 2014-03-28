@@ -39,6 +39,7 @@ grails.project.dependency.resolution = {
         mavenRepo "http://mirrors.ibiblio.org/maven2/org/ocpsoft/prettytime/prettytime/3.2.4.Final/"
         mavenRepo "http://repo1.maven.org/maven2/de/l3s/boilerpipe/boilerpipe/1.1.0/"
         mavenRepo "http://repo.jenkins-ci.org/releases/org/eclipse/mylyn/wikitext/wikitext/1.7.4.v20130429-0100/"
+//        mavenRepo "http://repo.springsource.org/libs-milestone"
 //        mavenRepo "http://snapshots.repository.codehaus.org"
         // mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
@@ -52,6 +53,7 @@ grails.project.dependency.resolution = {
         compile "mysql:mysql-connector-java:5.1.29"
 		compile "com.gravity:goose:2.1.23"
         compile "wordpress-java:jwordpress:0.5.1"
+//        compile 'jpwgen:jpwgen:1.2.0'
         //        compile 'org.eclipse.mylyn.wikitext:wikitext:1.7.4.v20130429-0100'
         compile 'de.l3s.boilerpipe:boilerpipe:1.1.0'
         compile 'com.itextpdf:itextpdf:5.5.0'
