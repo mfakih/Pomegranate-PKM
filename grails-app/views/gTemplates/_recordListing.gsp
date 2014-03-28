@@ -26,9 +26,8 @@
     <br/> <div class="paginateButtons" style="display:inline !important;">
     <util:remotePaginate controller="generics" action="executeSavedSearch" total="${searchResultsTotal}"
                          maxsteps="5"
-                         params="[id: ssId, maxsteps: 5]" update="centralArea"/>
+                         params="[id: ssId]" update="centralArea"/>
 </div>
-    <br/>
 </g:if>
 
 
@@ -40,7 +39,6 @@
 
                          update="centralArea"/>
 </div>
-    <br/>
 </g:elseif>
 
 
