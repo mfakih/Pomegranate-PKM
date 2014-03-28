@@ -52,8 +52,14 @@
                              params="[input: queryKey]" update="centralArea"/>
     </div>
 
+</g:if>
+<g:if test="${queryKey2}">
+    <div class="paginateButtons" style="display:inline !important;">
+        <util:remotePaginate controller="generics" action="queryRecords" total="${totalHits}"
+                             maxsteps="5"
+                             params="[input: queryKey2]" update="centralArea"/>
+    </div>
 
-%{--<hr/>--}%
 </g:if>
 
 

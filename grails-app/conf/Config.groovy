@@ -142,6 +142,7 @@ log4j = {
             'org.codehaus.groovy.grails.plugins', // plugins
             'org.codehaus.groovy.grails.orm.hibernate' // hibernate integration
     info 'grails.app'
+    info 'com.linkedin.grails'
     //debug additivity: false, fileSQL: 'org.hibernate.SQL'
     //trace additivity: false, fileSQL: 'org.hibernate.type'
     root {

@@ -1613,7 +1613,6 @@ def addContactToRecord() {
     }
 
     def findRecords(String input) {
-           println ' input ' + input
         if (input.contains(' {')) {
 
             def groupBy = input.split(/ \{/)[1]
@@ -1723,7 +1722,7 @@ def addContactToRecord() {
 
     def queryRecords(String input) {
 
-        try {
+
             if (input.contains(' {')) {
 
                 def groupBy = input.split(/ \{/)[1]
@@ -1777,11 +1776,26 @@ def addContactToRecord() {
                         groups: groups, groupBy: groupBy,
                         title: 'HQL Query: ' + input]
                 )
-            } else {
+            }
+            else {
 
 
+              def fullquery
+            def fullquerySort
+            def queryKey
+           if (input.startsWith('_')){
+               fullquery = session[input]
+               fullquerySort = 'select count(*) ' + fullquery
+               queryKey = input
+           }
+           else{
 
-                def list = Task.executeQuery(input, [], [max: 50])
+            fullquery = input
+            fullquerySort = 'select count(*) ' + input
+            queryKey = '_' + new Date().format('ddMMyyHHmmss')
+             session[queryKey] = fullquery
+                params.max = 5
+                def list = Task.executeQuery(fullquery, [], params)
                 if (OperationController.getPath('enable.autoselectResults') == 'yes'){
                     selectedRecords.keySet().each() {
                         session[it] = 0
@@ -1796,13 +1810,12 @@ def addContactToRecord() {
 
 
                 render(template: '/gTemplates/recordListing', model: [
-                        list: Task.executeQuery(input, [], [max: 50]),
-                        title: 'HQL Query ' + (!input.contains('select') ? '(' + Task.executeQuery('select count(*) ' + input)[0] + ')' : '') + ' : ' + input
+                        list: Task.executeQuery(fullquery, [], params),
+                        totalHits: Task.executeQuery(fullquerySort)[0],
+                        queryKey2: queryKey, fullquery: fullquery,
+                        title: 'HQL Query ' + (!input.contains('select') ? '(' + Task.executeQuery(fullquerySort)[0] + ')' : '') + ' : ' + input
                 ])
             }
-        } catch (Exception e) {
-            println 'here ' + e
-            render 'Problem occurred ' + e
         }
 
     }
@@ -3411,6 +3424,7 @@ def addContactToRecord() {
     }
 
     def commandNotes(){
-        render [CommandPrefix.get(params.q)?.notes] as JSON
+        def r = [CommandPrefix.get(params.q)?.notes] as JSON
+        render(r)
     }
 }

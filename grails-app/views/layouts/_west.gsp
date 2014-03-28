@@ -101,42 +101,42 @@
 
 
 </div>
-<h3 class="browseTab">
-    <a>
-        <span class="ui-icon ui-icon-calendar"></span>
-              Calendars
-    </a>
-</h3>
+%{--<h3 class="browseTab">--}%
+    %{--<a>--}%
+        %{--<span class="ui-icon ui-icon-calendar"></span>--}%
+              %{--Calendars--}%
+    %{--</a>--}%
+%{--</h3>--}%
 
-<div>
-
-
-    <h2>Journal</h2>
-    <ul style="line-height: 30px; font-size: 14px;">
-
-    <g:each in="${JournalType.list([sort: 'name'])}" var="type">
-    <g:link controller="task" action="calendar" target="_blank" params="[id: type.id, jp: 'J']"
-    title="Calendar">
-    ${type} <sup>${Journal.countByType(type)}</sup>
-    </g:link>
-    </g:each>
-
-    </ul>
-
-    <h2>Planner</h2>
-    <ul style="line-height: 30px; font-size: 14px;">
-
-    <g:each in="${PlannerType.list([sort: 'name'])}" var="type">
-    <g:link controller="task" action="calendar" target="_blank" params="[id: type.id, jp: 'P']"
-    title="Calendar">
-    ${type} <sup>${Planner.countByType(type)}</sup>
-    </g:link>
-    </g:each>
-
-    </ul>
+%{--<div>--}%
 
 
-</div>
+    %{--<h2>Journal</h2>--}%
+    %{--<ul style="line-height: 30px; font-size: 14px;">--}%
+
+    %{--<g:each in="${JournalType.list([sort: 'name'])}" var="type">--}%
+    %{--<g:link controller="task" action="calendar" target="_blank" params="[id: type.id, jp: 'J']"--}%
+    %{--title="Calendar">--}%
+    %{--${type} <sup>${Journal.countByType(type)}</sup>--}%
+    %{--</g:link>--}%
+    %{--</g:each>--}%
+
+    %{--</ul>--}%
+
+    %{--<h2>Planner</h2>--}%
+    %{--<ul style="line-height: 30px; font-size: 14px;">--}%
+
+    %{--<g:each in="${PlannerType.list([sort: 'name'])}" var="type">--}%
+    %{--<g:link controller="task" action="calendar" target="_blank" params="[id: type.id, jp: 'P']"--}%
+    %{--title="Calendar">--}%
+    %{--${type} <sup>${Planner.countByType(type)}</sup>--}%
+    %{--</g:link>--}%
+    %{--</g:each>--}%
+
+    %{--</ul>--}%
+
+
+%{--</div>--}%
 
 <h3 class="browseTab">
     <a>
@@ -152,10 +152,20 @@
     </ul>
 </div>
 
+<h3 class="browseTab">
+    <a>
+        <span class="ui-icon ui-icon-script"></span>
+        Records to update
+    </a>
+</h3>
+<div>
+    <ul>
+        <g:render template="/layouts/savedSearches" model="[entity: 'U']"/>
+    </ul>
 </div>
 
 
-
+</div>
 
 <h4 class="accordionHeader" onclick="toggleAdd('#accordionModules', 'modulesPanel')">Modules</h4>
 
@@ -510,22 +520,38 @@
 
     var addPanel = true
     var modulesPanel = true
-    var coursesPanel = false
+    var coursesPanel = true
     var calendarPanel = true
     var searchPanel = true
 
     function toggleAdd(panel, varb) {
-        console.log(' pane' + panel + ' var ' + varb)
+//        console.log(' pane' + panel + ' var ' + varb)
         if (window[varb] == true) {
             jQuery(panel).addClass('navHidden');
             window[varb] = false
         }
         else if (window[varb] == false) {
+            jQuery('#accordionAdd').addClass('navHidden')
+            jQuery('#accordionModules').addClass('navHidden')
+            jQuery('#accordionCourses').addClass('navHidden')
+            jQuery('#dateRange1').addClass('navHidden')
+            jQuery('#accordionSearch').addClass('navHidden')
+            window['addPanel'] = false
+            window['modulesPanel'] = false
+            window['coursesPanel'] = false
+            window['calendarPanel'] = false
+            window['searchPanel'] = false
             jQuery(panel).removeClass('navHidden');
             window[varb] = true
         }
     }
 
 
+    jQuery('#accordionAdd').addClass('navHidden')
+    jQuery('#accordionCourses').addClass('navHidden')
+    jQuery('#accordionSearch').addClass('navHidden')
+    window['addPanel'] = false
+    window['coursesPanel'] = false
+    window['searchPanel'] = false
 
 </script>

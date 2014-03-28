@@ -17,7 +17,7 @@
                 <g:select name="commandPrefix"
                           from="${CommandPrefix.list()}" optionKey="id" optionValue="name"
                           style="direction: ltr; text-align: left; display: inline; width: 150px;"
-                          onchange="jQuery('#quickAddTextField').val(jQuery.getJSON('generics/commandNotes?q=' + this.value))"
+                          onchange="jQuery('#quickAddTextField').val(jQuery.getJSON('generics/commandNotes?q=' + this.value).responseText); console.log(jQuery.getJSON('generics/commandNotes?q=' + this.value).getResponseText())"
                           value=""/>
 
                 </td>

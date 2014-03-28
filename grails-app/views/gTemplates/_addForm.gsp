@@ -1,4 +1,4 @@
-<%@ page import="app.parameters.Blog; mcs.Department; mcs.parameters.WorkStatus;" %>
+<%@ page import="app.parameters.Blog;app.parameters.Pomegranate; mcs.Department; mcs.parameters.WorkStatus;" %>
 
 <g:if test="${record}">
     <g:render template="/gTemplates/recordSummary" model="[record: record]"/>
@@ -238,7 +238,7 @@
 
 
 
-        <g:if test="${fields.contains('category')}">
+        <g:if test="${fields.contains('category') && entityCode == 'Q'}">
           <td>
             <g:select name="category.id" class="ui-corner-all"
                       from="${app.PaymentCategory.list()}" optionKey="id"
@@ -308,11 +308,19 @@
 
 <g:if test="${fields.contains('blog')}">
         <td>
+            %{-- todo <g:select name="blog.id" style="width: 150px;"--}%
+                      %{--from="${Blog.list([sort: 'code'])}" optionKey="id" optionValue="summary"--}%
+                      %{--value="${record?.blog?.id}"--}%
+                      %{--noSelection="${['null': 'No blog']}"/>--}%
+        </td>
+    </g:if>
 
-            <g:select name="blog.id" style="width: 150px;"
-                      from="${Blog.list([sort: 'code'])}" optionKey="id" optionValue="summary"
-                      value="${record?.blog?.id}"
-                      noSelection="${['null': 'No blog']}"/>
+<g:if test="${fields.contains('pomegranate')}">
+        <td>
+            <g:select name="pomegranate.id" style="width: 150px;"
+                      from="${Pomegranate.list([sort: 'code'])}" optionKey="id" optionValue="summary"
+                      value="${record?.pomegranate?.id}"
+                      noSelection="${['null': 'No pomegranate']}"/>
         </td>
     </g:if>
 

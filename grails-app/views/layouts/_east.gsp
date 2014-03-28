@@ -3,8 +3,7 @@
 <h4 class="accordionHeader" onclick="toggleAdd('#accordionAdd', 'addPanel')">Data entry & import</h4>
 
 
-<div id="accordionAdd"
-     style="width: 200px; padding: 3px;">
+<div id="accordionAdd" style="width: 200px; padding: 3px;">
 
 
 
