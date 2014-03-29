@@ -90,36 +90,34 @@ class PkmTagLib {
                 }
             }
             if (module == 'R'){
-                folders = [
-                        OperationController.getPath('module.sandbox.' + module + '.path') + '/' + (record.id / 100).toInteger(),
-                        OperationController.getPath('module.repository.' + module + '.path') + '/' + (record.id / 100).toInteger()
+                        def typeSandboxPath = ResourceType.findByCode(type).newFilesPath
+                        def typeRepositoryPath = ResourceType.findByCode(type).repositoryPath
+  folders = [
+                        typeSandboxPath + '/' + type + '/' + (recordId / 100).toInteger(),
+                        typeRepositoryPath + '/' + (recordId / 100).toInteger()
                 ]
                 folders.each() { folder ->
-                    println 'flder ' + folder
                     if (new File(folder).exists()) {
                         new File(folder).eachFileMatch(~/${recordId}[a-z][\S\s]*\.[\S\s]*/) {
                             filesList.add(it)
                         }
                     }
                 }
-                        def typeSandboxPath = ResourceType.findByCode(type).newFilesPath
-                        def typeRepositoryPath = ResourceType.findByCode(type).repositoryPath
-  folders = [
+                folders = [
           typeSandboxPath + '/' + type + '/' + (recordId / 100).toInteger() + '/' + recordId,
           typeRepositoryPath + '/' + (recordId / 100).toInteger() + '/' + recordId()
                 ]
                 folders.each() { folder ->
-                    println 'flder ' + folder
                     if (new File(folder).exists()) {
-                        new File(folder).eachFileMatch(~/${recordId}[a-z][\S\s]*\.[\S\s]*/) {
+                        new File(folder).eachFileMatch(~/[\S\s]*\.[\S\s]*/) {
                             filesList.add(it)
                         }
                     }
                 }
                 folders = [
-                        OperationController.getPath('audio.excerpts.repository.path') + '/' + module + '/' + type + '/' + recordId,
-                        OperationController.getPath('video.excerpts.repository.path') + '/' + module + '/' + type  + '/' + recordId,
-                        OperationController.getPath('video.snapshots.repository.path') + '/' + module  + '/' + type + '/' + recordId
+                        OperationController.getPath('audio.excerpts.repository.path')  + '/' + type + '/' + recordId,
+                        OperationController.getPath('video.excerpts.repository.path')  + '/' + type  + '/' + recordId,
+                        OperationController.getPath('video.snapshots.repository.path')   + '/' + type + '/' + recordId
                 ]
                 folders.each() { folder ->
                     if (new File(folder).exists()) {
