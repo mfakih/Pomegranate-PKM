@@ -18,7 +18,7 @@
 package app.parameters
 
 import cmn.DataChangeAudit
-import com.bloomhealthco.jasypt.GormEncryptedStringType
+//import com.bloomhealthco.jasypt.GormEncryptedStringType
 
 class Blog implements Comparable {  // entity id = 20
 
@@ -52,7 +52,7 @@ class Blog implements Comparable {  // entity id = 20
 
     static mapping = {
         notes(sqlType: 'longtext')
-        password type: GormEncryptedStringType
+//        password type: GormEncryptedStringType
     }
 
     static namedQueries = {

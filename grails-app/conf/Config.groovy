@@ -142,7 +142,6 @@ log4j = {
             'org.codehaus.groovy.grails.plugins', // plugins
             'org.codehaus.groovy.grails.orm.hibernate' // hibernate integration
     info 'grails.app'
-    info 'com.linkedin.grails'
     //debug additivity: false, fileSQL: 'org.hibernate.SQL'
     //trace additivity: false, fileSQL: 'org.hibernate.type'
     root {
@@ -228,9 +227,12 @@ grails.dbconsole.enabled=true
 grails.dbconsole.urlRoot='/admin/dbconsole'
 
 
-jasypt {
-    algorithm = "PBEWithMD5AndDES"
-    providerName = "BC"
-    password = "<your very secret passphrase>"
-    keyObtentionIterations = 1000
-}
+/* from official doc:  Changing any of these values will result in different results (and will also prevent the ability to decrypt previously encrypted information).
+https://bitbucket.org/tednaleid/grails-jasypt/wiki/Home
+*/
+//jasypt {
+//    algorithm = "SHA-256"
+//    providerName = "BC"
+//    password = "<your very secret passphrase>"
+//    keyObtentionIterations = 1000
+//}

@@ -68,7 +68,7 @@ grails.project.dependency.resolution = {
     }
     plugins {
 
-        compile ":oauth:2.1.0"
+//        compile ":oauth:2.1.0"
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
         //runtime ":cached-resources:1.0"
@@ -99,6 +99,6 @@ grails.project.dependency.resolution = {
         compile ":searchable:0.6.4"
         compile ":audit-logging:0.5.5.3"
         compile ":rest-client-builder:2.0.1"
-        compile ":jasypt-encryption:1.1.0"
+//        compile ":jasypt-encryption:1.1.0"
     }
 }

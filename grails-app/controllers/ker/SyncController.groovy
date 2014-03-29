@@ -17,14 +17,14 @@ class SyncController {
         p.description = request.JSON.description
         p.sourceFree =  request.JSON.sourceFree
         p.originalId = request.JSON.id
-        p.dateCreated = Date.parse('ddMMyyy', request.JSON.dateCreated)
+//        p.dateCreated = Date.parse('ddMMyyy', request.JSON.dateCreated)
         p.lastUpdated = new Date()
 //        p.lastReviewed = new Date()
 
         p.syncedOn = new Date()
 
          if (p.save(flush: true)) {
-        render(['status': 'ok from syn'] as XML)
+        render(['status': 'ok from remote PKM'] as XML)
         }
         else { println 'not saved'
             println p.errors

@@ -2,116 +2,34 @@
 <g:set var="entityCode"
        value="${record.metaClass.respondsTo(record, 'entityCode') ? record.entityCode() : record.class?.name?.split(/\./).last()}"/>
 
+<g:if test="${session['showLine1Only'] == 'on'}">
 <g:render template="/gTemplates/2ndLine" model="[record: record, entityCode: entityCode]"/>
+    </g:if>
 
 %{--<r:require module="fileuploader"/>--}%
 %{--<r:layoutResources/>--}%
 
 
-<div class="recordDetailsBody" style="margin-left: 20px;" id="detailsRegion${record.entityCode()}${record.id}">
+<div class="recordDetailsBody" style="margin-left: 5px;" id="detailsRegion${record.entityCode()}${record.id}">
 
        <table style="border-collapse: collapse; width: 99%" border="0">
-           <tr style="width: 95%">
+           <tr style="width: 99%">
                <td style="width: 60%; vertical-align: top">
-
 
 <g:if test="${'T'.contains(record.entityCode())}">
                    %{--<g:render template="/tag/addContact" model="[instance: record, entity: record.entityCode()]"/>--}%
 </g:if>
 
-
+                   <div style="padding: 8px; font-size: 11px; font-family: georgia; margin: 2px; line-height: 20px; text-align: justify">
                    <g:if test="${record.class.declaredFields.name.contains('description')}">
-
+                       <g:remoteLink controller="page" action="panel"
+                                     params="${[id: record.id, entityCode: entityCode]}"
+                                     update="3rdPanel"
+                                     title="Read the full text">
                        ${StringUtils.abbreviate(record.description?.replaceAll('\n', '<br/>')?.replace('Product Description', '')?.decodeHTML(), 240)}
-
+                       </g:remoteLink>
                    </g:if>
-
-
-                   <g:render template="/tag/addTag" model="[instance: record, entity: record.entityCode()]"/>
-
-                   <g:if test="${'TGRE'.contains(record.entityCode())}">
-                       <h4>Add journal or planner record</h4>
-                       <g:formRemote name="scheduleTask" url="[controller: 'task', action: 'assignRecordToDate']"
-                                     style="display: inline;" update="below${record.entityCode()}Record${record.id}"
-                                     method="post">
-                           Type/Level/Weight
-                           <br/>
-                           <g:select name="type" from="['J', 'P']" value="P"/>
-                           <g:select name="level" from="['e', 'y', 'M', 'W', 'd', 'm']" value="d"/>
-                           <g:select name="weight" from="${1..4}" value="1"/>
-                           <input type="text" name="date" title="Format: wwd [hh]" placeholder="Date"
-                                  style="width: 70px;"
-                                  value="${mcs.Utils.toWeekDate(new Date())}"/>
-                           <input type="text" name="summary" title="" placeholder="Summary"
-                                  style="width: 200px;"
-                                  value=""/>
-
-
-                           <g:hiddenField name="recordType" value="${record.entityCode()}"/>
-                           <g:hiddenField name="recordId" value="${record.id}"/>
-                           <g:submitButton name="scheduleTask" value="ok" style="display: none;"
-                                           class="fg-button ui-widget ui-state-default ui-corner-all"/>
-                       </g:formRemote>
-                    <br/>
-                    <br/>
-                   </g:if>
-
-                   <h4>Relate to other records</h4>
-                   <span id="addRelationship${record.id}" style="display: inline;">
-                       <g:render template="/gTemplates/addRelationships"
-                                 model="[record: record, entity: record.entityCode()]"/>
-                   </span>
-
-
-                   <div id="publish${record.id}" style="display: inline;  margin-left: 10px;">
-<!--todo-->
-                       <g:if test="${'N'.contains(entityCode)}">
-                           <div id="postResult${record.id}" style="display: inline">
-                               <g:if test="${record.blog?.code}">
-                               <g:remoteLink controller="generics" action="publish" id="${record.id}"
-                               params="[entityCode: entityCode]"
-                               update="postResult${record?.id}"
-                               title="Publish record"
-                               class="fg-button ui-widget ui-state-default ui-corner-all">
-                               Publish on <b> ${record.blog?.code}</b>
-                               </g:remoteLink>
-                               </g:if>
-                           </div>
-
-
-                           <div id="syncResult${record.id}" style="display: inline">
-
-                               <g:if test="${record.pomegranate?.code}">
-                                   <g:remoteLink controller="export" action="syncNote" id="${record.id}"
-                                                 params="[entityCode: entityCode]"
-                                                 update="syncResult${record?.id}"
-                                                 title="Sync record"
-                                                 class="fg-button ui-widget ui-state-default ui-corner-all">
-                                       Sync on <b> ${record.pomegranate?.code}</b>
-                                   </g:remoteLink>
-                               </g:if>
-
-                           </div>
-
-                           <g:if test="${1 == 2}">
-                               <g:formRemote name="setBlogCode" style="display: inline"
-                                             url="[controller: 'generics', action: 'setRecordBlog', params: [id: record.id, entityCode: record.entityCode()]]"
-                                             update="notificationArea"
-                                             title="Post info">
-                                   <g:select from="${Blog.list()}" name="blog.id" title="Blog"
-                                             value="${record.blog?.id}"/>
-                                   <g:textField id="publishedNodeId" name="publishedNodeId" style="width: 30px"
-                                                class="ui-corner-all"
-                                                title="Post ID" placeholder="Post ID"
-                                                value="${record?.publishedNodeId}"/>
-                                   <g:textField id="publishedOn" name="publishedOn" style="width: 80px"
-                                                class="ui-corner-all" placeholder="Post date" title="Post date"
-                                                value="${record.publishedOn ? record.publishedOn?.format('dd.MM.yyyy') : new Date().format('dd.MM.yyyy')}"/>
-
-                                   <g:submitButton name="add" value="Set" style=""
-                                                   class="fg-button  ui-widget ui-state-default ui-corner-all"/>
-                               </g:formRemote>
-                           </g:if>
+                   </div>
 
 
                        %{--<br/>--}%
@@ -121,141 +39,227 @@
                        %{--<br/>--}%
                        %{--</g:if>--}%
 
-                       </g:if>
-                   </div>
+
+                   <g:if test="${'R'.contains(record.entityCode())}">
+                   %{--<b>${record.title?.encodeAsHTML()?.replaceAll('\n', '<br/>')}</b>--}%
+                   %{--<br/>--}%
+                       <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
+                           <g:if test="${record.legacyTitle}">
+                               <span style="font-size: small">
+                                   <br/>    <b>Legacy title:</b>  ${record.legacyTitle}
+                                   <br/>
+                               </span>
+                           </g:if>
+                           <g:if test="${record.author}">
+                               <b>Author</b>   : ${record.author}
+                               <br/>
+                           </g:if>
+                           <g:if test="${record.isbn}">
+                               <b>ISBN</b>   : ${record.isbn}
+                               <br/>
+                           </g:if>
+                           <g:if test="${record.nbPages}">
+                               <b>Nb pages</b>   : ${record.nbPages}
+                               <br/>
+                           </g:if>
+                       %{--Extension: ${record.ext}--}%
+                       %{--<br/>--}%
+                           <g:if test="${record.publisher}">
+                               <b>Publisher</b>: ${record.publisher}
+                               <br/>
+                           </g:if>
+                           <g:if test="${record.publicationDate}">
+                               <b>Publication date</b>: ${record.publicationDate}
+                               <br/>
+                           </g:if>
+                           <g:if test="${record.edition}">
+                               <b>Edition</b>: ${record.edition}
+                               <br/>
+                           </g:if>
+
+                           <g:if test="${record.url}">
+                               <span style="">
+                                   <b>Link:</b>
+                                   <span id="linkBloc${record.id}"
+                                   ${record.url}
+                               </span>
+                           %{--${record.author},${record.title ?: record.legacyTitle} ${record.edition} ed--}%
+                           %{--(${record.publisher},--}%
+                           %{--${record.publicationDate})--}%
+                           </g:if>
+
+                           <g:if test="${record?.type?.code == 'link'}">
+                               <br/>
+                               <g:remoteLink controller="import" action="scrapHtmlPage" id="${record.id}"
+                                             update="RRecord${record.id}"
+                                             class="actionLink"
+                                             title="Scrap HTML">
+                                   Scrape HTML page
+                               </g:remoteLink>
+                               <br/>
+                               <br/>
+                           </g:if>
+
+                           <g:if test="${record.citationHtml}">
+                               <span style="">
+                                   <b>Citation:</b>
+                                   <span id="citationBloc${record.id}"
+                                   ${record.citationHtml}
+                               </span>
+                           %{--${record.author},${record.title ?: record.legacyTitle} ${record.edition} ed--}%
+                           %{--(${record.publisher},--}%
+                           %{--${record.publicationDate})--}%
+
+
+                               <br/>
+                           </g:if>
+                           <g:if test="${record.isbn}">
+                               <g:remoteLink controller="import" action="generateCitation" id="${record.id}"
+                                             update="citationBloc${record.id}"
+                                             class="actionLink"
+                                             title="Update metadata">
+                                   Generate citations
+                               </g:remoteLink>
+                               <br/>
+                               <br/>
+                           </g:if>
+
+
+                       %{--Amazon tags: ${record.tags}--}%
+                           <span id="bibTexBloc${record.id}">
+                               <g:if test="${record.bibEntry}">
+                                   <b>Bib entry:</b>
+
+                                   <br/>
+                                   ${record.bibEntry}
+
+                               </g:if>
+                           </span>
+
+                           <br/>
+                           <g:if test="${record.isbn}">
+                               <g:remoteLink controller="operation" action="addBibtex" id="${record.id}"
+                                             update="bibTexBloc${record.id}"
+                                             class="actionLink"
+                                             title="Update metadata">
+                                   Fetch Bib entry
+                               </g:remoteLink>
+                           </g:if>
+                       %{--Amazon tags: ${record.tags}--}%
+
+                           <g:if test="${record.withAudiobook}">
+                               <br/><i>With audiobook</i>
+                           </g:if>
+                           <g:if test="${record.isAudiobook}">
+                               <br/><i>Is audiobook</i>
+                           </g:if>
+                           <g:if test="${record.isPaperOnly}">
+                               <br/><i>Paper format only</i>
+                           </g:if>
+
+                           <g:if test="${record.isRead}">
+                               <br/><i>Has been read</i>
+                           </g:if>
+
+                           <g:if test="${record.isPublic}">
+                               <br/><i>To be shared</i>
+                           </g:if>
+                       </div>
+                   </g:if>
 
                </td>
 
            <td style="width: 40%; vertical-align: top">
 
 
-               <g:if test="${'R'.contains(record.entityCode())}">
-               %{--<b>${record.title?.encodeAsHTML()?.replaceAll('\n', '<br/>')}</b>--}%
-               %{--<br/>--}%
-                   <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
-                       <g:if test="${record.legacyTitle}">
-                           <span style="font-size: small">
-                               <br/>    <b>Legacy title:</b>  ${record.legacyTitle}
-                               <br/>
-                           </span>
-                       </g:if>
-                       <g:if test="${record.author}">
-                           <b>Author</b>   : ${record.author}
-                           <br/>
-                       </g:if>
-                       <g:if test="${record.isbn}">
-                           <b>ISBN</b>   : ${record.isbn}
-                           <br/>
-                       </g:if>
-                       <g:if test="${record.nbPages}">
-                           <b>Nb pages</b>   : ${record.nbPages}
-                           <br/>
-                       </g:if>
-                   %{--Extension: ${record.ext}--}%
-                   %{--<br/>--}%
-                       <g:if test="${record.publisher}">
-                           <b>Publisher</b>: ${record.publisher}
-                           <br/>
-                       </g:if>
-                       <g:if test="${record.publicationDate}">
-                           <b>Publication date</b>: ${record.publicationDate}
-                           <br/>
-                       </g:if>
-                       <g:if test="${record.edition}">
-                           <b>Edition</b>: ${record.edition}
-                           <br/>
-                       </g:if>
 
-               <g:if test="${record.url}">
-                       <span style="">
-                           <b>Link:</b>
-                           <span id="linkBloc${record.id}"
-                           ${record.url}
-                           </span>
-                           %{--${record.author},${record.title ?: record.legacyTitle} ${record.edition} ed--}%
-                           %{--(${record.publisher},--}%
-                           %{--${record.publicationDate})--}%
-                   </g:if>
+<g:render template="/tag/addTag" model="[instance: record, entity: record.entityCode()]"/>
 
-                           <g:if test="${record?.type?.code == 'link'}">
-                               <br/>
-                           <g:remoteLink controller="import" action="scrapHtmlPage" id="${record.id}"
-                                         update="RRecord${record.id}"
-                                         class="actionLink"
-                                         title="Scrap HTML">
-                               Scrape HTML page
-                           </g:remoteLink>
-                               <br/>
-                               <br/>
-                           </g:if>
-
-                       <g:if test="${record.citationHtml}">
-   <span style="">
-                           <b>Citation:</b>
-                           <span id="citationBloc${record.id}"
-                           ${record.citationHtml}
-                           </span>
-                           %{--${record.author},${record.title ?: record.legacyTitle} ${record.edition} ed--}%
-                           %{--(${record.publisher},--}%
-                           %{--${record.publicationDate})--}%
+<g:if test="${'TGRE'.contains(record.entityCode())}">
+    <h4>Add journal or planner record</h4>
+    <g:formRemote name="scheduleTask" url="[controller: 'task', action: 'assignRecordToDate']"
+                  style="display: inline;" update="below${record.entityCode()}Record${record.id}"
+                  method="post">
+        Type/Level/Weight
+        <br/>
+        <g:select name="type" from="['J', 'P']" value="P"/>
+        <g:select name="level" from="['e', 'y', 'M', 'W', 'd', 'm']" value="d"/>
+        <g:select name="weight" from="${1..4}" value="1"/>
+        <input type="text" name="date" title="Format: wwd [hh]" placeholder="Date"
+               style="width: 70px;"
+               value="${mcs.Utils.toWeekDate(new Date())}"/>
+        <input type="text" name="summary" title="" placeholder="Summary"
+               style="width: 200px;"
+               value=""/>
 
 
-                       <br/>
-                       </g:if>
-               <g:if test="${record.isbn}">
-                           <g:remoteLink controller="import" action="generateCitation" id="${record.id}"
-                                         update="citationBloc${record.id}"
-                                         class="actionLink"
-                                         title="Update metadata">
-                               Generate citations
-                           </g:remoteLink>
-                           <br/>
-                           <br/>
-                   </g:if>
+        <g:hiddenField name="recordType" value="${record.entityCode()}"/>
+        <g:hiddenField name="recordId" value="${record.id}"/>
+        <g:submitButton name="scheduleTask" value="ok" style="display: none;"
+                        class="fg-button ui-widget ui-state-default ui-corner-all"/>
+    </g:formRemote>
+    <br/>
+    <br/>
+</g:if>
+
+<h4>Relate</h4>
+<span id="addRelationship${record.id}" style="display: inline;">
+    <g:render template="/gTemplates/addRelationships"
+              model="[record: record, entity: record.entityCode()]"/>
+</span>
 
 
-                       %{--Amazon tags: ${record.tags}--}%
-               <span id="bibTexBloc${record.id}">
-               <g:if test="${record.bibEntry}">
-                       <b>Bib entry:</b>
+<div id="publish${record.id}" style="display: inline;  margin-left: 10px;">
+<!--todo-->
+<g:if test="${'N'.contains(entityCode)}">
+<div id="postResult${record.id}" style="display: inline">
+    <g:if test="${record.blog?.code}">
+        <g:remoteLink controller="generics" action="publish" id="${record.id}"
+                      params="[entityCode: entityCode]"
+                      update="postResult${record?.id}"
+                      title="Publish record"
+                      class="fg-button ui-widget ui-state-default ui-corner-all">
+            Publish on <b>${record.blog?.code}</b>
+        </g:remoteLink>
+    </g:if>
+</div>
 
-                           <br/>
-                           ${record.bibEntry}
 
-                       </g:if>
-                       </span>
+    <br/><br/>
+<div id="syncResult${record.id}" style="display: inline">
 
-                       <br/>
-               <g:if test="${record.isbn}">
-                       <g:remoteLink controller="operation" action="addBibtex" id="${record.id}"
-                                     update="bibTexBloc${record.id}"
-                                     class="actionLink"
-                                     title="Update metadata">
-                           Fetch Bib entry
-                       </g:remoteLink>
-                      </g:if>
-                   %{--Amazon tags: ${record.tags}--}%
+    <g:if test="${record.pomegranate?.code}">
+        <g:remoteLink controller="export" action="syncNote" id="${record.id}"
+                      params="[entityCode: entityCode]"
+                      update="syncResult${record?.id}"
+                      title="Sync record"
+                      class="fg-button ui-widget ui-state-default ui-corner-all">
+            Sync on <b>${record.pomegranate?.code}</b>
+        </g:remoteLink>
+    </g:if>
 
-                       <g:if test="${record.withAudiobook}">
-                           <br/><i>With audiobook</i>
-                       </g:if>
-                       <g:if test="${record.isAudiobook}">
-                           <br/><i>Is audiobook</i>
-                       </g:if>
-                       <g:if test="${record.isPaperOnly}">
-                           <br/><i>Paper format only</i>
-                       </g:if>
+</div>
+    </g:if>
+<g:if test="${1 == 2}">
+    <g:formRemote name="setBlogCode" style="display: inline"
+                  url="[controller: 'generics', action: 'setRecordBlog', params: [id: record.id, entityCode: record.entityCode()]]"
+                  update="notificationArea"
+                  title="Post info">
+        <g:select from="${Blog.list()}" name="blog.id" title="Blog"
+                  value="${record.blog?.id}"/>
+        <g:textField id="publishedNodeId" name="publishedNodeId" style="width: 30px"
+                     class="ui-corner-all"
+                     title="Post ID" placeholder="Post ID"
+                     value="${record?.publishedNodeId}"/>
+        <g:textField id="publishedOn" name="publishedOn" style="width: 80px"
+                     class="ui-corner-all" placeholder="Post date" title="Post date"
+                     value="${record.publishedOn ? record.publishedOn?.format('dd.MM.yyyy') : new Date().format('dd.MM.yyyy')}"/>
 
-                       <g:if test="${record.isRead}">
-                           <br/><i>Has been read</i>
-                       </g:if>
-
-                       <g:if test="${record.isPublic}">
-                           <br/><i>To be shared</i>
-                       </g:if>
-                   </div>
-               </g:if>
-
+        <g:submitButton name="add" value="Set" style=""
+                        class="fg-button  ui-widget ui-state-default ui-corner-all"/>
+    </g:formRemote>
+</g:if>
+  </div>
 
 
                <g:if test="${record.entityCode() == 'N'}">
@@ -401,7 +405,8 @@
                                      initial=""/>
 
 
-
+           <br/>
+           <br/>
 
 
                                                      %{--todo; case of x ,y--}%
@@ -573,7 +578,6 @@
 %{--date="${record.dateCreated}"/>)--}%
 %{--by ${record.insertedBy}--}%
 %{--editedBy ${record.editedBy}--}%
-    <br/>
     <b>  Created </b>${record.dateCreated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')}
 (${new PrettyTime()?.format(record.dateCreated)})
     <br/>

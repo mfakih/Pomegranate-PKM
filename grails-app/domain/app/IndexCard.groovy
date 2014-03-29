@@ -28,7 +28,7 @@ import mcs.Writing
 import mcs.parameters.WritingType
 //import app.parameters.WordSource
 import mcs.parameters.WritingStatus
-import com.bloomhealthco.jasypt.GormEncryptedStringType
+//import com.bloomhealthco.jasypt.GormEncryptedStringType
 
 class IndexCard implements Comparable {  // entity id = 16
 
@@ -145,7 +145,7 @@ class IndexCard implements Comparable {  // entity id = 16
         reaction(sqlType: 'longtext')
         extractedWords(sqlType: 'longtext')
         notes(sqlType: 'longtext')
-        password type: GormEncryptedStringType
+//        password type: GormEncryptedStringType
     }
 
     static namedQueries = {

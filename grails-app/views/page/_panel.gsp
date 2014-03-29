@@ -273,12 +273,11 @@
 
 <div id="type-7" style="">
 
-    todo
+    %{--todo--}%
 %{--<g:each in="${DataChangeAudit.findAllByEntityIdAndRecordId(144,record.id, [sort: 'dateCreated', order: 'desc'])}" var="c">--}%
 %{--<br/>--}%
 %{--<br/>--}%
    %{--${c.userName}: ${c.datePerformed}     ${c.operationType}<br/>--}%
-      todo
 
 
 
