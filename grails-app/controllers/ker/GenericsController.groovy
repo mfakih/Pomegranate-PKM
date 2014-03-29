@@ -181,10 +181,10 @@ class GenericsController {
 
     // this now the used action dispatcher
     def batchAddPreprocessor(Long commandPrefix, String block) {
-        println 'pre ' + commandPrefix
+
         def prefixRecord = CommandPrefix.get(commandPrefix)
-        def prefix = prefixRecord.prefix ?: ''
-        println 'pre ' + prefix
+        def prefix = prefixRecord.description ?: ''
+
         if (prefixRecord.multiLine){
              block.eachLine(){
                  batchAdd(prefix + block.trim())

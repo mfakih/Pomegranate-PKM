@@ -19,9 +19,10 @@
 
 package ker
 
-import org.scribe.model.Response
-import org.scribe.model.Token
-import uk.co.desirableobjects.oauth.scribe.OauthService
+//import org.scribe.model.Response
+//import org.scribe.model.Token
+//import uk.co.desirableobjects.oauth.scribe.OauthService
+
 import app.IndexCard
 import grails.converters.XML
 import app.Indicator
@@ -812,7 +813,8 @@ This presentation aims to give an overview of Pomegranate PKM system.
           println e.printStackTrace()
       }
     }
-    OauthService oauthService
+
+/*    OauthService oauthService
     def googleCalendar(){
         Token token = (Token) session[oauthService.findSessionKeyForAccessToken('google')]
 //        Token token = new Token(
@@ -842,4 +844,6 @@ This presentation aims to give an overview of Pomegranate PKM system.
         //String serviceName, Token accessToken, String verbName, String url, Map body) {
         //def response = oauthService.accessResource(url:grailsApplication.config.oauth.providers.google.api,consumer:'consumer_name',token:[key:'accesskey',secret:'accesssecret'], method:'POST')
     }
+    */
+
 } // end of class

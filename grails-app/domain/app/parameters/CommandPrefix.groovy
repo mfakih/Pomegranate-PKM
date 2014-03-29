@@ -27,10 +27,10 @@ class CommandPrefix implements Comparable {  // entity id = 29
 
     // Fields
     String code
-    String name
+    String summary
     String module
     Role role
-    String prefix
+    String description
     String style
 
 
@@ -43,8 +43,8 @@ class CommandPrefix implements Comparable {  // entity id = 29
     Date deletedOn
 
     static constraints = {
-        code(nullable: false, blank: false)
-        name(nullable: false, blank: false)
+        code()
+        summary(nullable: false, blank: false)
 
         notes()
         dateCreated()
@@ -63,11 +63,11 @@ class CommandPrefix implements Comparable {  // entity id = 29
     }
 
     public String toString() {
-        return name
+        return summary
     }
 
     public String fullString() {
-        return 'name||' + name + ';;'
+        return 'summary||' + summary + ';;'
     }
 
 
