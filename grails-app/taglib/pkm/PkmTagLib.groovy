@@ -1,5 +1,7 @@
 package pkm
 
+import app.parameters.ResourceType
+import ker.OperationController
 import org.apache.commons.lang.StringUtils
 
 import java.text.DecimalFormat
@@ -55,6 +57,103 @@ class PkmTagLib {
         } else {
             out << ''
         }
+    }
+    def listRecordFiles = { attrs ->
+        def module = attrs.module
+        def fileClass = attrs.fileClass
+        def recordId = attrs.recordId
+        def type = attrs.type
+        def filesList = []
+        try {
+            def folders = [
+                    OperationController.getPath('module.sandbox.' + module + '.path'),
+                    OperationController.getPath('module.repository.' + module + '.path')
+            ]
+            folders.each() { folder ->
+                println 'flder ' + folder
+                if (new File(folder).exists()) {
+                    new File(folder).eachFileMatch(~/${recordId}[a-z][\S\s]*\.[\S\s]*/) {
+                        filesList.add(it)
+                    }
+                }
+            }
+             folders = [
+                    OperationController.getPath('module.sandbox.' + module + '.path') + '/' + recordId,
+                    OperationController.getPath('module.repository.' + module + '.path') + '/' + recordId,
+                     OperationController.getPath('pictures.repository.path') + '/' + module + '/' + recordId
+            ]
+            folders.each() { folder ->
+                if (new File(folder).exists()) {
+                    new File(folder).eachFileMatch(~/[\S\s]*\.[\S\s]*/) {
+                        filesList.add(it)
+                    }
+                }
+            }
+            if (module == 'R'){
+                folders = [
+                        OperationController.getPath('module.sandbox.' + module + '.path') + '/' + (record.id / 100).toInteger(),
+                        OperationController.getPath('module.repository.' + module + '.path') + '/' + (record.id / 100).toInteger()
+                ]
+                folders.each() { folder ->
+                    println 'flder ' + folder
+                    if (new File(folder).exists()) {
+                        new File(folder).eachFileMatch(~/${recordId}[a-z][\S\s]*\.[\S\s]*/) {
+                            filesList.add(it)
+                        }
+                    }
+                }
+                        def typeSandboxPath = ResourceType.findByCode(type).newFilesPath
+                        def typeRepositoryPath = ResourceType.findByCode(type).repositoryPath
+  folders = [
+          typeSandboxPath + '/' + type + '/' + (recordId / 100).toInteger() + '/' + recordId,
+          typeRepositoryPath + '/' + (recordId / 100).toInteger() + '/' + recordId()
+                ]
+                folders.each() { folder ->
+                    println 'flder ' + folder
+                    if (new File(folder).exists()) {
+                        new File(folder).eachFileMatch(~/${recordId}[a-z][\S\s]*\.[\S\s]*/) {
+                            filesList.add(it)
+                        }
+                    }
+                }
+                folders = [
+                        OperationController.getPath('audio.excerpts.repository.path') + '/' + module + '/' + type + '/' + recordId,
+                        OperationController.getPath('video.excerpts.repository.path') + '/' + module + '/' + type  + '/' + recordId,
+                        OperationController.getPath('video.snapshots.repository.path') + '/' + module  + '/' + type + '/' + recordId
+                ]
+                folders.each() { folder ->
+                    if (new File(folder).exists()) {
+                        new File(folder).eachFileMatch(~/[\S\s]*\.[\S\s]*/) {
+                            filesList.add(it)
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            out << ''
+            e.printStackTrace()
+        }
+        def output = "<ul style='padding: 5px; line-height: 20px;list-style: none; font-weight: bold; font-size: 12px; text-decoration: none;'>"
+        def c = 1
+        for (i in filesList) {
+            def fileId = new Date().format('HHmmssSSS') + c //Math.floor(Math.random()*1000)
+            c++
+            session[fileId] = i.path
+            output += """<li>
+<a href="${createLink(controller: 'operation', action: 'download', id: fileId)}" class="${fileClass}"
+                          target="_blank"
+                          title="${i.path}">
+  ${i.name} <span style="font-size: smaller; color: gray;">
+${prettySizeMethod(i.size())}
+</span>
+            </a>
+</li>"""
+        }
+        output += "</ul>"
+        out << output.decodeHTML()
+//            }
+//    out << ''
     }
 
     def listFiles = { attrs ->

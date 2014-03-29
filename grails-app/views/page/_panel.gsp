@@ -26,6 +26,7 @@
     <r:layoutResources/>
 
 
+<g:render template="/gTemplates/filesListing" model="[record: record, entityCode: record.entityCode()]"/>
 <g:if test="${record.entityCode().length() == 1}">
     <div style="display: inline; text-align: right;">
         <uploader:uploader id="yourUploaderId${record.id}"
@@ -68,7 +69,7 @@
 
             <div style="padding: 3px; font-size: 13px; font-family: georgia; margin: 5px; line-height: 20px; text-align: justify">
                 <span id="descriptionBloc${record.id}">
-                    ${record.description?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}
+               Description:     ${record.description?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}
                     %{--${?.encodeAsHTML()?.replaceAll('\n', '<br/>')}--}%
                 </span>
 
@@ -194,7 +195,7 @@
 
             <g:if test="${record.notes}">
                 <br/>
-                <i style="color: #1d806f">${record.notes?.replaceAll('\n', '<br/>')}</i>
+                Notes: <i style="color: #1d806f">${record.notes?.replaceAll('\n', '<br/>')}</i>
                 <br/><hr/><br/>
             </g:if>
 
@@ -218,7 +219,7 @@
                         </g:if>
                         <g:if test="${record.fullText}">
                             <div class="${record.language == 'ar' ? 'arabicText' : ''}">
-                                ${record.fullText?.replaceAll('\n', '<br/>')}
+                       Full text:         ${record.fullText?.replaceAll('\n', '<br/>')}
                             </div>
                         </g:if>
                     </div>

@@ -169,6 +169,8 @@
 
 
 
+               <br/>
+               <br/>
                    <div style="font-size: 11px;">
                        <br/>
 
@@ -195,7 +197,7 @@
 <g:render template="/tag/addTag" model="[instance: record, entity: record.entityCode()]"/>
 
 <g:if test="${'TGRE'.contains(record.entityCode())}">
-    <h4>Add journal or planner record</h4>
+    <h4>Add journal or planner</h4>
     <g:formRemote name="scheduleTask" url="[controller: 'task', action: 'assignRecordToDate']"
                   style="display: inline;" update="below${record.entityCode()}Record${record.id}"
                   method="post">
@@ -281,30 +283,11 @@
   </div>
 
 
-               <g:if test="${record.entityCode() == 'N'}">
-                       <pkm:listFiles
-                               folder="${OperationController.getPath('module.sandbox.N.path')}"
-                               initial="${record.id}n"/>
-
-                       <pkm:listAudios fileClass="vxrFile"
-                                       folder="${OperationController.getPath('module.sandbox.N.path')}"
-                                       initial="${record.id}n"/>
 
 
-                       <pkm:listFiles
-                               folder="${OperationController.getPath('module.sandbox.N.path')}"
-                               initial="${record.id}n"/>
 
-                   </g:if>
-                   <g:if test="${record.entityCode() == 'E'}">
-                       <pkm:listFiles fileClass="himFile"
-                                      folder="${OperationController.getPath('module.repository.E.path')}"
-                                      initial="${record.id}r"/>
-                       <pkm:listFiles fileClass="newFile"
-                                      folder="${OperationController.getPath('module.sandbox.E.path')}"
-                                      initial="${record.id}r"/>
 
-                   </g:if>
+
 
                    <g:if test="${new File(OperationController.getPath('covers.sandbox.path') + '/' +
                            entityCode + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + entityCode + '/' + record.id + '.jpg')?.exists()}">
@@ -316,9 +299,8 @@
                        </a>
                    </g:if>
 
-                   <g:if test="${record.entityCode() == 'R'}">
 
-                       <g:if test="${record.entityCode() == 'B' && (new File(OperationController.getPath('covers.sandbox.path') + '/' +
+           <g:if test="${record.entityCode() == 'R' && (new File(OperationController.getPath('covers.sandbox.path') + '/' +
                                record?.type?.code + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + record.id + '.jpg')?.exists())}">
                            <br/><br/>
                            <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
@@ -342,90 +324,31 @@
 
 
 
-                       <br/>
-                       <pkm:listFiles fileClass="himFile"
-                                      folder="${record?.type?.repositoryPath}/${(record.id / 100).toInteger()}"
-                                      initial="${record.id}[a-z]"/>
-                   %{--${record.resourceType == 'ebk' ? 'b' : (record.resourceType == 'art' ? 'a' : 'n')}--}%
-
-                       <pkm:listFiles fileClass="himFile"
-                                      folder="${record?.type?.repositoryPath}/${(record.id / 100).toInteger()}/${record.id}"
-                                      initial=""/>
-                       <pkm:listFiles fileClass="vxrFile"
-                                      folder="${OperationController.getPath('video.excerpts.repository.path')}/${record.resourceType}/${record.id}"
-                                      initial=""/>
-
-                       %{--<pkm:listFiles fileClass="libFile"--}%
-                                      %{--folder="/todo/lib/${record?.type?.code}/${(record.id / 100).toInteger()}"--}%
-                                      %{--initial="${record.id}[a-z]"/>--}%
-                       %{--<pkm:listFiles fileClass="libFile"--}%
-                                      %{--folder="/todo/lib/${record?.type?.code}/${(record.id / 100).toInteger()}"--}%
-                                      %{--initial="${record.id}[a-z]"/>--}%
-                       <pkm:listFiles fileClass="libFile"
-                                       folder="${record?.type?.repositoryPath}/${(record.id / 100).toInteger()}/${record.id}"
-                                       initial=""/>
-                       <pkm:listFiles fileClass="himFile"
-                                      folder="${record?.type?.repositoryPath}/${record.resourceType}-${record.id}"
-                                      initial=""/>
-
-
-                       <pkm:listFiles fileClass="libFile"
-                                      folder="${record?.type?.repositoryPath}/${record.resourceType}-${record.id}"
-                                      initial=""/>
-
-                       <pkm:listFiles fileClass="newFile"
-                                      folder="${record?.type?.newFilesPath}/${(record.id / 100).toInteger()}"
-                                      initial="${record.id}[a-z]"/>
-
-                       <pkm:listFiles fileClass="newFile"
-                                      folder="${record?.type?.newFilesPath}/${(record.id / 100).toInteger()}/${record.id}"
-                                      initial=""/>
 
 
 
-                       <pkm:listVideos fileClass="vxrFile"
-                                       folder="${OperationController.getPath('vxr.path')}/${record.type?.code}/${record.id}"
-                                       initial=""/>
-
-                       <pkm:listAudios fileClass="vxrFile"
-                                       folder="${OperationController.getPath('audio.excerpts.repository.path')}/${record.type?.code}/${record.id}"
-                                       initial=""/>
 
 
 
-                       <pkm:listPictures fileClass="snsFile"
-                                         folder="${OperationController.getPath('video.snapshots.repository.path')}/${record.entityCode()}/${record.id}"
-                                         initial=""/>
 
 
 
-                       <g:if test="${record.withAudiobook}">
-
-                           <pkm:listFiles fileClass="vxrFile"
-                                          folder="${OperationController.getPath('audiobooks.repository.path')}/${record.id}"
-                                          initial=""/>
-
-                           <pkm:listFiles fileClass="abkFile"
-                                          folder="${OperationController.getPath('audio.excerpts.repository.path')}/${record.type?.code}/${record.id}"
-                                          initial=""/>
-
-                       </g:if>
-
-                   %{--<br/>--}%
-                   %{--<pkm:listFiles--}%
-                   %{--folder="/new/${record.resourceType}/${new DecimalFormat('00000').format(record.id).substring(0, 2)}"--}%
-                   %{--initial="${new DecimalFormat('0000').format(record.id)}${record.resourceType == 'ebk' ? 'b' : 'a'}"></pkm:listFiles>--}%
-
-                   </g:if>
 
 
-                   <pkm:listPictures fileClass="snsFile"
-                                     folder="${OperationController.getPath('pictures.repository.path')}/${record.entityCode()}/${record.id}"
-                                     initial=""/>
 
 
-           <br/>
-           <br/>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                                                      %{--todo; case of x ,y--}%
