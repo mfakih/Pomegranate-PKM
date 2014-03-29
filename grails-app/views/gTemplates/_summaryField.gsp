@@ -56,7 +56,7 @@
 
 
 <g:if test="${record.class.declaredFields.name.contains('type') && record.type}">
-    <span style="${record.type?.style}; font-size: 11px; border-top: 0.5px solid; border-bottom: 0.5px solid; padding: 1px;  margin-right: 3px;">
+    <span style="${record.type?.style}; font-size: 11px;border-bottom: 0.5px solid; padding: 1px;  margin-right: 3px;">
         ${record.type?.name}
     </span>
 

@@ -205,7 +205,7 @@ class RssController {
                         entryAuthor = { it?.course.toString() }
                         entryCategory = { it?.course.toString() }
                         break
-
+                }
 
                         title = feedTitle
                         link = feedLink
@@ -245,7 +245,6 @@ class RssController {
                 //                    }
                 //                }
                 //            }
-            }
         }
     }
 

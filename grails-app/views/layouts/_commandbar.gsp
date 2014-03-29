@@ -12,18 +12,18 @@
 
         <g:hiddenField name="sth2" value="${new java.util.Date()}"/>
         <table style="width: 98%; padding: 0px; margin: 0px;">
-            <td style=" padding: 0px; margin: 0px; width: 70%">
+            <td style=" padding: 0px; margin: 0px; width: 90%">
               Choose action:
                 <g:select name="commandPrefix"
                           from="${CommandPrefix.list()}" optionKey="id" optionValue="name"
                           style="direction: ltr; text-align: left; display: inline; width: 150px;"
-                          onchange="jQuery('#quickAddTextField').val(jQuery.getJSON('generics/commandNotes?q=' + this.value).responseText); console.log(jQuery.getJSON('generics/commandNotes?q=' + this.value).getResponseText())"
+                          onchange="jQuery.getJSON('generics/commandNotes?q=' + this.value, function(jsdata){jQuery('#quickAddTextField').val(jsdata.info)})"
                           value=""/>
 
                 </td>
         <td>
             <g:submitButton name="batch" value="Execute"
-                            style="height: 2    0px; margin: 0px; width: 100px;"
+                            style="height: 20px; margin: 0px; width: 100px;"
                             id="quickAddXcdSubmit"
                             class="fg-button ui-widget ui-state-default"/>
 
@@ -38,8 +38,7 @@
                             onkeyup="if (jQuery('#quickAddTextField').val().search(';')== -1){jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))}"
                             onblur="jQuery('#hintArea').html('')"
                             onfocus="jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))"
-                            style="font-family: monospace; width:98%; height: 60px; background: #eeeeee; margin: 0px!important;"/>
-
+                            class="commandBarTexField"/>
             </td>
             %{--<td style="width: 25px !important ; padding: 0px; margin: 0px;">--}%
 

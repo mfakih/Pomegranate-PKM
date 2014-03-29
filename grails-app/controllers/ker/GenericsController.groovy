@@ -58,7 +58,8 @@ class GenericsController {
             'S': 'app.Contact',
 
             'Y': 'cmn.Setting',
-            'X': 'mcs.parameters.SavedSearch'
+            'X': 'mcs.parameters.SavedSearch',
+            'A': 'app.parameters.CommandPrefix'
     ]
 
     static allClasses = [
@@ -3424,7 +3425,7 @@ def addContactToRecord() {
     }
 
     def commandNotes(){
-        def r = [CommandPrefix.get(params.q)?.notes] as JSON
-        render(r)
+        def r = ['info': CommandPrefix.get(params.q)?.notes]
+        render(r as JSON)
     }
 }

@@ -70,6 +70,15 @@ class CommandPrefix implements Comparable {  // entity id = 29
         return 'name||' + name + ';;'
     }
 
+
+    public String entityCode() {
+        return 'A'
+    }
+
+    public String entityController() {
+        return 'commandPrefix'
+    }
+
     int compareTo(obj) {
         if (id && obj.id)
         return id.compareTo(obj.id)

@@ -66,8 +66,35 @@
         <g:remoteLink controller="generics" action="showSelectedRecords"
                       update="centralArea"
                       title="Selected records">
-Selected records
+Selected
         </g:remoteLink>
+
+    </li>
+
+    <li>
+
+        <a id="selectAll"
+           title="Select all shown records">
+            all
+        </a>
+
+
+        &nbsp;
+        &nbsp;
+        <a id="deselectAll"
+           title="Deselect all shown records">
+            none
+        </a>
+
+    &nbsp;
+    &nbsp;
+        <g:remoteLink controller="generics" action="deselectAll"
+                      update="centralArea"
+                      before="if(!confirm('Are you sure you want to deselect all selected records from all current and previous listings? Click on Selected records to see your selections')) return false"
+                      title="Clear all current and past selections">
+            clear
+        </g:remoteLink>
+
 
     </li>
 

@@ -23,9 +23,7 @@
 
     <div class="ui-layout-east eastRegion">
 
-
         <div id="3rdPanel"></div>
-
         %{--<g:if test="${ker.OperationController.getPath('twoPanels') == 'on'}">--}%
         %{--<g:render template="/layouts/east"/>--}%
     %{--</g:if>--}%
@@ -37,10 +35,9 @@
 
     <div class="middle-center">
 
-
         <div class="inner-center">
             <div id="spinner2" style="display:none; z-index: 10000 !important">
-                <img src="${resource(dir: 'images', file: 'ajax-loader1.gif')}" alt="Spinner"
+                <img src="${resource(dir: 'images', file: 'ajax-loader1.gif')}" alt="Spinner2"
                      style="z-index: 10000 !important"/>
             </div>
 

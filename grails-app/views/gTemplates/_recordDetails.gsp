@@ -2,7 +2,7 @@
 <g:set var="entityCode"
        value="${record.metaClass.respondsTo(record, 'entityCode') ? record.entityCode() : record.class?.name?.split(/\./).last()}"/>
 
-<g:if test="${session['showLine1Only'] == 'on'}">
+<g:if test="${!session['showLine1Only'] || session['showLine1Only'] == 'on'}">
 <g:render template="/gTemplates/2ndLine" model="[record: record, entityCode: entityCode]"/>
     </g:if>
 
@@ -166,6 +166,25 @@
                            </g:if>
                        </div>
                    </g:if>
+
+
+
+                   <div style="font-size: 11px;">
+                       <br/>
+
+                       <b>Updated</b> ${record.lastUpdated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')} (<prettytime:display
+                           date="${record.lastUpdated}"/>)
+                        <br/>
+                   %{--(<prettytime:display--}%
+                   %{--date="${record.dateCreated}"/>)--}%
+                   %{--by ${record.insertedBy}--}%
+                   %{--editedBy ${record.editedBy}--}%
+                       <b>Created</b> ${record.dateCreated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')}
+                   (${new PrettyTime()?.format(record.dateCreated)})
+                       <br/>
+                       <b>Version</b> <span style="font-weight: normal">${record.version}</span>
+                   </div>
+
 
                </td>
 
@@ -566,21 +585,4 @@
     </g:if>
 </div>
     </g:if>
-
-
-<div style="font-size: 11px;">
-    <br/>
-
-    <b> Updated </b>${record.lastUpdated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')} (<prettytime:display
-        date="${record.lastUpdated}"/>)
-
-%{--(<prettytime:display--}%
-%{--date="${record.dateCreated}"/>)--}%
-%{--by ${record.insertedBy}--}%
-%{--editedBy ${record.editedBy}--}%
-    <b>  Created </b>${record.dateCreated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')}
-(${new PrettyTime()?.format(record.dateCreated)})
-    <br/>
-    <b>Version</b> <span style="font-weight: normal">${record.version}</span>
-</div>
 

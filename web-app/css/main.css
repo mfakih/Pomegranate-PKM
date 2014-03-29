@@ -14,6 +14,7 @@
 }
 html * {
     margin: 0px;
+
     /*padding: 0; SELECT NOT DISPLAYED CORRECTLY IN FIREFOX */
 }
 
@@ -22,7 +23,7 @@ html * {
 #spinner2 {
     position: fixed;
     top: 20%;
-    left: 70%;
+    left: 90%;
     margin-left: -50px;
     /*half width of the spinner gif */
     margin-top: -50px;
@@ -35,10 +36,13 @@ html * {
 }
 
 body {
-    /*background: #506e6a;*/
+    background: #D8D4C9;
     color: #333;
     /*line-height: 1.4;*/
     font: 12px arial;
+
+    padding-left: 15px !important;
+    padding-right: 15px !important;
 /*'Lucida Sans Unicode';*/
         /*overflow: hidden;*/
     /*margin: 2px;*/
@@ -46,9 +50,8 @@ body {
 
     /*float: left;*/
     /*margin: 0 15px 10px 15px;*/
-    margin: auto;
+    /*margin: auto;*/
     /*width: 90%;*/
-    background: #f9f9f9
 }
 
 a:link, a:visited, a:hover {
@@ -221,10 +224,10 @@ input:focus, textarea:focus {
 
 #quickAddTextField, #quickAddNote {
  
-    border-bottom: 1px solid gray;
-    border-top: 0px;
-    border-left: 1px;
-    border-right: 0px;
+    /*border-bottom: 1px solid gray;*/
+    /*border-top: 0px;*/
+    /*border-left: 1px;*/
+    /*border-right: 0px;*/
     /*width:650px; min-width:650px !important; */
 /*     background: #eeeeee;  */
     margin: 2px;
@@ -233,8 +236,8 @@ input:focus, textarea:focus {
 }
 
 #quickAddTextField:focus{
-   border-top: 1px;
-       background: #EEEEEE;
+   border: 1px solid #9FA19E;
+       background: #ffffff;
     
 }
 
@@ -968,6 +971,7 @@ ul.ui-tabs-nav {
 .ui-layout-resizer {
     background-color: #e8e7e7 !important;
     border: 0px !important;
+    display: none !important;
 }
 
 .ui-layout-center {
@@ -980,16 +984,14 @@ ul.ui-tabs-nav {
     /*background: #ffffff !important;*/
     padding: 0px !important;
     /*height: 30px !important;*/
-
     border: 0;
-
     /*border-bottom: 1px #000000;*/
-
 }
 
 
 .ui-layout-resizer-open {
     /*height: 0px !important;*/
+    display: none;
 }
 
 
@@ -1014,7 +1016,7 @@ ul.ui-tabs-nav {
 .record-selection {
     width: 20px;
     font-size: 10px;
-    text-align: center;
+    text-align: left;
     white-space: nowrap;
 }
 
@@ -1082,12 +1084,14 @@ ul.ui-tabs-nav {
     padding-right: 2px;
     /*font-size: 11px;*/
     text-align: left;
+    vertical-align: top !important;
 }
 .record-summary a {
     font-family: tahoma;
 /*"Lucida Sans";*/
     font-size: 14px;
     text-align: left;
+    vertical-align: top !important;
 }
 
 .record-status {
@@ -1525,10 +1529,19 @@ ul.ui-autocomplete.ui-menu {
     z-index: 100000;
 }
 .accordionHeader{
-    color: white;
-background: #95959e;
+    color: white !important;
+background: #9FA19E;
 border-top: 1px solid #6d6d74;
 border-bottom: 1px solid #6d6d74;
 margin-top: 3px;
 margin-bottom: 3px;
+
+    /*4e5f6e;*/
+    font-weight: bold;
+    font-size: 12px;
+    /*margin: .2em 0 .2em 0;*/
+    padding: 3px;
+    /*margin-left: 1em;*/
+    font-family: "DejaVu Sans Mono";
+
 }

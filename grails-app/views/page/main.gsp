@@ -56,7 +56,7 @@
 
 
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'fileuploader.js')}"></script>--}%
-<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.flipcountdown.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.flipcountdown.js')}"></script>--}%
 <script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap.min.js')}"></script>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap-global-bind.min.js')}"></script>
 
@@ -67,23 +67,23 @@
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.purr.js')}"></script>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'fg.menu.js')}"></script>
 
-<link rel="stylesheet" href="${resource(dir: 'css/minimal', file: 'minimal.css')}"/>
-<link rel="stylesheet" href="${resource(dir: 'css/minimal', file: 'grey.css')}"/>
+%{--<link rel="stylesheet" href="${resource(dir: 'css/minimal', file: 'minimal.css')}"/>--}%
+%{--<link rel="stylesheet" href="${resource(dir: 'css/minimal', file: 'grey.css')}"/>--}%
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.continuousCalendar.css')}"/>
 
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'icheck.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'icheck.js')}"></script>--}%
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.continuousCalendar-latest.js')}"></script>
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script>--}%
 <script type="text/javascript" src="${resource(dir: 'js', file: 'raphael-min.js')}"></script>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'morris.js')}"></script>
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script>--}%
 
 %{--<r:layoutResources/>--}%
 
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>
+%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>--}%
 
 
 <script type="text/javascript">
@@ -207,11 +207,11 @@
         // this layout could be created with NO OPTIONS - but showing some here just as a sample...
         // myLayout = jQuery('body').layout(); -- syntax with No Options
 
-        jQuery('input').iCheck({
-            checkboxClass: 'icheckbox_minimal-grey',
-            radioClass: 'iradio_minimal-grey',
-            increaseArea: '-20%' // optional
-        });
+//        jQuery('input').iCheck({
+//            checkboxClass: 'icheckbox_minimal-grey',
+//            radioClass: 'iradio_minimal-grey',
+//            increaseArea: '-20%' // optional
+//        });
 
 //        jQuery('#searchForm').load('generics/hqlSearchForm/T')
 
@@ -340,20 +340,20 @@
             center__paneSelector: ".outer-center",
             //	reference only - these options are NOT required because 'true' is the default
             closable: true	// pane can open & close
-            , resizable: true	// when open, pane can be resized
+            , resizable: false	// when open, pane can be resized
             , slidable: true	// when closed, pane can 'slide' open over other panes - closes on mouse-out
             , livePaneResizing: true,
-            spacing_closed: 20		// big resizer-bar when open (zero height)
+            spacing_closed: 0		// big resizer-bar when open (zero height)
 
             //	some resizing/toggling settings
             // , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
             ,north__closable: false
             , north__togglerLength_closed: '100%'	// toggle-button is full-width of resizer-bar
-            , north__spacing_closed: 20		// big resizer-bar when open (zero height)
-            , north__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+            , north__spacing_closed: 0		// big resizer-bar when open (zero height)
+            , north__resizable: true	// OVERRIDE the pane-default of 'resizable=true'
             , south__resizable: true	// OVERRIDE the pane-default of 'resizable=true'
             , south__spacing_open: 0		// no resizer-bar when open (zero height)
-            , south__spacing_closed: 20		// big resizer-bar when open (zero height)
+            , south__spacing_closed: 0		// big resizer-bar when open (zero height)
 
             //	some pane-size settings
             , west__minSize: 100, east__minSize: 100, east__maxSize: .5 // 50% of layout width
@@ -383,8 +383,8 @@
 //                west__paneSelector: ".middle-west",
 //                east__paneSelector: ".middle-east",
 //                west__size: 100, east__size: 100,
-                spacing_open: 8  // ALL panes
-                , spacing_closed: 12 // ALL panes
+                spacing_open: 0  // ALL panes
+                , spacing_closed: 0 // ALL panes
 
                 // INNER-LAYOUT (child of middle-center-pane)
                 , center__childOptions: {
@@ -395,8 +395,8 @@
                     south__resizable: true,
 //                    west__size: 75, east__size: 75,
 //                    north_size: 'auto',
-                    spacing_open: 8  // ALL panes
-                    , spacing_closed: 8  // ALL panes
+                    spacing_open: 0  // ALL panes
+                    , spacing_closed: 0  // ALL panes
 //                    , west__spacing_closed: 12,
 //                    east__spacing_closed: 12
                 }

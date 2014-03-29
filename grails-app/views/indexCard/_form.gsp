@@ -16,6 +16,19 @@
                               from="${WritingType.list([sort: 'name'])}" optionKey="id" optionValue="name"
                               value="${indexCardInstance?.type?.id ?: (session['lastIcdTypeId'] ?: null)}"
                               noSelection="${['null': 'No type']}"/>
+
+        <g:select name="writing.id" from="${mcs.Writing.list([sort: 'summary'])}" style="width: 100px;"
+                  optionKey="id" value="${indexCardInstance?.writing?.id ?: (writingId ?: null)}"
+                  noSelection="['null': 'No writing']"/>
+        <g:select name="course.id" style="width: 100px;" from="${Course.list([sort: 'code'])}"
+                  value="${indexCardInstance?.course?.id}" optionKey="id" noSelection="${['null': 'No course']}"/>
+
+        <g:textField placeholder="Page" id="pages" name="pages" style="width: 50px" class="ui-corner-all"
+                     value="${indexCardInstance?.pages}"/>
+
+        <g:textField placeholder="Lang." name="language" style="width: 50px" value="${indexCardInstance?.language}"/>
+        %{--<g:textField name="orderNumber"  value="${indexCardInstance?.orderNumber}" style="width: 50px;"/>--}%
+
         <br/>
         <g:textField placeholder="Summary"  id="summary" name="summary" style="width: 99%;" class="ui-corner-all"
                      value="${indexCardInstance?.summary}"/>
@@ -28,8 +41,8 @@
 
     </td>
     </tr>
-        <tr>
-    <td valign="top" class="value ${hasErrors(bean: indexCardInstance, field: 'source', 'errors')}">
+        %{--<tr>--}%
+    %{--<td valign="top" class="value ${hasErrors(bean: indexCardInstance, field: 'source', 'errors')}">--}%
 
 
         %{--<g:select name="source.id" class="ui-corner-all"--}%
@@ -39,25 +52,16 @@
     %{--</td>  <td valign="top" class="value ${hasErrors(bean: indexCardInstance, field: 'writing', 'errors')}">--}%
 
         %{--<br/>--}%
-        <g:select name="writing.id" from="${mcs.Writing.list([sort: 'summary'])}" style="width: 150px;"
-                  optionKey="id" value="${indexCardInstance?.writing?.id ?: (writingId ?: null)}" noSelection="['null': 'No writing']"/>
 
         %{--B---}%
         %{--<g:textField placeholder="Book ID"  id="book.id" name="book.id" style="width: 60px" class="ui-corner-all"--}%
                      %{--value="${indexCardInstance?.book?.id ?: (bookId ?: null)}"/>--}%
 
-        <g:textField placeholder="Page"  id="pages" name="pages" style="width: 50px" class="ui-corner-all"
-                     value="${indexCardInstance?.pages}"/>
-
-        <g:select name="course.id" style="width: 200px;" from="${Course.list([sort: 'code'])}"
-                  value="${indexCardInstance?.course?.id}" optionKey="id" noSelection="${['null': 'No course']}"/>
-      <g:textField placeholder="Lang." name="language" style="width: 50px" value="${indexCardInstance?.language}"/>
-        %{--<g:textField name="orderNumber"  value="${indexCardInstance?.orderNumber}" style="width: 50px;"/>--}%
 
 
 
-</td>
-</tr>
+%{--</td>--}%
+%{--</tr>--}%
 
 
 

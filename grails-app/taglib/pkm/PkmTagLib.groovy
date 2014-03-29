@@ -29,7 +29,7 @@ class PkmTagLib {
               }
       //  background = 'gray'
         out << """
-<div class="ui-progressbar ui-widget ui-widget-content ui-corner-all" style=" float: right;width: 70px; height: 8px; display: inline-block">
+<div class="ui-progressbar ui-widget ui-widget-content ui-corner-all" style=" float: right;width: 40px; height: 8px; display: inline-block">
    <div style="width: ${attrs.percent}%; background: ${background};" class="ui-progressbar-value ui-widget-header ui-corner-left"></div>
 </div>
         """

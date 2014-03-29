@@ -1,6 +1,6 @@
 <%@ page import="ker.OperationController; mcs.Course; mcs.Department; org.apache.commons.lang.StringUtils; cmn.Setting" %>
 
-<h4 class="accordionHeader" onclick="toggleAdd('#accordionAdd', 'addPanel')">Data entry & import</h4>
+<div class="accordionHeader" onclick="toggleAdd('#accordionAdd', 'addPanel')">Data entry & import</div>
 
 
 <div id="accordionAdd" style="width: 200px; padding: 3px;">
@@ -127,12 +127,72 @@
 <sec:ifAnyGranted roles="ROLE_ADMIN">
     <h3 class="">
 
+        <a>Parameters</a>
+    </h3>
+
+    <div>
+
+        <li>Manage parameters
+
+            <ul style="list-style: square">
+
+                <g:each in="${[
+                        ['app.parameters.Blog', 'Blog'],
+                        ['app.parameters.Markup', 'Markup'],
+                        ['app.parameters.Pomegranate', 'Pomegranate'],
+                        ['mcs.parameters.WorkStatus', 'Work status'],
+                        ['mcs.parameters.WritingStatus', 'Writing status'],
+                        ['mcs.parameters.ResourceStatus', 'Resource status'],
+                        ['app.parameters.ResourceType', 'Resource type'],
+
+                        ['mcs.parameters.Location', 'Location'],
+                        ['mcs.parameters.Context', 'Context'],
+
+                        ['mcs.parameters.GoalType', 'Goal type'],
+                        ['mcs.parameters.PlannerType', 'Planner type'],
+                        ['mcs.parameters.JournalType', 'Journal type'],
+                        ['mcs.parameters.WritingType', 'Writing type'],
+
+
+
+
+                        ['mcs.Department', 'Department'],
+                        ['mcs.Course', 'Course'],
+
+
+                        ['app.Indicator', 'Indicator'],
+                        ['app.PaymentCategory', 'Payment category'],
+                        ['mcs.parameters.RelationshipType', 'Relationship type']
+
+                ]}"
+                        var="i">
+
+                    <g:remoteLink controller="generics" action="getAddForm"
+                                  params="[entityController: i[0], isParameter: true,
+                                          updateRegion: 'centralArea']"
+                                  update="centralArea">
+                        <li>
+                            <span style="font-size: 12px; padding: 2px;">
+                                ${i[1]} (${grailsApplication.classLoader.loadClass(i[0]).count()})
+                            </span>
+                        </li>
+                    </g:remoteLink>
+
+                </g:each>
+            </ul>
+
+        </li>
+
+
+    </div>
+      <h3 class="">
+
         <a>Administration</a>
     </h3>
 
     <div>
-        <ul>
-        <li>Configuration
+        %{--<ul>--}%
+        %{--<li>Configuration--}%
 
             <ul style="list-style: square">
 
@@ -157,58 +217,6 @@
     </li>
 </g:each>
     </ul>
-        </li>
-
-            <li>Manage parameters
-
-                <ul style="list-style: square">
-
-                    <g:each in="${[
-                            ['app.parameters.Blog', 'Blog'],
-                            ['app.parameters.Markup', 'Markup'],
-                            ['app.parameters.Pomegranate', 'Pomegranate'],
-                            ['mcs.parameters.WorkStatus', 'Work status'],
-                            ['mcs.parameters.WritingStatus', 'Writing status'],
-                            ['mcs.parameters.ResourceStatus', 'Resource status'],
-                            ['app.parameters.ResourceType', 'Resource type'],
-
-                            ['mcs.parameters.Location', 'Location'],
-                            ['mcs.parameters.Context', 'Context'],
-
-                            ['mcs.parameters.GoalType', 'Goal type'],
-                            ['mcs.parameters.PlannerType', 'Planner type'],
-                            ['mcs.parameters.JournalType', 'Journal type'],
-                            ['mcs.parameters.WritingType', 'Writing type'],
-
-
-
-
-                            ['mcs.Department', 'Department'],
-                            ['mcs.Course', 'Course'],
-
-
-                            ['app.Indicator', 'Indicator'],
-                            ['app.PaymentCategory', 'Payment category'],
-                            ['mcs.parameters.RelationshipType', 'Relationship type']
-
-                    ]}"
-                            var="i">
-
-                        <g:remoteLink controller="generics" action="getAddForm"
-                                      params="[entityController: i[0], isParameter: true,
-                                              updateRegion: 'centralArea']"
-                                      update="centralArea">
-                            <li>
-                                <span style="font-size: 12px; padding: 2px;">
-                                    ${i[1]} (${grailsApplication.classLoader.loadClass(i[0]).count()})
-                                </span>
-                            </li>
-                        </g:remoteLink>
-
-                    </g:each>
-                </ul>
-
-            </li>
 
 <li>
             <g:remoteLink controller="generics" action="logicallyDeletedRecords"
@@ -252,7 +260,7 @@
 
 
 <g:if test="${OperationController.getPath('coursesPanel.enabled')?.toLowerCase() == 'yes' ? true : false}">
-<h4 class="accordionHeader" onclick="toggleAdd('#accordionCourses', 'coursesPanel')">Projects & Courses</h4>
+<div class="accordionHeader" onclick="toggleAdd('#accordionCourses', 'coursesPanel')">Projects & Courses</div>
 <div id="accordionCourses"
      style="width: 200px; padding: 3px;">
 

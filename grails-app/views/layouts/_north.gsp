@@ -22,6 +22,20 @@
     </a>
 </sub>
       </g:if>
+
+&nbsp;
+
+    <% Calendar c = new GregorianCalendar(); c.setLenient(false); c.setMinimalDaysInFirstWeek(4);
+    c.setFirstDayOfWeek(java.util.Calendar.MONDAY)
+    %>
+    <b>Week ${c.get(Calendar.WEEK_OF_YEAR)}</b>
+&nbsp;
+
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 &nbsp;
 <g:if test="${OperationController.getPath('kanban.enabled')?.toLowerCase() == 'yes' ? true : false}">
 <g:link controller="page" action="kanbanCrs"
@@ -84,6 +98,9 @@
     <span class="ui-icon ui-icon-star"></span>
 </g:remoteLink>
 &nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 
 
 
@@ -112,26 +129,11 @@
 
 
 
-    <g:formRemote name="searchField" url="[controller: 'generics', action: 'quickSearch']" update="centralArea"
-              method="post" style="display: inline; "
-              onComplete="">
-    %{--<g:textField id="courseTest" class="ui-corner-all" style="width:150px;" name="q"/>--}%
-    <g:textField id="searchField" name="q" style="width: 150px; margin: 1px; background: #ffffff"
-                 type="text"
-                 placeholder="Quick search..."
-                 title=""/>
-    <g:submitButton class="" style="visibility: hidden;"
-                    name="submit" value="s"/>
-</g:formRemote>
-
 &nbsp;
-
-    <% Calendar c = new GregorianCalendar(); c.setLenient(false); c.setMinimalDaysInFirstWeek(4);
-    c.setFirstDayOfWeek(java.util.Calendar.MONDAY)
-    %>
-    <b>Week ${c.get(Calendar.WEEK_OF_YEAR)}</b>
 &nbsp;
-
+&nbsp;
+&nbsp;
+&nbsp;
 
 
     <sec:ifLoggedIn>
@@ -156,6 +158,26 @@
     </sec:ifNotLoggedIn>
 
 &nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+
+
+    <g:formRemote name="searchField" url="[controller: 'generics', action: 'quickSearch']" update="centralArea"
+                  method="post" style="display: inline; "
+                  onComplete="">
+    %{--<g:textField id="courseTest" class="ui-corner-all" style="width:150px;" name="q"/>--}%
+        <g:textField id="searchField" name="q" style="width: 150px; margin: 1px; background: #ffffff"
+                     type="text"
+                     placeholder="Quick search..."
+                     title=""/>
+        <g:submitButton class="" style="visibility: hidden;"
+                        name="submit" value="s"/>
+    </g:formRemote>
+
 
 
 </div>

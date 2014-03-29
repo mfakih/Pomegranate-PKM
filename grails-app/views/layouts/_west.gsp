@@ -2,7 +2,7 @@
 
 
 <g:if test="${OperationController.getPath('rangeCalendar.enabled')?.toLowerCase() == 'yes' ? true : false}">
-<h4 class="accordionHeader" onclick="toggleAdd('#dateRange1', 'calendarPanel')">Calendar</h4>
+<div class="accordionHeader" onclick="toggleAdd('#dateRange1', 'calendarPanel')">Calendar</div>
 <div id="dateRange1" style="">
     <input type="hidden" class="startDate" id="range_start">
     <input type="hidden" class="endDate" id="range_end">
@@ -11,7 +11,7 @@
 
 
 
-<h4 class="accordionHeader" onclick="toggleAdd('#accordionSearch', 'searchPanel')">Search</h4>
+<div class="accordionHeader" onclick="toggleAdd('#accordionSearch', 'searchPanel')">Search</div>
 <div id="accordionSearch"
      style="width: 200px; padding: 3px;">
 
@@ -167,7 +167,7 @@
 
 </div>
 
-<h4 class="accordionHeader" onclick="toggleAdd('#accordionModules', 'modulesPanel')">Modules</h4>
+<div class="accordionHeader" onclick="toggleAdd('#accordionModules', 'modulesPanel')">Modules</div>
 
 <div id="accordionModules"
      style="width: 200px; padding: 3px;">
@@ -236,8 +236,9 @@
 
 </g:if>
 
-<br/>
+
 <g:if test="${OperationController.getPath('journal.enabled')?.toLowerCase() == 'yes' ? true : false}">
+    <br/>
 <h3><a>
     <span class="J-bkg"
           style="font-family: 'Lucida Console'; margin-right: 3px; padding-right: 2px; font-weight: bold;">J</span>
@@ -320,8 +321,9 @@
     </div>
 </g:if>
 
-<br/>
+
 <g:if test="${OperationController.getPath('writings.enabled')?.toLowerCase() == 'yes' ? true : false}">
+    <br/>
     <h3><a>
         <span class="W-bkg"
               style="font-family: 'Lucida Console'; margin-right: 3px; padding-right: 2px; font-weight: bold;">W</span>

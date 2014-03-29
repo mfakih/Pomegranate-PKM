@@ -224,7 +224,7 @@ grails {
 }
 remove this line */
 grails.dbconsole.enabled=true
-grails.dbconsole.urlRoot='/admin/dbconsole'
+grails.dbconsole.urlRoot='/dbconsole'
 
 
 /* from official doc:  Changing any of these values will result in different results (and will also prevent the ability to decrypt previously encrypted information).

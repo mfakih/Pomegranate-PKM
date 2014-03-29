@@ -47,7 +47,7 @@
 
         <span class="${entityCode}-bkg ID-bkg ${record.class.declaredFields.name.contains('deletedOn') && record.deletedOn ? 'deleted' : ''}" style="padding: 3px; margin-right: 3px; color: gray;">
               <b style="color: white;">  ${entityCode}</b>
-        </span>
+        </span> <sup>${record.id}</sup>
 
     </g:remoteLink>
     %{--<sup style="color: #6E6E6E; font-size: 10px; padding-top: 3px;">${record.id}</sup>--}%
@@ -61,7 +61,7 @@
 </td>
 
 <td colspan="10" rowspan="2" class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
-    style="font-family: Arial; width: 90% !important;: font-size: 14px; color: #105CB6; line-height: 20px; ">
+    style="font-family: Arial; width: 80% !important;: font-size: 13px; color: #105CB6; line-height: 17px; ">
 
 
 <g:remoteLink controller="generics" action="showDetails"
@@ -153,7 +153,7 @@
 
     <td class="record-selection">
 
-        <g:checkBox name="select-${record.id}-${entityCode}" title="Select record" class="acheckbox"
+        <g:checkBox name="select-${record.id}-${entityCode}" title="Select record"
                     value="${session[entityCode + record.id] == 1}"
                     onchange="jQuery('#logRegion').load('generics/selectOnly/${entityCode}${record.id}')"
                     onclick="jQuery('#logRegion').load('generics/selectOnly/${entityCode}${record.id}')"/>

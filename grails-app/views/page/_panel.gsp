@@ -27,7 +27,7 @@
 
 
 <g:if test="${record.entityCode().length() == 1}">
-    <div style="float: right; display: inline">
+    <div style="display: inline; text-align: right;">
         <uploader:uploader id="yourUploaderId${record.id}"
                            url="${[controller: 'import', action: 'upload']}"
                            params="${[recordId: record.id, entityCode: record.entityCode()]}">
@@ -37,8 +37,7 @@
             Attach...
         </uploader:uploader>
     </div>
-
-    <div id="subUploadInPanel"></div>
+        <div id="subUploadInPanel"></div>
 </g:if>
 <g:if test="${record.entityCode() == 'R'}">
     <h2>Resource</h2>
