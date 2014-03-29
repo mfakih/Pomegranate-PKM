@@ -15,7 +15,7 @@
             <td style=" padding: 0px; margin: 0px; width: 90%">
               Choose action:
                 <g:select name="commandPrefix"
-                          from="${CommandPrefix.list()}" optionKey="id" optionValue="name"
+                          from="${CommandPrefix.list()}" optionKey="id" optionValue="summary"
                           style="direction: ltr; text-align: left; display: inline; width: 150px;"
                           onchange="jQuery.getJSON('generics/commandNotes?q=' + this.value, function(jsdata){jQuery('#quickAddTextField').val(jsdata.info)})"
                           value=""/>

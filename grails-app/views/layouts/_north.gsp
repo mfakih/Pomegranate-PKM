@@ -35,8 +35,6 @@
 &nbsp;
 &nbsp;
 &nbsp;
-&nbsp;
-&nbsp;
 <g:if test="${OperationController.getPath('kanban.enabled')?.toLowerCase() == 'yes' ? true : false}">
 <g:link controller="page" action="kanbanCrs"
         class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
@@ -100,7 +98,6 @@
 &nbsp;
 &nbsp;
 &nbsp;
-&nbsp;
 
 
 
@@ -128,9 +125,6 @@
 
 
 
-
-&nbsp;
-&nbsp;
 &nbsp;
 &nbsp;
 &nbsp;
@@ -160,11 +154,6 @@
 &nbsp;
 &nbsp;
 &nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-
-
 
     <g:formRemote name="searchField" url="[controller: 'generics', action: 'quickSearch']" update="centralArea"
                   method="post" style="display: inline; "
