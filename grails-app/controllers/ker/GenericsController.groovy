@@ -104,6 +104,7 @@ class GenericsController {
             app.IndicatorData,
             app.Payment,
 
+
             mcs.Writing,
             app.IndexCard,
             app.Contact,
@@ -159,8 +160,11 @@ class GenericsController {
                             break
                         case 't': batchAddTagToRecords(commandBody)
                             break
-                        case 'x': batchDeletedSecords(commandBody)
+                        case 'x': batchLogicallyDeleteRecords(commandBody)
                             break
+                        case 'X': batchPhysicallyDeleteRecords(commandBody)
+                            break
+
                         case 'u': updateCommand(commandBody)
                             break
                         case 'U': updateCommandWithId(commandBody)
@@ -244,8 +248,12 @@ class GenericsController {
                                 break
                             case 't': batchAddTagToRecords(commandBody)
                                 break
-                            case 'x': batchDeletedSecords(commandBody)
+                            case 'x': batchLogicallyDeleteRecords(commandBody)
                                 break
+
+                            case 'X': batchPhysicallyDeleteRecords(commandBody)
+                                break
+
                             case 'r': randomGet(commandBody)
                                 break
                             case '+': parameterAdd(commandBody)
@@ -1045,7 +1053,7 @@ def addContactToRecord() {
                 title: 'Updated records'])
     }
 
-   def batchDeletedSecords(String type) {
+   def batchLogicallyDeleteRecords(String type) {
 
         def list = []
 
@@ -1062,6 +1070,19 @@ def addContactToRecord() {
         render(template: '/gTemplates/recordListing', model: [
                 list: list,
                 title: 'Trashed records'])
+    }
+
+  def batchPhysicallyDeleteRecords(String type) {
+
+        selectedRecords.each() {
+            if (it.value == 1 && it.key.substring(0, 1).toLowerCase() == type.toLowerCase()) {
+                def record = grailsApplication.classLoader.loadClass(entityMapping[it.key.substring(0, 1)]).get(it.key.substring(1))
+
+               record.delete()
+            }
+        }
+
+        render(template: '/layouts/achtung', model: [message: 'Records physically deleted'])
     }
 
 
@@ -1913,8 +1934,8 @@ def addContactToRecord() {
 //        def queryCriteria = transformMcsNotation(input)['queryCriteria']
 //        def queryHead = 'from ' + entityMapping[entityCode] + ' where '
 //        def queryParams = ''
-        } catch (Exception) {
-            ;//          render 'Exception in quick add' + e
+        } catch (Exception e) {
+            //          render 'Exception in quick add' + e
                   print 'Exception in quick add' + e
         }
 
@@ -2684,7 +2705,7 @@ def addContactToRecord() {
                                     core.matches(/^\d\d\d\.[0-9]{2}/)||
                                     core.matches(/^\d\d\d[\_][0-9]{1,4}$/)||
                                     core.matches(/^\d\d\d[\_][0-9]{1,4}[\.][0-9]{2}$/)){
-                                properties[dateField] = SupportService.fromWeekDateAsDateTimeFullSyntax(core)
+                                properties[dateField] = supportService.fromWeekDateAsDateTimeFullSyntax(core)
                             }
                             else {
                             def format = Setting.findByName('date.format')
@@ -2703,11 +2724,10 @@ def addContactToRecord() {
                                     core.matches(/^\d\d\d\.[0-9]{2}/) ||
                                     core.matches(/^\d\d\d[\_][0-9]{1,4}$/) ||
                                     core.matches(/^\d\d\d[\_][0-9]{1,4}[\.][0-9]{2}$/)) {
-                                properties[dateField] = SupportService.fromWeekDateAsDateTimeFullSyntax(core)
+                                properties[dateField] = supportService.fromWeekDateAsDateTimeFullSyntax(core)
                             } else {
                                 def format = Setting.findByName('date.format')
                                 properties[dateField] = Date.parse(format ? format.value : 'dd.MM.yyyy', core)
-                                // todo setting
                             }
                         }
                     }

@@ -26,7 +26,7 @@
 
 
 
-<td colspan="8" style="width: 50%">
+<td  style="width: 90%">
 %{--<span style="border: 1px solid #5c5c5c; border-radius: 5px">--}%
 
 <g:if test="${record.class.declaredFields.name.contains('course') && record.course}">
@@ -101,7 +101,7 @@
                   update="quickEditType${record.id}"
                   title="Edit type">
         <span id="quickEditType${record.id}">
-            ${record.type?.code ?: '#'}
+            ${record.type?.code ?: 'No type'}
         </span>
     </g:remoteLink>
 </g:if>
@@ -113,7 +113,7 @@
                   update="quickEditType${record.id}"
                   title="Edit status">
         <span id="quickEditType${record.id}">
-            ${record.type?.code ?: '#'}
+            ${record.type?.code ?: 'No type'}
         </span>
     </g:remoteLink>
 
@@ -167,7 +167,7 @@
 %{--</g:if>--}%
 
 <g:if test="${entityCode == 'I'}">
-    ${record.category}
+    %{--${record.category}--}%
 </g:if>
 
 
@@ -189,7 +189,7 @@
                   update="quickEditStatus${record.id}"
                   title="Edit status">
         <span id="quickEditStatus${record.id}">
-            ${record.status?.code ?: '?...'}
+            ${record.status?.code ?: 'No status'}
         </span>
     </g:remoteLink>
 </g:if>
@@ -201,7 +201,7 @@
                   title="Edit status">
         <span id="quickEditStatus${record.id}">
 
-            ${record.status?.code ?: '?...'}
+            ${record.status?.code ?: 'No status'}
         </span>
     </g:remoteLink>
 </g:if>
@@ -212,7 +212,7 @@
                   update="quickEditStatus${record.id}"
                   title="Edit status">
         <span id="quickEditStatus${record.id}">
-            ${record.status?.code ?: '?...'}
+            ${record.status?.code ?: 'No status'}
         </span>
     </g:remoteLink>
 </g:if>
@@ -229,7 +229,7 @@
                 <b style="color: red">${record.status?.code ?: '?...'}</b>
             </g:if>
             <g:else>
-                ${record.status?.code ?: '?...'}
+                ${record.status?.code ?: 'No status'}
             </g:else>
         </span>
     </g:remoteLink>
@@ -260,8 +260,8 @@
                           valueId: (record.blog?.id ?: null), updateDiv: 'quickEditBlog' + record.id]"
                   update="quickEditBlog${record.id}"
                   title="ID ${record.publishedNodeId ?: '?'} ${record.publishedOn ? ' on ' + record.publishedOn?.format('dd.MM.yyyy HH:mm') : ''}">
-        &
-    </g:remoteLink><span id="quickEditBlog${record.id}"><span>${record.blog?.code ? record.blog?.code : '...'}</span> </span>
+        <span id="quickEditBlog${record.id}"><span>${record.blog?.code ? record.blog?.code : 'No blog'}</span> </span>
+    </g:remoteLink>
 </g:if>
 
 
@@ -272,8 +272,8 @@
                           valueId: (record.pomegranate?.id ?: null), updateDiv: 'quickEditpomegranate' + record.id]"
                   update="quickEditpomegranate${record.id}"
                   title="ID ${record.syncedId ?: '?'} ${record.syncedOn ? ' on ' + record.syncedOn?.format('dd.MM.yyyy HH:mm') : ''}">
-        &
-    </g:remoteLink><span id="quickEditpomegranate${record.id}"><span>${record.pomegranate?.code ? record.pomegranate?.code : '...'}</span> </span>
+        <span id="quickEditpomegranate${record.id}"><span>${record.pomegranate?.code ? record.pomegranate?.code : 'No PKM'}</span> </span>
+    </g:remoteLink>
 </g:if>
 
 
@@ -285,11 +285,11 @@
                           valueId: (record.percentCompleted ?: null), updateDiv: 'quickEditPercent' + record.id]"
                   update="quickEditPercent${record.id}"
                   title="Edit percent completed">
-        %
-    </g:remoteLink>
-    <span id="quickEditPercent${record.id}">
-        <span>${record.percentCompleted ? record.percentCompleted + '' : '...'}</span>
+        <span id="quickEditPercent${record.id}">
+        <span>${record.percentCompleted ? record.percentCompleted + '' : 'No %'}</span>
     </span>
+    </g:remoteLink>
+
 </g:if>
 
 
@@ -299,8 +299,8 @@
                           valueId: (record.priority ?: null), updateDiv: 'quickEditPriority' + record.id]"
                   update="quickEditPriority${record.id}"
                   title="Edit priority ">
-        p
-    </g:remoteLink><span id="quickEditPriority${record.id}"> <span>${record.priority ? '' + record.priority : '...'}</span></span>
+        <span id="quickEditPriority${record.id}"> <span>${record.priority ? '' + record.priority : 'No priority'}</span></span>
+    </g:remoteLink>
 
 
 </g:if>
@@ -335,7 +335,7 @@
             %{--${IndexCard.countByBook(mcs.Book.get(record.id))} <sup>C</sup>--}%
             </g:if>
 
-            <g:if test="${entityCode == 'I'}">
+            <g:if test="${entityCode == 'K'}">
                 # <i>${IndicatorData.countByIndicator(record)}</i>
 
             </g:if>
@@ -393,28 +393,14 @@
     </g:remoteLink>
 </td>
 
-<g:if test="${'JWN'.contains(entityCode) && record.blog}">
-
-    <td class="actionTd">
-
-
-        <g:remoteLink controller="generics" action="publish" id="${record.id}"
-                      params="[entityCode: entityCode]"
-                      update="notificationArea"
-                      title="Post to blog ${record.blog}">
-            <span class="ui-icon ui-icon-circle-arrow-e"></span>
-        </g:remoteLink>
-    </td>
-
-</g:if>
 
 
 
 
 
-<g:if test="${'CW'.contains(entityCode)}">
+%{--<g:if test="${'CW'.contains(entityCode)}">--}%
 
-    <td class="actionTd">
+    %{--<td class="actionTd">--}%
 
         %{--<g:link controller="page" action="publish" target="_blank"--}%
                 %{--params="${[id: record.id, entityCode: entityCode]}"--}%
@@ -434,106 +420,18 @@
 
 
 
-    </td>
+    %{--</td>--}%
 
 
-</g:if>
-<td  class="actionTd">
+%{--</g:if>--}%
 
-    <g:link controller="page" action="record" target="_blank"
-            params="${[id: record.id, entityCode: entityCode]}"
-            class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-            title="Go to page">
-        <span class="ui-icon ui-icon-extlink"></span>
 
-    </g:link>
-
-</td>
 
 
 
 %{--<tdclass="actionTd">--}%
 %{----}%
 %{--</td>--}%
-
-<td class="actionTd">
-
-    <g:if test="${entityCode.size() == 1 && record.class.declaredFields.name.contains('deletedOn')}">
-        <g:if test="${!record.deletedOn}">
-
-            <g:remoteLink controller="generics" action="logicalDelete"
-                          params="${[id: record.id, entityCode: entityCode]}"
-                          update="${entityCode}Record${record.id}"
-                          before="if(!confirm('Are you sure you want to delete the record?')) return false"
-                          class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-                          title="Logical delete">
-                <span class="ui-icon ui-icon-trash"></span>
-            </g:remoteLink>
-        </g:if>
-
-
-        <g:else>
-
-            <g:remoteLink controller="generics" action="logicalUndelete"
-                          params="${[id: record.id, entityCode: entityCode]}"
-                          update="${entityCode}Record${record.id}"
-                          class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-                          title="Logical undelete">
-                <span class="ui-icon ui-icon-closethick"></span>
-            </g:remoteLink>
-        </g:else>
-
-    </g:if>
-
-<g:if test="${entityCode.size() > 1}">
-    <g:remoteLink controller="generics" action="physicalDelete"
-                  params="${[id: record.id, entityCode: entityCode]}"
-                  update="${entityCode}Record${record.id}"
-                  class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-                  title="Logical undelete">
-        <span class="ui-icon ui-icon-circle-close"></span>
-    </g:remoteLink>
-    </g:if>
-
-
-
-</td>
-
-
-
-
-<td style="width :12px; line-height: 0.4em;">
-
-    <g:remoteLink controller="generics" action="showIndexCards" style="display: inline;"
-                  params="${[id: record.id, entityCode: entityCode]}"
-                  update="commentArea${entityCode}${record.id}"
-                  class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-                  title="show index cards">
-
-        <g:if test="${app.IndexCard.countByEntityCodeAndRecordId(entityCode, record.id) > 0 || (entityCode == 'W' ? app.IndexCard.countByWriting(Writing.get(record.id)) > 0 : false) || (entityCode == 'R' ? app.IndexCard.countByBook(Book.get(record.id)) > 0 : false)}">
-
-            <span class="ui-icon ui-icon-comment"></span>
-            <span>
-
-                <g:if test="${entityCode == 'W'}">
-                    ${app.IndexCard.countByWriting(Writing.get(record.id))}
-                </g:if>
-                <g:elseif test="${entityCode == 'R'}">
-                    ${app.IndexCard.countByBook(Book.get(record.id))}
-                </g:elseif>
-                <g:else>
-                    ${app.IndexCard.countByEntityCodeAndRecordId(entityCode, record.id)}
-                </g:else>
-
-            </span>
-        </g:if>
-        <g:else>
-            <span class="ui-icon ui-icon-comment"></span>
-        %{--todo empty icon--}%
-        </g:else>
-
-    </g:remoteLink>
-</td>
 
 </tr>
 </table>

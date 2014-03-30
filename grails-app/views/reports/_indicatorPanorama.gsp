@@ -3,10 +3,9 @@
 <h4>Update indicators</h4>
 <table border="1" style="width: 98%; border: #496779; border-collapse: collapse;">
     <thead>
-    <th>Category</th>
-    <th>Indicator</th>
+    <th>K</th>
+    <th>I</th>
     <th>Last value</th>
-    <th>On</th>
     <th>New</th>
     <th>Log</th>
     </thead>
@@ -20,8 +19,11 @@
                         </b>
                      ${i.name}
                  </td>
-                 <td>${SupportService.indicatorLastSavedValue(i.id)}</td>
-                 <td>${SupportService.indicatorLastSavedDate(i.id)?.format('dd.MM.yyyy')}</td>
+                 <td>${SupportService.indicatorLastSavedDate(i.id)?.format('dd.MM.yyyy')}
+                     <br/>
+
+                 ${SupportService.indicatorLastSavedValue(i.id)}</td>
+
                  <td>
 
 

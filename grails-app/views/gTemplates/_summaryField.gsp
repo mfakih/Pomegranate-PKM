@@ -30,8 +30,8 @@
                        length="60"/>
     </span>
 
-    <span style="${record.status?.style}; font-size: 11px; border: 0.5px solid;  border-radius: 3px; padding: 1px; margin-right: 3px;">
-        ${record.status?.name}
+    <span style="${record.status?.style}; font-size: 11px; border: 0px solid; text-decoration: italic;  border-radius: 3px; padding: 1px; margin-right: 3px;">
+        ${record.status?.code}
     </span>
 
 
@@ -57,7 +57,7 @@
 
 <g:if test="${record.class.declaredFields.name.contains('type') && record.type}">
     <span style="${record.type?.style}; font-size: 11px;border-bottom: 0.5px solid; padding: 1px;  margin-right: 3px;">
-        ${record.type?.name}
+        ${record.type?.code}
     </span>
 
 

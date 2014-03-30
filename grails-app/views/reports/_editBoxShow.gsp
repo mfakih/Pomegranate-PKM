@@ -28,8 +28,19 @@ Edit folder: ${OperationController.getPath('editBox.path')}
 <br/>
 <br/>
 
+<h4>Changed records</h4>
 
-<table border="1" style="border-collapse: collapse">
+
+<g:each in="${OperationController.getFileListing('editBox.path')}" var="f">
+
+    <g:set value="${f.name.split(' ')[0].split('_')}" var="ID"></g:set>
+
+    <g:if test="${f.text != Writing.get(ID[1]).description}">
+    <g:render template="/gTemplates/recordSummary" model="[record: Writing.get(ID[1])]"></g:render>
+        </g:if>
+    </g:each>
+
+        <table border="1" style="border-collapse: collapse">
     <thead>
     <th>Original (database) contents </th>
     <th>New (file) contents </th>
@@ -63,10 +74,6 @@ Edit folder: ${OperationController.getPath('editBox.path')}
 <br/>
 
 
-
-
-
-<br/>
-<h4>Bookmarked records</h4>
-<g:render template="/gTemplates/recordListing" model="[list: IndexCard.findAllByBookmarked(true) + Writing.findAllByBookmarked(true)]"></g:render>
+%{--<h4>Bookmarked records</h4>--}%
+%{--<g:render template="/gTemplates/recordListing" model="[list: IndexCard.findAllByBookmarked(true) + Writing.findAllByBookmarked(true)]"></g:render>--}%
 

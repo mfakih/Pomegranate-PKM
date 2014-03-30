@@ -540,6 +540,7 @@ class ImportController {
 
         def entityCode = params.entityCode
         def path = params.path
+        def parentPath = params.parentPath
         def count = 0
         def folder = new File(path)
         def name = params.name
@@ -549,8 +550,6 @@ class ImportController {
         if (params.smart != 'yes') {
             if (entityCode == 'R') {
                 type = ResourceType.findByCode(params.type)
-                b.legacyTitle = name
-                b.type = type
 
                 def isbn
 
@@ -567,27 +566,32 @@ class ImportController {
                     def dup = isbn ? Book.findByIsbn(isbn) : null
                     if (dup && isbn) {
                         def ant = new AntBuilder()
-                        ant.copy(file: path + '/' + it.name, tofile: path + '/backup/' + it.name)
+                        ant.copy(file: parentPath + '/' + name, tofile: parentPath + '/backup/' + name)
 
-                        def newPath = path + '/' + (dup.id / 100).toInteger()
+                        def newPath = parentPath + '/' + (dup.id / 100).toInteger()
                         def c = 1
                         // was path + '/' + nf.format(dup.id).substring(0, 2)
-                        while (new File(newPath + '/' + dup.id + 'b-' + c + '.' + ext).exists())
+                        while (new File(newPath + '/' + dup.id + 'b-' + name).exists())
                             c++
 
-                        ant.move(file: path + '/' + it.name, tofile: newPath + '/' + dup.id + 'b-' + c + '.' + ext)
-                        count++
-                    } else {
+                        ant.move(file: parentPath + '/' + name, tofile: newPath + '/' + dup.id + 'b-' + c + '-' + name)
+                        return
+                    }
+                    else {
                         b = new Book([isbn: isbn])
                         // todo remove ext
-                        b.legacyTitle = it.name
+                        b.legacyTitle = name
 
                     }
 //                    b.isbn = isbn
                 }
+                b.legacyTitle = name
+                b.type = type
+
 
                 finalName = params.type + '.' + name.split(/\./).last()
-            } else {
+            }
+            else {
 
                 b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).newInstance()
                 b.summary = name

@@ -30,7 +30,11 @@
                             <g:hiddenField name="name" value="${i.name}"></g:hiddenField>
                             <g:hiddenField name="path"
                                            value="${ry.newFilesPath + '/' + i.name}"></g:hiddenField>
+
+                            <g:hiddenField name="parentPath"
+                                           value="${ry.newFilesPath}"></g:hiddenField>
                             ${StringUtils.abbreviate(i.name, 60)}
+                            <br/>
                             <g:actionSubmit value="+"></g:actionSubmit>
 
                         </g:formRemote>

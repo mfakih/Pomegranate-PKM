@@ -1,4 +1,4 @@
-<%@ page import="org.apache.commons.lang.StringUtils; ker.OperationController; app.parameters.Blog; org.ocpsoft.prettytime.PrettyTime; cmn.Setting; ys.wikiparser.WikiParser; mcs.Journal; app.Payment; app.IndicatorData; app.IndexCard; mcs.Excerpt; mcs.Planner; java.text.DecimalFormat" %>
+<%@ page import="mcs.Writing; mcs.Book; org.apache.commons.lang.StringUtils; ker.OperationController; app.parameters.Blog; org.ocpsoft.prettytime.PrettyTime; cmn.Setting; ys.wikiparser.WikiParser; mcs.Journal; app.Payment; app.IndicatorData; app.IndexCard; mcs.Excerpt; mcs.Planner; java.text.DecimalFormat" %>
 <g:set var="entityCode"
        value="${record.metaClass.respondsTo(record, 'entityCode') ? record.entityCode() : record.class?.name?.split(/\./).last()}"/>
 
@@ -259,9 +259,39 @@
         </g:remoteLink>
     </g:if>
 
+
+
 </div>
     </g:if>
-<g:if test="${1 == 2}">
+
+
+    <g:if test="${'JWN'.contains(entityCode) && record.blog}">
+
+        <td class="actionTd">
+
+            <g:remoteLink controller="generics" action="publish" id="${record.id}"
+                          params="[entityCode: entityCode]"
+                          update="notificationArea"
+                          title="Post to blog ${record.blog}">
+                <span class="ui-icon ui-icon-circle-arrow-e"></span>
+            </g:remoteLink>
+        </td>
+
+    </g:if>
+
+
+
+
+    <g:link controller="page" action="record" target="_blank"
+            params="${[id: record.id, entityCode: entityCode]}"
+            class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+            title="Go to page">
+        <span class="ui-icon ui-icon-extlink"></span> New tab
+
+    </g:link>
+
+
+    <g:if test="${1 == 2}">
     <g:formRemote name="setBlogCode" style="display: inline"
                   url="[controller: 'generics', action: 'setRecordBlog', params: [id: record.id, entityCode: record.entityCode()]]"
                   update="notificationArea"
@@ -308,12 +338,12 @@
                        </g:if>
                        <br/>
                        <br/>
-                       <g:if test="${Setting.findByName('aws.secret.key')}">
+                       <g:if test="${Setting.findByName('aws.secret.key') && entityCode == 'R'}">
                            <g:remoteLink controller="book" action="updateBookInfo" id="${record.id}"
                                          update="RRecord${record.id}"
                                          class="actionLink"
-                                         title="Update metadata">
-                               Update metadata from Amazon
+                                         title="Update metadata from Amazon">
+                               Update metadata
                            </g:remoteLink>
                            <br/>
                            <br/>
@@ -403,7 +433,7 @@
 
 </g:if>
 
-<g:if test="${record.entityCode() == 'I'}">
+<g:if test="${record.entityCode() == 'K'}">
 
     <div id="graph${record.id}" style="width: 500px; height: 200px; margin: 3px auto 0 auto;"></div>
 
@@ -484,6 +514,87 @@
 %{--<g:render template="/indexCard/add"--}%
 %{--model="[indexCardInstance: new IndexCard(), recordEntityCode: record.entityCode(), recordId: record.id]"/>--}%
 
+
+
+
+<td class="actionTd">
+
+    <g:if test="${entityCode.size() == 1 && record.class.declaredFields.name.contains('deletedOn')}">
+        <g:if test="${!record.deletedOn}">
+
+            <g:remoteLink controller="generics" action="logicalDelete"
+                          params="${[id: record.id, entityCode: entityCode]}"
+                          update="${entityCode}Record${record.id}"
+                          before="if(!confirm('Are you sure you want to delete the record?')) return false"
+                          class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                          title="Logical delete">
+                <span class="ui-icon ui-icon-trash"></span>
+            </g:remoteLink>
+        </g:if>
+
+
+        <g:else>
+
+            <g:remoteLink controller="generics" action="logicalUndelete"
+                          params="${[id: record.id, entityCode: entityCode]}"
+                          update="${entityCode}Record${record.id}"
+                          class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                          title="Logical undelete">
+                <span class="ui-icon ui-icon-closethick"></span>
+            </g:remoteLink>
+        </g:else>
+
+    </g:if>
+
+    <g:if test="${entityCode.size() > 1}">
+        <g:remoteLink controller="generics" action="physicalDelete"
+                      params="${[id: record.id, entityCode: entityCode]}"
+                      update="${entityCode}Record${record.id}"
+                      class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                      title="Logical undelete">
+            <span class="ui-icon ui-icon-circle-close"></span>
+        </g:remoteLink>
+    </g:if>
+
+
+
+</td>
+
+
+
+
+<td style="width :12px; line-height: 0.4em;">
+
+    <g:remoteLink controller="generics" action="showIndexCards" style="display: inline;"
+                  params="${[id: record.id, entityCode: entityCode]}"
+                  update="commentArea${entityCode}${record.id}"
+                  class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                  title="show index cards">
+
+        <g:if test="${app.IndexCard.countByEntityCodeAndRecordId(entityCode, record.id) > 0 || (entityCode == 'W' ? app.IndexCard.countByWriting(Writing.get(record.id)) > 0 : false) || (entityCode == 'R' ? app.IndexCard.countByBook(Book.get(record.id)) > 0 : false)}">
+
+            <span class="ui-icon ui-icon-comment"></span>
+            <span>
+
+                <g:if test="${entityCode == 'W'}">
+                    ${app.IndexCard.countByWriting(Writing.get(record.id))}
+                </g:if>
+                <g:elseif test="${entityCode == 'R'}">
+                    ${app.IndexCard.countByBook(Book.get(record.id))}
+                </g:elseif>
+                <g:else>
+                    ${app.IndexCard.countByEntityCodeAndRecordId(entityCode, record.id)}
+                </g:else>
+
+            </span>
+        </g:if>
+        <g:else>
+            <span class="ui-icon ui-icon-comment"></span>
+        %{--todo empty icon--}%
+        </g:else>
+
+    </g:remoteLink>
+</td>
 
 
 
