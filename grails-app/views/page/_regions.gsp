@@ -23,7 +23,15 @@
 
     <div class="ui-layout-east eastRegion">
 
-        <div id="3rdPanel"></div>
+        <div id="3rdPanel">
+
+
+            <h1>Welcome to Pomegranate</h1>
+            <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
+${htmlContent}
+
+</div>
+        </div>
         %{--<g:if test="${ker.OperationController.getPath('twoPanels') == 'on'}">--}%
         %{--<g:render template="/layouts/east"/>--}%
     %{--</g:if>--}%

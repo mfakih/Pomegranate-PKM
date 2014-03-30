@@ -20,6 +20,7 @@ package mcs
 import app.Contact
 import app.Tag
 import app.parameters.Blog
+import app.parameters.Markup
 import cmn.DataChangeAudit
 import mcs.parameters.JournalType
 import mcs.parameters.Location
@@ -42,6 +43,9 @@ class Journal implements Comparable {  // entity id = 125
     Date endDate
     Integer priority = 2
 //  String title
+
+
+    Markup markup
 
     Integer weight
     String summary

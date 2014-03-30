@@ -50,6 +50,7 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'runtime', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
+
         compile "mysql:mysql-connector-java:5.1.29"
 		compile "com.gravity:goose:2.1.23"
         compile "wordpress-java:jwordpress:0.5.1"
@@ -61,6 +62,9 @@ grails.project.dependency.resolution = {
         compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
         compile 'de.undercouch:citeproc-java:0.6'
         compile 'org.jbibtex:jbibtex:1.0.11'
+
+        compile 'org.citationstyles:styles:1.0'
+
      //   compile 'net.java.dev.rome:rome:1.0.0'
         //        compile 'org.eclipse.mylyn.wikitext:wikitext.core:1.7.4.v20130429'
         compile 'org.asciidoctor:asciidoctor-maven-plugin:0.1.4'

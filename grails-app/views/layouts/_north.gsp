@@ -78,9 +78,10 @@
 
 
     <g:remoteLink controller="generics" action="recentRecords"
-                  class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-                  update="centralArea"
-                  title="Timeline">
+                  class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+                  update="centralArea"title="Timeline">
+    <span class="ui-icon ui-icon-calendar"></span>
+
         Timeline
     </g:remoteLink>
 
@@ -89,9 +90,11 @@
 
 
 
+
+
 <g:remoteLink controller="generics" action="showBookmarkedRecords"
               update="centralArea"
-              class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+              class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
               title="Bookmarked records">
     <span class="ui-icon ui-icon-star"></span>
 </g:remoteLink>
@@ -99,6 +102,33 @@
 &nbsp;
 &nbsp;
 
+    <g:remoteLink controller="report" action="detailedAdd"
+                  update="searchArea"
+                  style="color: white !important"
+                  title="Add using formas">
+        Add...
+    </g:remoteLink>
+
+
+&nbsp;
+&nbsp;
+
+    <g:if test="${OperationController.getPath('import.enabled')?.toLowerCase() == 'yes' ? true : false}">
+        <g:remoteLink controller="import" action="importLocalFiles"
+                      update="centralArea"
+                      style="color: white !important"
+                      title="Import local files">
+            Import...
+        </g:remoteLink>
+    </g:if>
+&nbsp;
+&nbsp;
+    <g:remoteLink controller="report" action="tagCloud"
+                  update="3rdPanel"
+      style="color: white !important"
+                  title="Tag cloud">
+        Tags...
+    </g:remoteLink>
 
 
 

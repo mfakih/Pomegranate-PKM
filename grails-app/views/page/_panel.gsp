@@ -26,10 +26,10 @@
     <r:layoutResources/>
 
 
-<g:render template="/gTemplates/filesListing" model="[record: record, entityCode: record.entityCode()]"/>
+
 <g:if test="${record.entityCode().length() == 1}">
     <div style="display: inline; text-align: right;">
-        <uploader:uploader id="yourUploaderId${record.id}"
+        <uploader:uploader id="uploadAsNoteWithAttachment${record.id}"
                            url="${[controller: 'import', action: 'upload']}"
                            params="${[recordId: record.id, entityCode: record.entityCode()]}">
                 <uploader:onComplete>
@@ -37,10 +37,30 @@
                 </uploader:onComplete>
             Attach...
         </uploader:uploader>
+
+        <br/>
+        <uploader:uploader id="addToRecordFolder${record.id}"
+                           url="${[controller: 'import', action: 'addToRecordFolder']}"
+                           params="${[recordId: record.id, entityCode: record.entityCode()]}">
+            Add to record folder
+        </uploader:uploader>
     </div>
         <div id="subUploadInPanel"></div>
 </g:if>
+
+
 <g:if test="${record.entityCode() == 'R'}">
+<g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
+        record?.type?.code + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + record.id + '.jpg')?.exists())}">
+
+    <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
+       target="_blank">
+        <img class="Photo" style="width: 80px; height:120px; display:inline"
+             src="${createLink(controller: 'book', action: 'viewImage', id: record.id, params: [date: new Date()])}"/>
+    </a>
+</g:if>
+
+
     <h2>Resource</h2>
     ${record.title}
 </g:if>
@@ -56,7 +76,7 @@
     ${record.summary}
 </g:if>
 
-
+<g:render template="/gTemplates/filesListing" model="[record: record, entityCode: record.entityCode()]"/>
         %{--<g:if test="${record.class.declaredFields.name.contains('shortDescription')}">--}%
             %{--<span style="font-size: 12px; font-style: italic; color: #4A5C69">--}%
                 %{--<b>Summary:</b> ${record?.shortDescription?.replaceAll('\n', '<br/>')}--}%

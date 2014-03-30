@@ -18,6 +18,7 @@
 package mcs
 
 import app.Tag
+import app.parameters.Markup
 import cmn.DataChangeAudit
 
 class Course implements Comparable {  // entity id = 130
@@ -50,6 +51,8 @@ class Course implements Comparable {  // entity id = 130
     Integer currentTextbookLevel = 1
 
     Integer orderInDepartment
+
+    Markup markup
 
 
     String summary

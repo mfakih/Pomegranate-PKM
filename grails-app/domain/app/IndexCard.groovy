@@ -18,6 +18,7 @@
 package app
 
 import app.parameters.Blog
+import app.parameters.Markup
 import app.parameters.Pomegranate
 import app.parameters.WordSource
 import cmn.DataChangeAudit
@@ -40,6 +41,9 @@ class IndexCard implements Comparable {  // entity id = 16
     static searchable = true
 
     // Fields
+
+    Markup markup
+
 
 
     WordSource source

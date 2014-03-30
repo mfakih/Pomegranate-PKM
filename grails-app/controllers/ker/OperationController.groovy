@@ -446,7 +446,7 @@ class OperationController {
 
         def path = session[params.id]
 
-
+          // todo to make it smarter!
 
         def f = new File(path)
 
@@ -455,21 +455,18 @@ class OperationController {
         def id = corename.substring(0, corename.length() - 1)
 
         def title = ''
-        try {
+ /*       try {
             switch (entityCode) {
                 case 'a':
                     title = Book.findById(id.toLong()).title
                     break
-                case 'b':
+                case 'r':
                     title = (Book.findById(id.toLong()).title ?: '') + ' ' + (Book.findById(id.toLong()).legacyTitle ?: '')
                     break
                 case 'n':
                     title = Book.findById(id.toLong()).title
                     break
                 case 'e':
-                    title = Excerpt.findById(id.toLong()).summary
-                    break
-                case 'r':
                     title = Excerpt.findById(id.toLong()).chapters + ' ' + Excerpt.findById(id.toLong()).summary
                     break
 
@@ -487,9 +484,10 @@ class OperationController {
         catch (Exception e) {
             title = ''
         }
+    */
 
-
-        def fileName = f.getName().split(/\./)[0] + ' _ ' + new Date().format('yy') + 'y.' + getSupportService().toWeekDate(new Date()) + ' _ ' + title + '.' + f.getName().split(/\./)[1]
+        def fileName = f.getName().split(/\./)[0] + ' _ ' + new Date().format('yy') + 'y-' + getSupportService().toWeekDate(new Date()) + '.' + f.getName().split(/\./)[1]
+        // + ' _ ' + title
 
 //        println title + '  sad ' + entityCode + ' 2nd  ' + URLEncoder.encode(filename, "UTF-8")
 
@@ -505,6 +503,7 @@ class OperationController {
             response.setHeader("Content-Disposition",
                     "attachment;filename*=UTF-8''${URLEncoder.encode(finaln, 'UTF-8').replaceAll(/\+/, '%20')}")
 
+            // todo post
 //                response.setHeader("Content-disposition", "attachment; filename=\"${filename}\"")
             response.outputStream << new FileInputStream(path)
         }

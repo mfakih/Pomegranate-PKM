@@ -133,8 +133,8 @@ class ImportController {
                     } else {
                         def ant = new AntBuilder()
 //                        if (entityCode.toUpperCase() == 'N') {
-                            def sandboxPath = OperationController.getPath('module.' + entityCode.toUpperCase() + '.sandbox.path')
-                            ant.move(file: path + '/' + it.name, tofile: sandboxPath + '/' + b.id + entityCode + '.' + ext)
+                        def sandboxPath = OperationController.getPath('module.' + entityCode.toUpperCase() + '.sandbox.path')
+                        ant.move(file: path + '/' + it.name, tofile: sandboxPath + '/' + b.id + entityCode + '.' + ext)
                     }
 //                    println b.dump()
 //                if (Book.get(id) && title && title.length() > 2) {
@@ -166,7 +166,7 @@ class ImportController {
     def importSmartFilesAjax() {
         try {
             try {
-                java.util.regex.Matcher matcher = params.qqfile =~ /(?i)([\S]) ([\S\s ;-_]*)\.([\S]*)/
+                java.util.regex.Matcher matcher = params.qqfile =~ /(?i)([\S]) ([\w\W\S\s ;-_]*)\.([\W]*)/
                 def entityCode = matcher[0][1]
 
                 def title = matcher[0][2]
@@ -174,7 +174,7 @@ class ImportController {
 
                 def b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).newInstance()
 
-                def tmpFilename = new Date().format('ddMMyyyyHHmmss') + Math.random() * 1000
+                def tmpFilename = new Date().format('ddMMyyyyHHmmss') + (Math.random() * 1000).toInteger()
                 def f = new File(OperationController.getPath('tmp.path') + '/' + tmpFilename) << request.inputStream
 
                 b.properties = GenericsController.transformMcsNotation(entityCode + ' ' + title.trim())['properties']
@@ -185,30 +185,26 @@ class ImportController {
                     else
                         b.description = f.text
                 }
-                else {
-                    def ant = new AntBuilder()
-//                        if (entityCode.toUpperCase() == 'N') {
-                    def sandboxPath = OperationController.getPath('module.' + entityCode.toUpperCase() + '.sandbox.path')
-                    ant.move(file: f.path, tofile: sandboxPath + '/' + b.id + entityCode + '.' + ext)
 
-                }
-
-
-                if (entityCode.toLowerCase() == 'b')
-                    b.fullText = f.text
-                else
-                    b.description = f.text
+//                else {
+//
+//                }
 
                 if (!b.hasErrors() && b.save(flush: true)) {
 //                        render(template: '/gTemplates/recordSummary', model: [record: b])
+                    def ant = new AntBuilder()
+//                        if (entityCode.toUpperCase() == 'N') {
+                    def sandboxPath = OperationController.getPath('module.sandbox.' + entityCode.toUpperCase() + '.path')
+                    ant.move(file: f.path, tofile: sandboxPath + '/' + b.id + entityCode + '.' + ext)
                     return render(text: [id: b.id, entityCode: entityCode.toUpperCase()] as JSON, contentType: 'text/json')
 
-                } else {
+                }
+                else {
                     println 'Record saving problem'
                 }
 
             } catch (Exception e) {
-                println 'File import problem' + e.printStackTrace()
+                println 'File import problem ' + e.printStackTrace()
 
             }
 //            render(template: '/layouts/achtung', model: [message: count + " files imported"])
@@ -228,19 +224,19 @@ class ImportController {
                 def id
                 def title = ''
                 def ext
-                  try {
-                java.util.regex.Matcher matcher = params.qqfile =~ /(?i)([\S])_([0-9]+) ([\S\s ;-_]*)\.([\S]*)/
-                 entityCode = matcher[0][1]
-                 id = matcher[0][2]
-                 title = matcher[0][3]
-                 ext = matcher[0][4]
-                  }
-                  catch (Exception e){
-                      java.util.regex.Matcher matcher = params.qqfile =~ /(?i)([\S])_([0-9]+)\.([\S]*)/
-                      entityCode = matcher[0][1]
-                      id = matcher[0][2]
-                      ext = matcher[0][4]
-                  }
+                try {
+                    java.util.regex.Matcher matcher = params.qqfile =~ /(?i)([\S])_([0-9]+) ([\S\s ;-_]*)\.([\S]*)/
+                    entityCode = matcher[0][1]
+                    id = matcher[0][2]
+                    title = matcher[0][3]
+                    ext = matcher[0][4]
+                }
+                catch (Exception e) {
+                    java.util.regex.Matcher matcher = params.qqfile =~ /(?i)([\S])_([0-9]+)\.([\S]*)/
+                    entityCode = matcher[0][1]
+                    id = matcher[0][2]
+                    ext = matcher[0][4]
+                }
 
                 def b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).get(id)
 
@@ -483,7 +479,7 @@ class ImportController {
         entry = bibl.getEntries()[0].replace('[1]', '')
         r.citationHtml = entry
 
-           render entry
+        render entry
 //        render(template: '/gTemplates/recordSummary', model: [record:
 //                r
 //        ])
@@ -493,22 +489,22 @@ class ImportController {
 //                render(template: '/layouts/achtung', model: [message: entry])
 
 
-}
+    }
 
 
-String importModuleFiles(String entityCode) {
+    String importModuleFiles(String entityCode) {
 
-    def type = entityCode
-    def path = '/todo/new/N'
-    def count = 0
-    def folder = new File(path)
+        def type = entityCode
+        def path = OperationController.getPath('module.sandbox.' + entityCode + '.path')
+        def count = 0
+        def folder = new File(path)
 
 
-    OperationController.getPath('allowed.extensions').split(',').each() { ext ->
-        folder.eachFileMatch(~/[\w\W\S\s]*.${ext}/) {
-            try {
+        OperationController.getPath('allowed.extensions').split(',').each() { ext ->
+            folder.eachFileMatch(~/[\w\W\S\s]*.${ext}/) {
+                try {
 
-                def b
+                    def b
                     b = new IndexCard([ext: ext])
 
 //                    b.type = type
@@ -516,147 +512,203 @@ String importModuleFiles(String entityCode) {
 
 //                }
 
-                if (!b.hasErrors() && b.save(flush: true)) {
-                    def ant = new AntBuilder()
-                    ant.copy(file: path + '/' + it.name, tofile: path + '/backup/' + it.name)
-                    ant.move(file: path + '/' + it.name, tofile: path + '/N_' + b.id +  '.' + ext)
-                    count++
-                } else {
-                    b.errors.each() {
-                        println 'error ' + it
+                    if (!b.hasErrors() && b.save(flush: true)) {
+                        def ant = new AntBuilder()
+                        ant.copy(file: path + '/' + it.name, tofile: path + '/backup/' + it.name)
+                        ant.move(file: path + '/' + it.name, tofile: path + '/N_' + b.id + '.' + ext)
+                        count++
+                    } else {
+                        b.errors.each() {
+                            println 'error ' + it
+                        }
+                        println 'Error saving the resource'
                     }
-                    println 'Error saving the resource'
+
                 }
 
+                catch (Exception e) {
+                    //            render "Sth wrong happened"
+                    log.error e
+                }
             }
 
-            catch (Exception e) {
-                //            render "Sth wrong happened"
-                log.error e
-            }
         }
-
+        render(template: '/layouts/achtung', model: [message: count + " resources imported"])
     }
-    render(template: '/layouts/achtung', model: [message: count + " resources imported"])
-}
 
-def importIndividualFile() {
+    def importIndividualFile() {
 
-    def entityCode = params.entityCode
-    def path = params.path
-    def count = 0
-    def folder = new File(path)
-   def name = params.name
+        def entityCode = params.entityCode
+        def path = params.path
+        def count = 0
+        def folder = new File(path)
+        def name = params.name
+        def type
+        def finalName = ''
+        def b
+        if (params.smart != 'yes') {
+            if (entityCode == 'R') {
+                type = ResourceType.findByCode(params.type)
+                b.legacyTitle = name
+                b.type = type
 
-    def b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).newInstance()
-    b.summary = name
+                def isbn
 
-    b.description = 'Imported on ' + new Date().format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')
-
-//    b.properties = GenericsController.transformMcsNotation(entityCode + ' ' + title.trim())['properties']
-
-                if (!b.hasErrors() && b.save(flush: true)) {
-                    render(template: '/gTemplates/recordSummary', model: [record: b])
-                    def ant = new AntBuilder()
-                    ant.move(file: path, tofile: OperationController.getPath('module.' + entityCode + '.sandbox.path') + '/' + b.id + ' '  + name)
-
-                }
-                else {
-                    b.errors.each() {
-                        println 'error ' + it
-                    }
-                    println 'Error saving the resource'
-                }
-
-}
-
-String importResources(Long typeId) {
-
-    def type = ResourceType.get(params.type)
-    def path = type.newFilesPath
-    def count = 0
-    def folder = new File(path)
-
-
-    OperationController.getPath('allowed.extensions').split(',').each() { ext ->
-        folder.eachFileMatch(~/[\w\W\S\s]*.${ext}/) {
-            try {
-
-                def b
                 if (type.captureIsbn == true) {
                     try {
-                        java.util.regex.Matcher matcher = it.name =~ /(\d{13}|\d{12}X|\d{12}x|\d{9}X|\d{9}x|\d{10})[^\d]*/
-                        // todo: fix it to be exact match
-                        def isbn
-                        try {
+                        java.util.regex.Matcher matcher = name =~ /(\d{13}|\d{12}X|\d{12}x|\d{9}X|\d{9}x|\d{10})[^\d]*/
+                        // todo: fix it to be exact match, anythwere in the filename
                             isbn = matcher[0][1]
-                        } catch (Exception e) {
-                            isbn = null
-                        }
-
-                        def dup = isbn ? Book.findByIsbn(isbn) : null
-                        if (dup && isbn) {
-                            def ant = new AntBuilder()
-                            ant.copy(file: path + '/' + it.name, tofile: path + '/backup/' + it.name)
-
-                            def newPath = path + '/' + (dup.id / 100).toInteger()
-                            def c = 1
-                            // was path + '/' + nf.format(dup.id).substring(0, 2)
-                            while (new File(newPath + '/' + dup.id + 'b-' + c + '.' + ext).exists())
-                                c++
-
-                            ant.move(file: path + '/' + it.name, tofile: newPath + '/' + dup.id + 'b-' + c + '.' + ext)
-                            count++
-                        } else {
-                            b = new Book([isbn: isbn, ext: ext])
-                            b.legacyTitle = it.name
-
-                        }
                     }
                     catch (Exception e) {
-                        ; // no isbn
+                        println 'isbn not found in ' + name
                     }
-                } else {
-                    b = new Book([ext: ext])
 
-                    b.type = type
-                    b.title = it.name
+                    def dup = isbn ? Book.findByIsbn(isbn) : null
+                    if (dup && isbn) {
+                        def ant = new AntBuilder()
+                        ant.copy(file: path + '/' + it.name, tofile: path + '/backup/' + it.name)
 
+                        def newPath = path + '/' + (dup.id / 100).toInteger()
+                        def c = 1
+                        // was path + '/' + nf.format(dup.id).substring(0, 2)
+                        while (new File(newPath + '/' + dup.id + 'b-' + c + '.' + ext).exists())
+                            c++
+
+                        ant.move(file: path + '/' + it.name, tofile: newPath + '/' + dup.id + 'b-' + c + '.' + ext)
+                        count++
+                    } else {
+                        b = new Book([isbn: isbn])
+                        // todo remove ext
+                        b.legacyTitle = it.name
+
+                    }
+//                    b.isbn = isbn
                 }
 
-                if (!b.hasErrors() && b.save(flush: true)) {
-                    def ant = new AntBuilder()
-                    ant.copy(file: path + '/' + it.name, tofile: path + '/backup/' + it.name)
-                    ant.move(file: path + '/' + it.name, tofile: path + '/' + (b.id / 100).toInteger() + '/' + b.id + type.code + '.' + ext)
-                    count++
-                } else {
-                    b.errors.each() {
-                        println 'error ' + it
-                    }
-                    println 'Error saving the resource'
-                }
+                finalName = params.type + '.' + name.split(/\./).last()
+            } else {
 
+                b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).newInstance()
+                b.summary = name
+                finalName = ' ' + name
             }
 
-            catch (Exception e) {
-                //            render "Sth wrong happened"
-                log.error e
+                b.description = 'Imported on ' + new Date().format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')
+
+        }
+        else {
+            b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).newInstance()
+            b.properties = GenericsController.transformMcsNotation(name)['properties']
+            b.description = 'Imported on ' + new Date().format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')
+            finalName = entityCode.toLowerCase() + '.' + name.split(/\./).last()
+        }
+
+        if (!b.hasErrors() && b.save(flush: true)) {
+            render(template: '/gTemplates/recordSummary', model: [record: b])
+            def ant = new AntBuilder()
+            if (entityCode == 'R') {
+                ant.move(file: path, tofile: type.newFilesPath + '/' + (b.id / 100).toInteger() + '/' + b.id + '' + finalName)
             }
+            else
+            ant.move(file: path, tofile: OperationController.getPath('module.sandbox.' + entityCode + '.path') + '/' + b.id + '' + finalName)
+
+        } else {
+            b.errors.each() {
+                println 'error ' + it
+            }
+            println 'Error saving the resource'
         }
 
     }
-    render(template: '/layouts/achtung', model: [message: count + " resources imported"])
-}
 
-def uploadFiles() {
-    render(template: '/import/uploadFiles', model: [])
-}
+    String importResources(Long typeId) {
 
-def importLocalFiles() {
-    render(template: '/import/importLocalFiles', model: [])
-}
+        def type = ResourceType.get(params.type)
+        def path = type.newFilesPath
+        def count = 0
+        def folder = new File(path)
 
-    def scrapHtmlPage (){
+
+        OperationController.getPath('allowed.extensions').split(',').each() { ext ->
+            folder.eachFileMatch(~/[\w\W\S\s]*.${ext}/) {
+                try {
+
+                    def b
+                    if (type.captureIsbn == true) {
+                        try {
+                            java.util.regex.Matcher matcher = it.name =~ /(\d{13}|\d{12}X|\d{12}x|\d{9}X|\d{9}x|\d{10})[^\d]*/
+                            // todo: fix it to be exact match
+                            def isbn
+                            try {
+                                isbn = matcher[0][1]
+                            } catch (Exception e) {
+                                isbn = null
+                            }
+
+                            def dup = isbn ? Book.findByIsbn(isbn) : null
+                            if (dup && isbn) {
+                                def ant = new AntBuilder()
+                                ant.copy(file: path + '/' + it.name, tofile: path + '/backup/' + it.name)
+
+                                def newPath = path + '/' + (dup.id / 100).toInteger()
+                                def c = 1
+                                // was path + '/' + nf.format(dup.id).substring(0, 2)
+                                while (new File(newPath + '/' + dup.id + 'b-' + c + '.' + ext).exists())
+                                    c++
+
+                                ant.move(file: path + '/' + it.name, tofile: newPath + '/' + dup.id + 'b-' + c + '.' + ext)
+                                count++
+                            } else {
+                                b = new Book([isbn: isbn, ext: ext])
+                                b.legacyTitle = it.name
+
+                            }
+                        }
+                        catch (Exception e) {
+                            ; // no isbn
+                        }
+                    } else {
+                        b = new Book([ext: ext])
+
+                        b.type = type
+                        b.title = it.name
+
+                    }
+
+                    if (!b.hasErrors() && b.save(flush: true)) {
+                        def ant = new AntBuilder()
+                        ant.copy(file: path + '/' + it.name, tofile: path + '/backup/' + it.name)
+                        ant.move(file: path + '/' + it.name, tofile: path + '/' + (b.id / 100).toInteger() + '/' + b.id + type.code + '.' + ext)
+                        count++
+                    } else {
+                        b.errors.each() {
+                            println 'error ' + it
+                        }
+                        println 'Error saving the resource'
+                    }
+
+                }
+
+                catch (Exception e) {
+                    //            render "Sth wrong happened"
+                    log.error e
+                }
+            }
+
+        }
+        render(template: '/layouts/achtung', model: [message: count + " resources imported"])
+    }
+
+    def uploadFiles() {
+        render(template: '/import/uploadFiles', model: [])
+    }
+
+    def importLocalFiles() {
+        render(template: '/import/importLocalFiles', model: [])
+    }
+
+    def scrapHtmlPage() {
         def r = Book.get(params.id)
         String url = r.url
 
@@ -665,12 +717,12 @@ def importLocalFiles() {
         configuration.setLocalStoragePath("/tmp/goose")
         // i don't care about the image, just want text, this is much faster!
         configuration.setEnableImageFetching(false);
-     //   configuration.setImagemagickConvertPath("/opt/local/bin/convert");
+        //   configuration.setImagemagickConvertPath("/opt/local/bin/convert");
         Goose goose = new Goose(configuration);
 
         Article article = goose.extractContent(url)
         r.fullText = article.rawHtml()
-        println ('text ' + article.rawHtml())
+        println('text ' + article.rawHtml())
         r.publishedOn = article.publishDate()
         r.title = article.title()
         r.description = article.metaDescription()
@@ -681,8 +733,7 @@ def importLocalFiles() {
     }
 
 
-    def upload () {
-
+    def upload() {
 
 //        if (new File(CH.config.data.location + '/' + params.name).exists())
 //            new File(CH.config.data.location + '/' + params.name).renameTo(
@@ -697,7 +748,7 @@ def importLocalFiles() {
             a.save(flush: true)
             new File(OperationController.getPath('module.sandbox.N.path') + '/' + a.id) << request.inputStream
 
-            if (new File(OperationController.getPath('module.sandbox.N.path') + '/' + a.id).exists()){
+            if (new File(OperationController.getPath('module.sandbox.N.path') + '/' + a.id).exists()) {
                 return render(text: [id: a.id, entityCode: a.entityCode()] as JSON, contentType: 'text/json')
 
             }
@@ -712,6 +763,39 @@ def importLocalFiles() {
 
         //render(text: [success: true] as JSON, contentType: 'text/json')
 //        render(template: '/layouts/achtung', model: [message: 'Document uploaded'])
+
+    }
+
+    def addToRecordFolder() {
+
+        def status = ''
+        try {
+
+            def tmpFilename = new Date().format('ddMMyyyyHHmmss') + (Math.random() * 1000).toInteger()
+            def f = new File(OperationController.getPath('tmp.path') + '/' + tmpFilename) << request.inputStream
+
+            def path
+
+            if (params.entityCode == 'R'){
+                def b =  Book.get(params.recordId)
+                path = b.type?.newFilesPath + '/' + (b.id / 100).toInteger() + '/' + b.id + '/' + params.qqfile
+            }
+            else{
+            path = OperationController.getPath('module.sandbox.' + params.entityCode + '.path') + '/' +
+                    params.recordId + '/' + params.qqfile
+            }
+
+            def ant = new AntBuilder()
+            ant.move(file: f.path, tofile: path)
+
+                return render(['Ok'] as JSON, contentType: 'text/json')
+
+
+        } catch (Exception e) {
+            println 'problem uploading the file ' + params.qqfile
+            status = 'File could not be saved!'
+            e.printStackTrace()
+        }
 
     }
 

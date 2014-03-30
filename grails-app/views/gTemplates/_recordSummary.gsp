@@ -116,7 +116,7 @@
 
 <g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
 
-    <td>
+    <td colspan="2">
         <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
                 record?.type?.code + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + record.id + '.jpg')?.exists())}">
 
@@ -132,7 +132,7 @@
 
 <g:if test="${entityCode == 'E'}">
 
-    <td>
+    <td colspan="2">
         <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
                 record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists())}">
 

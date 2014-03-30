@@ -469,7 +469,6 @@ class SupportService {
          *
          */
         String ENDPOINT = b.isbn?.startsWith('2') ? 'ecs.amazonaws.fr' : (b.isbn?.startsWith('3') || b.language == 'de' ? "ecs.amazonaws.de" : "ecs.amazonaws.com")
-
         try {
             helper = SignedRequestsHelper.getInstance(ENDPOINT,
                     OperationController.getPath('aws.access.key.id'),
@@ -626,13 +625,15 @@ class SupportService {
     static String addCover(Long id) {
         def b = Book.get(id)
         //def path = CH.config.covers.repository.path + '/ebk'
+
         def path = OperationController.getPath('covers.sandbox.path') + '/' + b.type?.code
+        println '\n\n\n\n\n\ncover path is ' + path
 
         if (b.imageUrl) {
             def t = new File(path + '/' + id + '.jpg')
             if (t.exists()) t.renameTo(new File(path + '/' + id + '-old.jpg'))
             try {
-            ;//    t << new URL(b.imageUrl.substring(0, b.imageUrl.length() - 6)).openStream()
+                t << new URL(b.imageUrl.substring(0, b.imageUrl.length() - 6)).openStream()
             }
             catch (Exception e) {
                 e.printStackTrace()

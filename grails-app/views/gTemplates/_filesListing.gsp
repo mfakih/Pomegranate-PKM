@@ -5,6 +5,12 @@
 
 %{--<g:if test="${record.entityCode() != 'R'}">--}%
     <pkm:listRecordFiles module="${entityCode}" fileClass="himFile"  recordId="${record.id}" type="${entityCode == 'R' ? record.type?.code : ''}"/>
+
+
+<pkm:listPictures fileClass="snsFile"
+                  folder="${OperationController.getPath('pictures.repository.path')}/${entityCode}/${record.id}"
+                  initial=""/>
+
     %{--</g:if>--}%
 %{--<g:else>--}%
     %{--<pkm:listRecordFiles module="${entityCode}" resource="yes" fileClass="himFile"  recordId="${record.id}"/>--}%
@@ -74,9 +80,6 @@
 
 
 
-        %{--<pkm:listPictures fileClass="snsFile"--}%
-                          %{--folder="${OperationController.getPath('video.snapshots.repository.path')}/${record.entityCode()}/${record.id}"--}%
-                          %{--initial=""/>--}%
 
 
 

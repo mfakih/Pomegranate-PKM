@@ -62,6 +62,7 @@ class Book implements Comparable {  // entity id = 134
     Date lastReviewed
 
 
+    String code
 
     String title
 

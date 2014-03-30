@@ -2414,7 +2414,7 @@ def addContactToRecord() {
                         queryCriteria.add('pages = ' + it.substring(1))
                     }
 
-                    if (it.startsWith('_') && 'GTBR'.contains(entityCode)) {
+                    if (it.startsWith('_') && 'NE'.contains(entityCode)) {
                         properties['chapters'] = it.substring(1)
                         queryCriteria.add('chapters = ' + it.substring(1))
                     }
@@ -2668,43 +2668,46 @@ def addContactToRecord() {
                     }
 
                     //Todo: note there the detail
-                    if (it.startsWith('<')) {
+                    if (it.startsWith('<') || it.startsWith('(')) {
                         def dateField = 'startDate'
                         if ('I'.contains(entityCode))
                             dateField = 'date'
                         if ('Q'.contains(entityCode))
                             dateField = 'date'
-
-                        if (it.startsWith('<+') || it.startsWith('<-')) {
-                            properties[dateField] = new Date() + it.substring(1).toInteger()
-                            queryCriteria.add(dateField + " >= (current_date() " + it.substring(1) + ')')
+                        def core = it.substring(1)
+                        if (it.startsWith('<+') || it.startsWith('<-') || it.startsWith('(+') || it.startsWith('(-')) {
+                            properties[dateField] = new Date() + core.toInteger()
+                            queryCriteria.add(dateField + " >= (current_date() " + core + ')')
                         } else {
-                            if (it.matches(/^\d\d\d$/) ||
-                                    it.matches(/^\d\d\d\.[0-9]{2}/)||
-                                    it.matches(/^\d\d\d[\_][0-9]{1,4}$/)||
-                                    it.matches(/^\d\d\d[\_][0-9]{1,4}[\.][0-9]{2}$/)){
-                                properties[dateField] = SupportService.fromWeekDateAsDateTimeFullSyntax(it.substring(1))
+
+                            if (core.matches(/^\d\d\d$/) ||
+                                    core.matches(/^\d\d\d\.[0-9]{2}/)||
+                                    core.matches(/^\d\d\d[\_][0-9]{1,4}$/)||
+                                    core.matches(/^\d\d\d[\_][0-9]{1,4}[\.][0-9]{2}$/)){
+                                properties[dateField] = SupportService.fromWeekDateAsDateTimeFullSyntax(core)
                             }
                             else {
                             def format = Setting.findByName('date.format')
-                            properties[dateField] = Date.parse(format ? format.value: 'dd.MM.yyyy', it.substring(1))
+                            properties[dateField] = Date.parse(format ? format.value: 'dd.MM.yyyy', core)
                             }
                         }
                     }
-                    if (it.startsWith('>')) {
+                    if (it.startsWith('>') || it.startsWith(')')) {
                         def dateField = 'endDate'
-                        if (it.startsWith('>+') || it.startsWith('>-')) {
-                            properties['endDate'] = new Date() + it.substring(1).toInteger()
-                            queryCriteria.add("endDate <= (current_date() " + it.substring(1) + ')')
+                        def core = it.substring(1)
+                        if (it.startsWith('>+') || it.startsWith('>-') || it.startsWith(')+') || it.startsWith(')-')) {
+                            properties['endDate'] = new Date() + core.toInteger()
+                            queryCriteria.add("endDate <= (current_date() " + core + ')')
                         } else {
-                            if (it.matches(/^\d\d\d$/) ||
-                                    it.matches(/^\d\d\d\.[0-9]{2}/) ||
-                                    it.matches(/^\d\d\d[\_][0-9]{1,4}$/) ||
-                                    it.matches(/^\d\d\d[\_][0-9]{1,4}[\.][0-9]{2}$/)) {
-                                properties[dateField] = SupportService.fromWeekDateAsDateTimeFullSyntax(it.substring(1))
+                            if (core.matches(/^\d\d\d$/) ||
+                                    core.matches(/^\d\d\d\.[0-9]{2}/) ||
+                                    core.matches(/^\d\d\d[\_][0-9]{1,4}$/) ||
+                                    core.matches(/^\d\d\d[\_][0-9]{1,4}[\.][0-9]{2}$/)) {
+                                properties[dateField] = SupportService.fromWeekDateAsDateTimeFullSyntax(core)
                             } else {
                                 def format = Setting.findByName('date.format')
-                                properties[dateField] = Date.parse(format ? format.value : 'dd.MM.yyyy', it.substring(1))
+                                properties[dateField] = Date.parse(format ? format.value : 'dd.MM.yyyy', core)
+                                // todo setting
                             }
                         }
                     }

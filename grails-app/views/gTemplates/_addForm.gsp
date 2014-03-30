@@ -87,8 +87,15 @@
         </td>
     </g:if>
 
+
 </tr>
 <tr>
+
+    <g:if test="${fields.contains('legacyTitle')}">
+        <td colspan="1">
+            <g:textField placeholder="Legacy title" name="legacyTitle" value="${record?.legacyTitle}" style="width: 95%;"/>
+        </td>
+    </g:if>
 
     <g:if test="${fields.contains('isbn')}">
         <td colspan="1">

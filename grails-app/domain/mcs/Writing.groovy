@@ -20,6 +20,7 @@ package mcs
 import app.Contact
 import app.Tag
 import app.parameters.Blog
+import app.parameters.Markup
 import cmn.DataChangeAudit
 import mcs.parameters.WritingStatus
 import mcs.parameters.WritingType
@@ -47,6 +48,8 @@ class Writing implements Comparable {  // entity id = 144
     String shortDescription
     String descriptionHTML
     String slug
+
+    Markup markup
 
     String source
     Department department

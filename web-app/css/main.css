@@ -29,7 +29,7 @@ html * {
     margin-top: -50px;
     /*half height of the spinner gif */
     text-align: center;
-    z-index: 1234;
+    z-index: 1200034;
     overflow: auto;
     width: 40px; /* width of the spinner gif */
     height: 40px; /*hight of the spinner gif +2px to fix IE8 issue */

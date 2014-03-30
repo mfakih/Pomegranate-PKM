@@ -1,262 +1,5 @@
 <%@ page import="ker.OperationController; mcs.Course; mcs.Department; org.apache.commons.lang.StringUtils; cmn.Setting" %>
 
-<div class="accordionHeader" onclick="toggleAdd('#accordionAdd', 'addPanel')">Data entry & import</div>
-
-
-<div id="accordionAdd" style="width: 200px; padding: 3px;">
-
-
-
-    <h3 class="">
-        <a>
-            Quick add
-        </a>
-    </h3>
-
-    <div>
-
-        <b>Type:</b> <g:formRemote name="batchAdd2"
-                                   url="[controller: 'generics', action: 'quickAddRecord']"
-                                   update="centralArea" style="display: inline;"
-
-                                   onComplete="jQuery('quickAddNote').val('')"
-                                   method="post">
-        <g:select name="recordType"
-                  from="${  [
-
-  [enabled: OperationController.getPath('goals.enabled')?.toLowerCase() == 'yes', code: 'G', name: 'Goals'] ,
-  [ enabled : OperationController . getPath ( 'tasks.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'T' , name : 'Tasks' ] ,
-  [ enabled : OperationController . getPath ( 'planner.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'P' , name : 'Planner' ] ,
-  [ enabled : OperationController . getPath ( 'journal.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'J' , name : 'Journal' ] ,
-  [ enabled : OperationController . getPath ( 'writings.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'W' , name : 'Writing' ] ,
-  [ enabled : OperationController . getPath ( 'notes.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'N' , name : 'Notes' ] ,
-  [ enabled : OperationController . getPath ( 'resources.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'R' , name : 'Resources' ],
-  [ enabled : OperationController . getPath ( 'contacts.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'S' , name : 'Contact' ]
-                                   ].grep { it . enabled == true }
-}" optionKey="code" optionValue="name"
-                  style="direction: ltr; text-align: left; display: inline;"
-                  onchange="jQuery('#searchForm').load('generics/hqlSearchForm/' + this.value);"
-                  value="N"/>
-
-
-
-        <g:textArea cols="80" rows="5" name="block" id="quickAddRecordTextArea"
-                    value=""
-                    style="width: 90%; height: 60px;  margin: 4px;"
-
-                    placeholder="Contents..."/>
-    %{--style="width:650px; min-width:650px !important; height: 70px;
-     font-family: Source Sans Pro,Helvetica,Arial,sans-serif; background: #eeeeee; margin: 4px;"                --}%
-
-        <g:submitButton name="batch" value="Save" id="quickAddRecordSubmit"
-                        style=""
-                        class="fg-button  ui-widget ui-state-default"/>
-
-    </g:formRemote>
-    </div>
-
-
-    <h3 class="">
-        <a>
-            Detailed add
-        </a>
-    </h3>
-
-    <div>
-
-        <ul style="list-style: square">
-
-            <g:each in="${
-                [
-
-                        [enabled: OperationController.getPath('goals.enabled')?.toLowerCase() == 'yes', code: 'G', name: 'Goals', controller: 'mcs.Goal'],
-                        [enabled: OperationController.getPath('tasks.enabled')?.toLowerCase() == 'yes', code: 'T', name: 'Tasks', controller: 'mcs.Task'],
-                        [enabled: OperationController.getPath('planner.enabled')?.toLowerCase() == 'yes', code: 'P', name: 'Planner', controller: 'mcs.Planner'],
-                        [enabled: OperationController.getPath('journal.enabled')?.toLowerCase() == 'yes', code: 'J', name: 'Journal', controller: 'mcs.Journal'],
-                        [enabled: OperationController.getPath('indicators.enabled')?.toLowerCase() == 'yes', code: 'I', name: 'Indicator', controller: 'app.IndicatorData'],
-                        [enabled: OperationController.getPath('Payment.enabled')?.toLowerCase() == 'yes', code: 'Q', name: 'Payment', controller: 'app.Payment'],
-                        [enabled: OperationController.getPath('writings.enabled')?.toLowerCase() == 'yes', code: 'W', name: 'Writing', controller: 'mcs.Writing'],
-                        [enabled: OperationController.getPath('notes.enabled')?.toLowerCase() == 'yes', code: 'N', name: 'Notes', controller: 'app.IndexCard',],
-                        [enabled: OperationController.getPath('resources.enabled')?.toLowerCase() == 'yes', code: 'R', name: 'Resources', controller: 'mcs.Book'],
-                        [enabled: OperationController.getPath('contacts.enabled')?.toLowerCase() == 'yes', code: 'S', name: 'Contact', controller: 'app.Contact']
-                ].grep { it.enabled == true }
-            }"
-                    var="i">
-            %{--todo--}%
-
-                <g:remoteLink controller="generics" action="getAddForm"
-                              params="[entityController: i.controller, updateRegion: 'centralArea']"
-                              update="centralArea">
-                    <li>
-                        <span style="font-size: 12px; padding: 2px;">
-                            <b>${i.code}</b> ${i.name}
-                        </span>
-                    </li>
-                </g:remoteLink>
-
-            </g:each>
-        </ul>
-
-    </div>
-
-<g:if test="${OperationController.getPath('import.enabled')?.toLowerCase() == 'yes' ? true : false}">
-<h3 class="">
-    <a>
-        Import
-    </a>
-</h3>
-<div>
-    <li>
-        <g:remoteLink controller="import" action="uploadFiles"
-                      update="centralArea"
-                      title="Upload files">
-            Upload files
-        </g:remoteLink>
-    </li>
-    <li>
-
-        <g:remoteLink controller="import" action="importLocalFiles"
-                      update="centralArea"
-                      title="Import local files">
-            Import local files
-        </g:remoteLink>
-    </li>
-</div>
-    </g:if>
-
-<sec:ifAnyGranted roles="ROLE_ADMIN">
-    <h3 class="">
-
-        <a>Parameters</a>
-    </h3>
-
-    <div>
-
-        <li>Manage parameters
-
-            <ul style="list-style: square">
-
-                <g:each in="${[
-                        ['app.parameters.Blog', 'Blog'],
-                        ['app.parameters.Markup', 'Markup'],
-                        ['app.parameters.Pomegranate', 'Pomegranate'],
-                        ['mcs.parameters.WorkStatus', 'Work status'],
-                        ['mcs.parameters.WritingStatus', 'Writing status'],
-                        ['mcs.parameters.ResourceStatus', 'Resource status'],
-                        ['app.parameters.ResourceType', 'Resource type'],
-
-                        ['mcs.parameters.Location', 'Location'],
-                        ['mcs.parameters.Context', 'Context'],
-
-                        ['mcs.parameters.GoalType', 'Goal type'],
-                        ['mcs.parameters.PlannerType', 'Planner type'],
-                        ['mcs.parameters.JournalType', 'Journal type'],
-                        ['mcs.parameters.WritingType', 'Writing type'],
-
-
-
-
-                        ['mcs.Department', 'Department'],
-                        ['mcs.Course', 'Course'],
-
-
-                        ['app.Indicator', 'Indicator'],
-                        ['app.PaymentCategory', 'Payment category'],
-                        ['mcs.parameters.RelationshipType', 'Relationship type']
-
-                ]}"
-                        var="i">
-
-                    <g:remoteLink controller="generics" action="getAddForm"
-                                  params="[entityController: i[0], isParameter: true,
-                                          updateRegion: 'centralArea']"
-                                  update="centralArea">
-                        <li>
-                            <span style="font-size: 12px; padding: 2px;">
-                                ${i[1]} (${grailsApplication.classLoader.loadClass(i[0]).count()})
-                            </span>
-                        </li>
-                    </g:remoteLink>
-
-                </g:each>
-            </ul>
-
-        </li>
-
-
-    </div>
-      <h3 class="">
-
-        <a>Administration</a>
-    </h3>
-
-    <div>
-        %{--<ul>--}%
-        %{--<li>Configuration--}%
-
-            <ul style="list-style: square">
-
-<g:each in="${[
-        ['app.Tag', 'Tag'],
-        ['cmn.Setting', 'Setting'],
-        ['mcs.parameters.SavedSearch', 'Saved search'],
-        ['app.parameters.CommandPrefix', 'Command prefix']
-]}" var="i">
-
-    <li>
-        <g:remoteLink controller="generics" action="getAddForm"
-                          params="[entityController: i[0], isParameter: true,
-                                  updateRegion: 'centralArea']"
-                          update="centralArea">
-
-                    <span style="font-size: 12px; padding: 2px;">
-                        ${i[1]} (${grailsApplication.classLoader.loadClass(i[0]).count()})
-                    </span>
-
-            </g:remoteLink>
-    </li>
-</g:each>
-    </ul>
-
-<li>
-            <g:remoteLink controller="generics" action="logicallyDeletedRecords"
-                          update="centralArea"
-                          title="Logically deleted records">
-                Trash bin
-            </g:remoteLink>
-</li>
-            <li>
-                <g:remoteLink controller="report" action="parametersList" update="centralArea">
-                    Dashboard
-                        %{--todo?--}%
-                </g:remoteLink>
-            </li>
-
-
-
-
-
-            <li>
-
-                <g:remoteLink controller="generics" action="updateTagCount" update="notificationArea">
-                    Update tag count (todo quartz)
-                </g:remoteLink>
-            </li>
-            <li>
-
-                <g:remoteLink controller="generics" action="dotTextDump" update="notificationArea">
-                    Export records to plain text files (in todo)
-                </g:remoteLink>
-
-            </li>
-
-            <g:render template="/layouts/savedSearches" model="[entity: 'A']"/>
-    </ul>
-    </div>
-
- </sec:ifAnyGranted>
-
-</div>
 
 
 <g:if test="${OperationController.getPath('coursesPanel.enabled')?.toLowerCase() == 'yes' ? true : false}">
@@ -319,6 +62,264 @@
 
 </div>
  </g:if>
+<div class="accordionHeader" onclick="toggleAdd('#accordionAdd', 'addPanel')">Administration</div>
+
+
+<div id="accordionAdd" style="width: 200px; padding: 3px;">
+
+
+
+<h3 class="">
+    <a>
+        Quick add
+    </a>
+</h3>
+
+<div>
+
+    <b>Type:</b> <g:formRemote name="batchAdd2"
+                               url="[controller: 'generics', action: 'quickAddRecord']"
+                               update="centralArea" style="display: inline;"
+
+                               onComplete="jQuery('quickAddNote').val('')"
+                               method="post">
+    <g:select name="recordType"
+              from="${  [
+
+                      [enabled: OperationController.getPath('goals.enabled')?.toLowerCase() == 'yes', code: 'G', name: 'Goals'] ,
+                      [ enabled : OperationController . getPath ( 'tasks.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'T' , name : 'Tasks' ] ,
+                      [ enabled : OperationController . getPath ( 'planner.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'P' , name : 'Planner' ] ,
+                      [ enabled : OperationController . getPath ( 'journal.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'J' , name : 'Journal' ] ,
+                      [ enabled : OperationController . getPath ( 'writings.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'W' , name : 'Writing' ] ,
+                      [ enabled : OperationController . getPath ( 'notes.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'N' , name : 'Notes' ] ,
+                      [ enabled : OperationController . getPath ( 'resources.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'R' , name : 'Resources' ],
+                      [ enabled : OperationController . getPath ( 'contacts.enabled' ) ?. toLowerCase ( ) == 'yes' , code : 'S' , name : 'Contact' ]
+              ].grep { it . enabled == true }
+              }" optionKey="code" optionValue="name"
+              style="direction: ltr; text-align: left; display: inline;"
+              onchange="jQuery('#searchForm').load('generics/hqlSearchForm/' + this.value);"
+              value="N"/>
+
+
+
+    <g:textArea cols="80" rows="5" name="block" id="quickAddRecordTextArea"
+                value=""
+                style="width: 90%; height: 60px;  margin: 4px;"
+
+                placeholder="Contents..."/>
+%{--style="width:650px; min-width:650px !important; height: 70px;
+ font-family: Source Sans Pro,Helvetica,Arial,sans-serif; background: #eeeeee; margin: 4px;"                --}%
+
+    <g:submitButton name="batch" value="Save" id="quickAddRecordSubmit"
+                    style=""
+                    class="fg-button  ui-widget ui-state-default"/>
+
+</g:formRemote>
+</div>
+
+
+<h3 class="">
+    <a>
+        Detailed add
+    </a>
+</h3>
+
+<div>
+
+    <ul style="list-style: square">
+
+        <g:each in="${
+            [
+
+                    [enabled: OperationController.getPath('goals.enabled')?.toLowerCase() == 'yes', code: 'G', name: 'Goals', controller: 'mcs.Goal'],
+                    [enabled: OperationController.getPath('tasks.enabled')?.toLowerCase() == 'yes', code: 'T', name: 'Tasks', controller: 'mcs.Task'],
+                    [enabled: OperationController.getPath('planner.enabled')?.toLowerCase() == 'yes', code: 'P', name: 'Planner', controller: 'mcs.Planner'],
+                    [enabled: OperationController.getPath('journal.enabled')?.toLowerCase() == 'yes', code: 'J', name: 'Journal', controller: 'mcs.Journal'],
+                    [enabled: OperationController.getPath('indicators.enabled')?.toLowerCase() == 'yes', code: 'I', name: 'Indicator', controller: 'app.IndicatorData'],
+                    [enabled: OperationController.getPath('Payment.enabled')?.toLowerCase() == 'yes', code: 'Q', name: 'Payment', controller: 'app.Payment'],
+                    [enabled: OperationController.getPath('writings.enabled')?.toLowerCase() == 'yes', code: 'W', name: 'Writing', controller: 'mcs.Writing'],
+                    [enabled: OperationController.getPath('notes.enabled')?.toLowerCase() == 'yes', code: 'N', name: 'Notes', controller: 'app.IndexCard',],
+                    [enabled: OperationController.getPath('resources.enabled')?.toLowerCase() == 'yes', code: 'R', name: 'Resources', controller: 'mcs.Book'],
+                    [enabled: OperationController.getPath('contacts.enabled')?.toLowerCase() == 'yes', code: 'S', name: 'Contact', controller: 'app.Contact']
+            ].grep { it.enabled == true }
+        }"
+                var="i">
+        %{--todo--}%
+
+            <g:remoteLink controller="generics" action="getAddForm"
+                          params="[entityController: i.controller, updateRegion: 'centralArea']"
+                          update="centralArea">
+                <li>
+                    <span style="font-size: 12px; padding: 2px;">
+                        <b>${i.code}</b> ${i.name}
+                    </span>
+                </li>
+            </g:remoteLink>
+
+        </g:each>
+    </ul>
+
+</div>
+
+%{--<g:if test="${OperationController.getPath('import.enabled')?.toLowerCase() == 'yes' ? true : false}">--}%
+%{--<g:remoteLink controller="import" action="importLocalFiles"--}%
+%{--update="centralArea"--}%
+%{--title="Import local files">--}%
+%{--Import local files--}%
+%{--</g:remoteLink>--}%
+%{--<h3 class="">--}%
+%{--<a>--}%
+%{--Import--}%
+%{--</a>--}%
+%{--</h3>--}%
+%{--<div>--}%
+%{--<li>--}%
+%{--<g:remoteLink controller="import" action="uploadFiles"--}%
+%{--update="centralArea"--}%
+%{--title="Upload files">--}%
+%{--Upload files--}%
+%{--</g:remoteLink>--}%
+%{--</li>--}%
+%{--<li>--}%
+
+%{----}%
+%{--</li>--}%
+%{--</div>--}%
+%{--</g:if>--}%
+
+<sec:ifAnyGranted roles="ROLE_ADMIN">
+    <h3 class="">
+
+        <a>Parameters</a>
+    </h3>
+
+    <div>
+
+        <li>Manage parameters
+
+            <ul style="list-style: square">
+
+                <g:each in="${[
+                        ['app.parameters.Blog', 'Blog'],
+                        ['app.parameters.Markup', 'Markup'],
+                        ['app.parameters.Pomegranate', 'Pomegranate'],
+                        ['mcs.parameters.WorkStatus', 'Work status'],
+                        ['mcs.parameters.WritingStatus', 'Writing status'],
+                        ['mcs.parameters.ResourceStatus', 'Resource status'],
+                        ['app.parameters.ResourceType', 'Resource type'],
+
+                        ['mcs.parameters.Location', 'Location'],
+                        ['mcs.parameters.Context', 'Context'],
+
+                        ['mcs.parameters.GoalType', 'Goal type'],
+                        ['mcs.parameters.PlannerType', 'Planner type'],
+                        ['mcs.parameters.JournalType', 'Journal type'],
+                        ['mcs.parameters.WritingType', 'Writing type'],
+
+
+
+
+                        ['mcs.Department', 'Department'],
+                        ['mcs.Course', 'Course'],
+
+
+                        ['app.Indicator', 'Indicator'],
+                        ['app.PaymentCategory', 'Payment category'],
+                        ['mcs.parameters.RelationshipType', 'Relationship type']
+
+                ]}"
+                        var="i">
+
+                    <g:remoteLink controller="generics" action="getAddForm"
+                                  params="[entityController: i[0], isParameter: true,
+                                          updateRegion: 'centralArea']"
+                                  update="centralArea">
+                        <li>
+                            <span style="font-size: 12px; padding: 2px;">
+                                ${i[1]} (${grailsApplication.classLoader.loadClass(i[0]).count()})
+                            </span>
+                        </li>
+                    </g:remoteLink>
+
+                </g:each>
+            </ul>
+
+        </li>
+
+
+    </div>
+    <h3 class="">
+
+        <a>Administration</a>
+    </h3>
+
+    <div>
+%{--<ul>--}%
+%{--<li>Configuration--}%
+
+    <ul style="list-style: square">
+
+        <g:each in="${[
+                ['app.Tag', 'Tag'],
+                ['cmn.Setting', 'Setting'],
+                ['mcs.parameters.SavedSearch', 'Saved search'],
+                ['app.parameters.CommandPrefix', 'Command prefix']
+        ]}" var="i">
+
+            <li>
+                <g:remoteLink controller="generics" action="getAddForm"
+                              params="[entityController: i[0], isParameter: true,
+                                      updateRegion: 'centralArea']"
+                              update="centralArea">
+
+                    <span style="font-size: 12px; padding: 2px;">
+                        ${i[1]} (${grailsApplication.classLoader.loadClass(i[0]).count()})
+                    </span>
+
+                </g:remoteLink>
+            </li>
+        </g:each>
+    </ul>
+
+    <li>
+        <g:remoteLink controller="generics" action="logicallyDeletedRecords"
+                      update="centralArea"
+                      title="Logically deleted records">
+            Trash bin
+        </g:remoteLink>
+    </li>
+    <li>
+        <g:remoteLink controller="report" action="parametersList" update="centralArea">
+            Dashboard
+        %{--todo?--}%
+        </g:remoteLink>
+    </li>
+
+
+
+
+
+    <li>
+
+        <g:remoteLink controller="generics" action="updateTagCount" update="notificationArea">
+            Update tag count (todo quartz)
+        </g:remoteLink>
+    </li>
+    <li>
+
+        <g:remoteLink controller="generics" action="dotTextDump" update="notificationArea">
+            Export records to plain text files (in todo)
+        </g:remoteLink>
+
+    </li>
+
+    <g:render template="/layouts/savedSearches" model="[entity: 'A']"/>
+    </ul>
+    </div>
+
+</sec:ifAnyGranted>
+
+</div>
 
 
 <script type="text/javascript">

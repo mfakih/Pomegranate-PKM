@@ -75,11 +75,10 @@
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'icheck.js')}"></script>--}%
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.continuousCalendar-latest.js')}"></script>
 
-%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script>--}%
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'raphael-min.js')}"></script>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'morris.js')}"></script>
 
-%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script>--}%
 
 %{--<r:layoutResources/>--}%
 
@@ -439,15 +438,15 @@
 
 
 <browser:isChrome>
-    <g:render template="/page/regions"/>
+    <g:render template="/page/regions" model="[htmlContent: htmlContent]"/>
 </browser:isChrome>
 
 <browser:isFirefox>
-    <g:render template="/page/regions"/>
+    <g:render template="/page/regions" model="[htmlContent: htmlContent]"/>
 </browser:isFirefox>
 
 <browser:isOpera>
-    <g:render template="/page/regions"/>
+    <g:render template="/page/regions" model="[htmlContent: htmlContent]"/>
 </browser:isOpera>
 
 <browser:isMobile>

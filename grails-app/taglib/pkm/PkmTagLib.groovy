@@ -2,6 +2,7 @@ package pkm
 
 import app.parameters.ResourceType
 import ker.OperationController
+import mcs.Book
 import org.apache.commons.lang.StringUtils
 
 import java.text.DecimalFormat
@@ -70,7 +71,6 @@ class PkmTagLib {
                     OperationController.getPath('module.repository.' + module + '.path')
             ]
             folders.each() { folder ->
-                println 'flder ' + folder
                 if (new File(folder).exists()) {
                     new File(folder).eachFileMatch(~/${recordId}[a-z][\S\s]*\.[\S\s]*/) {
                         filesList.add(it)
@@ -92,11 +92,12 @@ class PkmTagLib {
             if (module == 'R'){
                         def typeSandboxPath = ResourceType.findByCode(type).newFilesPath
                         def typeRepositoryPath = ResourceType.findByCode(type).repositoryPath
-  folders = [
-                        typeSandboxPath + '/' + type + '/' + (recordId / 100).toInteger(),
+                folders = [
+                        typeSandboxPath  + '/' + (recordId / 100).toInteger(),
                         typeRepositoryPath + '/' + (recordId / 100).toInteger()
                 ]
                 folders.each() { folder ->
+
                     if (new File(folder).exists()) {
                         new File(folder).eachFileMatch(~/${recordId}[a-z][\S\s]*\.[\S\s]*/) {
                             filesList.add(it)
@@ -105,8 +106,16 @@ class PkmTagLib {
                 }
                 folders = [
           typeSandboxPath + '/' + type + '/' + (recordId / 100).toInteger() + '/' + recordId,
-          typeRepositoryPath + '/' + (recordId / 100).toInteger() + '/' + recordId()
+
+          typeRepositoryPath + '/' + (recordId / 100).toInteger() + '/' + recordId
                 ]
+
+                def b = Book.get(recordId)
+                if (b.code){
+                    folders.add(typeSandboxPath + '/' + b.code)
+                    folders.add(typeRepositoryPath + '/' + b.code)
+                }
+
                 folders.each() { folder ->
                     if (new File(folder).exists()) {
                         new File(folder).eachFileMatch(~/[\S\s]*\.[\S\s]*/) {
@@ -120,6 +129,7 @@ class PkmTagLib {
                         OperationController.getPath('video.snapshots.repository.path')   + '/' + type + '/' + recordId
                 ]
                 folders.each() { folder ->
+                    println 'folder ' + folder
                     if (new File(folder).exists()) {
                         new File(folder).eachFileMatch(~/[\S\s]*\.[\S\s]*/) {
                             filesList.add(it)
@@ -359,8 +369,10 @@ source src="${createLink(controller: 'operation', action: 'download', id: fileId
                     def fileId = new Date().format('HHmmssSSS') + c //Math.floor(Math.random()*1000)
                     c++
                     session[fileId] = i.path
+
+//                    rel="prettyPhoto[as]"
                     output += """<li>
-  <a href="${createLink(controller: 'operation', action: 'download', id: fileId)}" class="${fileClass}" rel="prettyPhoto[as]"
+  <a href="${createLink(controller: 'operation', action: 'download', id: fileId)}" target="_blank" class="${fileClass}"
                           title="${i.name}">
 <img src="${createLink(controller: 'operation', action: 'download', id: fileId)}" width="60" height="60" alt="${i.name}" />
             </a>

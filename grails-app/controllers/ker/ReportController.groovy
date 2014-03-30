@@ -210,6 +210,11 @@ class ReportController {
     }
 
 
+    def detailedAdd() {
+        render(template: '/reports/detailedAdd', model: [])
+    }
+
+
     def paymentCategories() {
         render(template: '/reports/paymentCategories', model: [])
     }

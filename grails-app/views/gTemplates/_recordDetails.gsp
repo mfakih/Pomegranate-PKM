@@ -286,10 +286,7 @@
 
 
 
-
-
-
-                   <g:if test="${new File(OperationController.getPath('covers.sandbox.path') + '/' +
+          <g:if test="${new File(OperationController.getPath('covers.sandbox.path') + '/' +
                            entityCode + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + entityCode + '/' + record.id + '.jpg')?.exists()}">
                        <br/><br/>
                        <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
