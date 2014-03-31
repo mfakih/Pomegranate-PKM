@@ -22,8 +22,8 @@ html * {
 
 #spinner2 {
     position: fixed;
-    top: 20%;
-    left: 90%;
+    top: 50%;
+    left: 50%;
     margin-left: -50px;
     /*half width of the spinner gif */
     margin-top: -50px;
@@ -128,7 +128,7 @@ h4 {
 
 
 ul {
-    padding-left: 15px;
+    padding-left: 3px;
 }
 
 .accordion ul li {
@@ -1447,11 +1447,26 @@ margin-bottom: 3px;
 
 h3, h4 {
     /* Headers & Footer in Center & East panes */
-    font-size: 1.1em;
-    background: #EEF;
-    border: 1px solid #BBB;
+    font-size: 1.0em;
+    background: #D8D4C9;
+    border-bottom: 1px solid #BBB;
     border-width: 0 0 1px;
-    padding: 7px 10px;
+    padding: 3px 10px;
+    margin: 0;
+}
+
+h2 {
+
+    font-family: Georgia;
+    color: #1E71A4;
+    font-weight: bold;
+    line-height: 20px;
+    /* Headers & Footer in Center & East panes */
+    font-size: 1.1em;
+    /*background: #D8D4C9;*/
+    border-bottom: 0.5px #BBB solid;
+    border-width: 1px 0 0;
+    padding: 7px 5px;
     margin: 0;
 }
 
@@ -1460,4 +1475,12 @@ h3, h4 {
     font-size: 0.9em;
     font-weight: normal;
     border-width: 1px 0 0;
+}
+
+.ui-helper-reset{
+    font-size: 0.99em !important;
+}
+
+ul.ui-autocomplete.ui-menu {
+    z-index: 1000 !important;
 }

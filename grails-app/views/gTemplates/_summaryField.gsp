@@ -30,7 +30,7 @@
                        length="60"/>
     </span>
 
-    <span style="${record.status?.style}; font-size: 11px; border: 0px solid; text-decoration: italic;  border-radius: 3px; padding: 1px; margin-right: 3px;">
+    <span style="${record.status?.style}; font-size: 11px; border: 0px solid; text-decoration: #808080 underline;  border-radius: 3px; padding: 1px; margin-right: 3px;">
         ${record.status?.code}
     </span>
 
@@ -63,11 +63,7 @@
 
 </g:if>
 
-<g:if test="${record.class.declaredFields.name.contains('status') && record.status}">
-    <span style="${record.status?.style}; font-size: 11px; border: 0.5px solid;  border-radius: 3px; padding: 1px; margin-right: 3px;">
-        ${record.status?.name}
-    </span>
-</g:if>
+
 
 <g:if test="${record.class.declaredFields.name.contains('goal') && record.goal}">
     <g:remoteLink controller="generics" action="showSummary" id="${record.goal?.id}"
@@ -380,6 +376,12 @@
     </g:if>
 </g:if>
 
+
+<g:if test="${record.class.declaredFields.name.contains('status') && record.status}">
+    <span style="${record.status?.style}; font-size: 11px; border: 0px solid;  border-radius: 3px; padding: 1px; margin-right: 3px;">
+        ${record.status?.code}
+    </span>
+</g:if>
 
 
 <span style="float: right;">

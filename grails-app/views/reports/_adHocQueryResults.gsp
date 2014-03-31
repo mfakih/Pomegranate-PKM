@@ -1,5 +1,5 @@
 
-<h2 style="font-family: Georgia; font-size: 14px; color: #1E71A4; font-weight: bold; line-height: 20px;">
+<h2>
 &sect;    ${title}
 </h2>
 

@@ -56,14 +56,3 @@ Command bar help:
 <hr/>
 
 
-<li><b>ESC</b> focus</li>
-<li><b>F10</b> xcd note add</li>
-<li><b>Shift+F5</b> hide central region</li>
-<li><b>Ctrl + alt + n</b> next</li>
-<li><b>p</b> previous</li>
-<li><b>s</b> selected</li>
-<li><b>F9</b>toggle navigation menu</li>
-
-
-
-

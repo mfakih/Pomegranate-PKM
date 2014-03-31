@@ -2,7 +2,7 @@
 
 <g:if test="${title && !ssId}">
     <h2 style="font-family: Georgia; font-size: 14px; color: #1E71A4; font-weight: bold; line-height: 20px;">
-    &sect;    ${title} ${totalHits ? '(' + totalHits + ')' : ''}
+    &sect;    ${title} ${totalHits ? ' (' + totalHits + ')' : ''}
     </h2>
 %{--<hr/>--}%
 </g:if>

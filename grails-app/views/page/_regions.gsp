@@ -7,6 +7,8 @@
 
 <!-- allowOverflow auto-attached by option: west__showOverflowOnHover = true -->
 <div class="ui-layout-west westRegion">
+
+
     <g:render template="/layouts/west"/>
     %{--<p><button onclick="myLayout.close('west')">Hide</button></p>--}%
 
@@ -23,35 +25,48 @@
 
     <div class="ui-layout-east eastRegion">
 
-        <div id="accordion1" class="basic">
+        <div id="accordionEast" class="basic">
 
-			<h3><a href="#">Section 1</a></h3>
+			<h3><a href="#">Details panel</a></h3>
+			   <div id="3rdPanel">
+
+			</div>
+
+			<h3><a href="#">Tags</a></h3>
+			%{--<div id='tagsPanel'>--}%
+
+                <div id="dateRange1" style="">
+                    <input type="hidden" class="startDate" id="range_start">
+                    <input type="hidden" class="endDate" id="range_end">
+                </div>
+
+
+			%{--</div>--}%
+            	<h3><a href="#">Help</a></h3>
 			<div>
-				<h5>West Pane</h5>
-				<p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam.
-					Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc.</p>
-				<p>Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada.
-					Vestibulum a velit eu ante scelerisque vulputate.</p>
+                <h1>Welcome to Pomegranate</h1>
+
+
+
+
+                <li><b>ESC</b> focus</li>
+                <li><b>F10</b> xcd note add</li>
+                <li><b>Shift+F5</b> hide central region</li>
+                <li><b>Ctrl + alt + n</b> next</li>
+                <li><b>p</b> previous</li>
+                <li><b>s</b> selected</li>
+                <li><b>F9</b>toggle navigation menu</li>
+
+
+
+
+                <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
+                    ${htmlContent}
+
+                </div>
 			</div>
 
-			<h3><a href="#">Section 2</a></h3>
-			<div>
-				<h5>Sed Non Urna</h5>
-				<p>Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus.
-					Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit,
-					faucibus interdum tellus libero ac justo.</p>
-				<p>Vivamus non quam. In suscipit faucibus urna.</p>
 			</div>
-			</div>
-        <div id="3rdPanel">
-
-
-            <h1>Welcome to Pomegranate</h1>
-            <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
-${htmlContent}
-
-</div>
-        </div>
         %{--<g:if test="${ker.OperationController.getPath('twoPanels') == 'on'}">--}%
         %{--<g:render template="/layouts/east"/>--}%
     %{--</g:if>--}%
@@ -59,6 +74,8 @@ ${htmlContent}
 
 
 <div class="ui-layout-center" style="display: none;">
+           	<h3 class="ui-widget-header">Center Pane</h3>
+	<div class="ui-layout-content ui-widget-content">
 
 
     <div id="spinner2" style="display:none; z-index: 10000 !important">
@@ -92,10 +109,26 @@ ${htmlContent}
 
             <div id="centralArea" class="centralRegion">
 
+                %{--<g:select name="username" id="username"--}%
+                          %{--data-type="select" data-pk="sami" data-url="operation/autoCompleteTagsJSON" data-title="Enter username"--}%
+                          %{--from="['sami', 'dani', 'asdfsa']" value="sami"></g:select>--}%
+
+
+
+
+
+                %{--<g:textField id="test123" name="test"--}%
+                             %{--style="z-index: 10000" value=""/>--}%
+                %{--<script>--}%
+                    %{--jQuery("#test123").autocomplete({appendTo: ".autoCompleterItem",source: '/pkm/operation/autoCompleteTags'})--}%
+%{--//                    this.options.appendTo = ".autoCompleterItem";--}%
+%{--//                </script>--}%
+
                 <g:render template='/reports/homepageSavedSearches'/>
 
             </div>
 
         </div>
+    </div>
 
 

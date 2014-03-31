@@ -19,12 +19,15 @@
 
 package ker
 
+import app.parameters.Blog
 import security.Role
 import security.User
 import security.UserRole
 
 import static org.asciidoctor.Asciidoctor.Factory.create;
 import org.asciidoctor.Asciidoctor;
+
+import grails.converters.JSON
 
 import app.*
 import cmn.Setting
@@ -758,6 +761,40 @@ puts "Hello, World!"
         render asciidoctor.render(Writing.get(params.id).description, [:])
     }
 
+    def autoCompleteTagsJSON() {
+        def responce = []
+
+//        if (params.term && params.term.trim() != '') {
+//            Tag.findAllByNameLike(params.term + '%', [sort: 'name']).each() {
+//                responce += it.name + '\n'
+//            }
+//        } else {
+            Tag.findAll([sort: 'name']).each() {
+                responce += [
+                        value: it.id,
+                        text: it.name]
+            }
+//        }
+        render responce as JSON
+    }
+
+    def autoCompleteBlogsJSON() {
+        def responce = []
+
+//        if (params.term && params.term.trim() != '') {
+//            Tag.findAllByNameLike(params.term + '%', [sort: 'name']).each() {
+//                responce += it.name + '\n'
+//            }
+//        } else {
+            Blog.findAll([sort: 'code']).each() {
+                responce += [
+                        value: it.id,
+                        text: it.code]
+            }
+//        }
+        render responce as JSON
+    }
+
     def autoCompleteTags() {
         def responce = ''
 
@@ -861,5 +898,8 @@ puts "Hello, World!"
 
     }
 
+    def quickSave2 (){
+        render 'ddd'
+    }
 
 } // end of class

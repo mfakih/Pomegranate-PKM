@@ -2,14 +2,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <link rel="stylesheet" href="${createLinkTo(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>
+    %{--<link rel="stylesheet" href="${createLinkTo(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>--}%
+    <link rel="stylesheet" href="${createLinkTo(dir: 'css', file: 'jquery-ui-1.10.4.custom.css')}"/>
 
     %{--<link rel="shortcut icon" href="${resource(dir: 'images', file: 'cal.png')}" type="image/png"/>--}%
     <link rel="shortcut icon" href="${resource(dir: 'images/icons', file: 'calendar.ico')}" type="image/png"/>
 
     <r:require modules="application"/>
     <r:require modules="jquery"/>
-    %{--<r:require modules="jquery-ui"/>--}%
+    <r:require modules="jquery-ui"/>
 
     <r:layoutResources/>
 
@@ -72,6 +73,9 @@
 </head>
 
 <body>
+
+
+
 
 <div style="font-size: 11px; line-height: 20px; text-align: center; padding-bottom: 10px;">
     %{--<g:each in="${(2004..2009)}" var="y">--}%

@@ -124,7 +124,8 @@
 &nbsp;
 &nbsp;
     <g:remoteLink controller="report" action="tagCloud"
-                  update="3rdPanel"
+                  update="tagsPanel"
+        before=""
       style="color: white !important"
                   title="Tag cloud">
         Tags...

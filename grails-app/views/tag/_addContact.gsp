@@ -11,9 +11,9 @@
 </g:formRemote>
 
 <script type="text/javascript">
-    jQuery("#newContactField${entity}${instance.id}").autocomplete('${request.contextPath}/operation/autoCompleteContacts', {
-        mustMatch:false, minChars:0, highlight:false, autoFill:false,
-        delay:10, matchSubset:0, matchContains:1, selectFirst:false,
-        cacheLength:100, multiple:false
-    });
+    %{--jQuery("#newContactField${entity}${instance.id}").autocomplete('${request.contextPath}/operation/autoCompleteContacts', {--}%
+//        mustMatch:false, minChars:0, highlight:false, autoFill:false,
+//        delay:10, matchSubset:0, matchContains:1, selectFirst:false,
+//        cacheLength:100, multiple:false
+//    });
 </script>

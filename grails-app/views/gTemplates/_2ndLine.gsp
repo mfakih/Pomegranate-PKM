@@ -255,13 +255,24 @@
 
 
 <g:if test="${'JWN'.contains(entityCode)}">
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'blog',
-                          valueId: (record.blog?.id ?: null), updateDiv: 'quickEditBlog' + record.id]"
-                  update="quickEditBlog${record.id}"
-                  title="ID ${record.publishedNodeId ?: '?'} ${record.publishedOn ? ' on ' + record.publishedOn?.format('dd.MM.yyyy HH:mm') : ''}">
-        <span id="quickEditBlog${record.id}"><span>${record.blog?.code ? record.blog?.code : 'No blog'}</span> </span>
-    </g:remoteLink>
+    %{--<g:remoteLink controller="generics" action="quickEdit" id="${record.id}"--}%
+                  %{--params="[entityCode: entityCode, field: 'blog',--}%
+                          %{--valueId: (record.blog?.id ?: null), updateDiv: 'quickEditBlog' + record.id]"--}%
+                  %{--update="quickEditBlog${record.id}"--}%
+                  %{--title="ID ${record.publishedNodeId ?: '?'} ${record.publishedOn ? ' on ' + record.publishedOn?.format('dd.MM.yyyy HH:mm') : ''}">--}%
+        %{--<span id="quickEditBlog${record.id}"><span>${record.blog?.code ? record.blog?.code : 'No blog'}</span> </span>--}%
+    %{--</g:remoteLink>--}%
+
+    <a href="#" id="blog" data-type="select" data-value="${record.id}" data-name="blog"
+       data-source="operation/autoCompleteBlogsJSON"
+
+       data-pk="1" data-url="operation/quickSave2" data-title="Edit blog">
+
+    </a>
+    <script>
+        $('#blog').editable();
+    </script>
+
 </g:if>
 
 

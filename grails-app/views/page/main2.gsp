@@ -34,10 +34,11 @@
 
 
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>
+%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.10.4.custom.css')}"/>--}%
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'main2.css')}"/>
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'layout-mine2.css')}"/>
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'personalization.css')}"/>
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>
+%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>--}%
 
 
 
@@ -49,12 +50,12 @@
 
 
 
-%{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'jquery.autocomplete.min.js')}"></script>--}%
-
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-1.11.0_min.js')}"></script>
-<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.9.2.custom.min2-full.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.10.4.custom.min.js')}"></script>
 
 
+<link rel="stylesheet" href="${resource(dir: 'css', file: 'jqueryui-editable.css')}"/>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jqueryui-editable.min.js')}"></script>
 
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'fileuploader.js')}"></script>--}%
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.flipcountdown.js')}"></script>--}%
@@ -92,17 +93,25 @@
     jQuery(document).ready(function () {
 
         myLayout = $('body').layout({
-            west__size: 300, east__size: 300
+            west__size: 230, east__size: 230
             // RESIZE Accordion widget when panes resize
-            , west__onresize: $.layout.callbacks.resizePaneAccordions, east__onresize: $.layout.callbacks.resizePaneAccordions
+            , west__onresize: $.layout.callbacks.resizePaneAccordions, east__onresize: $.layout.callbacks.resizePaneAccordions, north__closable: false, north__spacing_closed: 0		// big resizer-bar when open (zero height)
+            , north__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+            , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+            , south__spacing_open: 0		// no resizer-bar when open (zero height)
+            , south__spacing_closed: 0		// big resizer-bar when open (zero height)
+
+            , east__spacing_open: 10		// no resizer-bar when open (zero height)
+            , east__spacing_closed: 15		// big resizer-bar when open (zero height)
+            , west__spacing_open: 10		// no resizer-bar when open (zero height)
+            , west__spacing_closed: 15		// big resizer-bar when open (zero height)
+
+
         });
 
-        // ACCORDION - in the West pane
-        $("#accordion1").accordion({
-            heightStyle: "fill"
-        });
 
-
+        $.fn.editable.defaults.mode = 'inline';
+        $.fn.editable.defaults.showbuttons = false;
 
         jQuery('.fg-button').hover(
                 function () {
@@ -179,6 +188,34 @@
                         + jQuery('#range_end').val())//      + '&level=d')
             }})
 
+
+        // ACCORDION - in the West pane
+        $("#accordionEast").accordion({
+            heightStyle: "fill",
+            header: "h3",
+            event: "click",
+            active: 0,
+            collapsible: true,
+            icons: {
+                header: "ui-icon-circle-arrow-e",
+                headerSelected: "ui-icon-circle-arrow-s"
+            }
+
+        });
+        $("#accordionWest").accordion({
+            heightStyle: "fill",
+            header: "h4",
+            event: "click",
+            active: 4,
+            collapsible: true,
+            icons: {
+                header: "ui-icon-circle-arrow-e",
+                headerSelected: "ui-icon-circle-arrow-s"
+            }
+
+        });
+
+
         Mousetrap.bindGlobal('esc', function (e) {
             jQuery("html, body").animate({ scrollTop: 0 }, "fast");
             jQuery('#quickAddTextField').focus();
@@ -204,7 +241,7 @@
 
         });
 
-   Mousetrap.bindGlobal('f2', function (e) {
+        Mousetrap.bindGlobal('f2', function (e) {
 
             jQuery('#quickAddRecordTextArea').select().focus();
 
@@ -273,13 +310,9 @@
         // document.forms.quickAddForm['submit'].disabled = true;
 
 
-
-
-
         jQuery(window).bind('beforeunload', function () {
             return 'Are you sure you want to leave the application?';
         });
-
 
 
         jQuery.ajaxSetup({
@@ -290,9 +323,16 @@
                 $('#spinner2').hide();
             },
             success: function () {
+                $('#spinner2').hide();
             }
+
+
         });
 
+        $(document).ajaxError(function () {
+            $('#spinner2').hide();
+            console.log('eror')
+        });
 
     });
 
@@ -308,6 +348,10 @@
 </browser:isChrome>
 
 <browser:isFirefox>
+
+
+
+
     <g:render template="/page/regions" model="[htmlContent: htmlContent]"/>
 </browser:isFirefox>
 
@@ -317,10 +361,9 @@
 
 <browser:isMobile>
     <g:javascript>
-    document.location = 'page/mobile'
+        document.location = 'page/mobile'
     </g:javascript>
 </browser:isMobile>
-
 
 </body>
 </html>
