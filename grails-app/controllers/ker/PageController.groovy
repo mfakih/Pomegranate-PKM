@@ -66,6 +66,9 @@ class PageController {
     def help() {
         render(template: '/page/help')
     }
+ def main2() {
+        render(view: '/page/main2')
+    }
 
 
     def main() {

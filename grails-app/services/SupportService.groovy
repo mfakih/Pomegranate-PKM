@@ -627,7 +627,6 @@ class SupportService {
         //def path = CH.config.covers.repository.path + '/ebk'
 
         def path = OperationController.getPath('covers.sandbox.path') + '/' + b.type?.code
-        println '\n\n\n\n\n\ncover path is ' + path
 
         if (b.imageUrl) {
             def t = new File(path + '/' + id + '.jpg')

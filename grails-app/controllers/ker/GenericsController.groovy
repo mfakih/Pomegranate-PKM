@@ -2705,7 +2705,7 @@ def addContactToRecord() {
                                     core.matches(/^\d\d\d\.[0-9]{2}/)||
                                     core.matches(/^\d\d\d[\_][0-9]{1,4}$/)||
                                     core.matches(/^\d\d\d[\_][0-9]{1,4}[\.][0-9]{2}$/)){
-                                properties[dateField] = supportService.fromWeekDateAsDateTimeFullSyntax(core)
+                                properties[dateField] = OperationController.fromWeekDateAsDateTimeFullSyntax(core)
                             }
                             else {
                             def format = Setting.findByName('date.format')
@@ -2724,7 +2724,7 @@ def addContactToRecord() {
                                     core.matches(/^\d\d\d\.[0-9]{2}/) ||
                                     core.matches(/^\d\d\d[\_][0-9]{1,4}$/) ||
                                     core.matches(/^\d\d\d[\_][0-9]{1,4}[\.][0-9]{2}$/)) {
-                                properties[dateField] = supportService.fromWeekDateAsDateTimeFullSyntax(core)
+                                properties[dateField] = OperationController.fromWeekDateAsDateTimeFullSyntax(core)
                             } else {
                                 def format = Setting.findByName('date.format')
                                 properties[dateField] = Date.parse(format ? format.value : 'dd.MM.yyyy', core)

@@ -820,4 +820,46 @@ puts "Hello, World!"
     }
 
 
+    static Date fromWeekDateAsDateTimeFullSyntax(String weekDate) {
+        def year = new Date().format('yyyy')
+        if (weekDate.contains('.'))
+            year = '20' + weekDate.substring(4, 6)
+        def time = '00:00'
+
+        if (weekDate.contains('_')) {
+            def chunk = weekDate.split('_')[1].trim()
+
+            if (chunk.length() > 2) {
+
+                if (chunk.length() == 3)
+                    chunk = '0' + chunk
+
+                time = chunk.substring(0, 2) + ':' + chunk.substring(2, 4)
+            } else {
+                time = weekDate.split('_')[1] + ':00'
+            }
+        }
+
+        int week = Integer.parseInt(weekDate.substring(0, 2))
+        int day = Integer.parseInt(weekDate.substring(2, 3))
+        if (week == 0 || week > 53 || day < 0 || day > 7) {
+            //    log.warn "Invalid weekDate ranges"
+            throw new IOException()
+        }
+
+        Calendar c = new GregorianCalendar()
+        c.setLenient(false)
+        c.setMinimalDaysInFirstWeek(4)
+        c.setFirstDayOfWeek(java.util.Calendar.MONDAY)
+        c.set(java.util.Calendar.WEEK_OF_YEAR, week)
+        int javaDay = (day == 7) ? 1 : (day + 1)
+        c.set(java.util.Calendar.DAY_OF_WEEK, javaDay)
+        c.set(java.util.Calendar.YEAR, year.toInteger())
+
+        Date.parse("yyyy-MM-dd HH:mm", c.get(Calendar.YEAR) + '-' + (c.get(Calendar.MONTH) + 1) + '-' + c.get(Calendar.DATE) + ' ' + time)
+        //        return c.get(Calendar.YEAR) + '-' + (c.get(Calendar.MONTH) + 1) + '-' + c.get(Calendar.DATE)
+
+    }
+
+
 } // end of class

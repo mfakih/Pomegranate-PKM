@@ -23,6 +23,26 @@
 
     <div class="ui-layout-east eastRegion">
 
+        <div id="accordion1" class="basic">
+
+			<h3><a href="#">Section 1</a></h3>
+			<div>
+				<h5>West Pane</h5>
+				<p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam.
+					Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc.</p>
+				<p>Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada.
+					Vestibulum a velit eu ante scelerisque vulputate.</p>
+			</div>
+
+			<h3><a href="#">Section 2</a></h3>
+			<div>
+				<h5>Sed Non Urna</h5>
+				<p>Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus.
+					Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit,
+					faucibus interdum tellus libero ac justo.</p>
+				<p>Vivamus non quam. In suscipit faucibus urna.</p>
+			</div>
+			</div>
         <div id="3rdPanel">
 
 
@@ -38,13 +58,10 @@ ${htmlContent}
     </div>
 
 
+<div class="ui-layout-center" style="display: none;">
 
-<div class="outer-center">
 
-    <div class="middle-center">
-
-        <div class="inner-center">
-            <div id="spinner2" style="display:none; z-index: 10000 !important">
+    <div id="spinner2" style="display:none; z-index: 10000 !important">
                 <img src="${resource(dir: 'images', file: 'ajax-loader1.gif')}" alt="Spinner2"
                      style="z-index: 10000 !important"/>
             </div>
@@ -81,23 +98,4 @@ ${htmlContent}
 
         </div>
 
-        %{--<div class="inner-southInner" style="">--}%
-%{----}%
-        %{--</div>--}%
 
-
-
-        %{--<div class="ui-layout-south">Inner South</div>--}%
-
-    </div>
-
-    %{--<div class="middle-west">Middle West</div>--}%
-    %{----}%
-    %{--<div class="middle-east">Middle East</div>--}%
-
-</div>
-
-%{--<div class="ui-layout-center">--}%
-
-%{----}%
-%{--</div>--}%
