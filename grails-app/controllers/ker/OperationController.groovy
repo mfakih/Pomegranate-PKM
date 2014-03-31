@@ -899,6 +899,9 @@ puts "Hello, World!"
     }
 
     def quickSave2 (){
+       println 'record id ' + params.pk
+       println 'new value ' +    params.value
+       println 'field ' + params.name
         render 'ddd'
     }
 

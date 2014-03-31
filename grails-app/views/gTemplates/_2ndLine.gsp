@@ -263,14 +263,13 @@
         %{--<span id="quickEditBlog${record.id}"><span>${record.blog?.code ? record.blog?.code : 'No blog'}</span> </span>--}%
     %{--</g:remoteLink>--}%
 
-    <a href="#" id="blog" data-type="select" data-value="${record.id}" data-name="blog"
+    <a href="#" id="blog"  class="blog" data-type="select" data-value="${record.blog?.id}" data-name="blog"
        data-source="operation/autoCompleteBlogsJSON"
-
-       data-pk="1" data-url="operation/quickSave2" data-title="Edit blog">
-
+       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit blog">
+       ${record.blog?.code ?: 'No blog'}
     </a>
     <script>
-        $('#blog').editable();
+        $('.blog').editable();
     </script>
 
 </g:if>
