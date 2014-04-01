@@ -761,20 +761,38 @@ puts "Hello, World!"
         render asciidoctor.render(Writing.get(params.id).description, [:])
     }
 
+    def getQuickEditValues() {
+        def entity = params.entity
+        def field = params.field
+        def responce = []
+        if(entity == 'N' && field == 'blog'){
+            Blog.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                            text: it.code]
+            }
+        }
+        // else if(){}
+        render responce as JSON
+    }
     def autoCompleteTagsJSON() {
         def responce = []
 
-//        if (params.term && params.term.trim() != '') {
-//            Tag.findAllByNameLike(params.term + '%', [sort: 'name']).each() {
-//                responce += it.name + '\n'
-//            }
-//        } else {
-            Tag.findAll([sort: 'name']).each() {
+        if (params.query && params.query.trim() != '') {
+            Tag.findAllByNameLike(params.query + '%', [sort: 'name']).each() {
+                println 'here'
                 responce += [
+                        id: it.id,
                         value: it.id,
                         text: it.name]
             }
-//        }
+        } else {
+            Tag.findAll([sort: 'name']).each() {
+                responce += [
+                        id: it.id,
+                        value: it.id,
+                        text: it.name]
+            }
+    }
         render responce as JSON
     }
 
@@ -899,10 +917,13 @@ puts "Hello, World!"
     }
 
     def quickSave2 (){
-       println 'record id ' + params.pk
-       println 'new value ' +    params.value
-       println 'field ' + params.name
-        render 'ddd'
+        def id = params.pk
+        def newValue = params.value
+       def field = params.name
+        println params.dump()
+//        def record = IndexCard.get(id)
+//        record.blog = Blog.get(newValue)
+        render (['ok'] as JSON)
     }
 
 } // end of class

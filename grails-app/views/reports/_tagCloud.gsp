@@ -1,4 +1,62 @@
 <%@ page import="app.Tag" %>
+<div style="margin: 5px">
+    <a href="#" id="tags" name="tags[]" style="width: 200px;"></a>
+</div>
+<script>
+    $.fn.editable.defaults.mode = 'inline';
+    $.fn.editable.defaults.showbuttons = false;
+    $('#tags').editable({
+        type: 'select2',
+        url: '/pkm/operation/quickSave2',
+                        pk: 123,
+        onblur: 'ignore',
+        emptytext: 'Tag...',
+        select2: {
+            tags: true,
+            tokenSeparators: [",", " "],
+//            tags: [],
+//            separator: ", ",
+            createSearchChoice: function (term) {
+                return {id: term, text: term};
+            },
+            placeholder: 'Tag...',
+            allowClear: false,
+//            multiple: true,
+            closeOnSelect: false,
+            width: '200px',
+            minimumInputLength: 2,
+            success: function (response, newValue) {
+                if (!response.success) return response.msg;
+            },
+//            id: function (e) {
+//                return e.value;
+//            },
+            ajax: {
+                url: '/pkm/operation/autoCompleteTagsJSON',
+                dataType: 'json',
+                quietMillis: 0,
+                data: function (term, page) {
+                    return { query: term };
+                },
+                results: function (data, page) {
+                    return { results: data };
+                }
+            },
+            formatResult: function (employee) {
+                return employee.text;
+            },
+            formatSelection: function (employee) {
+                return employee.text;
+            }
+        }
+        /* suucess not needed
+         ,
+         success: function(response) {
+         $('#RequestUser').text(response.newVal);
+         }
+         */
+    });
+</script>
 <div style="-moz-column-count: 1">
     %{--<ul>--}%
 <g:each in="${Tag.list([sort: 'name', order: 'asc'])}" var="t">

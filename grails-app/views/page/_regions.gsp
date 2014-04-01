@@ -33,15 +33,11 @@
 			</div>
 
 			<h3><a href="#">Tags</a></h3>
-			%{--<div id='tagsPanel'>--}%
+			<div id='tagsPanel'>
 
-                <div id="dateRange1" style="">
-                    <input type="hidden" class="startDate" id="range_start">
-                    <input type="hidden" class="endDate" id="range_end">
                 </div>
 
 
-			%{--</div>--}%
             	<h3><a href="#">Help</a></h3>
 			<div>
                 <h1>Welcome to Pomegranate</h1>
@@ -74,7 +70,6 @@
 
 
 <div class="ui-layout-center" style="display: none;">
-           	<h3 class="ui-widget-header">Center Pane</h3>
 	<div class="ui-layout-content ui-widget-content">
 
 

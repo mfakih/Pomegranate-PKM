@@ -54,6 +54,8 @@
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.10.4.custom.min.js')}"></script>
 
 
+<link rel="stylesheet" href="${resource(dir: 'css', file: 'select2.css')}"/>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'select2.min.js')}"></script>
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'jqueryui-editable.css')}"/>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jqueryui-editable.min.js')}"></script>
 
