@@ -31,7 +31,7 @@ class Journal implements Comparable {  // entity id = 125
 //    static searchable = [only: ['startDate', 'endDate', 'body', 'type', 'notes']]
     static searchable = true
 
-    static hasMany = [tags: Tag]
+    static hasMany = [tags: Tag, contacts: Contact]
 
     // Fields
 

@@ -29,7 +29,7 @@ class Goal implements Comparable {  // entity id = 126
 
     //   static belongsTo = [front: Front]
 
-    static hasMany = [tags: Tag]
+    static hasMany = [tags: Tag, contacts: Contact]
 
 //    static searchable = [only: ['title', 'description', 'priority', 'goalStatus', 'goalType', 'notes']]
 
@@ -58,6 +58,8 @@ class Goal implements Comparable {  // entity id = 126
     Integer priority = 2
     Integer percentCompleted
 
+    Float plannedDuration
+    Float actualDuration
     Date completedOn
 
     Boolean bookmarked = false

@@ -34,7 +34,7 @@ import mcs.parameters.WritingStatus
 class IndexCard implements Comparable {  // entity id = 16
 
 
-    static hasMany = [tags: Tag]
+    static hasMany = [tags: Tag, contacts: Contact]
 
 //    static searchable = [only: ['title', 'contents', 'mainHighlights', 'sideHighlights', 'reaction', 'extractedWords', 'notes']]
 

@@ -19,22 +19,18 @@
 
 package ker
 
+import app.*
 import app.parameters.Blog
-import security.Role
+import app.parameters.Pomegranate
+import cmn.Setting
+import grails.converters.JSON
+import mcs.*
+import mcs.parameters.*
+import org.asciidoctor.Asciidoctor
 import security.User
 import security.UserRole
 
-import static org.asciidoctor.Asciidoctor.Factory.create;
-import org.asciidoctor.Asciidoctor;
-
-import grails.converters.JSON
-
-import app.*
-import cmn.Setting
-import mcs.*
-import mcs.parameters.*
-
-import static java.util.Collections.*
+import static org.asciidoctor.Asciidoctor.Factory.create
 
 class OperationController {
 
@@ -771,28 +767,95 @@ puts "Hello, World!"
                             text: it.code]
             }
         }
-        // else if(){}
+        else if (field == 'pomegranate') {
+            Pomegranate.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+     else if (field == 'course') {
+            Course.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.summary]
+            }
+        }
+         else if (entity == 'T' && field == 'context') {
+            Context.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+        else if (entity == 'G' && field == 'type') {
+            GoalType.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+         else if('GTP'.contains(entity) && field == 'status') {
+            WorkStatus.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+        else if (field == 'plannedDuration') {
+            (1..10).each() {
+                responce += [value: it,
+                        text: it]
+            }
+        }
+        else if (field == 'priority') {
+            (1..4).each() {
+                responce += [value: it,
+                        text: it]
+            }
+        }
+  else if (field == 'percentCompleted') {
+            (1..10).each() {
+                responce += [value: it * 10,
+                        text: it * 10]
+            }
+        }
         render responce as JSON
     }
     def autoCompleteTagsJSON() {
         def responce = []
 
-        if (params.query && params.query.trim() != '') {
-            Tag.findAllByNameLike(params.query + '%', [sort: 'name']).each() {
-                println 'here'
+//        if (params.query && params.query.trim() != '') {
+//            Tag.findAllByNameLike(params.query + '%', [sort: 'id']).each() {
+//                println 'here'
+//                responce += [
+//                        id: it.id,
+//                        value: it.value,
+//                        text: it.name]
+//            }
+//        } else {
+        Tag.findAll([sort: 'id']).each() {
                 responce += [
                         id: it.id,
-                        value: it.id,
+                    value: it.name,
                         text: it.name]
             }
-        } else {
-            Tag.findAll([sort: 'name']).each() {
-                responce += [
-                        id: it.id,
-                        value: it.id,
-                        text: it.name]
-            }
+//    }
+        render responce as JSON
     }
+    def autoCompleteContactsJSON() {
+        def responce = []
+//        if (params.query && params.query.trim() != '') {
+//            Tag.findAllByNameLike(params.query + '%', [sort: 'id']).each() {
+//                println 'here'
+//                responce += [
+//                        id: it.id,
+//                        value: it.value,
+//                        text: it.name]
+//            }
+//        } else {
+        Contact.findAll([sort: 'id']).each() {
+                responce += [
+                        id: it.id,
+                    value: it.summary,
+                    text: it.summary]
+            }
+//    }
         render responce as JSON
     }
 
@@ -864,11 +927,9 @@ puts "Hello, World!"
             response.setHeader("Content-disposition", "attachment; filename=\"${file.fileName}\"")
             //   response.contentType = "application/vnd.ms-word"
             response.outputStream << new FileInputStream(OperationController.getPath('module.sandbox.N.path')+ '/' + file.id)
-        }
-        else if (new File(OperationController.getPath('module.repository.N.path') + '/' + file.id).exists()) {
+        } else if (new File(OperationController.getPath('module.repository.N.path') + '/' + file.id).exists()) {
             response.outputStream << new FileInputStream(OperationController.getPath('module.repository.N.path') + '/' + file.id)
-        }
-        else{
+        } else {
             render "Document was not found."
         }
 
@@ -916,14 +977,45 @@ puts "Hello, World!"
 
     }
 
-    def quickSave2 (){
+    def quickSave2() {
         def id = params.pk
         def newValue = params.value
-       def field = params.name
-        println params.dump()
-//        def record = IndexCard.get(id)
-//        record.blog = Blog.get(newValue)
-        render (['ok'] as JSON)
+        def field = params.name.split('-')[0]
+        def entity = params.name.split('-')[1]
+
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entity]).get(id)
+
+        if (field == 'blog')
+            record[field] = Blog.get(newValue)
+
+        else if (field == 'pomegranate')
+            record[field] = Pomegranate.get(newValue)
+         else if (field == 'course')
+            record[field] = Course.get(newValue)
+        else if (field == 'context')
+            record[field] = Context.get(newValue)
+
+        else if (field == 'location')
+            record[field] = Location.get(newValue)
+
+        else if (entity == 'G' && field == 'type')
+            record[field] = GoalType.get(newValue)
+        else if (entity == 'P' && field == 'type')
+            record[field] = Plannertype.get(newValue)
+        else if (entity == 'J' && field == 'type')
+            record[field] = JournalType.get(newValue)
+
+        else if ('GTP'.contains(entity) && field == 'status')
+            record[field] = WorkStatus.get(newValue)
+
+        else if (field == 'plannedDuration')
+            record[field] = newValue.toInteger()
+        else if (field == 'priority')
+            record[field] = newValue.toInteger()
+   else if (field == 'percentCompleted')
+            record[field] = newValue.toInteger()
+
+        render(['ok'] as JSON)
     }
 
 } // end of class

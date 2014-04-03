@@ -1,5 +1,5 @@
 <%@ page import="ker.OperationController" %>
-<g:if test="${entityCode == 'T'}">
+<g:if test="${entityCode == '11111111'}">
 
 
     <g:if test="${record.priority == 3}">
@@ -47,21 +47,13 @@
         ${record.notes}
     </span>
 
-    &nbsp; <g:render template="/tag/tags" model="[instance: record, entity: entityCode]"/>
-
-
+    <g:if test="${record.class.declaredFields.name.contains('tags')}">
+        &nbsp; <g:render template="/tag/tags" model="[instance: record, entity: entityCode]"/>
+        &nbsp; <g:render template="/tag/contacts" model="[instance: record, entity: entityCode]"/>
+    </g:if>
 
 </g:if>
 <g:else>
-
-
-<g:if test="${record.class.declaredFields.name.contains('type') && record.type}">
-    <span style="${record.type?.style}; font-size: 11px;border-bottom: 0.5px solid; padding: 1px;  margin-right: 3px;">
-        ${record.type?.code}
-    </span>
-
-
-</g:if>
 
 
 
@@ -82,10 +74,6 @@
 <g:if test="${record.class.declaredFields.name.contains('startDate') && record.startDate}">
     ${record.startDate?.format(OperationController.getPath('date.format'))}
 </g:if>
-
-
-
-
 
 
 <g:if test="${record.class.declaredFields.name.contains('book') && record.book}">
@@ -377,12 +365,40 @@
 </g:if>
 
 
-<g:if test="${record.class.declaredFields.name.contains('status') && record.status}">
-    <span style="${record.status?.style}; font-size: 11px; border: 0px solid;  border-radius: 3px; padding: 1px; margin-right: 3px;">
-        ${record.status?.code}
-    </span>
+
+<g:if test="${record.class.declaredFields.name.contains('type')}">
+    <g:set value="type" var="field"></g:set>
+
+    <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+        style="${record.type ? record.type?.style : ''}; float: right; font-size: 11px; font-weight: bold"
+       data-name="${field}-${record.entityCode()}"
+       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
+       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+       ${record[field]?.code ?: 'No ' + field}
+    </a>
+    <script>
+        $('#${field}${record.id}').editable();
+    </script>
 </g:if>
 
+
+
+
+<g:if test="${record.class.declaredFields.name.contains('status') && record.status}">
+    <g:set value="status" var="field"></g:set>
+
+    <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+       data-name="${field}-${record.entityCode()}"
+       style="${record.status ? record.status?.style : ''}; border: 0.5px solid #808080; font-size: 11px; text-decoration: italic"
+       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
+       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+        ${record[field]?.code ?: 'No ' + field}
+    </a>
+    <script>
+        $('#${field}${record.id}').editable();
+    </script>
+
+</g:if>
 
 <span style="float: right;">
     <g:if test="${record.class.declaredFields.name.contains('orderInCourse')}">
@@ -399,9 +415,7 @@
 
 <g:if test="${record.class.declaredFields.name.contains('tags')}">
     &nbsp; <g:render template="/tag/tags" model="[instance: record, entity: entityCode]"/>
-</g:if>
-<g:if test="${'T'.contains(entityCode)}">
-    &nbsp; <g:render template="/tag/peopleTags" model="[instance: record, entity: entityCode]"/>
+    &nbsp; <g:render template="/tag/contacts" model="[instance: record, entity: entityCode]"/>
 </g:if>
 
 

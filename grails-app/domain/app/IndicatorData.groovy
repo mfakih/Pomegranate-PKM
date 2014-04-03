@@ -18,10 +18,11 @@
 package app
 
 import cmn.DataChangeAudit
+import app.Contact
 
 class IndicatorData implements Comparable {  // entity id = 21
 
-    static hasMany = [tags: Tag]
+    static hasMany = [tags: Tag, contacts: Contact]
 
      static searchable = [only:['indicator', 'date', 'value', 'notes' ]]
 

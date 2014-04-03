@@ -19,6 +19,7 @@
 
 package ker
 
+import app.Contact
 import app.IndexCard
 import app.Indicator
 import app.PaymentCategory
@@ -999,6 +1000,14 @@ ll
             render(template: '/tag/tags', model: [instance: instance, entity: params.entityCode])
         } else render 'Tag not found'
     }
+ def removeContactFromRecord() {
+        def instance = grailsApplication.classLoader.loadClass(entityMapping[params.entityCode]).get(params.id)
+     def contact = Contact.get(params.tagId)
+        if (contact) {
+            instance.removeFromContacts(contact)
+            render(template: '/tag/', model: [instance: instance, entity: params.entityCode])
+        } else render 'Tag not found'
+    }
 
     def addTagToRecord() {
 
@@ -1019,11 +1028,13 @@ def addContactToRecord() {
 
         def instance = grailsApplication.classLoader.loadClass(entityMapping[params.entityCode]).get(params.id)
 
-        if (Contact.findByName(params.tag?.trim())) {
-            instance.addToPeople(Contact.findByName(params.tag?.trim()))
-            render(template: '/tag/peopleTags', model: [instance: instance, entity: params.entityCode])
+    def contact = Contact.findBySummary(params.contact?.trim())
+        if (contact) {
+            instance.addToContacts(contact)
+            render(template: '/tag/contacts', model: [instance: instance, entity: params.entityCode])
 
     }
+    else render ''
 }
 
 

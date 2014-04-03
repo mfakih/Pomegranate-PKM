@@ -17,6 +17,7 @@
 
 package mcs
 
+import app.Contact
 import app.Tag
 import cmn.DataChangeAudit
 
@@ -25,7 +26,7 @@ class Excerpt implements Comparable {  // entity id = 143
 
     static belongsTo = [book: Book]
 
-    static hasMany = [tags: Tag]
+    static hasMany = [tags: Tag, contacts: Contact]
 
 
 

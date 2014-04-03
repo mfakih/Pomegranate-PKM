@@ -18,6 +18,7 @@
 package app
 
 import cmn.DataChangeAudit
+import app.Contact
 import app.Tag
 import mcs.Course
 import mcs.Department
@@ -28,7 +29,7 @@ class Contact implements Comparable {  // entity id = 26
 
      static searchable = [only:['name', 'description', 'summary', 'notes' ]]
 
-    static hasMany = [tags: Tag]
+    static hasMany = [tags: Tag, contacts: Contact]
 
     // Fields
 

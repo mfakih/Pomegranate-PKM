@@ -105,6 +105,7 @@
     <g:remoteLink controller="page" action="panel"
                   params="${[id: record.id, entityCode: entityCode]}"
                   update="3rdPanel"
+                  before="jQuery('#accordionEast').accordion({ active: 0});"
                   class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
                   title="Go to page">
         <span class="ui-icon ui-icon-extlink"></span>

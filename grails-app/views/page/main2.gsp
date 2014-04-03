@@ -54,11 +54,11 @@
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.10.4.custom.min.js')}"></script>
 
 
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'select2.css')}"/>
-<script type="text/javascript" src="${resource(dir: 'js', file: 'select2.min.js')}"></script>
+%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'select2.css')}"/>--}%
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'select2.min.js')}"></script>--}%
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'jqueryui-editable.css')}"/>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jqueryui-editable.min.js')}"></script>
-
+<script type="text/javascript" src="${resource(dir: 'js', file: 'typeahead.bundle.js')}"></script>
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'fileuploader.js')}"></script>--}%
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.flipcountdown.js')}"></script>--}%
 <script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap.min.js')}"></script>
@@ -196,7 +196,7 @@
             heightStyle: "fill",
             header: "h3",
             event: "click",
-            active: 0,
+            active: 2,
             collapsible: true,
             icons: {
                 header: "ui-icon-circle-arrow-e",

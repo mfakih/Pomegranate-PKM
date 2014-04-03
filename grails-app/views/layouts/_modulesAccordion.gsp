@@ -32,17 +32,15 @@
 
     <div>
 
-        <ul>
 
-            <li>
                 <g:link controller="task" action="expotTodotxt" target="_blank">
                     Export to Todo.txt format
                 </g:link>
 
-            </li>
+             <br/>
 
             <g:render template="/layouts/savedSearches" model="[entity: 'T']"/>
-        </ul>
+
     </div>
 </g:if>
 
@@ -289,10 +287,10 @@
     </h3>
 
     <div>
-        <ul>
+       
             <g:render template="/layouts/savedSearches" model="[entity: 'E']"/>
 
-        </ul>
+        
     </div>
 
 </g:if>
@@ -300,8 +298,8 @@
 <g:if test="${OperationController.getPath('contacts.enabled')?.toLowerCase() == 'yes' ? true : false}">
     <h3>
         <a>
-            <span class="U-bkg"
-                  style="font-family: 'Lucida Console'; margin-right: 3px; padding-right: 2px; font-weight: bold;">U</span>
+            <span class="S-bkg"
+                  style="font-family: 'Lucida Console'; margin-right: 3px; padding-right: 2px; font-weight: bold;">S</span>
             ${OperationController.getPath('contacts.label') ?: 'Contacts'}<span
                 class="moduleCount">${app.Contact.countByDeletedOnIsNull()}</span>
         </a>

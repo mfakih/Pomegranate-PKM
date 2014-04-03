@@ -17,6 +17,7 @@
 
 package mcs
 
+import app.Contact
 import app.Tag
 import app.parameters.Markup
 import cmn.DataChangeAudit
@@ -30,7 +31,7 @@ class Course implements Comparable {  // entity id = 130
 
     // Fields
 
-    static hasMany = [tags: Tag]
+    static hasMany = [tags: Tag, contacts: Contact]
 
   //  String summary
 

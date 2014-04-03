@@ -125,7 +125,7 @@
 &nbsp;
     <g:remoteLink controller="report" action="tagCloud"
                   update="tagsPanel"
-        before=""
+        before="jQuery('#accordionEast').accordion({ active: 1});"
       style="color: white !important"
                   title="Tag cloud">
         Tags...

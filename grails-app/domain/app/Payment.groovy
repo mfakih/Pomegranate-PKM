@@ -18,13 +18,14 @@
 package app
 
 import cmn.DataChangeAudit
+import app.Contact
 
 class Payment implements Comparable {  // entity id = 24
 
 
 //     static searchable = [only:['category', 'date', 'amount', 'description', 'intendedUse', 'reality', 'notes' ]]
 
-    static hasMany = [tags: Tag]
+    static hasMany = [tags: Tag, contacts: Contact]
 
     static searchable = true
 

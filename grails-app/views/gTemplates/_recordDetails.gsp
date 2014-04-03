@@ -25,6 +25,7 @@
                        <g:remoteLink controller="page" action="panel"
                                      params="${[id: record.id, entityCode: entityCode]}"
                                      update="3rdPanel"
+                                     before="jQuery('#accordionEast').accordion({ active: 0});"
                                      title="Read the full text">
                        ${StringUtils.abbreviate(record.description?.replaceAll('\n', '<br/>')?.replace('Product Description', '')?.decodeHTML(), 240)}
                        </g:remoteLink>
@@ -193,8 +194,10 @@
            <td style="width: 40%; vertical-align: top">
 
 
-
+<g:if test="${record.class.declaredFields.name.contains('tags')}">
 <g:render template="/tag/addTag" model="[instance: record, entity: record.entityCode()]"/>
+<g:render template="/tag/addContact" model="[instance: record, entity: record.entityCode()]"/>
+    </g:if>
 
 <g:if test="${'TGRE'.contains(record.entityCode())}">
     <h4>Add journal or planner</h4>

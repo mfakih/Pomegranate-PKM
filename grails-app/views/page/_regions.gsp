@@ -74,7 +74,7 @@
 
 
     <div id="spinner2" style="display:none; z-index: 10000 !important">
-                <img src="${resource(dir: 'images', file: 'ajax-loader1.gif')}" alt="Spinner2"
+                <img src="${resource(dir: 'images/spinners', file: 'pmg-grain.gif')}" alt="Spinner2"
                      style="z-index: 10000 !important"/>
             </div>
 

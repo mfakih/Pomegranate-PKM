@@ -28,7 +28,7 @@ class Task implements Comparable {  // entity id = 127
 
 
  //   static belongsTo = [goal: Writing]
-    static hasMany = [tags: Tag, people: Contact]
+    static hasMany = [tags: Tag, contacts: Contact]
 
 //    static searchable = [only: ['priority', 'taskStatus', 'plannedDuration', 'name', 'description', 'location', 'notes']]
 
@@ -56,6 +56,7 @@ class Task implements Comparable {  // entity id = 127
     Integer percentCompleted
 
     Float plannedDuration
+    Float actualDuration
 
     String deliverable
     String recurring

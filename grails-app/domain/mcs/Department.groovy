@@ -17,13 +17,14 @@
 
 package mcs
 
+import app.Contact
 import app.Tag
 import cmn.DataChangeAudit
 
 class Department {  // entity id = 131
 
 
-    static hasMany = [courses: Course, tags: Tag]
+    static hasMany = [courses: Course, tags: Tag, contacts: Contact]
 
 
     static searchable = [only: ['code', 'summary', 'notes']]

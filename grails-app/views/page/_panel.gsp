@@ -29,6 +29,7 @@
 
 <g:if test="${record.entityCode().length() == 1}">
     <div style="display: inline; text-align: right;">
+        Attach files:
         <uploader:uploader id="uploadAsNoteWithAttachment${record.id}"
                            url="${[controller: 'import', action: 'upload']}"
                            params="${[recordId: record.id, entityCode: record.entityCode()]}">
@@ -39,6 +40,7 @@
         </uploader:uploader>
 
         <br/>
+        Add to record folder:
         <uploader:uploader id="addToRecordFolder${record.id}"
                            url="${[controller: 'import', action: 'addToRecordFolder']}"
                            params="${[recordId: record.id, entityCode: record.entityCode()]}">
@@ -113,27 +115,29 @@
                               class="actionLink"
                     target="_blank"
                               title="Convert to HTML">
-                    Combine writings in HTML format (new tab)
+                    Combine writings (HTML)
                 </g:link>
                 
+              <br/>
+              <br/>
               <br/>
                     <g:link url="[controller: 'export', action: 'generateCourseWritingsAsIs', id: record.id]"
                               class="actionLink"
                     target="_blank"
                               title="Convert to HTML">
-                    Combine writings as is (new tab)
+                    Combine writings as is
                 </g:link>
                 
                 
-                
-<br/>
-<br/>
-  <g:link url="[controller: 'export', action: 'generateCoursePresentation', id: record.id]"
-                              class="actionLink"
-                    target="_blank"
-                              title="Convert to HTML">
-                    Generate presentation (new tab)
-                </g:link>
+                %{----}%
+%{--<br/>--}%
+%{--<br/>--}%
+  %{--<g:link url="[controller: 'export', action: 'generateCoursePresentation', id: record.id]"--}%
+                              %{--class="actionLink"--}%
+                    %{--target="_blank"--}%
+                              %{--title="Convert to HTML">--}%
+                    %{--Generate presentation (new tab)--}%
+                %{--</g:link>--}%
 
 
             </g:if>

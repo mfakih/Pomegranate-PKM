@@ -17,6 +17,7 @@
 
 package mcs
 
+import app.Contact
 import app.parameters.ResourceType
 
 //import app.NewsCategory
@@ -28,7 +29,7 @@ import app.Tag
 class Book implements Comparable {  // entity id = 134
 
 
-    static hasMany = [excerpts: Excerpt, tags: Tag]
+    static hasMany = [excerpts: Excerpt, tags: Tag, contacts: Contact]
 
     static searchable = {
         only = ['title', 'author', 'description', 'fullText', 'resourceType', 'comments', 'highlights',

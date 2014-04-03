@@ -29,31 +29,52 @@
 <td  style="width: 90%">
 %{--<span style="border: 1px solid #5c5c5c; border-radius: 5px">--}%
 
-<g:if test="${record.class.declaredFields.name.contains('course') && record.course}">
-    <span title="${record.course?.summary}">
-        <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                      params="[entityCode: entityCode, field: 'course',
-                              valueId: (record.course ? record.course?.id : 0), updateDiv: 'quickEditCourse' + record.id]"
-                      update="quickEditCourse${record.id}"
-                      title="Edit course">
-            C</g:remoteLink><sup><span id="quickEditCourse${record.id}"
-                                       style="font-weight: bold; color: #1f3d5f">${record.course ? record.course?.code : '...'}</span>
-    </sup></span>
-</g:if>
 <g:if test="${record.class.declaredFields.name.contains('department')}">
-    <span title="${record.department}">
-        <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                      params="[entityCode: entityCode, field: 'department',
-                              valueId: (record.department ? record.department?.id : 0), updateDiv: 'quickEditDepartment' + record.id]"
-                      update="quickEditDepartment${record.id}"
-                      title="Edit department">
-            Dept. <span id="quickEditDepartment${record.id}">
-            ${record.department ? record.department?.code : '...'}
-        </span>
-        </g:remoteLink>
 
-    </span>
+    <g:set value="department" var="field"></g:set>
+
+    <a href="#" id="${field}${recordId}" class="${field}"
+       data-type="select" data-value="${record[field]?.id}"
+       data-name="${field}-${record.entityCode()}"
+       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
+       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+        ${record[field]?.summary ?: 'No dept'}
+    </a>
+    <script>
+        $('#${field}${recordId}').editable({
+//            typeahead: {
+//                name: 'value'
+//            }
+        });
+    </script>
+
 </g:if>
+&nbsp; | &nbsp;
+
+<g:if test="${record.class.declaredFields.name.contains('course')}">
+
+    <g:set value="course" var="field"></g:set>
+
+    <a href="#" id="${field}${record.id}" class="${field}"
+       data-type="select" data-value="${record[field]?.id}"
+
+       data-name="${field}-${record.entityCode()}"
+       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
+       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}"
+       style="; float: right">
+        ${record[field]?.code ?: 'No ' + field}   |
+
+    </a>
+    <script>
+        $('#${field}${record.id}').editable({
+//            typeahead: {
+//                name: 'value'
+//            }
+        });
+    </script>
+
+</g:if>
+
 
 
 
@@ -68,85 +89,132 @@
 
 %{--</span>--}%
 
-%{--<td class="record-summary ${'TGP'.contains(entityCode) ? 'workStatus' + record.status.id : ''} ${'WI'.contains(entityCode) ? 'writingStatus' + record.status.id : ''}" style="font-family: Arial; font-size: 14px; color: #105CB6; line-height: 16px; ">--}%
+%{--<g:if test="${'G'.contains(entityCode)}">--}%
+    %{--<g:remoteLink controller="generics" action="quickEdit" id="${record.id}"--}%
+                  %{--params="[entityCode: entityCode, field: 'goalType',--}%
+                          %{--valueId: (record.type ? record.type?.id : 0), updateDiv: 'quickEditType' + record.id]"--}%
+                  %{--update="quickEditType${record.id}"--}%
+                  %{--title="Edit type">--}%
+        %{--<span id="quickEditType${record.id}">--}%
+            %{--${record.type?.code ?: 'No type'}--}%
+        %{--</span>--}%
+    %{--</g:remoteLink>--}%
 
-<g:if test="${'WN'.contains(entityCode)}">
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'writingType',
-                          valueId: (record.type ? record.type?.id : 0), updateDiv: 'quickEditType' + record.id]"
-                  update="quickEditType${record.id}"
-                  title="Edit type">
-        <span id="quickEditType${record.id}">
-            ${record.type?.code ?: 'No type'}
-        </span>
-    </g:remoteLink>
+%{--</g:if>--}%
+%{--<g:if test="${'J'.contains(entityCode)}">--}%
+    %{--<g:remoteLink controller="generics" action="quickEdit" id="${record.id}"--}%
+                  %{--params="[entityCode: entityCode, field: 'journalType',--}%
+                          %{--valueId: (record.type ? record.type.id : 0), updateDiv: 'quickEditType' + record.id]"--}%
+                  %{--update="quickEditType${record.id}"--}%
+                  %{--title="Edit type">--}%
+        %{--<span id="quickEditType${record.id}">--}%
+            %{--${record.type?.code ?: 'No type'}--}%
+        %{--</span>--}%
+    %{--</g:remoteLink>--}%
+%{--</g:if>--}%
 
-</g:if>
-<g:if test="${'G'.contains(entityCode)}">
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'goalType',
-                          valueId: (record.type ? record.type?.id : 0), updateDiv: 'quickEditType' + record.id]"
-                  update="quickEditType${record.id}"
-                  title="Edit type">
-        <span id="quickEditType${record.id}">
-            ${record.type?.code ?: 'No type'}
-        </span>
-    </g:remoteLink>
 
-</g:if>
-<g:if test="${'J'.contains(entityCode)}">
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'journalType',
-                          valueId: (record.type ? record.type.id : 0), updateDiv: 'quickEditType' + record.id]"
-                  update="quickEditType${record.id}"
-                  title="Edit type">
-        <span id="quickEditType${record.id}">
-            ${record.type?.code ?: 'No type'}
-        </span>
-    </g:remoteLink>
-</g:if>
-<g:if test="${'P'.contains(entityCode)}">
 
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'plannerType',
-                          valueId: (record.type ? record.type.id : 0), updateDiv: 'quickEditType' + record.id]"
-                  update="quickEditType${record.id}"
-                  title="Edit status">
-        <span id="quickEditType${record.id}">
-            ${record.type?.code ?: 'No type'}
-        </span>
-    </g:remoteLink>
-
-</g:if>
 
 <g:if test="${entityCode == 'T'}">
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'location',
-                          valueId: (record.location ? record?.location?.id : 0), updateDiv: 'quickEditLocation' + record.id]"
-                  update="quickEditLocation${record.id}"
-                  title="Edit location">
-        <span id="quickEditLocation${record.id}">
-            ${record?.location?.code ?: 'No location'}
-        </span>
-    </g:remoteLink>
-    &nbsp;
-    &nbsp;
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'plannedDuration',
-                          valueId: (record.plannedDuration ? record.plannedDuration : 0), updateDiv: 'quickEditPlannedDuration' + record.id]"
-                  update="quickEditPlannedDuration${record.id}"
-                  title="Edit plannedDuration">
-        <span id="quickEditPlannedDuration${record.id}">
-            ${record.plannedDuration ? record.plannedDuration + '"' : '"No duration'}
-        </span>
-    </g:remoteLink>
+    %{--<g:remoteLink controller="generics" action="quickEdit" id="${record.id}"--}%
+                  %{--params="[entityCode: entityCode, field: 'location',--}%
+                          %{--valueId: (record.location ? record?.location?.id : 0), updateDiv: 'quickEditLocation' + record.id]"--}%
+                  %{--update="quickEditLocation${record.id}"--}%
+                  %{--title="Edit location">--}%
+        %{--<span id="quickEditLocation${record.id}">--}%
+            %{--${record?.location?.code ?: 'No location'}--}%
+        %{--</span>--}%
+    %{--</g:remoteLink>--}%
 
+
+    &nbsp; | &nbsp;
+    <g:set value="context" var="field"></g:set>
+
+    <a href="#" id="${field}${recordId}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+       data-name="${field}-${record.entityCode()}"
+       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
+       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+        ${record[field]?.code ?: 'No ' + field}
+    </a>
+    <script>
+        $('#${field}${recordId}').editable();
+    </script>
+    
+    
+    
     &nbsp;
     &nbsp;
-    ${record.orderInCourse ? '#' + record.orderInCourse : ''}
+    </g:if>
 
-</g:if>
+    %{--<g:remoteLink controller="generics" action="quickEdit" id="${record.id}"--}%
+                  %{--params="[entityCode: entityCode, field: 'plannedDuration',--}%
+                          %{--valueId: (record.plannedDuration ? record.plannedDuration : 0), updateDiv: 'quickEditPlannedDuration' + record.id]"--}%
+                  %{--update="quickEditPlannedDuration${record.id}"--}%
+                  %{--title="Edit plannedDuration">--}%
+        %{--<span id="quickEditPlannedDuration${record.id}">--}%
+            %{--${record.plannedDuration ? record.plannedDuration + '"' : '"No duration'}--}%
+        %{--</span>--}%
+    %{--</g:remoteLink>--}%
+<g:if test="${record.class.declaredFields.name.contains('plannedDuration')}">
+&nbsp; | &nbsp;
+    <g:set value="plannedDuration" var="field"></g:set>
 
+    <a href="#" id="${field}${recordId}" class="${field}" data-type="select" data-value="${record[field]}"
+       data-name="${field}-${record.entityCode()}"
+       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
+       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+        ${record[field] ?: 'No duration'}
+    </a>
+    <script>
+        $('#${field}${recordId}').editable();
+    </script>
+
+    </g:if>
+
+&nbsp; | &nbsp;
+    <g:set value="priority" var="field"></g:set>
+
+    <a href="#" id="${field}${recordId}" class="${field}" data-type="select" data-value="${record[field]}"
+       data-name="${field}-${record.entityCode()}"
+       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
+       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+        ${record[field] ? 'p' + record[field]: 'No ' + field}
+    </a>
+    <script>
+        $('#${field}${recordId}').editable();
+    </script>
+
+<g:if test="${record.class.declaredFields.name.contains('percentCompleted')}">
+&nbsp; | &nbsp;
+ <g:set value="percentCompleted" var="field"></g:set>
+
+    <a href="#" id="${field}${recordId}" class="${field}" data-type="text" data-value="${record[field]}"
+       data-name="${field}-${record.entityCode()}"
+       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
+       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+        ${record[field] ? record[field] + '%': 'No %'}
+    </a>
+    <script>
+        $('#${field}${recordId}').editable();
+    </script>
+
+    </g:if>
+&nbsp; | &nbsp;
+
+<g:if test="${record.class.declaredFields.name.contains('orderInCourse')}">
+<g:set value="orderInCourse" var="field"></g:set>
+
+<a href="#" id="${field}${recordId}" class="${field}" data-type="select" data-value="${record[field]}"
+   data-name="${field}-${record.entityCode()}"
+   data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
+   data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+    ${record[field] ?: 'No #'}
+</a>
+<script>
+    $('#${field}${recordId}').editable();
+</script>
+        </g:if>
 <g:if test="${entityCode == 'I'}">
     ${record.indicator?.code}
 </g:if>
@@ -174,71 +242,14 @@
 <g:if test="${entityCode == 'Q'}">
     ${record.amount}
 </g:if>
+
 <g:if test="${entityCode == 'I'}">
     <g:formatNumber number="${record.value}" format="#,###"/>
 </g:if>
 
-%{--</td>--}%
-%{--<td class="record-status">--}%
-
-
-<g:if test="${'GT'.contains(entityCode)}">
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'workStatus',
-                          valueId: (record.status ? record.status.id : 0), updateDiv: 'quickEditStatus' + record.id]"
-                  update="quickEditStatus${record.id}"
-                  title="Edit status">
-        <span id="quickEditStatus${record.id}">
-            ${record.status?.code ?: 'No status'}
-        </span>
-    </g:remoteLink>
-</g:if>
-<g:if test="${'W'.contains(entityCode)}">
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'writingStatus',
-                          valueId: (record.status ? record.status.id : 0), updateDiv: 'quickEditStatus' + record.id]"
-                  update="quickEditStatus${record.id}"
-                  title="Edit status">
-        <span id="quickEditStatus${record.id}">
-
-            ${record.status?.code ?: 'No status'}
-        </span>
-    </g:remoteLink>
-</g:if>
-<g:if test="${'R'.contains(entityCode)}">
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'resourceStatus',
-                          valueId: (record.status ? record.status.id : 0), updateDiv: 'quickEditStatus' + record.id]"
-                  update="quickEditStatus${record.id}"
-                  title="Edit status">
-        <span id="quickEditStatus${record.id}">
-            ${record.status?.code ?: 'No status'}
-        </span>
-    </g:remoteLink>
-</g:if>
-
-
-<g:if test="${'P'.contains(entityCode)}">
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'workStatus',
-                          valueId: (record.status ? record.status.id : 0), updateDiv: 'quickEditStatus' + record.id]"
-                  update="quickEditStatus${record.id}"
-                  title="Edit status">
-        <span id="quickEditStatus${record.id}">
-            <g:if test="${record.status?.code != 'completed' && record.startDate < new Date() - 1}">
-                <b style="color: red">${record.status?.code ?: '?...'}</b>
-            </g:if>
-            <g:else>
-                ${record.status?.code ?: 'No status'}
-            </g:else>
-        </span>
-    </g:remoteLink>
-</g:if>
-
-
-
 
 <g:if test="${entityCode == 'N'}">
+
     <g:if test="${record.recordId}">
 
         <g:remoteLink controller="generics" action="showSummary" id="${record.recordId}"
@@ -255,13 +266,6 @@
 
 
 <g:if test="${'JWN'.contains(entityCode)}">
-    %{--<g:remoteLink controller="generics" action="quickEdit" id="${record.id}"--}%
-                  %{--params="[entityCode: entityCode, field: 'blog',--}%
-                          %{--valueId: (record.blog?.id ?: null), updateDiv: 'quickEditBlog' + record.id]"--}%
-                  %{--update="quickEditBlog${record.id}"--}%
-                  %{--title="ID ${record.publishedNodeId ?: '?'} ${record.publishedOn ? ' on ' + record.publishedOn?.format('dd.MM.yyyy HH:mm') : ''}">--}%
-        %{--<span id="quickEditBlog${record.id}"><span>${record.blog?.code ? record.blog?.code : 'No blog'}</span> </span>--}%
-    %{--</g:remoteLink>--}%
 
     <a href="#" id="blog"  class="blog" data-type="select" data-value="${record.blog?.id}" data-name="blog-${record.entityCode()}"
        data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=blog"
@@ -271,7 +275,6 @@
     <script>
         $('.blog').editable();
     </script>
-
 </g:if>
 
 
@@ -289,74 +292,53 @@
 
 
 <g:if test="${'CGR'.contains(entityCode)}">
-    &nbsp;
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'percentCompleted',
-                          valueId: (record.percentCompleted ?: null), updateDiv: 'quickEditPercent' + record.id]"
-                  update="quickEditPercent${record.id}"
-                  title="Edit percent completed">
-        <span id="quickEditPercent${record.id}">
-        <span>${record.percentCompleted ? record.percentCompleted + '' : 'No %'}</span>
-    </span>
-    </g:remoteLink>
-
-</g:if>
-
-
-<g:if test="${record.class.declaredFields.name.contains('priority')}">
-    <g:remoteLink controller="generics" action="quickEdit" id="${record.id}"
-                  params="[entityCode: entityCode, field: 'priority',
-                          valueId: (record.priority ?: null), updateDiv: 'quickEditPriority' + record.id]"
-                  update="quickEditPriority${record.id}"
-                  title="Edit priority ">
-        <span id="quickEditPriority${record.id}"> <span>${record.priority ? '' + record.priority : 'No priority'}</span></span>
-    </g:remoteLink>
 
 
 </g:if>
+
 
 
 </td>
-<td class="record-statistics">
-    <span title="Statistics">
+%{--<td class="record-statistics">--}%
+    %{--<span title="Statistics">--}%
 
-        <g:if test="${params.action != 'luceneSearch'}">
-            <g:if test="${entityCode == 'G'}">
-                ${Planner.countByGoal(record)} <sup>P</sup>
+        %{--<g:if test="${params.action != 'luceneSearch'}">--}%
+            %{--<g:if test="${entityCode == 'G'}">--}%
+                %{--${Planner.countByGoal(record)} <sup>P</sup>--}%
 
-                ${Task.countByGoal(record)} <sup>T</sup>
+                %{--${Task.countByGoal(record)} <sup>T</sup>--}%
 
-            </g:if>
+            %{--</g:if>--}%
 
 
 
-            <g:if test="${entityCode == 'T'}">
+            %{--<g:if test="${entityCode == 'T'}">--}%
 
-                <g:remoteLink controller="task" action="showPlans" id="${record.id}"
-                              update="below${entityCode}Record${record.id}"
-                              title="Show plans">
-                    ${Planner.countByTask(record)} <sup>P</sup>
-                </g:remoteLink>
+                %{--<g:remoteLink controller="task" action="showPlans" id="${record.id}"--}%
+                              %{--update="below${entityCode}Record${record.id}"--}%
+                              %{--title="Show plans">--}%
+                    %{--${Planner.countByTask(record)} <sup>P</sup>--}%
+                %{--</g:remoteLink>--}%
 
-            </g:if>
+            %{--</g:if>--}%
 
-            <g:if test="${entityCode == 'R' && record.resourceType == 'ebk'}">
-                R <sup>${Excerpt.countByBook(mcs.Book.get(record.id))}</sup>
+            %{--<g:if test="${entityCode == 'R' && record.resourceType == 'ebk'}">--}%
+                %{--R <sup>${Excerpt.countByBook(mcs.Book.get(record.id))}</sup>--}%
             %{--${IndexCard.countByBook(mcs.Book.get(record.id))} <sup>C</sup>--}%
-            </g:if>
+            %{--</g:if>--}%
 
-            <g:if test="${entityCode == 'K'}">
-                # <i>${IndicatorData.countByIndicator(record)}</i>
+            %{--<g:if test="${entityCode == 'K'}">--}%
+                %{--# <i>${IndicatorData.countByIndicator(record)}</i>--}%
 
-            </g:if>
+            %{--</g:if>--}%
 
-            <g:if test="${entityCode == 'Q'}">
+            %{--<g:if test="${entityCode == 'Q'}">--}%
             %{--# <sup>${PaymentData.countByCategory(record)}</sup>--}%
                 %{--todo--}%
-            </g:if>
-        </g:if>
-    </span>
-</td>
+            %{--</g:if>--}%
+        %{--</g:if>--}%
+    %{--</span>--}%
+%{--</td>--}%
 
 <td class="record-date">
     <g:remoteLink controller="generics" action="showDetails"

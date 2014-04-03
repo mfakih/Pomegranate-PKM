@@ -1,8 +1,9 @@
 <%@ page import="app.Tag" %>
-<div style="margin: 5px">
-    <a href="#" id="tags" name="tags[]" style="width: 200px;"></a>
-</div>
+%{--<div style="margin-bottom: 50px">--}%
+    %{--<a href="#" id="tags" name="tags[]" style="width: 200px;"></a>--}%
+%{--</div>--}%
 <script>
+  /*
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.showbuttons = false;
     $('#tags').editable({
@@ -54,8 +55,9 @@
          success: function(response) {
          $('#RequestUser').text(response.newVal);
          }
-         */
+
     });
+    */
 </script>
 <div style="-moz-column-count: 1">
     %{--<ul>--}%

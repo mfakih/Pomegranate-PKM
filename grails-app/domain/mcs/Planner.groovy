@@ -26,7 +26,7 @@ import mcs.parameters.WorkStatus
 class Planner implements Comparable {  // entity id = 137
 
 
-    static hasMany = [tags: Tag]
+    static hasMany = [tags: Tag, contacts: Contact]
 
 
 //    static searchable = [only: ['description', 'planLevel', 'planDate', 'reality', 'startTime', 'endTime', 'notes']]
