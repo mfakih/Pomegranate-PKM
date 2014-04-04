@@ -156,8 +156,8 @@
 
         <g:checkBox name="select-${record.id}-${entityCode}" title="Select record"
                     value="${session[entityCode + record.id] == 1}"
-                    onchange="jQuery('#logRegion').load('/pkm/generics/selectOnly/${entityCode}${record.id}')"
-                    onclick="jQuery('#logRegion').load('/pkm/generics/selectOnly/${entityCode}${record.id}')"/>
+                    onchange="jQuery('#logRegion').load('/pkm/generics/select/${entityCode}${record.id}')"
+                    onclick="jQuery('#logRegion').load('/pkm/generics/select/${entityCode}${record.id}')"/>
         <!--a style="width: 10px; color: #000000"
            onclick="jQuery('#below${entityCode}Record${record.id}').html('')">&chi;</a-->
 

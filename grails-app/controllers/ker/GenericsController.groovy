@@ -194,7 +194,7 @@ class GenericsController {
 
         if (prefixRecord.multiLine){
              block.eachLine(){
-                 batchAdd(prefix + block.trim())
+                 batchAdd(prefix + it.trim())
              }
         }
         else

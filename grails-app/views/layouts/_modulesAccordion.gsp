@@ -228,7 +228,7 @@
 
     <div>
 
-        <ul>
+        <ul style="margin-left: 10px;">
 
             <li><a onclick="jQuery('#centralArea').load('report/duplicateIsbnBooks')">Books with duplication ISBN</a>
             </li>
@@ -261,7 +261,7 @@
                     Show books list in text
                 </a>
             </li>
-
+    </ul>
 
             %{--<li><a onclick="jQuery('#centralArea').load('book/report/notitle')">No title books</a>--}%
             %{--</li>--}%
@@ -269,7 +269,7 @@
             %{--<li><a onclick="jQuery('#centralArea').load('book/report/isbnNoTitle')">ISBN  without title</a>--}%
             %{--</li>--}%
             <g:render template="/layouts/savedSearches" model="[entity: 'R']"/>
-        </ul>
+
 
     </div>
 </g:if>
