@@ -21,7 +21,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     %{--<meta name="layout" content="main"/>--}%
-    <title>Kanban</title>
+    <title>${title ?: 'Kanban'}</title>
 
 
     <!-- To make the page refresh every 120 seconds -->
@@ -105,7 +105,12 @@
 
 <body style="margin:15px;">
 
+<g:if test="${items}">
+    <g:render template="/reports/dynamicKanbanTable" model="[items: items, groups: groups, groupBy: groupBy, title:title]"/>
+</g:if>
+<g:else>
 <g:render template="/reports/kanbanCrs" model="[]"/>
+</g:else>
 
 
 <div id="notificationArea"></div>

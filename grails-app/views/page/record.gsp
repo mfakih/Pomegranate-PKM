@@ -31,7 +31,7 @@
 
 
     <r:require modules="application"/>
-    <r:require module="fileuploader"/>
+    %{--<r:require module="fileuploader"/>--}%
     <r:require modules="jquery"/>
     <r:require modules="jquery-ui"/>
 
@@ -39,17 +39,7 @@
     <r:layoutResources/>
 
 
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'uploader.css')}"/>
-
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>
-
-
-    %{--<uploader:head css="${resource(dir: 'css', file: 'uploader.css')}"/>--}%
-
-    %{----}%
-
-    %{--<uploader:head/>--}%
 
     <script type="text/javascript" src="${resource(dir: 'js', file: 'raphael-min.js')}"></script>
     <script type="text/javascript" src="${resource(dir: 'js', file: 'morris.js')}"></script>
@@ -57,39 +47,19 @@
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'fg.menu.css')}"/>
 
-    <script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'ui.achtung-min.js')}"></script>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'ui.achtung-min.css')}"/>
 
-    %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'fullcalendar.min.js')}"></script>--}%
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'morris.css')}"/>
-
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main2.css')}"/>
 
 
-    <script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'fg.menu.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'fg.menu.js')}">
 
-    %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'jquery.jeditable.mini.js')}"></script>--}%
-    <script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'jquery.blockUI.js')}"></script>
-
-
-
-    <script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'jquery.autocomplete.min.js')}"></script>
-
-    %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'jquery.relatedselects.min.js')}"></script>--}%
-
-    %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'shortcut.js')}"></script>--}%
-
-
-
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.tablednd_0_5.js')}"></script>
-
-
-    <script type=text/javascript>
-        jQuery(document).ready(function () {
-
-            jQuery("#tabsTask${record.id}").tabs({      });
-        });
     </script>
+
+        %{--jQuery(document).ready(function () {--}%
+%{----}%
+            %{--jQuery("#tabsTask${record.id}").tabs({      });--}%
+        %{--});--}%
+%{--//    </script>--}%
 
 </head>
 
@@ -123,7 +93,7 @@
     <h2>Writing page</h2>
 </g:if>
 
-<g:render template="/gTemplates/recordSummary" model="[record: record, expandedView: true]"/>
+<g:render template="/gTemplates/recordSummary" model="[record: record]"/>
 
 
 %{--<g:render template="/gTemplates/recordDetails" model="[record: record]"/>--}%

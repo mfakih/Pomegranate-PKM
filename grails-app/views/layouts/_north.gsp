@@ -35,69 +35,6 @@
 &nbsp;
 &nbsp;
 &nbsp;
-<g:if test="${OperationController.getPath('kanban.enabled')?.toLowerCase() == 'yes' ? true : false}">
-<g:link controller="page" action="kanbanCrs"
-        class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-        target="_blank"
-        title="Kanban">
-    <span class="ui-icon ui-icon-check"></span>
-    Kanban
-</g:link>
-    </g:if>
-&nbsp;
-
-
-%{--<g:link controller="page" action="kanbanCrs"--}%
-%{--class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"--}%
-%{--target="_blank"--}%
-%{--title="Kanban">--}%
-%{--<span class="ui-icon ui-icon-plusthick"></span>--}%
-%{--</g:link>--}%
-%{--&nbsp;--}%
-
-
-<g:if test="${OperationController.getPath('fullCalendar.enabled')?.toLowerCase() == 'yes' ? true : false}">
-<g:link controller="page" action="calendar"
-        class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-        target="_blank"
-        title="Mega calendar">
-    <span class="ui-icon ui-icon-calendar"></span> Calendar
-</g:link>
-
-&nbsp;
-    </g:if>
-<g:if test="${OperationController.getPath('kpi.enabled')?.toLowerCase() == 'yes' ? true : false}">
-<g:link controller="page" action="indicators"
-        class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-        target="_blank"
-        title="Indicators">
-    <span class="ui-icon ui-icon-signal"></span> KPI
-</g:link>
-    &nbsp;
-    </g:if>
-
-
-    <g:remoteLink controller="generics" action="recentRecords"
-                  class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-                  update="centralArea"title="Timeline">
-    <span class="ui-icon ui-icon-calendar"></span>
-
-        Timeline
-    </g:remoteLink>
-
-&nbsp;
-
-
-
-
-
-
-<g:remoteLink controller="generics" action="showBookmarkedRecords"
-              update="centralArea"
-              class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-              title="Bookmarked records">
-    <span class="ui-icon ui-icon-star"></span>
-</g:remoteLink>
 &nbsp;
 &nbsp;
 &nbsp;

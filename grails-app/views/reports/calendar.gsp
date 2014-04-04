@@ -19,7 +19,7 @@
 
     <script type="text/javascript" src="${resource(dir: 'js', file: 'fullcalendar.js')}"></script>
 
-    <title>Calendar ${title}</title>
+    <title>Cal ${title}</title>
 
     <script language="javascript" type="text/javascript">
         jQuery(document).ready(function () {
@@ -60,7 +60,7 @@
 
                 aspectRatio:1.8,
 
-                events:"${request.contextPath}/export/calendarEvents2",
+                events:"${request.contextPath}/export/calendarEvents3/${savedSearchId}",
                 loading:function (bool) {
                     if (bool) jQuery('#loading').show();
                     else jQuery('#loading').hide();

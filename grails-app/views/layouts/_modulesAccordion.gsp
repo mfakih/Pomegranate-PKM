@@ -109,8 +109,6 @@
 
     <div>
 
-        <ul>
-            <li>
                 <g:remoteLink controller="report" action="indicatorPanorama"
                               update="centralArea"
                               title="Update indicators">
@@ -118,10 +116,9 @@
                 </g:remoteLink>
 
 
-            </li>
+        <br/>
 
             <g:render template="/layouts/savedSearches" model="[entity: 'K']"/>
-        </ul>
 
     </div>
 </g:if>

@@ -27,12 +27,27 @@
             <g:if test="${i.queryType == 'hql'}">
            <sup>
             <g:remoteLink controller="generics" action="executeSavedSearch"
-                          style=" color: #${count > 0 ? '003366' : (count == 0 ? 'ccc' : 'aaa')}"
+                          style=" color: gray"
                           id="${i.id}" params="[reportType: 'random']"
                           update="centralArea">
                 r
 
             </g:remoteLink>
+           </sup>
+                <sup>
+            <g:link controller="generics" action="executeSavedSearch"
+                          style=" color: gray"
+                          id="${i.id}" params="[reportType: 'tab']"
+                          target="_blank">
+                tab
+            </g:link>
+           </sup>  <sup>
+            <g:link controller="generics" action="executeSavedSearch"
+                    style=" color: gray"
+                          id="${i.id}" params="[reportType: 'cal']"
+                          target="_blank">
+                cal
+            </g:link>
            </sup>
             </g:if>
 

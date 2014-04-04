@@ -156,8 +156,8 @@
 
         <g:checkBox name="select-${record.id}-${entityCode}" title="Select record"
                     value="${session[entityCode + record.id] == 1}"
-                    onchange="jQuery('#logRegion').load('generics/selectOnly/${entityCode}${record.id}')"
-                    onclick="jQuery('#logRegion').load('generics/selectOnly/${entityCode}${record.id}')"/>
+                    onchange="jQuery('#logRegion').load('/pkm/generics/selectOnly/${entityCode}${record.id}')"
+                    onclick="jQuery('#logRegion').load('/pkm/generics/selectOnly/${entityCode}${record.id}')"/>
         <!--a style="width: 10px; color: #000000"
            onclick="jQuery('#below${entityCode}Record${record.id}').html('')">&chi;</a-->
 
@@ -181,7 +181,7 @@
             <g:if test="${!record.bookmarked}">
                 <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"
                    value="${record.bookmarked}"
-                   onclick="jQuery('#${entityCode}Record${record.id}').load('generics/quickBookmark/${entityCode}-${record.id}')">
+                   onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/quickBookmark/${entityCode}-${record.id}')">
                     <span class="icon-star-gm"></span>
                 </a>
             </g:if>
@@ -189,7 +189,7 @@
             <g:if test="${record.bookmarked}">
                 <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"
                    value="${record.bookmarked}"
-                   onclick="jQuery('#${entityCode}Record${record.id}').load('generics/quickBookmark/${entityCode}-${record.id}')">
+                   onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/quickBookmark/${entityCode}-${record.id}')">
                     <span class="icon-starred-gm"></span>
                 </a>
 

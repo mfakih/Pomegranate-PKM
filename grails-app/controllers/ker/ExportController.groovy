@@ -33,6 +33,7 @@ import grails.plugins.rest.client.RestBuilder
 import jxl.write.NumberFormat
 import mcs.*
 import mcs.parameters.ResourceStatus
+import mcs.parameters.SavedSearch
 import mcs.parameters.WritingType
 import org.apache.commons.lang.StringUtils
 import org.apache.commons.lang.WordUtils
@@ -158,7 +159,7 @@ class ExportController {
                 events.add([id: it.id, start: new SimpleDateFormat("yyyy-MM-dd'T'HH:mm':00'").format(it.startDate),
                         //   end: new SimpleDateFormat("yyyy-MM-dd'T'HH:mm':00'").format(it.endDate ?: it.startDate),
                         'title': title, color: it.type?.color ?: 'green',
-                        url: 'page/record/' + it.id + '?entityCode=P',
+                        url: '/pkm/page/record/' + it.id + '?entityCode=P',
                         allDay: (it.level != 'm' || it.startDate.hours < 6 ? true : false)
                 ])
             }
@@ -167,11 +168,32 @@ class ExportController {
         render events as JSON
     }
 
+    def calendarEvents3() {
+        def events = []
+        def savedSearch = SavedSearch.get(params.id)
+        Task.executeQuery(savedSearch.query + " between ? and ?",
+                [new Date(Long.parseLong(params.start) * 1000), new Date(Long.parseLong(params.end) * 1000)]).each() {
+            def title = //' [' + it.type?.code + '] ' +
+                    (it.task ? 'T-' + StringUtils.abbreviate(it.task?.summary, 60) : '') +
+                    (it.goal ? 'G-' + it.goal?.code + ' ' + StringUtils.abbreviate(it.goal?.summary, 80) : '') +
+                    (it.summary ? it.summary + ' / ' : '') +
+                    (it.description ? StringUtils.abbreviate(it.description, 40) : ' ')
+            events.add([id: it.id,
+                    start: new SimpleDateFormat("yyyy-MM-dd'T'HH:mm':00'").format(it.startDate),
+                    end: new SimpleDateFormat("yyyy-MM-dd'T'HH:mm':00'").format(it.endDate ?: it.startDate),
+                    //it.type?.name +
+                    title: title,
+                    backgroundColor: it.type?.color ?: '#3A87AD',
+                    textColor: '#ffffff',
+                    url: OperationController.getPath('app.URL') + '/page/record/' + it.id + '?entityCode=J',
+                    allDay: (it.level != 'm' || it.startDate.hours < 6 ? true : false)])
+        }
+        render events as JSON
+    }
     def calendarEvents2() {
         def events = []
 
 //        if (params.jp == 'J') {
-//        Journal.executeQuery("from Journal j where j.startDate between ? and ? order by j.type.category asc",
         Journal.executeQuery("from Journal j where j.startDate between ? and ?",
                 [new Date(Long.parseLong(params.start) * 1000), new Date(Long.parseLong(params.end) * 1000)]).each() {
 

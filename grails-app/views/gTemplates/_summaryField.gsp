@@ -47,6 +47,24 @@
 </g:if>
 <g:else>
 
+<g:if test="${record.class.declaredFields.name.contains('course')}">
+    <g:set value="course" var="field"></g:set>
+    <a href="#" id="${field}${record.id}" class="${field}"
+       data-type="select" data-value="${record[field]?.id}"
+       data-name="${field}-${record.entityCode()}"
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}"
+       style="font-size: 11px; font-weight: bold;">
+        ${record[field]?.code ?: '?'}
+    </a>
+    <script>
+        $('#${field}${record.id}').editable({
+//            typeahead: {
+//                name: 'value'
+//            }
+        });
+    </script>
+</g:if>
 
 
 <g:if test="${record.class.declaredFields.name.contains('priority')}">
@@ -338,8 +356,8 @@
 
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
         style="${record.type ? record.type?.style : ''}; float: right; font-size: 11px; font-weight: bold"
-       data-name="${field}-${record.entityCode()}"
-       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-name="${field}-${entityCode}"
+       data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
        ${record[field]?.code ?: 'No ' + field}
     </a>
@@ -355,9 +373,9 @@
     <g:set value="writing" var="field"></g:set>
 
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
-       data-name="${field}-${record.entityCode()}"
+       data-name="${field}-${entityCode}"
        style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic"
-       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field] ? record[field]?.summary : 'No ' + field}
     </a>
@@ -372,11 +390,11 @@
     <g:set value="goal" var="field"></g:set>
 
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
-       data-name="${field}-${record.entityCode()}"
+       data-name="${field}-${entityCode}"
        style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic"
-       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
-        ${record[field] ? record[field]?.summary : 'No ' + field}
+        ${record[field] ? record[field]?.summary : 'g'}
     </a>
 
             <g:if test="${record.goal}">
@@ -399,9 +417,9 @@
     <g:set value="status" var="field"></g:set>
 
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
-       data-name="${field}-${record.entityCode()}"
+       data-name="${field}-${entityCode}"
        style="${record.status ? record.status?.style : ''}; border: 0.5px solid #808080; font-size: 11px; text-decoration: italic"
-       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field] ? record[field]?.code : 'No ' + field}
     </a>

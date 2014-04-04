@@ -1671,7 +1671,7 @@ def addContactToRecord() {
                     groups = Department.list([sort: 'code'])
                     break
                 case 'course':
-                    groups = Course.list([sort: 'title'])
+                    groups = Course.list([sort: 'summary'])
                     break
                 case 'type':
                     if (input.contains('from mcs.Goal')) {
@@ -1781,7 +1781,7 @@ def addContactToRecord() {
                         groups = Department.list([sort: 'code'])
                         break
                     case 'course':
-                        groups = Course.list([sort: 'title'])
+                        groups = Course.list([sort: 'summary'])
                         break
                     case 'type':
                         if (input.contains('from mcs.Goal')) {
@@ -3155,16 +3155,19 @@ def addContactToRecord() {
                 def list2 = Task.executeQuery(input, [], params)
 
 
-
+                 if (params.reportType == 'tab')
+                     render(view: '/page/kanbanCrs', model: [groups: groups, groupBy: groupBy,
+                             title: savedSearch.summary,
+                             items: list2])
+                     else
                 render(template: '/reports/genericGrouping', model: [groups: groups, groupBy: groupBy,
-                        title: 'Generic grouping: ' + savedSearch.query,
+                        title: savedSearch.summary,
                         items: list2])
 
             } else {
 
-                def list = Task.executeQuery(savedSearch.query, [], params)
 
-
+                 /*
 
                 if (OperationController.getPath('enable.autoselectResults') == 'yes'){
                     selectedRecords.keySet().each() {
@@ -3177,7 +3180,14 @@ def addContactToRecord() {
                     }
 
                 }
+                */
 
+                if (params.reportType == 'cal')
+                    render(view: '/reports/calendar', model: [
+                            savedSearchId: id,
+                            title: savedSearch.summary])
+                else {
+                    def list = Task.executeQuery(savedSearch.query, [], params)
                 render(template: '/gTemplates/recordListing', model: [
                         ssId: id,
                         searchResultsTotal: savedSearch.countQuery ? Task.executeQuery( savedSearch.countQuery)[0] : '',
@@ -3185,6 +3195,7 @@ def addContactToRecord() {
                         list: list,
                         title: savedSearch.summary
                 ])
+                }
             }
 
             //  + (! savedSearch.query.contains('select') ? '(' + Task.executeQuery('select count(*) ' +  savedSearch.query)[0] + ')' : '') + ' : ' +  savedSearch.query

@@ -51,30 +51,6 @@
 </g:if>
 &nbsp; | &nbsp;
 
-<g:if test="${record.class.declaredFields.name.contains('course')}">
-
-    <g:set value="course" var="field"></g:set>
-
-    <a href="#" id="${field}${record.id}" class="${field}"
-       data-type="select" data-value="${record[field]?.id}"
-
-       data-name="${field}-${record.entityCode()}"
-       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
-       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}"
-       style="; float: right">
-        ${record[field]?.code ?: 'No ' + field}   |
-
-    </a>
-    <script>
-        $('#${field}${record.id}').editable({
-//            typeahead: {
-//                name: 'value'
-//            }
-        });
-    </script>
-
-</g:if>
-
 
 
 

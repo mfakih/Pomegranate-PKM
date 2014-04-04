@@ -87,16 +87,89 @@
 
         </g:formRemote>
 
-
-
     </div>
 
 
     <h4><a href="#">Main reports</a></h4>
     <div>
+
+        <g:if test="${OperationController.getPath('kanban.enabled')?.toLowerCase() == 'yes' ? true : false}">
+            <g:link controller="page" action="kanbanCrs"
+                    class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+                    target="_blank"
+                    title="Kanban">
+                <span class="ui-icon ui-icon-check"></span>
+                Kanban
+            </g:link>
+            <br/>
+            <br/>
+
+        </g:if>
+
+
+
+    %{--<g:link controller="page" action="kanbanCrs"--}%
+    %{--class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"--}%
+    %{--target="_blank"--}%
+    %{--title="Kanban">--}%
+    %{--<span class="ui-icon ui-icon-plusthick"></span>--}%
+    %{--</g:link>--}%
+    %{--&nbsp;--}%
+
+
+        <g:if test="${OperationController.getPath('fullCalendar.enabled')?.toLowerCase() == 'yes' ? true : false}">
+            <g:link controller="page" action="calendar"
+                    class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+                    target="_blank"
+                    title="Mega calendar">
+                <span class="ui-icon ui-icon-calendar"></span> Calendar
+            </g:link>
+
+        <br/>
+        <br/>
+
+
+        </g:if>
+        <g:if test="${OperationController.getPath('kpi.enabled')?.toLowerCase() == 'yes' ? true : false}">
+            <g:link controller="page" action="indicators"
+                    class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+                    target="_blank"
+                    title="Indicators">
+                <span class="ui-icon ui-icon-signal"></span> KPI
+            </g:link>
+            <br/>
+            <br/>
+        </g:if>
+
+
+        <g:remoteLink controller="generics" action="recentRecords"
+                      class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+                      update="centralArea" title="Timeline">
+            <span class="ui-icon ui-icon-calendar"></span>
+
+            Timeline
+        </g:remoteLink>
+
+        <br/>
+        <br/>
+
+
+
+
+
+
+        <g:remoteLink controller="generics" action="showBookmarkedRecords"
+                      update="centralArea"
+                      class="fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+                      title="Bookmarked records">
+            <span class="ui-icon ui-icon-star"></span> Bookmarked records
+        </g:remoteLink>
+
+        <br/>
+        <br/>
         <g:render template="/layouts/savedSearches" model="[entity: 'M']"/>
     </div>
-    <h4><a href="#">Records in progress</a></h4>
+    <h4><a href="#">Monitor</a></h4>
     <div>
         <g:render template="/layouts/savedSearches" model="[entity: 'U']"/>
     </div>
