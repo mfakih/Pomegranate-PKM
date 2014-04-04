@@ -242,16 +242,16 @@ class ReportController {
                 def title = 'Activity log and agenda for: <b> ' +
                         (startDate.format('dd.MM.yyyy') == endDate.format('dd.MM.yyyy') ? startDate.format('EE dd.MM.yyyy') :
                                 startDate.format('EE dd.MM.yyyy') + ' - ' + endDate.format('EE dd.MM.yyyy')) + '</b>'
-                if (session['jp'] == 1)
+                if (session['JP'] == 1)
                     render(template: '/reports/jpCalendar', model: [startDate: startDate, endDate: endDate])
 
-                if (session['trk'] == 1)
+                if (session['Jtrk'] == 1)
                     render(template: '/reports/jtrkReport', model: [startDate: startDate, endDate: endDate])
 
-                if (session['trans'] == 1)
+                if (session['Qtrans'] == 1)
                     render(template: '/reports/financialReportTrans', model: [startDate: startDate, endDate: endDate])
 
-                if (session['acc'] == 1)
+                if (session['Qacc'] == 1)
                     render(template: '/reports/financialReportAcc', model: [startDate: startDate, endDate: endDate])
 
                 if (session['log'] == 1) {
@@ -303,10 +303,12 @@ class ReportController {
 
         if (session[params.id] == 1) {
             session[params.id] = 0
+            render params.id
         } else {
             session[params.id] = 1
+            render '<b>' + params.id + '</b>'
         }
-        render params.id + ' is now ' + session[params.id]
+//        render params.id + ' is now ' + session[params.id]
     }
  def showLine1Only = {
 

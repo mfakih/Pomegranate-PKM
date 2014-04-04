@@ -348,13 +348,13 @@ class TaskController { // entity id = 127
 
 
         switch(params.recordType.toLowerCase()){
-            case 'b': book = Book.get(params.recordId)
+            case 'r': book = Book.get(params.recordId)
                 break
             case 't': task = Task.get(params.recordId)
                 break
             case 'g': goal = Goal.get(params.recordId)
                 break
-                  case 'r': excerpt = Excerpt.get(params.recordId)
+          case 'e': excerpt = Excerpt.get(params.recordId)
                 break
         }
         def level = params.level

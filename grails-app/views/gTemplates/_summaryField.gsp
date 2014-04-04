@@ -13,15 +13,7 @@
     </g:elseif>
 
 
-    <g:if test="${record.goal}">
-        <g:remoteLink controller="generics" action="showSummary" id="${record.goal?.id}"
-                      params="[entityCode: 'G']"
-                      update="below${entityCode}Record${record.id}"
-                      title="Show goal">
-            <span style="color: #004499; font-weight: bold">
-                ${record.goal?.summary}</span>
-        </g:remoteLink>
-    </g:if>
+
 
     <pkm:summarize text="${record.summary}" length="80"/>
 
@@ -57,16 +49,19 @@
 
 
 
-<g:if test="${record.class.declaredFields.name.contains('goal') && record.goal}">
-    <g:remoteLink controller="generics" action="showSummary" id="${record.goal?.id}"
-                  params="[entityCode: 'G']"
-                  update="below${entityCode}Record${record.id}"
-                  title="Show goal">
-        <span style="color: #004499; font-weight: bold">
-            ${record.goal?.summary}</span>
-    </g:remoteLink>
-
+<g:if test="${record.class.declaredFields.name.contains('priority')}">
+   <span style="font-size: 10px; color: gray">
+<g:if test="${record.priority == 3}">
+    &gt;
 </g:if>
+<g:elseif test="${record.priority == 4}">
+    <b>&gt;&gt; </b>
+</g:elseif>
+<g:elseif test="${record.priority == 1}">
+    <b>&darr; </b>
+</g:elseif>
+   </span>
+    </g:if>
 
 
 
@@ -117,9 +112,9 @@
             <br/>
         </g:if>
 
-        <bdi>
+        %{--<bdi>--}%
             <pkm:summarize text="${record.summary}" length="80"/>
-        </bdi>
+        %{--</bdi>--}%
 
     </span>
 
@@ -232,10 +227,10 @@
 
 <g:if test="${entityCode == 'R'}">
 
-    <bdi>
+    %{--<bdi>--}%
     <pkm:summarize text="${(record.title ?: '') + ' ' + (record.author ?: '')}" length="100"/>
 
-    </bdi>
+    %{--</bdi>--}%
     <g:if test="${!record.title && record.legacyTitle}">
         _ ${record.legacyTitle}
     </g:if>
@@ -274,34 +269,6 @@
 
 </g:if>
 
-
-
-
-<g:if test="${record.class.declaredFields.name.contains('task') && record.task}">
-
-    <g:remoteLink controller="generics" action="showSummary" id="${record.task.id}"
-                  params="[entityCode: 'T']"
-                  update="below${entityCode}Record${record.id}"
-                  title="Show task">
-        <b style="color: #555555; font-size: 12px;">
-        %{--${record.task?.parentGoal?.code?.toUpperCase()}--}%
-            T-${record.task.id} <pkm:summarize text="${record.task?.summary}" length="80"/></b>
-
-    </g:remoteLink>
-
-</g:if>
-
-<g:if test="${record.class.declaredFields.name.contains('goal') && record.goal}">
-    <g:remoteLink controller="generics" action="showSummary" id="${record.goal.id}"
-                  params="[entityCode: 'G']"
-                  update="below${entityCode}Record${record.id}"
-                  title="Show goal">
-        <i>G-${record.goal?.id}</i>
-        <span style="color: #555555; font-weight: bold">${record.goal?.summary}</span>
-
-    </g:remoteLink>
-
-</g:if>
 
 
 
@@ -372,8 +339,8 @@
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
         style="${record.type ? record.type?.style : ''}; float: right; font-size: 11px; font-weight: bold"
        data-name="${field}-${record.entityCode()}"
-       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
-       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
        ${record[field]?.code ?: 'No ' + field}
     </a>
     <script>
@@ -384,15 +351,59 @@
 
 
 
-<g:if test="${record.class.declaredFields.name.contains('status') && record.status}">
+<g:if test="${record.class.declaredFields.name.contains('writing') && entityCode == 'N'}">
+    <g:set value="writing" var="field"></g:set>
+
+    <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+       data-name="${field}-${record.entityCode()}"
+       style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic"
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
+        ${record[field] ? record[field]?.summary : 'No ' + field}
+    </a>
+    <script>
+        $('#${field}${record.id}').editable();
+    </script>
+
+</g:if>
+
+<g:if test="${record.class.declaredFields.name.contains('goal')}">
+    &nbsp;
+    <g:set value="goal" var="field"></g:set>
+
+    <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+       data-name="${field}-${record.entityCode()}"
+       style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic"
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
+        ${record[field] ? record[field]?.summary : 'No ' + field}
+    </a>
+
+            <g:if test="${record.goal}">
+                <g:remoteLink controller="generics" action="showSummary" id="${record.goal?.id}"
+                              params="[entityCode: 'G']"
+                              update="below${entityCode}Record${record.id}"
+                              title="Show goal">
+                    <i>G-${record.goal?.id}</i>
+                </g:remoteLink>
+            </g:if>
+
+    <script>
+        $('#${field}${record.id}').editable();
+    </script>
+
+    &nbsp;
+</g:if>
+
+<g:if test="${record.class.declaredFields.name.contains('status')}">
     <g:set value="status" var="field"></g:set>
 
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
        data-name="${field}-${record.entityCode()}"
        style="${record.status ? record.status?.style : ''}; border: 0.5px solid #808080; font-size: 11px; text-decoration: italic"
-       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
-       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
-        ${record[field]?.code ?: 'No ' + field}
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
+        ${record[field] ? record[field]?.code : 'No ' + field}
     </a>
     <script>
         $('#${field}${record.id}').editable();
@@ -415,6 +426,9 @@
 
 <g:if test="${record.class.declaredFields.name.contains('tags')}">
     &nbsp; <g:render template="/tag/tags" model="[instance: record, entity: entityCode]"/>
+
+    </g:if>
+    <g:if test="${record.class.declaredFields.name.contains('contacts')}">
     &nbsp; <g:render template="/tag/contacts" model="[instance: record, entity: entityCode]"/>
 </g:if>
 

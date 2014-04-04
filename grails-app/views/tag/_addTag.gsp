@@ -11,8 +11,6 @@
     <g:submitButton name="add" value="add" style="display:none;"
                     class="fg-button  ui-widget ui-state-default ui-corner-all"/>
 </g:formRemote>
-<br/>
-<br/>
 
 
 <script type="text/javascript">

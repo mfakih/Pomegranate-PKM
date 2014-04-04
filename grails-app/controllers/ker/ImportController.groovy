@@ -612,6 +612,7 @@ class ImportController {
             render(template: '/gTemplates/recordSummary', model: [record: b])
             def ant = new AntBuilder()
             if (entityCode == 'R') {
+                type = b.type
                 ant.move(file: path, tofile: type.newFilesPath + '/' + (b.id / 100).toInteger() + '/' + b.id + '' + finalName)
             }
             else

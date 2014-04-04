@@ -58,11 +58,6 @@ class Book implements Comparable {  // entity id = 134
 
     String comments
 
-
-    Integer reviewCount = 0
-    Date lastReviewed
-
-
     String code
 
     String title
@@ -119,8 +114,14 @@ class Book implements Comparable {  // entity id = 134
     Boolean isAudiobook = false
     Boolean isPaperOnly = false
     Boolean hasExercises = false
+
     Boolean isRead = false
+
     Date readOn
+    Integer reviewCount = 0
+    Date lastReviewed
+
+
     Integer percentCompleted
     Boolean isPublic = false   // for sharing online
 

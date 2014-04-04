@@ -10,6 +10,11 @@
 
 <b>${entityController?.split(/\./).last()}</b>
 
+     <br/>
+
+<g:submitButton class="fg-button ui-icon-left ui-widget ui-state-default ui-corner-all" name="submit"
+                value="Save"
+                onsubmit=""/>
 
 
 <g:hiddenField name="entityController" value="${entityController}"/>
@@ -620,11 +625,6 @@
 
 
 
-
-
-<g:submitButton class="fg-button ui-icon-left ui-widget ui-state-default ui-corner-all" name="submit"
-                value="Save"
-                onsubmit="jQuery('#searchResults').html('')"/>
 
 </g:formRemote>
 %{--</g:if>--}%

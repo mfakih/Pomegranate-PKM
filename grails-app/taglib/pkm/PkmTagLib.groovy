@@ -619,10 +619,13 @@ source src="${createLink(controller: 'operation', action: 'download', id: fileId
                     }
                     out << "<b>" + count + "</b>  <i>" + ext + "</i> &nbsp;&nbsp;"
                 }
-            } else {
+            }
+            else {
                 count = 0
+                if ( new File(attrs.folder).exists()){
                 new File(attrs.folder).eachFileRecurse { f ->
                     count++
+                }
                 }
                 out << count
             }

@@ -323,7 +323,8 @@
             },
             complete: function () {
                 $('#spinner2').hide();
-            },
+            }
+            ,
             success: function () {
                 $('#spinner2').hide();
             }
@@ -331,9 +332,19 @@
 
         });
 
+        jQuery(document).ajaxComplete(function () {
+            $('#spinner2').hide();
+        });
+
+       jQuery(document).ajaxStop(function () {
+            $('#spinner2').hide();
+        });
+   jQuery(document).ajaxSuccess(function () {
+            $('#spinner2').hide();
+        });
+
         $(document).ajaxError(function () {
             $('#spinner2').hide();
-            console.log('eror')
         });
 
     });

@@ -60,7 +60,9 @@ class GenericsController {
 
             'Y': 'cmn.Setting',
             'X': 'mcs.parameters.SavedSearch',
-            'A': 'app.parameters.CommandPrefix'
+            'A': 'app.parameters.CommandPrefix',
+//todo for all params
+            'ResourceType': 'app.parameters.ResourceType'
     ]
 
     static allClasses = [
@@ -79,7 +81,7 @@ class GenericsController {
             mcs.Book,
             mcs.Excerpt,
 
-            app.parameters.WordSource,
+//            app.parameters.WordSource,
             app.Indicator,
             app.PaymentCategory,
             app.Contact,
@@ -87,7 +89,7 @@ class GenericsController {
     ]
 
     static allClassesWithCourses = allClasses -
-            [mcs.Excerpt, app.parameters.WordSource, mcs.Course,
+            [mcs.Excerpt, mcs.Course,
                     app.IndicatorData, app.Payment, app.PaymentCategory, app.Indicator]
 
     static allClassesWithCoursesMinusBW = allClasses -
@@ -197,6 +199,8 @@ class GenericsController {
         }
         else
         batchAdd(prefix + block.trim())
+
+      render ''
     }
     def batchAdd(String block) {
         def metaType = block.trim().split(/[ ]+/)[0]
@@ -681,16 +685,26 @@ ll
 
         def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
 
-        if (!'BR'.contains(entityCode)) {
+        if ('GTP'.contains(entityCode)) {
             record.completedOn = new Date()
 //        record.percentComplete = new Date()
             record.status = WorkStatus.findByCode('completed')
-        } else if ('JN'.contains(entityCode)) {
+        }
+      else  if ('RE'.contains(entityCode)) {
+            record.lastReviewed = new Date()
+            if (!record.reviewCount)
+                record.reviewCount = 1
+            else
+            record.reviewCount++
+
+            if (!record.readOn){
+                record.readOn = new Date()
+            }
+        }
+            else if ('JN'.contains(entityCode)) {
             record.lastReviewed = new Date()
         }
-        else {
-            record.readOn = new Date()
-        }
+
 
         render(template: '/gTemplates/recordSummary', model: [record: record])
         render(template: '/layouts/achtung', model: [message: 'Record marked as completed'])

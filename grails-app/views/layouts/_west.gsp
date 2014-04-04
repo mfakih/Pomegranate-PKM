@@ -14,7 +14,22 @@
     <div id="dateRange1" style="">
         <input type="hidden" class="startDate" id="range_start">
         <input type="hidden" class="endDate" id="range_end">
-    </div>
+
+         <br/>
+         <br/>
+         <br/>
+        Calendar report includes:
+        <br/>
+     <g:each in="['JP', 'Jtrk', 'Qtrans', 'Qacc', 'log']" var="type">
+         <g:remoteLink controller="report" action="setJPReportType" id="${type}"
+                       update="${type}ResultSpan"
+                       ttypele="Toggle ${type}">
+             <span id="${type}ResultSpan" style="font-weight: ${session[type] == 1 ? 'bold': 'normal'}">
+                 ${type}
+             </span>
+         </g:remoteLink>
+     </g:each>
+        </div>
 
     </g:if>
     <h4><a href="#">Search</a></h4>

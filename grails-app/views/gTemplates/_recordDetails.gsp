@@ -10,14 +10,14 @@
 %{--<r:layoutResources/>--}%
 
 
-<div class="recordDetailsBody" style="margin-left: 5px;" id="detailsRegion${record.entityCode()}${record.id}">
+<div class="recordDetailsBody" style="margin-left: 5px;" id="detailsRegion${entityCode}${record.id}">
 
        <table style="border-collapse: collapse; width: 99%" border="0">
            <tr style="width: 99%">
                <td style="width: 60%; vertical-align: top">
 
-<g:if test="${'T'.contains(record.entityCode())}">
-                   %{--<g:render template="/tag/addContact" model="[instance: record, entity: record.entityCode()]"/>--}%
+<g:if test="${'T'.contains(entityCode)}">
+                   %{--<g:render template="/tag/addContact" model="[instance: record, entity: entityCode]"/>--}%
 </g:if>
 
                    <div style="padding: 8px; font-size: 11px; font-family: georgia; margin: 2px; line-height: 20px; text-align: justify">
@@ -41,7 +41,7 @@
                        %{--</g:if>--}%
 
 
-                   <g:if test="${'R'.contains(record.entityCode())}">
+                   <g:if test="${'R'.contains(entityCode)}">
                    %{--<b>${record.title?.encodeAsHTML()?.replaceAll('\n', '<br/>')}</b>--}%
                    %{--<br/>--}%
                        <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
@@ -175,14 +175,14 @@
                    <div style="font-size: 11px;">
                        <br/>
 
-                       <b>Updated</b> ${record.lastUpdated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')} (<prettytime:display
+                       <b>Updated</b> ${record.lastUpdated?.format(OperationController.getPath('date.format') ? OperationController.getPath('date.format') + ' HH:mm' : 'dd.MM.yyyy HH:mm')} (<prettytime:display
                            date="${record.lastUpdated}"/>)
                         <br/>
                    %{--(<prettytime:display--}%
                    %{--date="${record.dateCreated}"/>)--}%
                    %{--by ${record.insertedBy}--}%
                    %{--editedBy ${record.editedBy}--}%
-                       <b>Created</b> ${record.dateCreated?.format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')}
+                       <b>Created</b> ${record.dateCreated?.format(OperationController.getPath('date.format') ? OperationController.getPath('date.format') + ' HH:mm' : 'dd.MM.yyyy HH:mm')}
                    (${new PrettyTime()?.format(record.dateCreated)})
                        <br/>
                        <b>Version</b> <span style="font-weight: normal">${record.version}</span>
@@ -195,14 +195,14 @@
 
 
 <g:if test="${record.class.declaredFields.name.contains('tags')}">
-<g:render template="/tag/addTag" model="[instance: record, entity: record.entityCode()]"/>
-<g:render template="/tag/addContact" model="[instance: record, entity: record.entityCode()]"/>
+<g:render template="/tag/addTag" model="[instance: record, entity: entityCode]"/>
+<g:render template="/tag/addContact" model="[instance: record, entity: entityCode]"/>
     </g:if>
 
-<g:if test="${'TGRE'.contains(record.entityCode())}">
+<g:if test="${'TGRE'.contains(entityCode)}">
     <h4>Add journal or planner</h4>
     <g:formRemote name="scheduleTask" url="[controller: 'task', action: 'assignRecordToDate']"
-                  style="display: inline;" update="below${record.entityCode()}Record${record.id}"
+                  style="display: inline;" update="below${entityCode}Record${record.id}"
                   method="post">
         Type/Level/Weight
         <br/>
@@ -217,7 +217,7 @@
                value=""/>
 
 
-        <g:hiddenField name="recordType" value="${record.entityCode()}"/>
+        <g:hiddenField name="recordType" value="${entityCode}"/>
         <g:hiddenField name="recordId" value="${record.id}"/>
         <g:submitButton name="scheduleTask" value="ok" style="display: none;"
                         class="fg-button ui-widget ui-state-default ui-corner-all"/>
@@ -226,11 +226,13 @@
     <br/>
 </g:if>
 
+           <g:if test="${entityCode.length() == 1}">
 <h4>Relate</h4>
 <span id="addRelationship${record.id}" style="display: inline;">
     <g:render template="/gTemplates/addRelationships"
-              model="[record: record, entity: record.entityCode()]"/>
+              model="[record: record, entity: entityCode]"/>
 </span>
+           </g:if>
 
 
 <div id="publish${record.id}" style="display: inline;  margin-left: 10px;">
@@ -296,7 +298,7 @@
 
     <g:if test="${1 == 2}">
     <g:formRemote name="setBlogCode" style="display: inline"
-                  url="[controller: 'generics', action: 'setRecordBlog', params: [id: record.id, entityCode: record.entityCode()]]"
+                  url="[controller: 'generics', action: 'setRecordBlog', params: [id: record.id, entityCode: entityCode]]"
                   update="notificationArea"
                   title="Post info">
         <g:select from="${Blog.list()}" name="blog.id" title="Blog"
@@ -330,7 +332,7 @@
                    </g:if>
 
 
-           <g:if test="${record.entityCode() == 'R' && (new File(OperationController.getPath('covers.sandbox.path') + '/' +
+           <g:if test="${entityCode == 'R' && (new File(OperationController.getPath('covers.sandbox.path') + '/' +
                                record?.type?.code + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + record.id + '.jpg')?.exists())}">
                            <br/><br/>
                            <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
@@ -403,11 +405,11 @@
    <g:if test="${1==2}">
 <div id="addNote${record.id}" style="display: inline; ">
     <g:formRemote name="addNote" url="[controller: 'generics', action: 'addNote']"
-                  update="notes${record.entityCode()}${record.id}"
+                  update="notes${entityCode}${record.id}"
                   style="display: inline;">
         <g:hiddenField name="id" value="${record.id}"/>
-        <g:hiddenField name="entityCode" value="${record.entityCode()}"/>
-        <g:textField id="newNote${record.entityCode()}${record.id}" name="note" class="ui-corner-all" placeholder="Append to notes..."
+        <g:hiddenField name="entityCode" value="${entityCode}"/>
+        <g:textField id="newNote${entityCode}${record.id}" name="note" class="ui-corner-all" placeholder="Append to notes..."
                      style="width:100px; display: inline; " value=""/>
         <g:submitButton name="add" value="add" style="display:none;"
                         class="fg-button  ui-widget ui-state-default ui-corner-all"/>
@@ -423,20 +425,21 @@
 
 </div>
 
-
-<div id="relationshipRegion${record.entityCode()}${record.id}">
-    <g:render template="/gTemplates/relationships" model="[record: record, entity: record.entityCode()]"/>
+<g:if test="${entityCode.length() == 1}">
+<div id="relationshipRegion${entityCode}${record.id}">
+    <g:render template="/gTemplates/relationships" model="[record: record, entity: entityCode]"/>
 </div>
+    </g:if>
 
 
-<g:if test="${record.entityCode() == 'L'}">
+<g:if test="${entityCode == 'L'}">
 
     <g:render template="/gTemplates/recordListing"
               model="[list: Payment.findAllByCategory(record, [sort: 'date', order: 'desc'])]"/>
 
 </g:if>
 
-<g:if test="${record.entityCode() == 'K'}">
+<g:if test="${entityCode == 'K'}">
 
     <div id="graph${record.id}" style="width: 500px; height: 200px; margin: 3px auto 0 auto;"></div>
 
@@ -474,7 +477,7 @@
 
 </g:if>
 
-<g:if test="${record.entityCode() == 'P'}">
+<g:if test="${entityCode == 'P'}">
 
     <g:if test="${record.completedOn}">
         Completed on: ${record.completedOn?.format('dd.MM.yyyy')}
@@ -487,12 +490,12 @@
     </g:if>
 </g:if>
 
-<g:if test="${record.entityCode() == 'T'}">
+<g:if test="${entityCode == 'T'}">
     <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByTask(record)]"/>
     <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByTask(record)]"/>
 </g:if>
 
-<g:if test="${record.entityCode() == 'R'}">
+<g:if test="${entityCode == 'R'}">
  %{--<h4>J & P</h4>--}%
     <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByBook(record)]"/>
     <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByBook(record)]"/>
@@ -500,14 +503,14 @@
 </g:if>
 
 
-<g:if test="${record.entityCode() == 'E'}">
+<g:if test="${entityCode == 'E'}">
     %{--<h4>J & P</h4>--}%
     <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByExcerpt(record)]"/>
     <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByExcerpt(record)]"/>
 
 </g:if>
 
-<g:if test="${record.entityCode() == 'G'}">
+<g:if test="${entityCode == 'G'}">
     %{--<h4>J & P</h4>--}%
     <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByGoal(record)]"/>
     <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByGoal(record)]"/>
@@ -515,7 +518,7 @@
 </g:if>
 
 %{--<g:render template="/indexCard/add"--}%
-%{--model="[indexCardInstance: new IndexCard(), recordEntityCode: record.entityCode(), recordId: record.id]"/>--}%
+%{--model="[indexCardInstance: new IndexCard(), recordEntityCode: entityCode, recordId: record.id]"/>--}%
 
 
 
@@ -603,14 +606,14 @@
 
 %{--<a class="actionLink" onclick="jQuery('#addRelationship${record.id}').removeClass('navHidden')">Relate...</a>--}%
 %{--<a class="actionLink" onclick="jQuery('#addNote${record.id}').removeClass('navHidden')">Add note...</a>--}%
-%{--<g:if test="${'JWC'.contains(record.entityCode())}">--}%
+%{--<g:if test="${'JWC'.contains(entityCode)}">--}%
     <!--<a class="actionLink" onclick="jQuery('#publish${record.id}').removeClass('navHidden')">Publish...</a>-->
 %{--</g:if>--}%
 
 
 
 <g:if test="${record.class.declaredFields.name.contains('notes')}">
-<div id="notes${record.entityCode()}${record.id}" style="display: inline;">
+<div id="notes${entityCode}${record.id}" style="display: inline;">
 
     <g:if test="${record.notes}">
     %{--<br/>--}%

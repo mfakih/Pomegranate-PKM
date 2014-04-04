@@ -757,66 +757,6 @@ puts "Hello, World!"
         render asciidoctor.render(Writing.get(params.id).description, [:])
     }
 
-    def getQuickEditValues() {
-        def entity = params.entity
-        def field = params.field
-        def responce = []
-        if(entity == 'N' && field == 'blog'){
-            Blog.findAll([sort: 'code']).each() {
-                responce += [value: it.id,
-                            text: it.code]
-            }
-        }
-        else if (field == 'pomegranate') {
-            Pomegranate.findAll([sort: 'code']).each() {
-                responce += [value: it.id,
-                        text: it.code]
-            }
-        }
-     else if (field == 'course') {
-            Course.findAll([sort: 'code']).each() {
-                responce += [value: it.id,
-                        text: it.summary]
-            }
-        }
-         else if (entity == 'T' && field == 'context') {
-            Context.findAll([sort: 'code']).each() {
-                responce += [value: it.id,
-                        text: it.code]
-            }
-        }
-        else if (entity == 'G' && field == 'type') {
-            GoalType.findAll([sort: 'code']).each() {
-                responce += [value: it.id,
-                        text: it.code]
-            }
-        }
-         else if('GTP'.contains(entity) && field == 'status') {
-            WorkStatus.findAll([sort: 'code']).each() {
-                responce += [value: it.id,
-                        text: it.code]
-            }
-        }
-        else if (field == 'plannedDuration') {
-            (1..10).each() {
-                responce += [value: it,
-                        text: it]
-            }
-        }
-        else if (field == 'priority') {
-            (1..4).each() {
-                responce += [value: it,
-                        text: it]
-            }
-        }
-  else if (field == 'percentCompleted') {
-            (1..10).each() {
-                responce += [value: it * 10,
-                        text: it * 10]
-            }
-        }
-        render responce as JSON
-    }
     def autoCompleteTagsJSON() {
         def responce = []
 
@@ -977,6 +917,86 @@ puts "Hello, World!"
 
     }
 
+
+    def getQuickEditValues() {
+        def entity = params.entity
+        def field = params.field
+        def responce = []
+        if(entity == 'N' && field == 'blog'){
+            Blog.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+        else if (field == 'pomegranate') {
+            Pomegranate.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+        else if (field == 'course') {
+            Course.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.summary]
+            }
+        }
+        else if (entity == 'T' && field == 'context') {
+            Context.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+        else if (entity == 'G' && field == 'type') {
+            GoalType.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+        else if ('WN'.contains(entity) && field == 'type') {
+            WritingType.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+        else if('GTP'.contains(entity) && field == 'status') {
+            WorkStatus.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+        else if('TPJ'.contains(entity) && field == 'goal') {
+            Goal.findAll([sort: 'summary']).each() {
+                responce += [value: it.id,
+                        text: it.summary]
+            }
+        }
+        else if('NJ'.contains(entity) && field == 'writing') {
+            Writing.findAll([sort: 'summary']).each() {
+                responce += [value: it.id,
+                        text: it.summary]
+            }
+        }
+        else if (field == 'plannedDuration') {
+            (1..10).each() {
+                responce += [value: it,
+                        text: it]
+            }
+        }
+        else if (field == 'priority') {
+            (1..4).each() {
+                responce += [value: it,
+                        text: it]
+            }
+        }
+        else if (field == 'percentCompleted') {
+            (1..10).each() {
+                responce += [value: it * 10,
+                        text: it * 10]
+            }
+        }
+        render responce as JSON
+    }
+
     def quickSave2() {
         def id = params.pk
         def newValue = params.value
@@ -990,8 +1010,12 @@ puts "Hello, World!"
 
         else if (field == 'pomegranate')
             record[field] = Pomegranate.get(newValue)
-         else if (field == 'course')
+        else if (field == 'course')
             record[field] = Course.get(newValue)
+        else if (field == 'goal')
+            record[field] = Goal.get(newValue)
+        else if (field == 'writing')
+            record[field] = Writing.get(newValue)
         else if (field == 'context')
             record[field] = Context.get(newValue)
 
@@ -1012,10 +1036,11 @@ puts "Hello, World!"
             record[field] = newValue.toInteger()
         else if (field == 'priority')
             record[field] = newValue.toInteger()
-   else if (field == 'percentCompleted')
+        else if (field == 'percentCompleted')
             record[field] = newValue.toInteger()
 
         render(['ok'] as JSON)
     }
+
 
 } // end of class

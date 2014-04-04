@@ -36,8 +36,8 @@
     <a href="#" id="${field}${recordId}" class="${field}"
        data-type="select" data-value="${record[field]?.id}"
        data-name="${field}-${record.entityCode()}"
-       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
-       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field]?.summary ?: 'No dept'}
     </a>
     <script>
@@ -59,8 +59,8 @@
        data-type="select" data-value="${record[field]?.id}"
 
        data-name="${field}-${record.entityCode()}"
-       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
-       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}"
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}"
        style="; float: right">
         ${record[field]?.code ?: 'No ' + field}   |
 
@@ -133,8 +133,8 @@
 
     <a href="#" id="${field}${recordId}" class="${field}" data-type="select" data-value="${record[field]?.id}"
        data-name="${field}-${record.entityCode()}"
-       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
-       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field]?.code ?: 'No ' + field}
     </a>
     <script>
@@ -162,8 +162,8 @@
 
     <a href="#" id="${field}${recordId}" class="${field}" data-type="select" data-value="${record[field]}"
        data-name="${field}-${record.entityCode()}"
-       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
-       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field] ?: 'No duration'}
     </a>
     <script>
@@ -172,18 +172,21 @@
 
     </g:if>
 
+<g:if test="${record.class.declaredFields.name.contains('priority')}">
 &nbsp; | &nbsp;
     <g:set value="priority" var="field"></g:set>
 
     <a href="#" id="${field}${recordId}" class="${field}" data-type="select" data-value="${record[field]}"
        data-name="${field}-${record.entityCode()}"
-       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
-       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field] ? 'p' + record[field]: 'No ' + field}
     </a>
     <script>
         $('#${field}${recordId}').editable();
     </script>
+
+    </g:if>
 
 <g:if test="${record.class.declaredFields.name.contains('percentCompleted')}">
 &nbsp; | &nbsp;
@@ -191,8 +194,8 @@
 
     <a href="#" id="${field}${recordId}" class="${field}" data-type="text" data-value="${record[field]}"
        data-name="${field}-${record.entityCode()}"
-       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
-       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field] ? record[field] + '%': 'No %'}
     </a>
     <script>
@@ -207,8 +210,8 @@
 
 <a href="#" id="${field}${recordId}" class="${field}" data-type="select" data-value="${record[field]}"
    data-name="${field}-${record.entityCode()}"
-   data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}"
-   data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit ${field}">
+   data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+   data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
     ${record[field] ?: 'No #'}
 </a>
 <script>
@@ -268,8 +271,8 @@
 <g:if test="${'JWN'.contains(entityCode)}">
 
     <a href="#" id="blog"  class="blog" data-type="select" data-value="${record.blog?.id}" data-name="blog-${record.entityCode()}"
-       data-source="operation/getQuickEditValues?entity=${record.entityCode()}&field=blog"
-       data-pk="${record.id}" data-url="operation/quickSave2" data-title="Edit blog">
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=blog"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit blog">
        ${record.blog?.code ?: 'No blog'}
     </a>
     <script>

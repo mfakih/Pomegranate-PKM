@@ -40,7 +40,7 @@ and <g:textField name="dateB" style="width: 50px;" value=""/>
 <g:if test="${'GTPJWNR'.contains(entityCode)}">
 
     <g:select name="type" style="width: 150px;"
-              from="${types}" optionKey="id" optionValue="value"
+              from="${types}" optionKey="id" optionValue="code"
               noSelection="${['null': 'Any type']}"/>
     <br/>
 </g:if>

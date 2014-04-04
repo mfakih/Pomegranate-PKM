@@ -48,20 +48,21 @@ class Excerpt implements Comparable {  // entity id = 143
     String notes
     Date dateCreated
     Date lastUpdated
+
+
+    Date readOn
     Integer reviewCount = 0
-    
-    
     Date lastReviewed
+
+
     Boolean bookmarked = false
 
 
 
-    Date readOn
     Integer priority
     
     Integer orderInCourse
 
-    Date studiedOn
     Date deletedOn
 
     //static transients = ['numberOfTasks']

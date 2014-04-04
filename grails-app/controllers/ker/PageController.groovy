@@ -66,9 +66,9 @@ class PageController {
     def help() {
         render(template: '/page/help')
     }
- def main2() {
-        render(view: '/page/main2')
-    }
+// def main2() {
+//        render(view: '/page/main2')
+//    }
 
 
     def main() {
@@ -139,7 +139,7 @@ My in-progress book at [LeanPub](https://leanpub.com/pomegranate) outlines the m
         String htmlContent = markupParser.parseToHtml(text);
 
 
-        render(view: '/page/main', model: [
+        render(view: '/page/main2', model: [
                 htmlContent: htmlContent
 //                environment: environment
                 //,

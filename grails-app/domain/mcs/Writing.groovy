@@ -29,7 +29,7 @@ import ys.wikiparser.WikiParser
 class Writing implements Comparable {  // entity id = 144
 
 
-    static hasMany = [goals: Goal, tags: Tag]
+    static hasMany = [goals: Goal, tags: Tag, contacts: Contact]
 
     def grailsApplication
 

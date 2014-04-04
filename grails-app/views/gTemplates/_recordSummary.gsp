@@ -61,7 +61,7 @@
 </td>
 
 <td colspan="10" rowspan="2" class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
-    style="font-family: Arial; width: 80% !important;: font-size: 13px; color: #105CB6; line-height: 17px; ">
+    style="font-family: Arial; font-size: 13px; color: #105CB6; line-height: 17px; ">
 
 
 <g:remoteLink controller="generics" action="showDetails"
@@ -240,31 +240,31 @@
 
 
 
-                <g:if test="${'T'.contains(entityCode)}">
-                    <g:if test="${record.goal}">
-                        <g:remoteLink controller="generics" action="showSummary" id="${record.goal.id}"
-                                      params="[entityCode: 'G']"
-                                      update="below${entityCode}Record${record.id}"
-                                      title="Show goal">
-                            <span style="color: #004499; font-weight: bold">
-                            xx ${record.goal?.summary}</span>
-                        </g:remoteLink>
+                %{--<g:if test="${'T'.contains(entityCode)}">--}%
+                    %{--<g:if test="${record.goal}">--}%
+                        %{--<g:remoteLink controller="generics" action="showSummary" id="${record.goal.id}"--}%
+                                      %{--params="[entityCode: 'G']"--}%
+                                      %{--update="below${entityCode}Record${record.id}"--}%
+                                      %{--title="Show goal">--}%
+                            %{--<span style="color: #004499; font-weight: bold">--}%
+                            %{--xx ${record.goal?.summary}</span>--}%
+                        %{--</g:remoteLink>--}%
 
-                    </g:if>
-                </g:if>
-                <g:if test="${'JP'.contains(entityCode)}">
-                    <g:if test="${record.goal}">
-                        <g:remoteLink controller="generics" action="showSummary" id="${record.goal.id}"
-                                      params="[entityCode: 'G']"
-                                      update="below${entityCode}Record${record.id}"
-                                      title="Show goal">
-                            <br/><i>G-${record.goal?.id}</i>
-                            <span style="color: #004499; font-weight: bold">${record.goal?.summary}</span>
+                    %{--</g:if>--}%
+                %{--</g:if>--}%
+                %{--<g:if test="${'JP'.contains(entityCode)}">--}%
+                    %{--<g:if test="${record.goal}">--}%
+                        %{--<g:remoteLink controller="generics" action="showSummary" id="${record.goal.id}"--}%
+                                      %{--params="[entityCode: 'G']"--}%
+                                      %{--update="below${entityCode}Record${record.id}"--}%
+                                      %{--title="Show goal">--}%
+                            %{--<br/><i>G-${record.goal?.id}</i>--}%
+                            %{--<span style="color: #004499; font-weight: bold">${record.goal?.summary}</span>--}%
 
-                        </g:remoteLink>
+                        %{--</g:remoteLink>--}%
 
-                    </g:if>
-                </g:if>
+                    %{--</g:if>--}%
+                %{--</g:if>--}%
 
                 <g:if test="${'C'.contains(entityCode)}">
 

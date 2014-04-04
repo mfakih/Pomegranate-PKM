@@ -1,4 +1,4 @@
-<div id="contacts${entity}${instance.id}" style="display: inline; float: right;">
+<div id="contacts${entity}${instance.id}" style="display: inline;">
     <g:if test="${instance.contacts}">
         <g:each in="${instance.contacts?.sort(){i,j -> i.summary.toLowerCase().compareTo(j.summary.toLowerCase())}}" var="t">
             &nbsp;  <div style=" display:inline; color: darkolivegreen; padding: 1px; margin-right: 3px; font-size: 11px; border: 1px solid #808080; border-radius: 4px;"
