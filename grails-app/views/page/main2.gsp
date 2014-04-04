@@ -95,7 +95,7 @@
     jQuery(document).ready(function () {
 
         myLayout = $('body').layout({
-            west__size: 230, east__size: 230
+            west__size: 215, east__size: 215
             // RESIZE Accordion widget when panes resize
             , west__onresize: $.layout.callbacks.resizePaneAccordions, east__onresize: $.layout.callbacks.resizePaneAccordions, north__closable: false, north__spacing_closed: 0		// big resizer-bar when open (zero height)
             , north__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
@@ -220,6 +220,7 @@
 
         Mousetrap.bindGlobal('esc', function (e) {
             jQuery("html, body").animate({ scrollTop: 0 }, "fast");
+            jQuery('#centralArea').html('');
             jQuery('#quickAddTextField').focus();
             jQuery('#quickAddTextField').select();
             jQuery('#quickAddTextField').scrollTop(0);

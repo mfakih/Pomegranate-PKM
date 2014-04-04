@@ -96,7 +96,7 @@
                   update="below${entityCode}Record${record.id}"
                   title="Show book">
         ${record.book?.id}b
-        <b>${record.book?.title}</b>
+        <i>${record.book?.title}</i>
     </g:remoteLink>
 
 </g:if>
@@ -351,7 +351,7 @@
 
 
 
-<g:if test="${record.class.declaredFields.name.contains('type')}">
+<g:if test="${record.class.declaredFields.name.contains('type') && entityCode.length() == 1}">
     <g:set value="type" var="field"></g:set>
 
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"

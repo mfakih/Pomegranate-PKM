@@ -1973,11 +1973,11 @@ def addContactToRecord() {
 
             if (!n.hasErrors() && n.save()) {
                 render(template: '/gTemplates/recordSummary', model: [
-                        record: n])
+                        record: n, expandedView: true])
             } else {
                 render 'Errors when saving the record<br/>'
                 render(template: '/gTemplates/recordSummary', model: [
-                        record: n])
+                        record: n, expandedView: true])
 //            n.errors.each() {
 //                render it
 //            }

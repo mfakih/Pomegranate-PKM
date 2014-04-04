@@ -117,7 +117,7 @@
 
 <g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
 
-    <td colspan="2">
+    <td rowspan="2">
         <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
                 record?.type?.code + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + record.id + '.jpg')?.exists())}">
 
@@ -133,7 +133,7 @@
 
 <g:if test="${entityCode == 'E'}">
 
-    <td colspan="2">
+    <td rowspan="2">
         <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
                 record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists())}">
 
@@ -200,25 +200,6 @@
 
 </tr>
 
-<tr id="appendRow${entityCode}-${record.id}" class="navHidden">
-    <td colspan="13">
-
-        <g:if test="${record.class.declaredFields.name.contains('description')}">
-            <g:formRemote name="appendText" url="[controller: 'generics', action: 'appendText']"
-                          update="${entityCode}Record${record.id}"
-                          style="display: inline;">
-                <g:hiddenField name="id" value="${record.id}"/>
-                <g:hiddenField name="entityCode" value="${entityCode}"/>
-                <g:textField id="appendTextFor${entityCode}${record.id}" name="text" class="ui-corner-all" cols="80"
-                             placeholder="Append to description..."
-                             rows="5"
-                             style="width:98%;  display: inline; " value=""/>
-                <g:submitButton name="add" value="+=" style="dispaly:none;"
-                                class="fg-button ui-widget ui-state-default ui-corner-all navHidden"/>
-            </g:formRemote>
-        </g:if>
-
-    </td>
 </tbody>
 </table>
 
@@ -274,7 +255,7 @@
                                       params="[entityCode: 'R']"
                                       update="below${entityCode}Record${record.id}"
                                       title="Show book">
-                            ~ R-${record.book.id} ${record.book.title}.
+                            ~ R-${record.book.id} ${record.book.title}
                         </g:remoteLink>
                     </g:if>
                     <g:if test="${record.pages}">

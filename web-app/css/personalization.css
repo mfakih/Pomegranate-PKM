@@ -30,6 +30,7 @@
 
  .commandBarTexField{
  font-family: monospace;
-     width:98%; height: 60px;
+     width:98%;
+     height: 60px;
      background: #f1ece0; margin: 0px !important;
  }

@@ -1543,3 +1543,7 @@ ul.ui-autocomplete.ui-menu {
 .gist {
     /*font-size: 14px;*/
 }
+
+.commandMode{
+    background: #ffcabf !important;
+}
