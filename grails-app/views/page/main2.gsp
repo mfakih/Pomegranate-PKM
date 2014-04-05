@@ -106,6 +106,13 @@
 
     jQuery(document).ready(function () {
 
+        for (var i = 0; i < localStorage.length; i++) {
+            // do something with localStorage.getItem(localStorage.key(i));
+            if (localStorage.key(i).startsWith('pkm-'))
+            document.getElementById('commandHistory').options.add(new Option(localStorage[localStorage.key(i)], localStorage.key(i)))
+        }
+
+
 
         myLayout = $('body').layout({
             west__size: 215, east__size: 230

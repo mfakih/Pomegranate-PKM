@@ -548,6 +548,7 @@ ll
         }
 
         //////////// validation
+        /* bandwidth consuming checks
         input.eachLine() { line, i ->
 
             if (line && line.substring(0, 1).toLowerCase() == 'a') {
@@ -574,7 +575,12 @@ ll
                 }
 
             }
-        }
+
+
+             }
+
+*/
+
         if (hint)
             render(hintResponce?.replaceAll('\n', '<br/>'))
         else
@@ -3188,7 +3194,8 @@ def addContactToRecord() {
                             title: savedSearch.summary])
                 else {
                     def list = Task.executeQuery(savedSearch.query, [], params)
-                render(template: '/gTemplates/recordListing', model: [
+
+                    render(template: '/gTemplates/recordListing', model: [
                         ssId: id,
                         searchResultsTotal: savedSearch.countQuery ? Task.executeQuery( savedSearch.countQuery)[0] : '',
                         totalHits: savedSearch.countQuery ? Task.executeQuery( savedSearch.countQuery)[0] : '',

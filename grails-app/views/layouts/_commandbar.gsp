@@ -7,23 +7,27 @@
                   url="[controller: 'generics', action: 'batchAddPreprocessor']"
                   update="centralArea"
 
-                  onComplete="jQuery('#quickAddXcdField').val('')"
+                  onComplete="var cdate = 'pkm-' + new Date().toISOString(); jQuery('#quickAddTextField').select();localStorage[cdate] = jQuery('#quickAddTextField').val(); document.getElementById('commandHistory').options.add(new Option(localStorage[cdate], cdate));"
                   method="post">
 
         <g:hiddenField name="sth2" value="${new java.util.Date()}"/>
         <table style="width: 98%; padding: 0px; margin: 0px;">
-            <td style=" padding: 0px; margin: 0px; width: 72%">
+            <td style=" padding: 0px; margin: 0px; width: 60%">
               Choose action:
                 <g:select name="commandPrefix"
                           from="${CommandPrefix.list()}" optionKey="id" optionValue="summary"
-                          style="direction: ltr; text-align: left; display: inline; width: 150px;"
+                          style="direction: ltr; text-align: left; display: inline; width: 160px;"
                           onchange="jQuery.getJSON('/pkm/generics/commandNotes?q=' + this.value, function(jsdata){jQuery('#quickAddTextField').val(jsdata.info);if (jsdata.info  == null ||  jsdata.info  == 'null' || !jsdata.info) jQuery('#quickAddTextField').addClass('commandMode'); else  jQuery('#quickAddTextField').removeClass('commandMode') })"
                           value=""/>
 
                 </td>
         <td>
+
+            History <select id="commandHistory" style="width: 50px;" onchange="jQuery('#quickAddTextField').val(this.options[this.selectedIndex].text)">
+            <option></option>
+            </select>
             <g:submitButton name="batch" value="Execute"
-                            style="height: 20px; margin: 0px; width: 15%;"
+                            style="height: 20px; margin: 0px; width: 80px !important;"
                             id="quickAddXcdSubmit"
                             class="fg-button ui-widget ui-state-default"/>
 
