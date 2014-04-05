@@ -51,6 +51,9 @@
 
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-1.11.0_min.js')}"></script>
+
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.address-1.5.min.js?autoUpdate=0')}"></script>
+
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.10.4.custom.min.js')}"></script>
 
 
@@ -91,11 +94,21 @@
 
 <script type="text/javascript">
 
+//    $.address.state('/pkm/')
+    $.address.externalChange(function (event) {
+        // do something depending on the event.value property, e.g.
+        // $('#content').load(event.value + '.xml');
+       // console.log('fired ' + event.value)
+        if(event.value != '/')
+        jQuery('#centralArea').load(event.value)
+    });
+
 
     jQuery(document).ready(function () {
 
+
         myLayout = $('body').layout({
-            west__size: 215, east__size: 215
+            west__size: 215, east__size: 230
             // RESIZE Accordion widget when panes resize
             , west__onresize: $.layout.callbacks.resizePaneAccordions, east__onresize: $.layout.callbacks.resizePaneAccordions, north__closable: false, north__spacing_closed: 0		// big resizer-bar when open (zero height)
             , north__resizable: false	// OVERRIDE the pane-default of 'resizable=true'

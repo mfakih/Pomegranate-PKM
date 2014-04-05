@@ -233,6 +233,7 @@
                             <g:remoteLink controller="generics" action="getAddForm"
                                           params="[entityController: i[0], isParameter: true,
                                                   updateRegion: 'centralArea']"
+                                          before="jQuery.address.value(jQuery(this).attr('href'));"
                                           update="centralArea">
                                     <span style="font-size: 12px; padding: 2px;">
                                         ${i[1]} (${grailsApplication.classLoader.loadClass(i[0]).count()})
@@ -265,6 +266,7 @@
                         <g:remoteLink controller="generics" action="getAddForm"
                                       params="[entityController: i[0], isParameter: true,
                                               updateRegion: 'centralArea']"
+                                      before="jQuery.address.value(jQuery(this).attr('href'));"
                                       update="centralArea">
 
                             <span style="font-size: 12px; padding: 2px;">

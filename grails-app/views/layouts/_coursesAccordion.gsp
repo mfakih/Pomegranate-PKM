@@ -41,6 +41,7 @@
                         var="t">
                     <li style="list-style-type: none">
                         <g:remoteLink controller="generics" action="recordsByCourse" id="${t.id}"
+                                      before="jQuery.address.value(jQuery(this).attr('href'));"
                                       update="centralArea">
                             <b>${t.numberCode}</b>
                             ${StringUtils.abbreviate(t.summary, 26)}

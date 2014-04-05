@@ -10,6 +10,7 @@
 <g:if test="${title && ssId}">
        <g:remoteLink controller="generics" action="executeSavedSearch"
                   id="${ssId}"
+                  before="jQuery.address.value(jQuery(this).attr('href'));"
                   update="centralArea">
       <h2> &sect;  ${title}
       </h2>

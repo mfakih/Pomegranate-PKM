@@ -622,7 +622,7 @@ source src="${createLink(controller: 'operation', action: 'download', id: fileId
             }
             else {
                 count = 0
-                if ( new File(attrs.folder).exists()){
+                if (attrs.folder && new File(attrs.folder).exists()){
                 new File(attrs.folder).eachFileRecurse { f ->
                     count++
                 }

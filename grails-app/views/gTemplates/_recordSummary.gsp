@@ -47,7 +47,8 @@
 
         <span class="${entityCode}-bkg ID-bkg ${record.class.declaredFields.name.contains('deletedOn') && record.deletedOn ? 'deleted' : ''}" style="padding: 3px; margin-right: 3px; color: gray;">
               <b style="color: white;">  ${entityCode}</b>
-        </span> <sup>${record.id}</sup>
+        </span>
+        %{--<sup>${record.id}</sup>--}%
 
     </g:remoteLink>
     %{--<sup style="color: #6E6E6E; font-size: 10px; padding-top: 3px;">${record.id}</sup>--}%
@@ -148,15 +149,22 @@
 </g:if>
 
 
+    <td rowspan="2" style="width: 8px; margin: 0px; padding: 0">
+        <div style="font-size: 10px; -moz-transform:rotate(-90deg); -moz-transform-origin: middle right; -webkit-transform: rotate(-90deg); -webkit-transform-origin: bottom left; -o-transform: rotate(-90deg); -o-transform-origin:  bottom left; ;">
+            ${record.id}
+        </div>
+    </td>
+
 </tr>
 
 <tr>
 
     <td class="record-selection">
 
+        %{--onchange="jQuery('#logRegion').load('/pkm/generics/select/${entityCode}${record.id}')"--}%
         <g:checkBox name="select-${record.id}-${entityCode}" title="Select record"
                     value="${session[entityCode + record.id] == 1}"
-                    onchange="jQuery('#logRegion').load('/pkm/generics/select/${entityCode}${record.id}')"
+
                     onclick="jQuery('#logRegion').load('/pkm/generics/select/${entityCode}${record.id}')"/>
         <!--a style="width: 10px; color: #000000"
            onclick="jQuery('#below${entityCode}Record${record.id}').html('')">&chi;</a-->

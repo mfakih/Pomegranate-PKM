@@ -121,6 +121,7 @@
     //        }
     //    });
 
+    /*
 
     $('#selectAll').click(function (e) {
     $("input[name^='select-']").each(function () {
@@ -140,5 +141,5 @@
     })
 
 //    });
-
+*/
 </script>

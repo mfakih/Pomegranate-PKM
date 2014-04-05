@@ -5,6 +5,7 @@
     <li>
         <g:remoteLink controller="report" action="whereIsMyData"
                       update="centralArea"
+                      before="jQuery.address.value(jQuery(this).attr('href'));"
                       title="Data entry activities">
 
             Where is my data?
@@ -17,6 +18,7 @@
     <li>
         <g:remoteLink controller="report" action="heartbeat"
                       update="centralArea"
+                      before="jQuery.address.value(jQuery(this).attr('href'));"
                       title="Data entry activities">
             Heartbeat
         </g:remoteLink>
@@ -25,6 +27,7 @@
  <li>
         <g:remoteLink controller="report" action="taskCompletionTrack"
                       update="centralArea"
+                      before="jQuery.address.value(jQuery(this).attr('href'));"
                       title="Task progress track">
             Task track
         </g:remoteLink>
@@ -34,6 +37,7 @@
     <li>
         <g:remoteLink controller="operation" action="editBoxShow"
                       update="centralArea"
+                      before="jQuery.address.value(jQuery(this).attr('href'));"
                       title="Edit box">
             Edit box
         </g:remoteLink>
@@ -65,6 +69,7 @@
 
         <g:remoteLink controller="generics" action="showSelectedRecords"
                       update="centralArea"
+                      before="jQuery.address.value(jQuery(this).attr('href'));"
                       title="Selected records">
 Selected
         </g:remoteLink>

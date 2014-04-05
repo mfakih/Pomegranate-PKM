@@ -20,6 +20,7 @@
             <g:remoteLink controller="generics" action="executeSavedSearch"
                           style=" color: #${count > 0 ? '003366' : (count == 0 ? 'ccc' : 'aaa')}"
                           id="${i.id}"
+                          before="jQuery.address.value(jQuery(this).attr('href'));"
                           update="centralArea">
                 ${i.summary} ${count != null ? '(' + count + ')' : null}
 
@@ -28,6 +29,7 @@
            <sup>
             <g:remoteLink controller="generics" action="executeSavedSearch"
                           style=" color: gray"
+                          before="jQuery.address.value(jQuery(this).attr('href'));"
                           id="${i.id}" params="[reportType: 'random']"
                           update="centralArea">
                 r

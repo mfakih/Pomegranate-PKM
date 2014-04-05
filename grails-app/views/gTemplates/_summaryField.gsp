@@ -47,39 +47,20 @@
 </g:if>
 <g:else>
 
-<g:if test="${record.class.declaredFields.name.contains('course')}">
-    <g:set value="course" var="field"></g:set>
-    <a href="#" id="${field}${record.id}" class="${field}"
-       data-type="select" data-value="${record[field]?.id}"
-       data-name="${field}-${record.entityCode()}"
-       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
-       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}"
-       style="font-size: 11px; font-weight: bold;">
-        ${record[field]?.code ?: '?'}
-    </a>
-    <script>
-        $('#${field}${record.id}').editable({
-//            typeahead: {
-//                name: 'value'
-//            }
-        });
-    </script>
-</g:if>
-
-
 <g:if test="${record.class.declaredFields.name.contains('priority')}">
-   <span style="font-size: 10px; color: gray">
-<g:if test="${record.priority == 3}">
-    &gt;
+    <span style="font-size: 10px; color: gray">
+        <g:if test="${record.priority == 3}">
+            &gt;
+        </g:if>
+        <g:elseif test="${record.priority == 4}">
+            <b>&gt;&gt;</b>
+        </g:elseif>
+        <g:elseif test="${record.priority == 1}">
+            <b>&darr;</b>
+        </g:elseif>
+    </span>
 </g:if>
-<g:elseif test="${record.priority == 4}">
-    <b>&gt;&gt; </b>
-</g:elseif>
-<g:elseif test="${record.priority == 1}">
-    <b>&darr; </b>
-</g:elseif>
-   </span>
-    </g:if>
+
 
 
 
@@ -413,12 +394,41 @@
     &nbsp;
 </g:if>
 
+
+
+<g:if test="${record.class.declaredFields.name.contains('course')}">
+
+    <g:set value="course" var="field"></g:set>
+
+    <a href="#" id="${field}${record.id}" class="${field}"
+
+       data-type="select" data-value="${record[field]?.id}"
+
+       data-name="${field}-${record.entityCode()}"
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}"
+       style="font-size: 11px; font-weight: bold;">
+        ${record[field]?.code ?: '?'}
+
+    </a>
+    <script>
+        $('#${field}${record.id}').editable({
+//            typeahead: {
+//                name: 'value'
+//            }
+        });
+    </script>
+
+</g:if>
+
+
+
 <g:if test="${record.class.declaredFields.name.contains('status')}">
     <g:set value="status" var="field"></g:set>
 
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
        data-name="${field}-${entityCode}"
-       style="${record.status ? record.status?.style : ''}; border: 0.5px solid #808080; font-size: 11px; text-decoration: italic"
+       style="${record.status ? record.status?.style : ''}; float: right; border: 0.5px solid #808080; border-radius: 3px; font-size: 11px; text-decoration: italic; padding-left: 2px; padding-right: 2px;"
        data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field] ? record[field]?.code : 'No ' + field}

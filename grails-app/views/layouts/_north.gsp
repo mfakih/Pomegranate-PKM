@@ -6,9 +6,10 @@
 
 &nbsp;
     <img src="${resource(dir: 'images', file: 'favicon-32px.png')}" width="15px;"/>
+    %{--target="_blank"--}%
+    <g:link controller="page" action="main"
 
-    <g:link controller="page" action="main" target="_blank"
-            title="Open app in a new tab">
+            title="Reload the application">
         <span style="color: #fff;">
         <b style="font-size: 13px; font-family: Trebuchet MS, Verdana, Geneva, Arial, Helvetica, sans-serif;">
             ${OperationController.getPath('app.name') ?: 'Pomegranate PKM'}</b> &nbsp;
@@ -41,6 +42,7 @@
 
     <g:remoteLink controller="report" action="detailedAdd"
                   update="searchArea"
+                  before="jQuery.address.value(jQuery(this).attr('href'));"
                   style="color: white !important"
                   title="Add using formas">
         Add...
@@ -53,6 +55,7 @@
     <g:if test="${OperationController.getPath('import.enabled')?.toLowerCase() == 'yes' ? true : false}">
         <g:remoteLink controller="import" action="importLocalFiles"
                       update="centralArea"
+                      before="jQuery.address.value(jQuery(this).attr('href'));"
                       style="color: white !important"
                       title="Import local files">
             Import...
