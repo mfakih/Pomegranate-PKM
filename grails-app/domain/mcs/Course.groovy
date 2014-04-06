@@ -110,7 +110,7 @@ class Course implements Comparable {  // entity id = 130
 
 
     public String toString() {
-        return (code ?: '') + summary
+        return summary + (code ? ' (' + code + ')': '')
     }
 
     public String fullString() {

@@ -446,6 +446,7 @@
         </g:if>
     </g:if>
 </span>
+    <br/>
 <g:if test="${'CGR'.contains(entityCode) && record.percentCompleted}">
     <pkm:progressBar percent="${record.percentCompleted}"/>
 </g:if>

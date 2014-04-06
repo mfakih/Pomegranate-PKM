@@ -72,6 +72,17 @@
     </g:remoteLink>
 
 
+&nbsp;
+&nbsp;
+    <g:remoteLink controller="report" action="contactCloud"
+                  update="contaactsPanel"
+        before="jQuery('#accordionEast').accordion({ active: 2});"
+      style="color: white !important"
+                  title="Contact cloud">
+        Contacts...
+    </g:remoteLink>
+
+
 
 
 

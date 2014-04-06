@@ -20,11 +20,27 @@
                         </g:link>
                     </div>
 
-                    <sup>${record.priority}</sup>
+                    %{--<sup>${record.priority}</sup>--}%
 
                     <g:if test="${'RE'.contains(record.entityCode())}">
                         <sup>${record.orderInCourse}</sup>
                     </g:if>
+
+
+                    <g:if test="${record.class.declaredFields.name.contains('priority')}">
+                        <span style="font-size: 10px; color: gray">
+                            <g:if test="${record.priority == 3}">
+                                &gt;
+                            </g:if>
+                            <g:elseif test="${record.priority == 4}">
+                                <b>&gt;&gt;</b>
+                            </g:elseif>
+                            <g:elseif test="${record.priority == 1}">
+                                <b>&darr;</b>
+                            </g:elseif>
+                        </span>
+                    </g:if>
+
 
 
                     <g:link controller="page" action="record" target="_blank"
@@ -62,6 +78,7 @@
                                 <i style="font-size: smaller">${record.class.declaredFields.name.contains('type') ? record?.type?.code: ''} ${record.class.declaredFields.name.contains('department') ? record.department?.code: ''}</i>&nbsp;
                             </g:if>
                         </span>
+
 
 
                         <g:if test="${'P'.contains(record.entityCode()) && record.task}">
@@ -112,12 +129,15 @@
                 </td>
 
             </tr>
-
+            <g:if test="${'CGR'.contains(record.entityCode()) && record.percentCompleted}">
             <tr>
-                <td colspan="2" class="box-priority-${record.priority}" style="height: 1px;">
+                <td colspan="2"  style="padding: 0; margin: 0">
+
+                        <pkm:progressBar percent="${record.percentCompleted}"/>
 
                 </td>
             </tr>
+            </g:if>
         </table>
     </g:if>
 </div>

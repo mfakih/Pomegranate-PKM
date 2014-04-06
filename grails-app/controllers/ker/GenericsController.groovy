@@ -385,7 +385,7 @@ p4"""
                                 hintResponce += ('' + it.code + '\n')
                             }
                                 break
-                            case 'C': WritingType.findAllByCodeLike(filter, [sort: 'name']).each() {
+                            case 'N': WritingType.findAllByCodeLike(filter, [sort: 'name']).each() {
                                 responce += ('' + it.name + '|' + finalPart + ' #' + it.code + '\n')
                                 hintResponce += ('' + it.code + '\n')
                             }
@@ -506,7 +506,7 @@ p4"""
                             }
                                 break
                             case 'N': Contact.findAllByCodeLike(filter, [sort: 'name']).each() {
-                                responce += ('' + it.name + '|' + finalPart + ' @' + it.code + '\n')
+                                responce += ('' + it.summary + '|' + finalPart + ' @' + it.code + '\n')
                                 hintResponce += ('' + it.code + '\n')
                             }
                                 break
@@ -3161,16 +3161,22 @@ def addContactToRecord() {
                 def list2 = Task.executeQuery(input, [], params)
 
 
-                 if (params.reportType == 'tab')
+                 if (params.reportType == 'tab'){
+
                      render(view: '/page/kanbanCrs', model: [groups: groups, groupBy: groupBy,
                              title: savedSearch.summary,
-                             items: list2])
-                     else
+                             items:  Task.executeQuery(input, [])])
+            }
+
+                else
+                {
                 render(template: '/reports/genericGrouping', model: [groups: groups, groupBy: groupBy,
                         title: savedSearch.summary,
                         items: list2])
+                }
 
-            } else {
+            }
+        else {
 
 
                  /*
@@ -3192,7 +3198,16 @@ def addContactToRecord() {
                     render(view: '/reports/calendar', model: [
                             savedSearchId: id,
                             title: savedSearch.summary])
-                else {
+            else if (params.reportType == 'tab'){
+                    render(view: '/page/kanbanCrs', model: [
+                            ssId: id,
+                            searchResultsTotal: savedSearch.countQuery ? Task.executeQuery( savedSearch.countQuery)[0] : '',
+                            totalHits: savedSearch.countQuery ? Task.executeQuery( savedSearch.countQuery)[0] : '',
+                            list: Task.executeQuery(savedSearch.query, []),
+                            title: savedSearch.summary]
+                    )
+            }
+            else {
                     def list = Task.executeQuery(savedSearch.query, [], params)
 
                     render(template: '/gTemplates/recordListing', model: [
@@ -3203,7 +3218,7 @@ def addContactToRecord() {
                         title: savedSearch.summary
                 ])
                 }
-            }
+        }
 
             //  + (! savedSearch.query.contains('select') ? '(' + Task.executeQuery('select count(*) ' +  savedSearch.query)[0] + ')' : '') + ' : ' +  savedSearch.query
 
@@ -3211,7 +3226,8 @@ def addContactToRecord() {
 //                    list: Task.executeQuery(savedSearch.query, [max: 100]),
 //                    title: savedSearch.summary + " (" + savedSearch.query + ")"
 //            ])
-        } else if (savedSearch.queryType == 'lucene'){
+        }
+        else if (savedSearch.queryType == 'lucene'){
             render(template: '/gTemplates/recordListing', model: [
                     list: searchableService.search(savedSearch.query, [max: 100]),
                     title: savedSearch.summary + " (" + savedSearch.query + ")"])
@@ -3358,22 +3374,17 @@ def addContactToRecord() {
         allClasses.each() {
             list += it.createCriteria().list() { tags { idEq(params.id.toLong()) } }
         }
-        render(template: '/gTemplates/recordListing', model: [list: list, title: ''])
+        render(template: '/gTemplates/recordListing', model: [list: list, title: 'Tag: ' + Tag.get(params.id).name])
+    }
 
-//        list = Writing.createCriteria().list() { tags {idEq(params.id.toLong())}}
-//        render(template: '/writing/forCriteria', model: [list: list, title: ''])
-//
-//        list = IndexCard.createCriteria().list() { tags {idEq(params.id.toLong())}}
-//        render(template: '/indexCard/indexCards', model: [list: list, title: ''])
-//
-//        list = Journal.createCriteria().list() { tags {idEq(params.id.toLong())}}
-//        render(template: '/journal/forCriteria', model: [list: list, title: ''])
-//        list = Planner.createCriteria().list() { tags {idEq(params.id.toLong())}}
-//        render(template: '/planner/forCriteria', model: [list: list, title: ''])
-//
-//        list = Goal.createCriteria().list() { tags {idEq(params.id.toLong())}}
-//        render(template: '/goal/forCriteria', model: [list: list, title: ''])
+  def contactReport() {
 
+        def list = []
+
+        allClasses.each() {
+            list += it.createCriteria().list() { contacts { idEq(params.id.toLong()) } }
+        }
+        render(template: '/gTemplates/recordListing', model: [list: list, title: 'Contact: ' + Contact.get(params.id).summary])
     }
 
 

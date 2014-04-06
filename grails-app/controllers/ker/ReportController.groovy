@@ -208,6 +208,9 @@ class ReportController {
     def tagCloud() {
         render(template: '/reports/tagCloud', model: [])
     }
+    def contactCloud() {
+        render(template: '/reports/contactCloud', model: [])
+    }
 
 
     def detailedAdd() {

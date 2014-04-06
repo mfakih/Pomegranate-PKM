@@ -34,29 +34,48 @@
 
 
 
-    <r:require modules="application"/>
+    %{--<r:require modules="application"/>--}%
     %{--<r:require module="fileuploader"/>--}%
-    <r:require modules="jquery"/>
-    <r:require modules="jquery-ui"/>
+    %{--<r:require modules="jquery"/>--}%
+    %{--<r:require modules="jquery-ui"/>--}%
 
 
     <r:layoutResources/>
 
 
-    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'uploader.css')}"/>--}%
-
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.10.4.custom.css')}"/>--}%
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main2.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'personalization.css')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>--}%
 
 
-    %{--<uploader:head css="${resource(dir: 'css', file: 'uploader.css')}"/>--}%
 
-    %{----}%
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'fg.menu.css')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'layout-mine.css')}"/>--}%
 
-    %{--<uploader:head/>--}%
+    %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'ui.achtung-min.js')}"></script>--}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'ui.achtung-min.css')}"/>--}%
 
 
-    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery/jquery-1.3.2.min.js')}"></script>--}%
+
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-1.11.0_min.js')}"></script>
+
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.address-1.5.min.js?autoUpdate=0')}"></script>
+
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.10.4.custom.min.js')}"></script>
+
+
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'select2.css')}"/>--}%
+    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'select2.min.js')}"></script>--}%
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jqueryui-editable.css')}"/>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'jqueryui-editable.min.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'typeahead.bundle.js')}"></script>
+    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'fileuploader.js')}"></script>--}%
+    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.flipcountdown.js')}"></script>--}%
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap.min.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap-global-bind.min.js')}"></script>
+
 
 
 
@@ -73,15 +92,9 @@
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'morris.css')}"/>
 
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}"/>
 
 
     <script type="text/javascript" src="${resource(dir: 'js', file: 'fg.menu.js')}"></script>
-
-    %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'jquery.jeditable.mini.js')}"></script>--}%
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.js')}"></script>
-
-
 
     %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'jquery.relatedselects.min.js')}"></script>--}%
 
@@ -105,9 +118,18 @@
 
 <body style="margin:15px;">
 
-<g:if test="${items}">
-    <g:render template="/reports/dynamicKanbanTable" model="[items: items, groups: groups, groupBy: groupBy, title:title]"/>
+<g:if test="${ssId}">
+    <g:render template="/gTemplates/recordListing" model="[
+            ssId: ssId,
+            searchResultsTotal: searchResultsTotal,
+            totalHits: totalHits,
+            list: list,
+            title: title]"/>
 </g:if>
+
+<g:elseif test="${items}">
+    <g:render template="/reports/dynamicKanbanTable" model="[items: items, groups: groups, groupBy: groupBy, title:title]"/>
+</g:elseif>
 <g:else>
 <g:render template="/reports/kanbanCrs" model="[]"/>
 </g:else>

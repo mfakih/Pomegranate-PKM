@@ -41,8 +41,13 @@ body {
     /*line-height: 1.4;*/
     font: 12px arial;
 
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    /*todo*/
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+
+
+
+
 /*'Lucida Sans Unicode';*/
         /*overflow: hidden;*/
     /*margin: 2px;*/

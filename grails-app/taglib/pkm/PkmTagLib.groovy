@@ -32,7 +32,7 @@ class PkmTagLib {
               }
       //  background = 'gray'
         out << """
-<div class="ui-progressbar ui-widget ui-widget-content ui-corner-all" style=" float: right;width: 40px; height: 8px; display: inline-block">
+<div class="ui-progressbar ui-widget ui-widget-content ui-corner-all" style="width: 40px; height: 8px; display: inline-block">
    <div style="width: ${attrs.percent}%; background: ${background};" class="ui-progressbar-value ui-widget-header ui-corner-left"></div>
 </div>
         """
@@ -105,7 +105,7 @@ class PkmTagLib {
                     }
                 }
                 folders = [
-          typeSandboxPath + '/' + type + '/' + (recordId / 100).toInteger() + '/' + recordId,
+          typeSandboxPath +  '/' + (recordId / 100).toInteger() + '/' + recordId,
 
           typeRepositoryPath + '/' + (recordId / 100).toInteger() + '/' + recordId
                 ]
@@ -129,7 +129,6 @@ class PkmTagLib {
                         OperationController.getPath('video.snapshots.repository.path')   + '/' + type + '/' + recordId
                 ]
                 folders.each() { folder ->
-                    println 'folder ' + folder
                     if (new File(folder).exists()) {
                         new File(folder).eachFileMatch(~/[\S\s]*\.[\S\s]*/) {
                             filesList.add(it)

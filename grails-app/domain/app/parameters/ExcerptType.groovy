@@ -15,41 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package app
+package app.parameters
 
 import cmn.DataChangeAudit
-import app.Contact
-import app.Tag
-import mcs.Course
-import mcs.Department
 
-class Contact implements Comparable {  // entity id = 26
+class ExcerptType implements Comparable {  // entity id = 29
 
-    def springSecurityService
 
-     static searchable = [only:['name', 'description', 'summary', 'notes' ]]
-
-    static hasMany = [tags: Tag, contacts: Contact]
+    // static searchable = [only:['name', 'notes' ]]
 
     // Fields
-
     String code
-	String email
-	String address
-	String telephones
-	String jobTitle
-	
-    Department department
-    Course course
+    String name
+    String style
 
-    String summary
-    String description
+    String sandboxPath
+    String repositoryPath
 
-
-    Integer occurrence
-
-    Boolean bookmarked
-    Integer priority = 2
 
     String notes
 
@@ -57,16 +39,9 @@ class Contact implements Comparable {  // entity id = 26
     Date lastUpdated
     Date deletedOn
 
-
-    String createdBy
-    String insertedBy = 'me'
-    String editedBy
-
-
-
     static constraints = {
-        summary()
-        summary(blank: false, nullable: false)
+        code(nullable: false, blank: false)
+        name(nullable: false, blank: false)
 
         notes()
         dateCreated()
@@ -77,33 +52,19 @@ class Contact implements Comparable {  // entity id = 26
     static mapping = {
 
         // name (index:'name_index')
-        description(sqlType: 'longtext')
         notes(sqlType: 'longtext')
     }
-
-
-
 
     static namedQueries = {
         deleted { isNotNull 'deletedOn' }
     }
 
     public String toString() {
-        return summary
+        return name
     }
-
-    public String entityCode() {
-        return 'S'
-    }
-
-    public String entityController() {
-        return 'contact'
-    }
-
-
 
     public String fullString() {
-        return 'name||' + summary + ';;'
+        return 'name||' + name + ';;'
     }
 
     int compareTo(obj) {
@@ -118,36 +79,14 @@ class Contact implements Comparable {  // entity id = 26
 
     static auditable = [handlersOnly: true]
 
-    def beforeInsert() {
-//        new NoteEvent(type: "CREATED", note: this).save()
-
-        editedBy = springSecurityService.authentication.name.encodeAsHTML() ?: 'Anonymous'
-        insertedBy = springSecurityService.authentication.name.encodeAsHTML() ?: 'Anonymous'
-    }
-
-    def afterInsert() {
-//        new NoteEvent(type: "CREATED", note: this).save()
-        editedBy = springSecurityService.authentication.name.encodeAsHTML() ?: 'Anonymous'
-        insertedBy = springSecurityService.authentication.name.encodeAsHTML() ?: 'Anonymous'
-    }
-
-    def beforeValidate() {
-        println 'asdfasdfvalida'
-//        new NoteEvent(type: "UPDATED", note: this).save()
-        editedBy = springSecurityService.authentication.name.encodeAsHTML() ?: 'Anonymous'
-    }
-
-
-
     def onSave = {
-
         DataChangeAudit dca = new DataChangeAudit([
-                userName: springSecurityService.authentication.name.encodeAsHTML() ?: 'Anonymous',
+                userName: ('System'),
                 operationType: 'Create',
-                entityId: '26', recordId: id,
+                entityId: '29', recordId: id,
                 operationDetails: fullString(), datePerformed: new Date()])
         if (!dca.hasErrors() && dca.save()) {
-            log.info "New  WordSource inserted with id " + id + " by " + dca.userName + " at " + formatDate(new Date())
+            log.info "New  ExerciseType inserted with id " + id + " by " + dca.userName + " at " + formatDate(new Date())
         }
         else {
             log.error "Something went wrong in logging the change to record " + id
@@ -156,10 +95,10 @@ class Contact implements Comparable {  // entity id = 26
 
     def onDelete = {
         DataChangeAudit dca = new DataChangeAudit([userName: ('System'), operationType: 'Delete',
-                entityId: '26', recordId: id, operationDetails: fullString(),
+                entityId: '29', recordId: id, operationDetails: fullString(),
                 datePerformed: new Date()])
         if (!dca.hasErrors() && dca.save()) {
-            log.info "A WordSource was deleted with id " + id + " by " + dca.userName + " at " + formatDate(new Date())
+            log.info "A ExerciseType was deleted with id " + id + " by " + dca.userName + " at " + formatDate(new Date())
         }
         else {
             log.error "Something went wrong in logging the change to record " + id
@@ -177,10 +116,10 @@ class Contact implements Comparable {  // entity id = 26
         })
 
         DataChangeAudit dca = new DataChangeAudit([userName: ('System'), operationType: 'Update',
-                entityId: '26', recordId: id, operationDetails: message,
+                entityId: '29', recordId: id, operationDetails: message,
                 datePerformed: new Date()])
         if (!dca.hasErrors() && dca.save()) {
-            log.info "A WordSource was changed with id " + id + " by " + dca.userName + " at " + formatDate(new Date())
+            log.info "A ExerciseType was changed with id " + id + " by " + dca.userName + " at " + formatDate(new Date())
         }
         else {
             log.error "Something went wrong in logging the change to record " + id

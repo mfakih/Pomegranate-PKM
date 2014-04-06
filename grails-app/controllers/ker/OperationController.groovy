@@ -934,7 +934,13 @@ puts "Hello, World!"
                         text: it.code]
             }
         }
-        else if (field == 'course') {
+        else if (field == 'department') {
+            Department.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.summary]
+            }
+        }
+         else if (field == 'course') {
             Course.findAll([sort: 'code']).each() {
                 responce += [value: it.id,
                         text: it.summary]

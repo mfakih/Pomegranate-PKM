@@ -108,8 +108,12 @@
 
         for (var i = 0; i < localStorage.length; i++) {
             // do something with localStorage.getItem(localStorage.key(i));
-            if (localStorage.key(i).startsWith('pkm-'))
-            document.getElementById('commandHistory').options.add(new Option(localStorage[localStorage.key(i)], localStorage.key(i)))
+            var key = localStorage.key(i)
+            var value = localStorage[key]
+            console.log('key ' + key + 'value' + value)
+//            if ((typeof value == 'string' || value instanceof String) && !value.contains('datum'))
+//            if (value.contains('pkm-'))
+//            document.getElementById('commandHistory').options.add(new Option(value, localStorage.key(i)))
         }
 
 
@@ -239,11 +243,11 @@
 
 
         Mousetrap.bindGlobal('esc', function (e) {
-            jQuery("html, body").animate({ scrollTop: 0 }, "fast");
+//            jQuery("html, body").animate({ scrollTop: 0 }, "fast");
             jQuery('#centralArea').html('');
             jQuery('#quickAddTextField').focus();
             jQuery('#quickAddTextField').select();
-            jQuery('#quickAddTextField').scrollTop(0);
+//            jQuery('#quickAddTextField').scrollTop(0);
         });
 
 //        Mousetrap.bindGlobal('esc', function (e) {
@@ -257,10 +261,8 @@
 
         Mousetrap.bindGlobal('f6', function (e) {
             jQuery('#centralArea').html('');
-            jQuery('#quickAddXcdField').val('');
-            jQuery('#quickAddTextField').val('');
-            jQuery('#quickAddXcdField').select();
-            jQuery('#quickAddXcdField').focus();
+            jQuery('#quickAddTextField').focus();
+            jQuery('#quickAddTextField').select();
 
         });
 

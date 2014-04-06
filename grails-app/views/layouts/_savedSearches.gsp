@@ -41,16 +41,20 @@
                           style=" color: gray"
                           id="${i.id}" params="[reportType: 'tab']"
                           target="_blank">
-                tab
+                t
             </g:link>
-           </sup>  <sup>
+           </sup>
+                <g:if test="${i.calendarEnabled}">
+                <sub>
             <g:link controller="generics" action="executeSavedSearch"
                     style=" color: gray"
                           id="${i.id}" params="[reportType: 'cal']"
                           target="_blank">
-                cal
+                c
             </g:link>
-           </sup>
+
+           </sub>
+                </g:if>
             </g:if>
 
 

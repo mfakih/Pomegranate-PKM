@@ -37,6 +37,11 @@
 
                 </div>
 
+	<h3><a href="#">Contacts</a></h3>
+			<div id='contactsPanel'>
+
+                </div>
+
 
             	<h3><a href="#">Help</a></h3>
 			<div>

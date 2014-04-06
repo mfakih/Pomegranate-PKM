@@ -726,14 +726,29 @@ class ImportController {
         Goose goose = new Goose(configuration);
 
         Article article = goose.extractContent(url)
-        r.fullText = article.rawHtml()
-        println('text ' + article.rawHtml())
+        r.fullText = article.cleanedArticleText()
         r.publishedOn = article.publishDate()
         r.title = article.title()
-        r.description = article.metaDescription()
+        r.notes = article.metaDescription()
         r.textTags = article.metaKeywords()
         r.imageUrl = article.topImage().getImageSrc()
-        render(template: '/gTemplates/recordSummary', model: [record: r, expandedView: true])
+
+
+        if (r.imageUrl) {
+
+            def path = OperationController.getPath('covers.sandbox.path') + '/' + r.type?.code
+
+            def t = new File(path + '/' + r.id + '.jpg')
+            if (t.exists()) t.renameTo(new File(path + '/' + r.id + '-old.jpg'))
+            try {
+                t << new URL(r.imageUrl.substring(0, r.imageUrl.length() - 6)).openStream()
+            }
+            catch (Exception e) {
+                e.printStackTrace()
+            }
+        }
+
+                render(template: '/gTemplates/recordSummary', model: [record: r, expandedView: true])
 
     }
 

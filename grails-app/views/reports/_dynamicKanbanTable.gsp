@@ -4,7 +4,9 @@
         <g:each in="${groups}" var="g">
             <g:if test="${items[groupBy].contains(g)}">
                 <td style="vertical-align: top">
+                    <div style="height: 50px; vertical-align: top">
                     <h4 style="-moz-column-break-after: column !important;-moz-column-break-before: column !important; padding-left: 0 !important; margin-left: 0 !important">${g.toString()}</h4>
+                    </div>
                     <g:findAll in="${items}" expr="${it[groupBy] == g}">
                         <g:render template="/gTemplates/box" model="[record: it]"/>
                     </g:findAll>

@@ -611,6 +611,22 @@
 %{--</g:if>--}%
 
 
+<div class="pkmCode">
+
+A ${entityCode} ${record.class.declaredFields.name.contains('type') && entityCode.length() == 1 && record.type ? '#' + record.type.code : ''}
+${record.class.declaredFields.name.contains('status') && entityCode.length() == 1 && record.status ? '?' + record.status.code : ''}
+${record.class.declaredFields.name.contains('status') && entityCode.length() == 1 && record.status ? '?' + record.status.code : ''}
+${record.class.declaredFields.name.contains('location') && entityCode.length() == 1 && record.location ? '@' + record.location.code : ''}
+${record.class.declaredFields.name.contains('context') && entityCode.length() == 1 && record.context ? '@' + record.context.code : ''}
+    ${record.class.declaredFields.name.contains('summary') && record.summary ? ' ; ' + record.summary : ''}
+
+ <br/>
+    ${record.class.declaredFields.name.contains('description') && record.description ? ' ; ' + record.description : ''}
+    
+    
+</div>
+
+
 
 <g:if test="${record.class.declaredFields.name.contains('notes')}">
 <div id="notes${entityCode}${record.id}" style="display: inline;">
