@@ -114,11 +114,11 @@
                             ${record?.summary}
                         </g:else>
 
-                        <g:if test="${'C'.contains(record.entityCode())}">
-                            <b>${record.code}
-                                ${record.code}</b>
-                            ${record.summary}
-                        </g:if>
+                        %{--<g:if test="${'C'.contains(record.entityCode())}">--}%
+                            %{--<b>${record.code}--}%
+                                %{--${record.code}</b>--}%
+                            %{--${record.summary}--}%
+                        %{--</g:if>--}%
 
                         <br/>
                     </g:link>

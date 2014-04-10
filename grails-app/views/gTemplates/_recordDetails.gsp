@@ -439,7 +439,7 @@
 
 
 
-%{--<g:each in="${app.IndexCard.findAllByEntityCodeAndRecordId(entityCode, record.id)}" var="c">--}%
+%{-- todo check <g:each in="${app.IndexCard.findAllByEntityCodeAndRecordId(entityCode, record.id)}" var="c">--}%
     %{--<g:render template="/gTemplates/recordSummary" model="[record: c]"/>--}%
 %{--</g:each>--}%
 

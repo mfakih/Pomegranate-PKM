@@ -61,7 +61,40 @@
 
 </td>
 
-<td class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
+    <g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
+
+        <td rowspan="2">
+            <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
+                    record?.type?.code + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + record.id + '.jpg')?.exists())}">
+
+                <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
+                   target="_blank">
+                    <img class="Photo" style="width: 30px; height:40px; display:inline"
+                         src="${createLink(controller: 'book', action: 'viewImage', id: record.id, params: [date: new Date()])}"/>
+                </a>
+            </g:if>
+
+        </td>
+    </g:if>
+
+    <g:if test="${entityCode == 'E'}">
+
+        <td>
+            <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
+                    record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists())}">
+
+                <a href="${createLink(controller: 'book', action: 'viewImage', id: record?.book?.id)}"
+                   target="_blank">
+                    <img class="Photo" style="width: 30px; height:40px; display:inline"
+                         src="${createLink(controller: 'book', action: 'viewImage', id: record?.book?.id, params: [date: new Date()])}"/>
+                </a>
+            </g:if>
+        </td>
+    </g:if>
+
+
+
+    <td class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
     style="font-family: Arial; font-size: 13px; color: #105CB6; line-height: 17px; ">
 
 
@@ -94,59 +127,6 @@
     %{--</g:remoteLink>--}%
 
 </td>
-<td class="actionTd">
-
-%{--<span style="float: right">--}%
-%{--<a class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"--}%
-   %{--onclick="jQuery('#appendRow${entityCode}-${record.id}').removeClass('navHidden'); jQuery('#appendTextFor${entityCode}${record.id}').select(); jQuery('#appendTextFor${entityCode}${record.id}').focus();">--}%
-    %{--<span class="ui-icon ui-icon-arrowreturn-1-e"></span>--}%
-%{--</a>--}%
-
-
-    <g:remoteLink controller="page" action="panel"
-                  params="${[id: record.id, entityCode: entityCode]}"
-                  update="3rdPanel"
-                  before="jQuery('#accordionEast').accordion({ active: 0});"
-                  class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-                  title="Go to page">
-        <span class="ui-icon ui-icon-extlink"></span>
-
-    </g:remoteLink>
-
-  </td>
-
-
-<g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
-
-    <td rowspan="2">
-        <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
-                record?.type?.code + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + record.id + '.jpg')?.exists())}">
-
-            <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
-               target="_blank">
-                <img class="Photo" style="width: 30px; height:40px; display:inline"
-                     src="${createLink(controller: 'book', action: 'viewImage', id: record.id, params: [date: new Date()])}"/>
-            </a>
-        </g:if>
-
-    </td>
-</g:if>
-
-<g:if test="${entityCode == 'E'}">
-
-    <td rowspan="2">
-        <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
-                record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists())}">
-
-            <a href="${createLink(controller: 'book', action: 'viewImage', id: record?.book?.id)}"
-               target="_blank">
-                <img class="Photo" style="width: 30px; height:40px; display:inline"
-                     src="${createLink(controller: 'book', action: 'viewImage', id: record?.book?.id, params: [date: new Date()])}"/>
-            </a>
-        </g:if>
-
-    </td>
-</g:if>
 
 
 
@@ -201,6 +181,31 @@
            onclick="jQuery('#below${entityCode}Record${record.id}').html('')">&chi;</a-->
 
     </td>
+
+
+    <td class="actionTd">
+
+    %{--<span style="float: right">--}%
+    %{--<a class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"--}%
+    %{--onclick="jQuery('#appendRow${entityCode}-${record.id}').removeClass('navHidden'); jQuery('#appendTextFor${entityCode}${record.id}').select(); jQuery('#appendTextFor${entityCode}${record.id}').focus();">--}%
+    %{--<span class="ui-icon ui-icon-arrowreturn-1-e"></span>--}%
+    %{--</a>--}%
+
+
+        <g:remoteLink controller="page" action="panel"
+                      params="${[id: record.id, entityCode: entityCode]}"
+                      update="3rdPanel"
+                      before="jQuery('#accordionEast').accordion({ active: 0});"
+                      class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                      title="Go to page">
+            <span class="ui-icon ui-icon-extlink"></span>
+
+        </g:remoteLink>
+
+    </td>
+
+
+
     <td  style="width: 8px; margin-top: 4px; padding: 0; ">
         <div style="font-size: 10px; -moz-transform:rotate(-90deg); -moz-transform-origin: middle right; -webkit-transform: rotate(-90deg); -webkit-transform-origin: middle right; -o-transform: rotate(-90deg); -o-transform-origin:  middle right; ;">
         ${record.id}

@@ -26,29 +26,78 @@
     <r:layoutResources/>
 
 
+<g:set var="entityCode"
+       value="${record.metaClass.respondsTo(record, 'entityCode') ? record.entityCode() : record.class?.name?.split(/\./).last()}"/>
+
+
+<g:remoteLink controller="page" action="panel"
+              params="${[id: record.id, entityCode: entityCode]}"
+              update="3rdPanel"
+              title="Click to refresh">
+
+
+%{--<sup>${record.id}</sup>--}%
+
+    <div style="padding: 1px; font-size: 15px; font-family: georgia; margin: 3px; line-height: 20px; text-align: justify">
+        <span class="${entityCode}-bkg ID-bkg ${record.class.declaredFields.name.contains('deletedOn') && record.deletedOn ? 'deleted' : ''}"
+              style="padding: 3px; margin-right: 3px; color: gray;">
+            <b style="color: white;">${entityCode}</b>
+            ${record.id}
+        </span>
+        <g:if test="${record.class.declaredFields.name.contains('summary')}"><u>${record.summary}</u></g:if>
+        <g:if test="${record.class.declaredFields.name.contains('title')}"><u>${record.title}</u></g:if>
+    </div>
+
+</g:remoteLink>
+
+
+
+
+<br/>
+<br/>
+
+%{--<h4>Files</h4>--}%
+
+
+
+<g:render template="/gTemplates/filesListing" model="[record: record, entityCode: record.entityCode()]"/>
+
 
 <g:if test="${record.entityCode().length() == 1}">
     <div style="display: inline; text-align: right;">
-        Attach files:
-        <uploader:uploader id="uploadAsNoteWithAttachment${record.id}"
-                           url="${[controller: 'import', action: 'upload']}"
-                           params="${[recordId: record.id, entityCode: record.entityCode()]}">
-                <uploader:onComplete>
-                    jQuery('#subUploadInPanel').load('generics/showSummary/' + responseJSON.id + '?entityCode=' +  responseJSON.entityCode)
-                </uploader:onComplete>
-            Attach...
-        </uploader:uploader>
+        <table border=0>
+            <tr>
+                <td>
+                    Attach files:
+                    <uploader:uploader id="uploadAsNoteWithAttachment${record.id}"
+                                       url="${[controller: 'import', action: 'upload']}"
+                                       params="${[recordId: record.id, entityCode: record.entityCode()]}">
+                        <uploader:onComplete>
+                            jQuery('#subUploadInPanel').load('generics/showSummary/' + responseJSON.id + '?entityCode=' +  responseJSON.entityCode)
+                        </uploader:onComplete>
+                        Attach...
+                    </uploader:uploader>
+                </td>
 
-        <br/>
-        Add to record folder:
-        <uploader:uploader id="addToRecordFolder${record.id}"
-                           url="${[controller: 'import', action: 'addToRecordFolder']}"
-                           params="${[recordId: record.id, entityCode: record.entityCode()]}">
-            Add to record folder
-        </uploader:uploader>
+                <td>
+                    Add to record folder:
+                    <uploader:uploader id="addToRecordFolder${record.id}"
+                                       url="${[controller: 'import', action: 'addToRecordFolder']}"
+                                       params="${[recordId: record.id, entityCode: record.entityCode()]}">
+                        Add to record folder
+                    </uploader:uploader>
+                </td>
+            </tr>
+        </table>
+
+
+
+
     </div>
         <div id="subUploadInPanel"></div>
 </g:if>
+
+ <br/>
 
 
 <g:if test="${record.entityCode() == 'R'}">
@@ -63,22 +112,13 @@
 </g:if>
 
 
-    <h2>Resource</h2>
-    ${record.title}
+      
 </g:if>
 
-<g:if test="${record.entityCode() == 'G'}">
-    <h2>Goal</h2>
-    ${record.summary}
 
-</g:if>
 
-<g:if test="${record.entityCode() == 'W'}">
-    <h2>Writing</h2>
-    ${record.summary}
-</g:if>
 
-<g:render template="/gTemplates/filesListing" model="[record: record, entityCode: record.entityCode()]"/>
+
         %{--<g:if test="${record.class.declaredFields.name.contains('shortDescription')}">--}%
             %{--<span style="font-size: 12px; font-style: italic; color: #4A5C69">--}%
                 %{--<b>Summary:</b> ${record?.shortDescription?.replaceAll('\n', '<br/>')}--}%

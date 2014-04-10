@@ -177,7 +177,7 @@ class GenericsController {
                         case 'v': convertDate(commandBody)
                             break
                         default:
-                            render 'Wrong input!'
+                            render '<br/>Wrong input!'
                     }
                 }
             }
@@ -273,7 +273,7 @@ class GenericsController {
                             case 'v': convertDate(commandBody)
                                 break
                             default:
-                                render 'Wrong input!'
+                                render '<br/>Wrong input!'
                         }
                     }
                 }

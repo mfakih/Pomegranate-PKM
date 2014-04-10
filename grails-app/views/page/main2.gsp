@@ -103,6 +103,46 @@
         jQuery('#centralArea').load(event.value)
     });
 
+/**
+ *    UI Layout Callback: resizePaneAccordions
+ *
+ *    This callback is used when a layout-pane contains 1 or more accordions
+ *    - whether the accordion a child of the pane or is nested within other elements
+ *    Assign this callback to the pane.onresize event:
+ *
+ *    SAMPLE:
+ *    < jQuery UI 1.9: $("#elem").tabs({ show: $.layout.callbacks.resizePaneAccordions });
+ *    > jQuery UI 1.9: $("#elem").tabs({ activate: $.layout.callbacks.resizePaneAccordions });
+ *    $("body").layout({ center__onresize: $.layout.callbacks.resizePaneAccordions });
+ *
+ *    Version:    1.2 - 2013-01-12
+ *    Author:        Kevin Dalman (kevin.dalman@gmail.com)
+ */
+;
+(function ($) {
+    var _ = $.layout;
+
+// make sure the callbacks branch exists
+    if (!_.callbacks) _.callbacks = {};
+
+    _.callbacks.resizePaneAccordions = function (x, ui) {
+        // may be called EITHER from layout-pane.onresize OR tabs.show
+        var $P = ui.jquery ? ui : $(ui.newPanel || ui.panel);
+        // find all VISIBLE accordions inside this pane and resize them
+        $P.find(".ui-accordion:visible").each(function () {
+            var $E = $(this);
+            if ($E.data("accordion"))		// jQuery < 1.9
+                $E.accordion("resize");
+            if ($E.data("ui-accordion"))	// jQuery >= 1.9
+                $E.accordion("refresh");
+        });
+    };
+})(jQuery);
+
+
+
+
+
 
     jQuery(document).ready(function () {
 
@@ -118,19 +158,23 @@
 
 
 
-        myLayout = $('body').layout({
+
+        var myLayout = $('body').layout({
             west__size: 300,
-            east__size: 320
+            east__size: 320,
             // RESIZE Accordion widget when panes resize
-            , west__onresize: $.layout.callbacks.resizePaneAccordions, east__onresize: $.layout.callbacks.resizePaneAccordions, north__closable: false, north__spacing_closed: 0		// big resizer-bar when open (zero height)
+           west__onresize: $.layout.callbacks.resizePaneAccordions,
+            east__onresize: $.layout.callbacks.resizePaneAccordions,
+//            onresize: $.layout.callbacks.resizePaneAccordions,
+            north__closable: false, north__spacing_closed: 0		// big resizer-bar when open (zero height)
             , north__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
             , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
             , south__spacing_open: 0		// no resizer-bar when open (zero height)
             , south__spacing_closed: 0		// big resizer-bar when open (zero height)
 
-            , east__spacing_open: 10		// no resizer-bar when open (zero height)
+            , east__spacing_open: 5		// no resizer-bar when open (zero height)
             , east__spacing_closed: 15		// big resizer-bar when open (zero height)
-            , west__spacing_open: 10		// no resizer-bar when open (zero height)
+            , west__spacing_open: 5		// no resizer-bar when open (zero height)
             , west__spacing_closed: 15		// big resizer-bar when open (zero height)
 
 

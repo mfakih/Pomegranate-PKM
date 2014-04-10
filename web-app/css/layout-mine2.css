@@ -82,9 +82,10 @@ body {
  */
 .ui-layout-resizer {
     /* all 'resizer-bars' */
-    background: #D8D4C9;
+    background: #f5f1e5;
     border: 0px solid #BBB;
     border-width: 0;
+    width: 5px !important;
 }
 
 .ui-layout-resizer-drag {
@@ -165,6 +166,7 @@ body {
 .ui-layout-toggler {
     border: 1px solid #BBB; /* match pane-border */
     background-color: #BBB;
+    width: 5px;
 }
 
 .ui-layout-resizer-hover .ui-layout-toggler {
