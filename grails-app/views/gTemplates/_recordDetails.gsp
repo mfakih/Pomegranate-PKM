@@ -16,6 +16,10 @@
            <tr style="width: 99%">
                <td style="width: 60%; vertical-align: top">
 
+                     <g:if test="${'N'.contains(entityCode)}">
+                   Source: <a  href="${record.sourceFree}">${StringUtils.abbreviate(record.sourceFree,30)} </a>
+                     </g:if>
+
 <g:if test="${'T'.contains(entityCode)}">
                    %{--<g:render template="/tag/addContact" model="[instance: record, entity: entityCode]"/>--}%
 </g:if>
@@ -89,7 +93,8 @@
                            %{--${record.publicationDate})--}%
                            </g:if>
 
-                           <g:if test="${record?.type?.code == 'link'}">
+                           %{--<g:if test="${record?.type?.code == 'link'}">--}%
+                           <g:if test="${record?.url}">
                                <br/>
                                <g:remoteLink controller="import" action="scrapHtmlPage" id="${record.id}"
                                              update="RRecord${record.id}"
@@ -432,6 +437,13 @@
     </g:if>
 
 
+
+
+%{--<g:each in="${app.IndexCard.findAllByEntityCodeAndRecordId(entityCode, record.id)}" var="c">--}%
+    %{--<g:render template="/gTemplates/recordSummary" model="[record: c]"/>--}%
+%{--</g:each>--}%
+
+
 <g:if test="${entityCode == 'L'}">
 
     <g:render template="/gTemplates/recordListing"
@@ -621,8 +633,8 @@ ${record.class.declaredFields.name.contains('context') && entityCode.length() ==
     ${record.class.declaredFields.name.contains('summary') && record.summary ? ' ; ' + record.summary : ''}
 
  <br/>
-    ${record.class.declaredFields.name.contains('description') && record.description ? ' ; ' + record.description : ''}
-    
+    ${record.class.declaredFields.name.contains('description') && record.description ? StringUtils.abbreviate(record.description, 200) : ''}
+
     
 </div>
 

@@ -65,6 +65,25 @@
 
 
 
+<g:if test="${record.class.declaredFields.name.contains('type') && entityCode.length() == 1}">
+    <g:set value="type" var="field"></g:set>
+
+    <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+       style="${record.type ? record.type?.style : ''};font-size: 11px; font-weight: bold"
+       data-name="${field}-${entityCode}"
+       data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
+        ${record[field]?.code ?: 'No ' + field}
+    </a>
+    <script>
+        $('#${field}${record.id}').editable();
+    </script>
+</g:if>
+
+
+
+
+
 <g:if test="${record.class.declaredFields.name.contains('startDate') && record.startDate}">
     ${record.startDate?.format(OperationController.getPath('date.format'))}
 </g:if>
@@ -332,22 +351,6 @@
 
 
 
-<g:if test="${record.class.declaredFields.name.contains('type') && entityCode.length() == 1}">
-    <g:set value="type" var="field"></g:set>
-
-    <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
-        style="${record.type ? record.type?.style : ''}; float: right; font-size: 11px; font-weight: bold"
-       data-name="${field}-${entityCode}"
-       data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
-       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
-       ${record[field]?.code ?: 'No ' + field}
-    </a>
-    <script>
-        $('#${field}${record.id}').editable();
-    </script>
-</g:if>
-
-
 
 
 <g:if test="${record.class.declaredFields.name.contains('writing') && entityCode == 'N'}">
@@ -446,7 +449,10 @@
         </g:if>
     </g:if>
 </span>
-    <br/>
+
+
+
+
 <g:if test="${'CGR'.contains(entityCode) && record.percentCompleted}">
     <pkm:progressBar percent="${record.percentCompleted}"/>
 </g:if>

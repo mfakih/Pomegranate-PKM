@@ -61,7 +61,7 @@
 
 </td>
 
-<td colspan="10" rowspan="2" class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
+<td class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
     style="font-family: Arial; font-size: 13px; color: #105CB6; line-height: 17px; ">
 
 
@@ -149,29 +149,9 @@
 </g:if>
 
 
-    <td rowspan="2" style="width: 8px; margin: 0px; padding: 0">
-        <div style="font-size: 10px; -moz-transform:rotate(-90deg); -moz-transform-origin: middle right; -webkit-transform: rotate(-90deg); -webkit-transform-origin: bottom left; -o-transform: rotate(-90deg); -o-transform-origin:  bottom left; ;">
-            ${record.id}
-        </div>
-    </td>
-
-</tr>
-
-<tr>
-
-    <td class="record-selection">
-
-        %{--onchange="jQuery('#logRegion').load('/pkm/generics/select/${entityCode}${record.id}')"--}%
-        <g:checkBox name="select-${record.id}-${entityCode}" title="Select record"
-                    value="${session[entityCode + record.id] == 1}"
-
-                    onclick="jQuery('#logRegion').load('/pkm/generics/select/${entityCode}${record.id}')"/>
-        <!--a style="width: 10px; color: #000000"
-           onclick="jQuery('#below${entityCode}Record${record.id}').html('')">&chi;</a-->
-
-    </td>
 
     <g:if test="${'TPGRE'.contains(entityCode)}">
+
         <td class="actionTd">
             <g:remoteLink controller="generics" action="markCompleted" id="${record.id}"
                           params="[entityCode: entityCode]"
@@ -180,9 +160,9 @@
                           title="Mark completed">
                 <span class="ui-icon ui-icon-check"></span>
             </g:remoteLink>
-
         </td>
     </g:if>
+
 
     <td class="actionTd">
         <g:if test="${record.class.declaredFields.name.contains('bookmarked')}">
@@ -205,6 +185,29 @@
         </g:if>
 
     </td>
+
+
+
+
+
+    <td class="record-selection">
+
+        %{--onchange="jQuery('#logRegion').load('/pkm/generics/select/${entityCode}${record.id}')"--}%
+        <g:checkBox name="select-${record.id}-${entityCode}" title="Select record"
+                    value="${session[entityCode + record.id] == 1}"
+
+                    onclick="jQuery('#logRegion').load('/pkm/generics/select/${entityCode}${record.id}')"/>
+        <!--a style="width: 10px; color: #000000"
+           onclick="jQuery('#below${entityCode}Record${record.id}').html('')">&chi;</a-->
+
+    </td>
+    <td  style="width: 8px; margin-top: 4px; padding: 0; ">
+        <div style="font-size: 10px; -moz-transform:rotate(-90deg); -moz-transform-origin: middle right; -webkit-transform: rotate(-90deg); -webkit-transform-origin: middle right; -o-transform: rotate(-90deg); -o-transform-origin:  middle right; ;">
+        ${record.id}
+        </div>
+    </td>
+
+
 
 </tr>
 

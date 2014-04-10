@@ -119,7 +119,8 @@
 
 
         myLayout = $('body').layout({
-            west__size: 215, east__size: 230
+            west__size: 300,
+            east__size: 320
             // RESIZE Accordion widget when panes resize
             , west__onresize: $.layout.callbacks.resizePaneAccordions, east__onresize: $.layout.callbacks.resizePaneAccordions, north__closable: false, north__spacing_closed: 0		// big resizer-bar when open (zero height)
             , north__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
@@ -220,7 +221,7 @@
             heightStyle: "fill",
             header: "h3",
             event: "click",
-            active: 2,
+            active: 3,
             collapsible: true,
             icons: {
                 header: "ui-icon-circle-arrow-e",
@@ -232,7 +233,7 @@
             heightStyle: "fill",
             header: "h4",
             event: "click",
-            active: 4,
+            active: 2,
             collapsible: true,
             icons: {
                 header: "ui-icon-circle-arrow-e",

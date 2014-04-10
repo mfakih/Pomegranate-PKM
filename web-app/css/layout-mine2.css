@@ -283,3 +283,8 @@ iframe.ui-layout-mask {
         overflow: visible !important;
     }
 }
+
+
+.centralRegion{
+ margin: 15px;
+}
