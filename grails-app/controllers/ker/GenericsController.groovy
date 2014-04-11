@@ -3162,7 +3162,7 @@ def addContactToRecord() {
 
 
                  if (params.reportType == 'tab'){
-
+					params.max = null
                      render(view: '/page/kanbanCrs', model: [groups: groups, groupBy: groupBy,
                              title: savedSearch.summary,
                              items:  Task.executeQuery(input, [])])
@@ -3199,6 +3199,7 @@ def addContactToRecord() {
                             savedSearchId: id,
                             title: savedSearch.summary])
             else if (params.reportType == 'tab'){
+			params.max = null
                     render(view: '/page/kanbanCrs', model: [
                             ssId: id,
                             searchResultsTotal: savedSearch.countQuery ? Task.executeQuery( savedSearch.countQuery)[0] : '',

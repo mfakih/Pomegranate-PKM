@@ -20,8 +20,7 @@
 </g:if>
 
 
-
-<g:if test="${ssId && searchResultsTotal}">
+<g:if test="${ssId && searchResultsTotal && params.max}">
 
 
     <br/> <div class="paginateButtons" style="display:inline !important;">
@@ -33,7 +32,7 @@
 
 
 
-<g:elseif test="${searchResultsTotal}">
+<g:elseif test="${searchResultsTotal  && params.max}">
     <br/>
     <br/>  <div class="paginateButtons" style="display:inline !important;">
     <util:remotePaginate controller="generics" action="hqlSearch" total="${searchResultsTotal}"
