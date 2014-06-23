@@ -29,14 +29,14 @@
     </uploader:onComplete>
 </uploader:uploader>
 
-<h3>Update records through smart files</h3>
-<uploader:uploader id="yourUploaderIdUpdate"
-                   url="${[controller: 'import', action: 'importSmartFilesAjaxUpdate']}">
-    Upload smart files for import
-    <uploader:onComplete>
-        jQuery('#centralArea').load('generics/showSummary/' + responseJSON.id + '?entityCode=' +  responseJSON.entityCode)
-    </uploader:onComplete>
-</uploader:uploader>
+%{--<h3>Update records through smart files</h3>--}%
+%{--<uploader:uploader id="yourUploaderIdUpdate"--}%
+                   %{--url="${[controller: 'import', action: 'importSmartFilesAjaxUpdate']}">--}%
+    %{--Upload smart files for import--}%
+    %{--<uploader:onComplete>--}%
+        %{--jQuery('#centralArea').load('generics/showSummary/' + responseJSON.id + '?entityCode=' +  responseJSON.entityCode)--}%
+    %{--</uploader:onComplete>--}%
+%{--</uploader:uploader>--}%
 
 
 

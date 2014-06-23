@@ -95,7 +95,7 @@
 
             <div style="-moz-column-count: 3">
 
-                <div id="hintArea" style="font-size: 10px; color: #255b17; font-style: italic;"></div>
+                <div id="hintArea" style="font-size: 10px; color: #255b17; font-style: italic; height: 40px;"></div>
             </div>
 
             <div id="logRegion"></div>

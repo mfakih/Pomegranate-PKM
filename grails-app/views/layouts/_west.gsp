@@ -2,7 +2,7 @@
 
 
 
-<div id="accordionWest" class="basic">
+<div id="accordionWest" class="basic" style="height: 100%;">
 
 
     <g:if test="${OperationController.getPath('rangeCalendar.enabled')?.toLowerCase() == 'yes' ? true : false}">

@@ -548,11 +548,11 @@
     </td>
       </g:if>
 
-        %{--<g:if test="${fields.contains('onHomepage')}">--}%
-        %{--<td>    <g:checkBox id="onHomepage" name="onHomepage" value="${record?.onHomepage}"--}%
-                        %{--style="width: 15px;"/> On homepage?--}%
-        %{--</td>--}%
-        %{--</g:if>--}%
+        <g:if test="${fields.contains('onMobile')}">
+        <td>    <g:checkBox id="onMobile" name="onMobile" value="${record?.onMobile}"
+                        style="width: 15px;"/> On mobile?
+        </td>
+        </g:if>
       <g:if test="${fields.contains('captureIsbn')}">
         <td>    <g:checkBox id="captureIsbn" name="captureIsbn" value="${record?.captureIsbn}"
                         style="width: 15px;"/> Capture ISBN in file names?

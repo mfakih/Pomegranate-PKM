@@ -60,6 +60,7 @@ class SavedSearch implements Comparable {  // entity id = 451
     String orderNumber
 
     Boolean onHomepage = false
+    Boolean onMobile = false
     Boolean bookmarked = false
     Boolean calendarEnabled = false
 

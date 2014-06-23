@@ -1,5 +1,14 @@
 <%@ page import="org.apache.commons.lang.StringUtils; ker.OperationController; app.parameters.ResourceType; cmn.Setting; mcs.parameters.PlannerType; mcs.parameters.JournalType; mcs.Planner; mcs.Journal; mcs.parameters.ResourceStatus; mcs.Book" %>
 
+
+
+%{--<h3>Import smart files</h3>--}%
+       <g:render template="/import/uploadFiles"/>
+
+
+<br/>
+<br/>
+
 <h3>Import local files</h3>
 
 <table border="0" style="border-collapse: collapse; width: 95%">

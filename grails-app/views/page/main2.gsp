@@ -275,6 +275,7 @@
         });
         $("#accordionWest").accordion({
             heightStyle: "fill",
+            fillSpace: true,
             header: "h4",
             event: "click",
             active: 2,

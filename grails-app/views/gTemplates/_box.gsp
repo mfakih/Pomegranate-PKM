@@ -45,7 +45,7 @@
 
                     <g:link controller="page" action="record" target="_blank"
                             params="${[id: record.id, entityCode: record.entityCode()]}"
-                            title="${record?.description}">
+                            title="${record?.description?.encodeAsHTML()}">
 
                         <span style="color: #003399;">
 
@@ -85,8 +85,9 @@
                             <span title="${record?.summary}">${record.task?.summary}</span>
                         </g:if>
                         <g:elseif test="${'N'.contains(record.entityCode())}">
-                            ${record?.orderInWriting ? '#' + record?.orderInWriting + ' ' : ''} ${record?.summary}
-                            ${StringUtils.abbreviate(record.description?.decodeHTML(), 240)}
+                            ${record?.orderInWriting ? '#' + record?.orderInWriting + ' ' : ''}
+                            ${record?.summary}
+                            %{--${StringUtils.abbreviate(record.description?.encodeAsHTML(), 240)}--}%
 
                                 <g:if test="${record.fileName}">
                                     <a href="${createLink(controller: 'operation', action: 'downloadNoteFile', id: record.id)}" target="_blank">
@@ -122,9 +123,9 @@
 
                         <br/>
                     </g:link>
-                <!--div style="line-height: 20px;">
-                    ${record.description?.encodeAsHTML()?.replaceAll('\n', '<br/>')}
-                    </div-->
+                <div style="line-height: 20px;">
+                   ${record.description?.replaceAll('\n', '<br/>')?.decodeHTML()}
+                    </div>
 
                 </td>
 

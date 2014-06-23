@@ -22,6 +22,7 @@ package ker
 import app.*
 import app.parameters.Blog
 import app.parameters.Pomegranate
+import app.parameters.ResourceType
 import cmn.Setting
 import grails.converters.JSON
 import mcs.*
@@ -946,6 +947,12 @@ puts "Hello, World!"
                         text: it.summary]
             }
         }
+        else if (field == 'markdown') {
+            Markdown.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.summary]
+            }
+        }
         else if (entity == 'T' && field == 'context') {
             Context.findAll([sort: 'code']).each() {
                 responce += [value: it.id,
@@ -960,6 +967,12 @@ puts "Hello, World!"
         }
         else if ('WN'.contains(entity) && field == 'type') {
             WritingType.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
+        else if ('R'.contains(entity) && field == 'type') {
+            ResourceType.findAll([sort: 'code']).each() {
                 responce += [value: it.id,
                         text: it.code]
             }
@@ -1031,9 +1044,11 @@ puts "Hello, World!"
         else if (entity == 'G' && field == 'type')
             record[field] = GoalType.get(newValue)
         else if (entity == 'P' && field == 'type')
-            record[field] = Plannertype.get(newValue)
+            record[field] = PlannerType.get(newValue)
         else if (entity == 'J' && field == 'type')
             record[field] = JournalType.get(newValue)
+        else if (entity == 'R' && field == 'type')
+            record[field] = ResourceType.get(newValue)
 
         else if ('GTP'.contains(entity) && field == 'status')
             record[field] = WorkStatus.get(newValue)

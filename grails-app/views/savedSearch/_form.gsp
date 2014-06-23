@@ -20,6 +20,7 @@
                             </label>
   	<g:textField id="summary" name="summary" value="${savedSearchInstance?.summary}"/>	
   	<g:checkBox id="onHomepage" name="onHomepage" value="${savedSearchInstance?.onHomepage}" style="width: 15px;"/> On homepage?
+  	<g:checkBox id="onMobile" name="onMobile" value="${savedSearchInstance?.onMobile}" style="width: 15px;"/> On mobile?
 </td>
    </tr>
   <tr>

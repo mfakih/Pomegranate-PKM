@@ -21,12 +21,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     %{--<meta name="layout" content="main"/>--}%
-    <title>Kanban</title>
+    <title>Mobile</title>
 
 
     <!-- To make the page refresh every 120 seconds -->
 
-    <meta http-equiv="refresh" content="120">
+    %{--<meta http-equiv="refresh" content="120">--}%
 
 
 
@@ -46,7 +46,7 @@
     %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'uploader.css')}"/>--}%
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>--}%
 
 
     %{--<uploader:head css="${resource(dir: 'css', file: 'uploader.css')}"/>--}%
@@ -65,13 +65,13 @@
     %{--<script type="text/javascript" src="${resource(dir: 'css', file: 'uploader.css')}"></script>--}%
 
 
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'raphael-min.js')}"></script>
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'morris.js')}"></script>
+    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'raphael-min.js')}"></script>--}%
+    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'morris.js')}"></script>--}%
 
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'fg.menu.css')}"/>
 
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'morris.css')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'morris.css')}"/>--}%
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}"/>
 
@@ -79,15 +79,15 @@
     <script type="text/javascript" src="${resource(dir: 'js', file: 'fg.menu.js')}"></script>
 
     %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'jquery.jeditable.mini.js')}"></script>--}%
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.js')}"></script>
+    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.js')}"></script>--}%
 
 
 
     %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'jquery.relatedselects.min.js')}"></script>--}%
 
     %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'shortcut.js')}"></script>--}%
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap.min.js')}"></script>
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap-global-bind.min.js')}"></script>
+    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap.min.js')}"></script>--}%
+    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap-global-bind.min.js')}"></script>--}%
 
 
 
@@ -106,11 +106,13 @@
 <body style="margin:5px;">
 
 <div id="notificationArea"></div>
-<r:layoutResources/>
+%{--<r:layoutResources/>--}%
+
+<g:render template='/reports/mobileSavedSearches'/>
+
 
 </body>
 
-<g:render template='/reports/mobileSavedSearches'/>
 %{--<r:layoutResources/>--}%
 
 </html>

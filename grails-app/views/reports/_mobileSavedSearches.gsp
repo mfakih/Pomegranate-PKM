@@ -1,7 +1,7 @@
 <%@ page import="mcs.Task; mcs.parameters.SavedSearch" %>
 
 
-<g:each in="${SavedSearch.findAllByBookmarked(true, [sort: 'entity', order: 'asc'])}" var="s">
+<g:each in="${SavedSearch.findAllByOnMobile(true, [sort: 'entity', order: 'asc'])}" var="s">
 
     <g:if test="${s.queryType == 'hql'}">
         <g:render template='/gTemplates/recordListingBox' model="[
