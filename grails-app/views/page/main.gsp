@@ -34,27 +34,35 @@
 
 
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>
+%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.10.4.custom.css')}"/>--}%
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}"/>
+<link rel="stylesheet" href="${resource(dir: 'css', file: 'layout-mine.css')}"/>
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'personalization.css')}"/>
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>
+%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>--}%
 
 
 
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'fg.menu.css')}"/>
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'layout-mine.css')}"/>
+%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'layout-mine.css')}"/>--}%
 
 %{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'ui.achtung-min.js')}"></script>--}%
 %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'ui.achtung-min.css')}"/>--}%
 
 
-
-%{--<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'jquery.autocomplete.min.js')}"></script>--}%
+<link rel="stylesheet" href="${resource(dir: 'css', file: 'prettyPhoto.css')}"/>
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-1.11.0_min.js')}"></script>
-<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.9.2.custom.min.js')}"></script>
+
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.address-1.5.min.js?autoUpdate=0')}"></script>
+
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.10.4.custom.min.js')}"></script>
 
 
-
+%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'select2.css')}"/>--}%
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'select2.min.js')}"></script>--}%
+<link rel="stylesheet" href="${resource(dir: 'css', file: 'jqueryui-editable.css')}"/>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jqueryui-editable.min.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'typeahead.bundle.js')}"></script>
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'fileuploader.js')}"></script>--}%
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.flipcountdown.js')}"></script>--}%
 <script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap.min.js')}"></script>
@@ -87,77 +95,95 @@
 
 <script type="text/javascript">
 
+//    $.address.state('/pkm/')
+    $.address.externalChange(function (event) {
+        // do something depending on the event.value property, e.g.
+        // $('#content').load(event.value + '.xml');
+       // console.log('fired ' + event.value)
+        if(event.value != '/')
+        jQuery('#centralArea').load(event.value)
+    });
 
+/**
+ *    UI Layout Callback: resizePaneAccordions
+ *
+ *    This callback is used when a layout-pane contains 1 or more accordions
+ *    - whether the accordion a child of the pane or is nested within other elements
+ *    Assign this callback to the pane.onresize event:
+ *
+ *    SAMPLE:
+ *    < jQuery UI 1.9: $("#elem").tabs({ show: $.layout.callbacks.resizePaneAccordions });
+ *    > jQuery UI 1.9: $("#elem").tabs({ activate: $.layout.callbacks.resizePaneAccordions });
+ *    $("body").layout({ center__onresize: $.layout.callbacks.resizePaneAccordions });
+ *
+ *    Version:    1.2 - 2013-01-12
+ *    Author:        Kevin Dalman (kevin.dalman@gmail.com)
+ */
+;
+(function ($) {
+    var _ = $.layout;
 
-    function toggleLiveResizing() {
-        $.each($.layout.config.borderPanes, function (i, pane) {
-            var o = myLayout.options[ pane ];
-            o.livePaneResizing = !o.livePaneResizing;
+// make sure the callbacks branch exists
+    if (!_.callbacks) _.callbacks = {};
+
+    _.callbacks.resizePaneAccordions = function (x, ui) {
+        // may be called EITHER from layout-pane.onresize OR tabs.show
+        var $P = ui.jquery ? ui : $(ui.newPanel || ui.panel);
+        // find all VISIBLE accordions inside this pane and resize them
+        $P.find(".ui-accordion:visible").each(function () {
+            var $E = $(this);
+            if ($E.data("accordion"))		// jQuery < 1.9
+                $E.accordion("resize");
+            if ($E.data("ui-accordion"))	// jQuery >= 1.9
+                $E.accordion("refresh");
         });
-    }
-    ;
-
-    function toggleStateManagement(skipAlert, mode) {
-        if (!$.layout.plugins.stateManagement) return;
-
-        var options = myLayout.options.stateManagement
-                , enabled = options.enabled // current setting
-                ;
-        if ($.type(mode) === "boolean") {
-            if (enabled === mode) return; // already correct
-            enabled = options.enabled = mode
-        }
-        else
-            enabled = options.enabled = !enabled; // toggle option
-
-        if (!enabled) { // if disabling state management...
-            myLayout.deleteCookie(); // ...clear cookie so will NOT be found on next refresh
-            if (!skipAlert)
-                alert('This layout will reload as the options specify \nwhen the page is refreshed.');
-        }
-        else if (!skipAlert)
-            alert('This layout will save & restore its last state \nwhen the page is refreshed.');
-
-        // update text on button
-//        var $Btn = $('#btnToggleState'), text = $Btn.html();
-//        if (enabled)
-//            $Btn.html(text.replace(/Enable/i, "Disable"));
-//        else
-//            $Btn.html(text.replace(/Disable/i, "Enable"));
     };
+})(jQuery);
 
-    // set EVERY 'state' here so will undo ALL layout changes
-    // used by the 'Reset State' button: myLayout.loadState( stateResetSettings )
-    var stateResetSettings = {
-        north__size: "auto",
-        north__initClosed: false,
-        north__initHidden: false,
-        south__size: 20,
-        south__initClosed: false,
-        south__initHidden: false,
-        //west__size: 200,
-        west__size: "auto",
-        west__initClosed: false,
-        west__initHidden: false,
-        east__resizable: true,
-//        east__size: "auto",
-        east__initClosed: false,
-        east__initHidden: false
-    };
 
-    var myLayout;
+
+
+
 
     jQuery(document).ready(function () {
-        var iiii = 1;
-//        $("#retroclockbox1").flipcountdown({
-//            size: "xs",
-//            showHour:false, showMinute: true, showSecond:   true,
-//                    tick: function () {
-//                        return iiii++;
-//                    }, speedFlip: 10
-//        }
-//        )
 
+        for (var i = 0; i < localStorage.length; i++) {
+            // do something with localStorage.getItem(localStorage.key(i));
+            var key = localStorage.key(i)
+            var value = localStorage[key]
+            console.log('key ' + key + 'value' + value)
+//            if ((typeof value == 'string' || value instanceof String) && !value.contains('datum'))
+//            if (value.contains('pkm-'))
+//            document.getElementById('commandHistory').options.add(new Option(value, localStorage.key(i)))
+        }
+
+
+
+
+        var myLayout = $('body').layout({
+            west__size: 230,
+            east__size: 320,
+            // RESIZE Accordion widget when panes resize
+           west__onresize: $.layout.callbacks.resizePaneAccordions,
+            east__onresize: $.layout.callbacks.resizePaneAccordions,
+//            onresize: $.layout.callbacks.resizePaneAccordions,
+            north__closable: false, north__spacing_closed: 0		// big resizer-bar when open (zero height)
+            , north__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+            , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+            , south__spacing_open: 0		// no resizer-bar when open (zero height)
+            , south__spacing_closed: 0		// big resizer-bar when open (zero height)
+
+            , east__spacing_open: 5		// no resizer-bar when open (zero height)
+            , east__spacing_closed: 15		// big resizer-bar when open (zero height)
+            , west__spacing_open: 5		// no resizer-bar when open (zero height)
+            , west__spacing_closed: 15		// big resizer-bar when open (zero height)
+
+
+        });
+
+
+        $.fn.editable.defaults.mode = 'inline';
+        $.fn.editable.defaults.showbuttons = false;
 
         jQuery('.fg-button').hover(
                 function () {
@@ -234,11 +260,41 @@
                         + jQuery('#range_end').val())//      + '&level=d')
             }})
 
+
+        // ACCORDION - in the West pane
+        $("#accordionEast").accordion({
+            heightStyle: "fill",
+            header: "h3",
+            event: "click",
+            active: 3,
+            collapsible: true,
+            icons: {
+                header: "ui-icon-circle-arrow-e",
+                headerSelected: "ui-icon-circle-arrow-s"
+            }
+
+        });
+        $("#accordionWest").accordion({
+            heightStyle: "fill",
+            fillSpace: true,
+            header: "h4",
+            event: "click",
+            active: 2,
+            collapsible: true,
+            icons: {
+                header: "ui-icon-circle-arrow-e",
+                headerSelected: "ui-icon-circle-arrow-s"
+            }
+
+        });
+
+
         Mousetrap.bindGlobal('esc', function (e) {
-            jQuery("html, body").animate({ scrollTop: 0 }, "fast");
+//            jQuery("html, body").animate({ scrollTop: 0 }, "fast");
+            jQuery('#centralArea').html('');
             jQuery('#quickAddTextField').focus();
             jQuery('#quickAddTextField').select();
-            jQuery('#quickAddTextField').scrollTop(0);
+//            jQuery('#quickAddTextField').scrollTop(0);
         });
 
 //        Mousetrap.bindGlobal('esc', function (e) {
@@ -252,14 +308,12 @@
 
         Mousetrap.bindGlobal('f6', function (e) {
             jQuery('#centralArea').html('');
-            jQuery('#quickAddXcdField').val('');
-            jQuery('#quickAddTextField').val('');
-            jQuery('#quickAddXcdField').select();
-            jQuery('#quickAddXcdField').focus();
+            jQuery('#quickAddTextField').focus();
+            jQuery('#quickAddTextField').select();
 
         });
 
-   Mousetrap.bindGlobal('f2', function (e) {
+        Mousetrap.bindGlobal('f2', function (e) {
 
             jQuery('#quickAddRecordTextArea').select().focus();
 
@@ -328,84 +382,10 @@
         // document.forms.quickAddForm['submit'].disabled = true;
 
 
-
-
-
         jQuery(window).bind('beforeunload', function () {
             return 'Are you sure you want to leave the application?';
         });
 
-        myLayout = jQuery('body').layout({
-            center__paneSelector: ".outer-center",
-            //	reference only - these options are NOT required because 'true' is the default
-            closable: true	// pane can open & close
-            , resizable: false	// when open, pane can be resized
-            , slidable: true	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-            , livePaneResizing: true,
-            spacing_closed: 0		// big resizer-bar when open (zero height)
-
-            //	some resizing/toggling settings
-            // , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
-            ,north__closable: false
-            , north__togglerLength_closed: '100%'	// toggle-button is full-width of resizer-bar
-            , north__spacing_closed: 0		// big resizer-bar when open (zero height)
-            , north__resizable: true	// OVERRIDE the pane-default of 'resizable=true'
-            , south__resizable: true	// OVERRIDE the pane-default of 'resizable=true'
-            , south__spacing_open: 0		// no resizer-bar when open (zero height)
-            , south__spacing_closed: 0		// big resizer-bar when open (zero height)
-
-            //	some pane-size settings
-            , west__minSize: 100, east__minSize: 100, east__maxSize: .5 // 50% of layout width
-            , west__size: 230
-//            , east__size: 230
-            , center__minWidth: 100
-                    ,east__resizable: true
-                    ,west__resizable: true
-
-            //	some pane animation settings
-//            , west__animatePaneSizing: false,
-//        west__fxSpeed_size: "fast"	// 'fast' animation when resizing west-pane
-//            , west__fxSpeed_open: 1000	// 1-second animation when opening west-pane
-//            , west__fxSettings_open: { easing: "easeOutBounce" } // 'bounce' effect when opening
-//            , west__fxName_close: "none"	// NO animation when closing west-pane
-
-            //	enable showOverflow on west-pane so CSS popups will overlap north pane
-//            , west__showOverflowOnHover: true
-
-            //	enable state management
-            , stateManagement__enabled: true // automatic cookie load & save enabled by default
-
-            , showDebugMessages: true // log and/or display messages from debugging & testing code
-
-            , center__childOptions: {
-                center__paneSelector: ".middle-center",
-//                west__paneSelector: ".middle-west",
-//                east__paneSelector: ".middle-east",
-//                west__size: 100, east__size: 100,
-                spacing_open: 0  // ALL panes
-                , spacing_closed: 0 // ALL panes
-
-                // INNER-LAYOUT (child of middle-center-pane)
-                , center__childOptions: {
-                    center__paneSelector: ".inner-center",
-//                    west__paneSelector: ".inner-west",
-//                    east__paneSelector: ".inner-east",
-                    south__paneSelector: ".inner-southInner",
-                    south__resizable: true,
-//                    west__size: 75, east__size: 75,
-//                    north_size: 'auto',
-                    spacing_open: 0  // ALL panes
-                    , spacing_closed: 0  // ALL panes
-//                    , west__spacing_closed: 12,
-//                    east__spacing_closed: 12
-                }
-            }
-
-        });
-
-        // if there is no state-cookie, then DISABLE state management initially
-        var cookieExists = !jQuery.isEmptyObject(myLayout.readCookie());
-          if (!cookieExists) toggleStateManagement(true, false);
 
         jQuery.ajaxSetup({
             beforeSend: function () {
@@ -413,20 +393,29 @@
             },
             complete: function () {
                 $('#spinner2').hide();
-            },
-            success: function () {
             }
+            ,
+            success: function () {
+                $('#spinner2').hide();
+            }
+
+
         });
 
-//    jQuery('#spinner').ajaxStart(function() {
-//        jQuery(this).fadeIn();
-//        console.log('adfasdfasf')
-//    }).ajaxStop(function() {
-//                jQuery(this).fadeOut();
-//    });
+        jQuery(document).ajaxComplete(function () {
+            $('#spinner2').hide();
+        });
 
+       jQuery(document).ajaxStop(function () {
+            $('#spinner2').hide();
+        });
+   jQuery(document).ajaxSuccess(function () {
+            $('#spinner2').hide();
+        });
 
-
+        $(document).ajaxError(function () {
+            $('#spinner2').hide();
+        });
 
     });
 
@@ -435,6 +424,10 @@
 </head>
 
 <body>
+
+
+
+<!--browser:isIExplorer todo-->
 
 
 <browser:isChrome>
@@ -451,10 +444,9 @@
 
 <browser:isMobile>
     <g:javascript>
-    document.location = 'page/mobile'
+        document.location = 'page/mobile'
     </g:javascript>
 </browser:isMobile>
-
 
 </body>
 </html>

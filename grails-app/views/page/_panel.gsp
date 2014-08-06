@@ -52,10 +52,6 @@
 
 
 
-
-<br/>
-<br/>
-
 %{--<h4>Files</h4>--}%
 
 
@@ -128,8 +124,8 @@
 
 
         <g:if test="${record.class.declaredFields.name.contains('description')}">
-
-            <div style="padding: 3px; font-size: 13px; font-family: georgia; margin: 5px; line-height: 20px; text-align: justify">
+  
+            <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px; text-align: justify" class="${record.class.declaredFields.name.contains('language') && record.language == 'ar' ? 'arabicText' : ''}">
                 <span id="descriptionBloc${record.id}">
                Description:     ${record.description?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}
                     %{--${?.encodeAsHTML()?.replaceAll('\n', '<br/>')}--}%
@@ -270,10 +266,12 @@
                 <g:if test="${'R'.contains(record.entityCode())}">
                     <div style="font-family: tahoma; text-align: justify; line-height: 20px; font-size: 14px; margin: 5px;">
                         <g:if test="${record.highlights}">
+                          <div class="${record.language == 'ar' ? 'arabicText' : ''}">
                             <i style="color: #48802C">
                                 ${record.highlights?.replaceAll('\n', '<br/>')}
                             </i>
                             <br/>
+                            </div>
                         </g:if>
                         <g:if test="${record.comments}">
                             <br/>
@@ -283,7 +281,7 @@
                         </g:if>
                         <g:if test="${record.fullText}">
                             <div class="${record.language == 'ar' ? 'arabicText' : ''}">
-                       Full text:         ${record.fullText?.replaceAll('\n', '<br/>')}
+                     <br/><hr/>   ${record.fullText?.replaceAll('\n', '<br/>')}
                             </div>
                         </g:if>
                     </div>
@@ -328,11 +326,6 @@
     %{--</div>--}%
 
 
-
-<h4>Notes</h4>
-
-<div id="panelComments${entityCode}Record${record.id}">
-<g:render template="/indexCard/add" model="[recordId: record.id, recordEntityCode: entityCode]"/>
 
 
 <div id="type-7" style="">

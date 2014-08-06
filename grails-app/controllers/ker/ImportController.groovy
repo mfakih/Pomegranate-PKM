@@ -807,10 +807,7 @@ class ImportController {
 
             def ant = new AntBuilder()
             ant.move(file: f.path, tofile: path)
-
-                return render(['Ok'] as JSON, contentType: 'text/json')
-
-
+                return render(['Ok'] as JSON)
         } catch (Exception e) {
             println 'problem uploading the file ' + params.qqfile
             status = 'File could not be saved!'

@@ -183,9 +183,7 @@
     </g:if>
 
 
-    <g:if test="${record.sourceFree}">
-        ${record.sourceFree}
-    </g:if>
+  
     <g:if test="${record.source}">
         <span style="color: brown">${record.source}</span>
     </g:if>
@@ -193,6 +191,11 @@
 
         Untitled
     </g:if>
+    
+     <g:if test="${record.sourceFree}">
+       <pkm:summarize text="${record.sourceFree}" length="40"/>
+    </g:if>
+    
 
 %{--<g:if test="${!record.summary}">--}%
 %{--<i style="font-size: smaller"> <pkm:summarize text="${record.description}" length="80"/></i>--}%
@@ -453,9 +456,6 @@
 
 
 
-<g:if test="${'CGR'.contains(entityCode) && record.percentCompleted}">
-    <pkm:progressBar percent="${record.percentCompleted}"/>
-</g:if>
 
 %{--</span>--}%
 

@@ -101,6 +101,7 @@ class PageController {
 //        }
 
         session['log'] = 1
+        session['JP'] = 1
 
         def text = """
 Pomegranate-PKM
@@ -139,7 +140,7 @@ My in-progress book at [LeanPub](https://leanpub.com/pomegranate) outlines the m
         String htmlContent = markupParser.parseToHtml(text);
 
 
-        render(view: '/page/main2', model: [
+        render(view: '/page/main', model: [
                 htmlContent: htmlContent
 //                environment: environment
                 //,

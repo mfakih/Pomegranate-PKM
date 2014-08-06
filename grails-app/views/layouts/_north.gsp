@@ -36,12 +36,14 @@
 &nbsp;
 &nbsp;
 &nbsp;
+
+
 &nbsp;
 &nbsp;
 &nbsp;
 
     <g:remoteLink controller="report" action="detailedAdd"
-                  update="searchArea"
+                  update="centralArea"
                   before="jQuery.address.value(jQuery(this).attr('href'));"
                   style="color: white !important"
                   title="Add using formas">
@@ -75,7 +77,7 @@
 &nbsp;
 &nbsp;
     <g:remoteLink controller="report" action="contactCloud"
-                  update="contaactsPanel"
+                  update="contactsPanel"
         before="jQuery('#accordionEast').accordion({ active: 2});"
       style="color: white !important"
                   title="Contact cloud">
@@ -134,6 +136,31 @@
     </sec:ifNotLoggedIn>
 
 &nbsp;
+
+
+<g:formRemote name="batchAdd2"
+              url="[controller: 'generics', action: 'actionDispatcher']"
+              update="centralArea" style="display: inline"
+              method="post">
+
+    <g:hiddenField name="sth2" value="${new java.util.Date()}"/>
+        <g:submitButton name="batch" value="Execute"
+                        style="height: 20px; margin: 0px; width: 200px !important; display: none"
+                        id="quickAddXcdSubmitTop"
+                        class="fg-button ui-widget ui-state-default"/>
+
+            <g:textField name="input" id="quickAddTextFieldBottomTop" value=""
+                        autocomplete="off"
+                         style="display: inline;  width: 300px !important"
+                        placeholder="Command bar"
+                        onkeyup="if (jQuery('#quickAddTextField').val().search(';')== -1){jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))}"
+                        onfocus="jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))"
+                        onblur="jQuery('#hintArea').html('')"
+                        class="commandBarTexFieldTop"/>
+
+</g:formRemote>
+
+
 &nbsp;
 &nbsp;
 

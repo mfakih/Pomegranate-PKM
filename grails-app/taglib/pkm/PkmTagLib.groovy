@@ -18,7 +18,7 @@ class PkmTagLib {
 
         def background = 'gray';
         def percent = (attrs?.percent?.toInteger() ? attrs?.percent?.toInteger() : 0)
-      switch(percent) {
+    /*  switch(percent) {
                 case 0..20:  background = 'yellow'
                 break
                 case 21..40: background = 'lightgreen'
@@ -30,9 +30,10 @@ class PkmTagLib {
                 case 91..100: background = 'lightgray'
                 break
               }
-      //  background = 'gray'
+              */
+        background = 'gray'
         out << """
-<div class="ui-progressbar ui-widget ui-widget-content ui-corner-all" style="width: 40px; height: 8px; display: inline-block">
+<div class="ui-progressbar ui-widget ui-widget-content ui-corner-all" style="width: 99%; height: 3px; border: none; display: block; margin-top:4px;">
    <div style="width: ${attrs.percent}%; background: ${background};" class="ui-progressbar-value ui-widget-header ui-corner-left"></div>
 </div>
         """
@@ -373,7 +374,7 @@ source src="${createLink(controller: 'operation', action: 'download', id: fileId
                     output += """<li>
   <a href="${createLink(controller: 'operation', action: 'download', id: fileId)}" target="_blank" class="${fileClass}"
                           title="${i.name}">
-<img src="${createLink(controller: 'operation', action: 'download', id: fileId)}" width="60" height="60" alt="${i.name}" />
+<img src="${createLink(controller: 'operation', action: 'download', id: fileId)}" width="200" alt="${i.name}" />
             </a>
 </li>"""
 

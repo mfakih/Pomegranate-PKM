@@ -216,6 +216,18 @@
 
 </tr>
 
+
+
+
+<g:if test="${'CGR'.contains(entityCode) && record.percentCompleted}">
+<tr>
+<td colspan="8" style="padding: 0px; margin: 0px;">
+<pkm:progressBar percent="${record.percentCompleted}"/>
+</td>
+</tr>
+</g:if>
+
+
 </tbody>
 </table>
 

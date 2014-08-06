@@ -65,29 +65,6 @@
 
     </li>
 
-     <li>
-<g:formRemote name="batchAdd2"
-              url="[controller: 'generics', action: 'actionDispatcher']"
-              update="centralArea"
-              method="post">
-
-    <g:hiddenField name="sth2" value="${new java.util.Date()}"/>
-        <g:submitButton name="batch" value="Execute"
-                        style="height: 20px; margin: 0px; width: 80px !important; display: none"
-                        id="quickAddXcdSubmit"
-                        class="fg-button ui-widget ui-state-default"/>
-
-            <g:textField name="block" id="quickAddTextFieldBottom" value=""
-                        autocomplete="off"
-                        placeholder="Command bar"
-                        onkeyup="if (jQuery('#quickAddTextField').val().search(';')== -1){jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))}"
-                        onfocus="jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))"
-                        onblur="jQuery('#hintArea').html('')"
-                        class="commandBarTexField"/>
-
-</g:formRemote>
-</li>
-
     <li>
 
         <g:remoteLink controller="generics" action="showSelectedRecords"

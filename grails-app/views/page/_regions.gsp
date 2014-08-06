@@ -45,7 +45,7 @@
 
             	<h3><a href="#">Help</a></h3>
 			<div>
-                <h1>Welcome to Pomegranate</h1>
+                <h1>Shortcut Keys</h1>
 
 
 
@@ -56,13 +56,13 @@
                 <li><b>Ctrl + alt + n</b> next</li>
                 <li><b>p</b> previous</li>
                 <li><b>s</b> selected</li>
-                <li><b>F9</b>toggle navigation menu</li>
+                <li><b>F9</b> toggle navigation menu</li>
 
 
 
 
                 <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
-                    ${htmlContent}
+                    <!--{htmlContent}-->
 
                 </div>
 			</div>

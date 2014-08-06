@@ -519,6 +519,14 @@
         </td>
         </g:if>
 
+        
+        <g:if test="${fields.contains('publishedNodeId')}">
+        <td>
+            <g:textField id="publishedNodeId" name="publishedNodeId" placeholder="Published node Id" style="width: 90px;" class="ui-corner-all"
+                         value="${record?.publishedNodeId}"/>
+        </td>
+        </g:if>
+        
 
 </tr>
 <tr>
@@ -530,6 +538,11 @@
             </td>
         </g:if>
 
+ <g:if test="${fields.contains('isKeyword')}">
+            <td>
+                 <g:checkBox name="isKeyword" value="${record?.isKeyword}"/> Is keyword?
+            </td>
+        </g:if>
 
 
       <g:if test="${fields.contains('isCategory')}">

@@ -163,8 +163,11 @@ class GenericsController {
                             break
                         case 't': batchAddTagToRecords(commandBody)
                             break
-                        case 'x': batchLogicallyDeleteRecords(commandBody)
+                        case 'b': repostRecords(commandBody)
                             break
+                         case 'x': batchLogicallyDeleteRecords(commandBody)
+                            break
+                         
                         case 'X': batchPhysicallyDeleteRecords(commandBody)
                             break
 
@@ -253,6 +256,8 @@ class GenericsController {
                                 break
                             case 't': batchAddTagToRecords(commandBody)
                                 break
+                                case 'b': repostRecords(commandBody)
+                            break
                             case 'x': batchLogicallyDeleteRecords(commandBody)
                                 break
 
@@ -1102,6 +1107,76 @@ def addContactToRecord() {
                 list: list,
                 title: 'Trashed records'])
     }
+    
+       def repostRecords(String choice) {
+
+        def list = []
+
+        selectedRecords.each() {
+            if (it.value == 1 && it.key.substring(0, 1).toLowerCase() == choice.toLowerCase()) {
+                def record = grailsApplication.classLoader.loadClass(entityMapping[it.key.substring(0, 1)]).get(it.key.substring(1))
+
+               
+		  def tags = ''
+        record.tags.each() {
+            if (!it.isKeyword)
+                tags += it.name + ', '
+        }
+        def categories = record?.type?.name + ','
+        record.tags.each() {
+            if (it.isKeyword)
+                categories += it.name + ', '
+        }
+
+        String summary, contents, type
+
+        switch (record.entityCode()) {
+            case 'W': summary = record.summary
+                contents = ys.wikiparser.WikiParser.renderXHTML(record.description)?.decodeHTML()
+                type = record.type?.name
+                break
+            case 'N': summary = record.summary
+                contents =  (record.language == 'ar' ? ('<div style="direction: rtl; text-align: right">' + record.description?.encodeAsHTML() + '</div>') :  record.description?.encodeAsHTML())
+
+                //ys.wikiparser.WikiParser.renderXHTML(record.description)?.decodeHTML()
+                //record.description//?.encodeAsHTML()
+                type = record.type?.name
+                break
+             case 'J': summary = record.summary
+                contents = ys.wikiparser.WikiParser.renderXHTML(record.description)?.decodeHTML()
+                //record.description//?.encodeAsHTML()
+                type = record.type?.name
+                break
+        }
+
+        // postToBlog(String blogId, String title, String categoriesString, String tags, String fullText) {
+        sleep(2000)
+        int r = supportService.postToBlog(record.blog.id, summary, categories, tags, contents, record.publishedNodeId)
+
+        if (r) {
+            record.publishedNodeId = r
+            record.publishedOn = new Date()
+            //render r
+            render(template: '/layouts/achtung', model: [message: "Record published with id " + r])
+        } else "Problem posting the record"
+
+	  
+	  
+	  
+		
+		
+		
+
+                list.add(record)
+            }
+        }
+
+        render(template: '/gTemplates/recordListing', model: [
+                list: list,
+                title: 'Posted records'])
+    }
+    
+    
 
   def batchPhysicallyDeleteRecords(String type) {
 
@@ -1749,7 +1824,7 @@ def addContactToRecord() {
              session[queryKey] = fullquery
 
            }
-            params.max = 5
+            params.max = Setting.findByNameLike('savedSearch.pagination.max.link') ? Setting.findByNameLike('savedSearch.pagination.max.link').value.toInteger() : 5
             def list = Task.executeQuery(fullquery  + ' order by lastUpdated desc', [], params)
 //            if (OperationController.getPath('enable.autoselectResults') == 'yes'){
 //                selectedRecords.keySet().each() {
@@ -1847,7 +1922,9 @@ def addContactToRecord() {
             fullquerySort = 'select count(*) ' + input
             queryKey = '_' + new Date().format('ddMMyyHHmmss')
              session[queryKey] = fullquery
-                params.max = 5
+	   }
+             
+                params.max = Setting.findByNameLike('savedSearch.pagination.max.link') ? Setting.findByNameLike('savedSearch.pagination.max.link').value.toInteger() : 5
                 def list = Task.executeQuery(fullquery, [], params)
                 if (OperationController.getPath('enable.autoselectResults') == 'yes'){
                     selectedRecords.keySet().each() {
@@ -1858,17 +1935,17 @@ def addContactToRecord() {
                     for (r in list) {
                     selectedRecords[r.entityCode() + r.id] = 1
                     session[r.entityCode() + r.id] = 1
+               
                 }
-                }
-
+	    } 
 
                 render(template: '/gTemplates/recordListing', model: [
                         list: Task.executeQuery(fullquery, [], params),
                         totalHits: Task.executeQuery(fullquerySort)[0],
                         queryKey2: queryKey, fullquery: fullquery,
-                        title: 'HQL Query ' + (!input.contains('select') ? '(' + Task.executeQuery(fullquerySort)[0] + ')' : '') + ' : ' + input
+                        title: 'HQL Query ' + (!input.contains('select') ? '(' + Task.executeQuery(fullquerySort)[0] + ')' : '') + ' : ' + fullquery
                 ])
-            }
+            
         }
 
     }
@@ -2473,7 +2550,7 @@ def addContactToRecord() {
 
                     if (it.startsWith(':')) {
                         properties['language'] = it.substring(1)
-                        queryCriteria.add('language = ' + it.substring(1, 2))
+                        queryCriteria.add("language = '" + it.substring(1) + "'")
                     }
                     if (it.startsWith('e')) {
                         properties['energyLevel'] = it.substring(1).toInteger()
@@ -2766,7 +2843,7 @@ def addContactToRecord() {
 
 
                     if (it.startsWith('.')) {
-                        properties['blog.code'] = it.substring(1)
+                        properties['blog.id'] = Blog.findByCode(it.substring(1)).id
                         queryCriteria.add("blog.code = '" + it.substring(1) + "'")
                     }
                     if (it.startsWith('/')) {
@@ -3253,7 +3330,7 @@ def addContactToRecord() {
             if (!it.isKeyword)
                 tags += it.name + ', '
         }
-        def categories = ''
+        def categories = record?.type?.name + ','
         record.tags.each() {
             if (it.isKeyword)
                 categories += it.name + ', '
@@ -3267,7 +3344,7 @@ def addContactToRecord() {
                 type = record.type?.name
                 break
             case 'N': summary = record.summary
-                contents = ys.wikiparser.WikiParser.renderXHTML(record.description)?.decodeHTML()
+                contents = (record.language == 'ar' ? ('<div style="direction: rtl; text-align: right">' + record.description?.encodeAsHTML() + '</div>') :  record.description?.encodeAsHTML())
                 //record.description//?.encodeAsHTML()
                 type = record.type?.name
                 break

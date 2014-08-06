@@ -16,6 +16,26 @@
            <tr style="width: 99%">
                <td style="width: 60%; vertical-align: top">
 
+               
+               
+
+    <g:if test="${record.entityCode() == 'R' && record.type.code == 'sns'}">
+<pkm:listPictures fileClass="snsFile"
+                  folder="${app.parameters.ResourceType.findByCode('sns').newFilesPath}/${(record.id / 100).toInteger()}/${record.id}"
+                  initial=""/>
+
+                  </g:if>
+
+                  
+                  <pkm:listPictures fileClass="snsFile"
+                  
+                  folder="${OperationController.getPath('module.sandbox.' + record.entityCode() + '.path')}/${record.id}"
+                  initial=""/>
+                  
+                  
+
+                  
+                  
                      <g:if test="${'N'.contains(entityCode)}">
                    Source: <a  href="${record.sourceFree}">${StringUtils.abbreviate(record.sourceFree,30)} </a>
                      </g:if>
@@ -35,6 +55,15 @@
                        </g:remoteLink>
                    </g:if>
                    </div>
+                   
+                   
+                   
+<h4>Notes</h4>
+
+<div id="panelComments${entityCode}Record${record.id}">
+<g:render template="/indexCard/add" model="[recordId: record.id, recordEntityCode: entityCode]"/>
+</div>
+
 
 
                        %{--<br/>--}%
@@ -205,12 +234,13 @@
     </g:if>
 
 <g:if test="${'TGRE'.contains(entityCode)}">
-    <h4>Add journal or planner</h4>
+    <br/><b>+ J/P</b>
+    <br/>
     <g:formRemote name="scheduleTask" url="[controller: 'task', action: 'assignRecordToDate']"
                   style="display: inline;" update="below${entityCode}Record${record.id}"
                   method="post">
-        Type/Level/Weight
-        <br/>
+        <!-- Type/Level/Weight -->
+        
         <g:select name="type" from="['J', 'P']" value="P"/>
         <g:select name="level" from="['e', 'y', 'M', 'W', 'd', 'm']" value="d"/>
         <g:select name="weight" from="${1..4}" value="1"/>
@@ -232,7 +262,8 @@
 </g:if>
 
            <g:if test="${entityCode.length() == 1}">
-<h4>Relate</h4>
+<b>Relate</b>
+<br/>
 <span id="addRelationship${record.id}" style="display: inline;">
     <g:render template="/gTemplates/addRelationships"
               model="[record: record, entity: entityCode]"/>
@@ -294,9 +325,9 @@
 
     <g:link controller="page" action="record" target="_blank"
             params="${[id: record.id, entityCode: entityCode]}"
-            class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
+            class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
             title="Go to page">
-        <span class="ui-icon ui-icon-extlink"></span> New tab
+        <span class="ui-icon ui-icon-extlink"></span>
 
     </g:link>
 
@@ -388,18 +419,7 @@
 
 
 
-                                                     %{--todo; case of x ,y--}%
-                   <g:if test="${entityCode.size() >= 1 || (record.class.declaredFields.name.contains('deletedOn') && record.deletedOn != null)}">
-                       <g:remoteLink controller="generics" action="physicalDelete"
-                                     params="${[id: record.id, entityCode: entityCode]}"
-                                     update="${entityCode}Record${record.id}"
-                                     class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
-                                     before="if(!confirm('Are you sure you want to permanantly delete the record?')) return false"
-                                     title="Physical delete">
-                           <span class="ui-icon ui-icon-circle-close"></span> Physical delete
-                       </g:remoteLink>
-                   </g:if>
-
+               
 
 
                </td>
@@ -537,6 +557,20 @@
 
 <td class="actionTd">
 
+                                      %{--todo; case of x ,y--}%
+                   <g:if test="${entityCode.size() >= 1 || (record.class.declaredFields.name.contains('deletedOn') && record.deletedOn != null)}">
+                       <g:remoteLink controller="generics" action="physicalDelete"
+                                     params="${[id: record.id, entityCode: entityCode]}"
+                                     update="${entityCode}Record${record.id}"
+                                     class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                                     before="if(!confirm('Are you sure you want to permanantly physically delete the record?')) return false"
+                                     title="Physical delete">
+                           <span class="ui-icon ui-icon-circle-close"></span>
+                       </g:remoteLink>
+                   </g:if>
+
+       &nbsp;            
+                   
     <g:if test="${entityCode.size() == 1 && record.class.declaredFields.name.contains('deletedOn')}">
         <g:if test="${!record.deletedOn}">
 
@@ -562,6 +596,7 @@
             </g:remoteLink>
         </g:else>
 
+        &nbsp;
     </g:if>
 
     <g:if test="${entityCode.size() > 1}">
@@ -623,7 +658,7 @@
 %{--</g:if>--}%
 
 
-<div class="pkmCode">
+<div class="pkmCode" style="display: none;">
 
 A ${entityCode} ${record.class.declaredFields.name.contains('type') && entityCode.length() == 1 && record.type ? '#' + record.type.code : ''}
 ${record.class.declaredFields.name.contains('status') && entityCode.length() == 1 && record.status ? '?' + record.status.code : ''}
@@ -651,3 +686,4 @@ ${record.class.declaredFields.name.contains('context') && entityCode.length() ==
 </div>
     </g:if>
 
+<br/>
