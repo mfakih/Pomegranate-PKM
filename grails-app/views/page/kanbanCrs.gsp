@@ -45,7 +45,7 @@
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>
     %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.10.4.custom.css')}"/>--}%
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main2.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'personalization.css')}"/>
     %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>--}%
 

@@ -545,7 +545,16 @@ class ImportController {
         def folder = new File(path)
         def name = params.name
         def type
-        def finalName = ''
+    def finalName = ''
+    
+    
+     java.util.regex.Matcher matcher2 = name =~ /(?i)([\S\s ;-_]*)\.([\S]*)/
+//                def id = matcher[0][1]
+                    
+                    def title = matcher2[0][1]
+                    def ext = matcher2[0][2]
+                    
+                    
         def b
         if (params.smart != 'yes') {
             if (entityCode == 'R') {
@@ -573,40 +582,60 @@ class ImportController {
                         // was path + '/' + nf.format(dup.id).substring(0, 2)
                         while (new File(newPath + '/' + dup.id + 'b-' + name).exists())
                             c++
-
                         ant.move(file: parentPath + '/' + name, tofile: newPath + '/' + dup.id + 'b-' + c + '-' + name)
+			render 'Moved to original book folder'
                         return
                     }
                     else {
                         b = new Book([isbn: isbn])
                         // todo remove ext
-                        b.legacyTitle = name
-
+                        b.legacyTitle = title
                     }
 //                    b.isbn = isbn
                 }
-                b.legacyTitle = name
+                b.legacyTitle = title
                 b.type = type
-
-
-                finalName = params.type + '.' + name.split(/\./).last()
+                finalName = params.type + '.' + ext
             }
             else {
-
                 b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).newInstance()
-                b.summary = name
-                finalName = ' ' + name
+    b.summary = title
+                finalName = ' ' + title
+                
+                
+               
+                    
             }
+            
+            
+          if (ext == 'txt') {
+                        if (entityCode.toLowerCase() == 'r')
+                            b.fullText = folder.text
+                        else
+                            b.description = folder.text
+                    } 
+      //      println 'text is ' + folder.text
+            
 
-                b.description = 'Imported on ' + new Date().format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')
-
-        }
-        else {
+    //b.description = 'Imported on ' + new Date().format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')
+     }
+    else{
+      
             b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).newInstance()
-            b.properties = GenericsController.transformMcsNotation(name)['properties']
-            b.description = 'Imported on ' + new Date().format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')
-            finalName = entityCode.toLowerCase() + '.' + name.split(/\./).last()
-        }
+    b.properties = GenericsController.transformMcsNotation(title)['properties']
+    
+            
+         finalName = entityCode.toLowerCase() + '.' + ext
+     }
+     
+		      if (ext == 'txt') {
+                        if (entityCode.toLowerCase() == 'r')
+                            b.fullText = folder.text
+                        else
+                            b.description = folder.text
+                    } 
+                    
+                    b.notes = 'Imported on ' + new Date().format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')
 
         if (!b.hasErrors() && b.save(flush: true)) {
             render(template: '/gTemplates/recordSummary', model: [record: b])

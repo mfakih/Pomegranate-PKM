@@ -11,10 +11,12 @@
 <b>${entityController?.split(/\./).last()}</b>
 
      <br/>
+     <br/>
 
-<g:submitButton class="fg-button ui-icon-left ui-widget ui-state-default ui-corner-all" name="submit"
+<g:submitButton class="fg-button ui-icon-left ui-widget ui-state-default ui-corner-all" name="submit" style="width: 100%; height: 30px;"
                 value="Save"
                 onsubmit=""/>
+                <br/>
 
 
 <g:hiddenField name="entityController" value="${entityController}"/>
@@ -155,7 +157,7 @@
 
     <g:if test="${fields.contains('url')}">
         <td colspan="3">
-        <g:textField placeholder="url" rows="5" name="url" value="${record?.url}"
+        <g:textField placeholder="url" name="url" value="${record?.url}"
                      style="width: 95%;"/>
       </td>
     </g:if>
@@ -169,6 +171,13 @@
             <pkm:datePicker name="completedOn" placeholder="Completed on" value="${record?.completedOn}"/>
         </td>
     </g:if>
+    
+     <g:if test="${fields.contains('publicationDate')}">
+        <td>
+            <g:textField name="publicationDate" placeholder="Publication date" value="${record?.publicationDate}"/>
+        </td>
+    </g:if>
+    
 
 </tr>
 
@@ -636,7 +645,7 @@
 
 </table>
 
-
+<hr/>
 
 
 </g:formRemote>

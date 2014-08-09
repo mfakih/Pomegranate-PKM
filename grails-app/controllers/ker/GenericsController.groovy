@@ -494,7 +494,7 @@ p4"""
                                 }
                             }
                             break
-                        case 'b':
+                        case 'r':
 
 //                            if (filter.length() > 1){
                             Book.findAllById(filter.replace('%', ''), [sort: 'title']).each() {
@@ -605,9 +605,9 @@ ll
     def showIndexCards(Long id, String entityCode) {
 
 //        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
-        if ('B'.contains(entityCode)) {
+        if ('R'.contains(entityCode)) {
             render(template: '/indexCard/add', model:
-                    [bookId: id, recordEntityCode: 'B', recordId: id])
+                    [bookId: id, recordEntityCode: 'R', recordId: id])
         } else if ('W'.contains(entityCode)) {
             render(template: '/indexCard/add', model:
                     [writingId: id, recordEntityCode: 'W', recordId: id])
@@ -1264,7 +1264,7 @@ def addContactToRecord() {
                                 highlights: results.highlights,
                                 total: IndexCard.countHits(q), title: query])
                         break
-                    case 'b':
+                    case 'r':
                         params.withHighlighter = { highlighter, index, sr ->
                             if (!sr.highlights) {
                                 sr.highlights = []
@@ -1609,7 +1609,7 @@ def addContactToRecord() {
 
         c = params.fullText
         if (c != '') {
-            if (params.entityCode != 'B')
+            if (params.entityCode != 'R')
                 query += "(summary like '%" + c + "%' or description like  '%" + c + "%' or notes like '%" + c + "%')"
             else
                 query += "(title like '%" + c + "%' or description like  '%" + c + "%' or legacyTitle like '%" + c + "%' or notes like '%" + c + "%')"
@@ -2270,7 +2270,7 @@ def addContactToRecord() {
 //                    responce += (it.name + '|l' + '' + it.id + '\n')
 //                }
 //                    break
-                case 'B': Book.findAllByTitleLike(filter, [sort: 'title']).each() {
+                case 'R': Book.findAllByTitleLike(filter, [sort: 'title']).each() {
                     responce += (it.title + ' ' + it.id + '|b' + '' + it.id + '\n')
                 }
                     break
@@ -2428,7 +2428,7 @@ def addContactToRecord() {
             //   record.summary = summary
             if (entityCode == 'X'){
                 record.countQuery = description
-        } else  if (entityCode == 'B')
+        } else  if (entityCode == 'R')
                 record.fullText = description
             else
                 record.description = description
@@ -2579,7 +2579,7 @@ def addContactToRecord() {
                         }
 
                     }
-                    if (it.startsWith('b') && it.length() > 1) {
+                    if (it.startsWith('r') && it.length() > 1) {
                         properties['book.id'] = Book.get(it.substring(1).toInteger()).id
                         queryCriteria.add('book.id = ' + it.substring(1))
                     }
@@ -2713,7 +2713,7 @@ def addContactToRecord() {
                                 statusId = WorkStatus.findByCode(it.substring(1)).id
                             else if ('WC'.contains(entityCode))
                                 statusId = WritingStatus.findByCode(it.substring(1)).id
-                            else if ('B'.contains(entityCode))
+                            else if ('R'.contains(entityCode))
                                 statusId = ResourceStatus.findByCode(it.substring(1)).id
 
                             properties['status.id'] = statusId
@@ -2803,6 +2803,9 @@ def addContactToRecord() {
                             dateField = 'date'
                         if ('Q'.contains(entityCode))
                             dateField = 'date'
+	   if ('R'.contains(entityCode))
+                            dateField = 'publicationDate'
+                     
                         def core = it.substring(1)
                         if (it.startsWith('<+') || it.startsWith('<-') || it.startsWith('(+') || it.startsWith('(-')) {
                             properties[dateField] = new Date() + core.toInteger()
@@ -2892,8 +2895,10 @@ def addContactToRecord() {
 
             def summaryFieldName = 'summary'
             def descriptionFieldName = 'description'
-            if ('R'.contains(entityCode))
+            if ('R'.contains(entityCode)){
                 summaryFieldName = 'title'
+	descriptionFieldName = 'fullText'
+	    }
             if ('I'.contains(entityCode))
                 summaryFieldName = 'value'
             if ('Q'.contains(entityCode))
@@ -2921,7 +2926,7 @@ def addContactToRecord() {
                 if (input.contains(' ; ')) {
                     summary = input.substring(input.indexOf(';') + 1, input.indexOf(';;')).trim().replaceAll("'", " ")
                     properties[summaryFieldName] = summary
-                    if (entityCode == 'B')
+                    if (entityCode == 'R')
                         queryCriteria.add('(' + summaryFieldName + " like '%" + summary + "%' or legacyTitle like '%" + summary + "%')")
                     else
                         queryCriteria.add(summaryFieldName + " like '%" + summary + "%'")
@@ -2933,7 +2938,7 @@ def addContactToRecord() {
 
 
                 if (entityCode == 'R')
-                    queryCriteria.add(summaryFieldName + " like '%" + summary + "%' or legacyTitle like '%" + summary + "%'")
+                    queryCriteria.add('(' + summaryFieldName + " like '%" + summary + "%' or legacyTitle like '%" + summary + "%')")
                 else
                     queryCriteria.add(summaryFieldName + " like '%" + summary + "%'")
 
@@ -2945,7 +2950,7 @@ def addContactToRecord() {
             return result
         }
         catch (Exception e) {
-            println 'Exception while transforming Pomegranate syntax: ' + e.printStackTrace()
+            println 'Exception while transforming Pomegranate syntax: ' + e
             return null
         }
     }
@@ -3373,11 +3378,15 @@ def addContactToRecord() {
         def recentRecords = []
 
         allClasses.each() {
-            recentRecords += it.findAll([sort: 'lastUpdated', order: 'desc', max: 2])
+            recentRecords += it.findAll([sort: 'lastUpdated', order: 'desc', max: 7])
+	//    recentRecords += it.findAllByLastUpdatedGreaterThan(new Date() - 7, [max: 12])
         }
+        
+        recentRecords = recentRecords.sort({it.lastUpdated}).reverse()
+	//recentRecords.unique()
 
         render(template: '/gTemplates/recordListing', model: [
-                title: 'Recent records',
+                title: 'Timeline',
                 list: recentRecords
         ])
     }
@@ -3582,5 +3591,72 @@ def addContactToRecord() {
     def commandNotes(){
         def r = ['info': CommandPrefix.get(params.q)?.notes]
         render(r as JSON)
+    }
+    
+    
+    def getIsbnInfo(String line){
+     
+      def isbn
+       try {
+                        java.util.regex.Matcher matcher = line =~ /(\d{13}|\d{12}X|\d{12}x|\d{9}X|\d{9}x|\d{10})[^\d]*/
+                        // todo: fix it to be exact match, anythwere in the filename
+                            isbn = matcher[0][1]
+                            
+                    def b = Book.findByIsbn(isbn)
+                    if (isbn && b)
+		      render 'Dup ' + b.id
+		      else if (isbn)
+			render isbn
+			else '-'
+			  
+                    }
+                    catch (Exception e) {
+                        
+                        render '-'
+                    }
+                    
+                    
+			
+                    
+                    
+                    
+                    
+                    
+                    
+    }
+    
+    def verifySmartFileName(String line){
+     
+          def properties
+                try {
+                    properties = transformMcsNotation(line)['properties']
+               
+    def n = grailsApplication.classLoader.loadClass(entityMapping[line.split(' ')[0].toUpperCase()]).newInstance()
+    
+                if (!properties) {
+                    render("error")
+                    
+                } else {
+                   n.properties = properties
+                   
+
+                    if (!n.validate()) {
+
+                        render('error')
+                        println('record has error')
+                    }
+                    
+                    else render ("correct")
+                }
+               
+
+                 } catch (Exception e) {
+                    render("error")
+		//    e.printStackTrace()
+                 //return   
+                }
+                //render("correct")
+                
+      
     }
 }

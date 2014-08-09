@@ -40,21 +40,21 @@
 
     <g:each in="${app.IndexCard.findAllByEntityCodeAndRecordId(recordEntityCode, recordId, [sort: 'dateCreated', order: 'desc'])}"
             var="c">
-        <g:render template="/gTemplates/box" model="[record: c]"/>
+        <g:render template="/gTemplates/recordSummary" model="[record: c]"/>
     </g:each>
 </g:if>
 
 <g:if test="${writingId && Writing.get(writingId) != null}">
     <g:each in="${app.IndexCard.findAllByWriting(Writing.get(writingId), [sort: 'dateCreated', order: 'asc'])}"
             var="c">
-        <g:render template="/gTemplates/box" model="[record: c]"/>
+        <g:render template="/gTemplates/recordSummary" model="[record: c]"/>
     </g:each>
 </g:if>
 
 <g:if test="${bookId && Book.get(bookId) != null}">
 
     <g:each in="${app.IndexCard.findAllByBook(Book.get(bookId), [sort: 'dateCreated', order: 'asc'])}" var="c">
-        <g:render template="/gTemplates/box" model="[record: c]"/>
+        <g:render template="/gTemplates/recordSummary" model="[record: c]"/>
     </g:each>
 </g:if>
 

@@ -85,7 +85,9 @@
 
 
 <g:if test="${record.class.declaredFields.name.contains('startDate') && record.startDate}">
+    <span title="${record.startDate?.format(OperationController.getPath('datetime.format'))}">
     ${record.startDate?.format(OperationController.getPath('date.format'))}
+    </span>
 </g:if>
 
 
@@ -184,8 +186,8 @@
 
 
   
-    <g:if test="${record.source}">
-        <span style="color: brown">${record.source}</span>
+    <g:if test="${record.source}">        
+        <i style="font-size: smaller"><pkm:summarize text="${record.source}" length="30"/></i>
     </g:if>
     <g:if test="${!record.summary}">
 
@@ -193,7 +195,7 @@
     </g:if>
     
      <g:if test="${record.sourceFree}">
-       <pkm:summarize text="${record.sourceFree}" length="40"/>
+       <i style="font-size: smaller"><pkm:summarize text="${record.sourceFree}" length="30"/></i>
     </g:if>
     
 
@@ -257,7 +259,8 @@
     </g:if>
 
     <g:if test="${record.url}">
-        ${record.url}
+        
+        <i style="font-size: smaller"><pkm:summarize text="${record.url}" length="30"/></i>
     </g:if>
 
 </g:if>

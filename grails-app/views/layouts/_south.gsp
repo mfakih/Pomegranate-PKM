@@ -188,6 +188,7 @@ Selected
 </ul>
 
 <div id="notificationArea"></div>
+<div style="display: none" id="notificationAreaHidden"></div>
 
 
 %{--<div id="dialog" title="Basic dialog">--}%

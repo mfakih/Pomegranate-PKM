@@ -49,7 +49,8 @@
 %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'ui.achtung-min.css')}"/>--}%
 
 
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'prettyPhoto.css')}"/>
+<!--link rel="stylesheet" href="${resource(dir: 'css', file: 'prettyPhoto.css')}"/-->
+
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-1.11.0_min.js')}"></script>
 
@@ -83,7 +84,7 @@
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'icheck.js')}"></script>--}%
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.continuousCalendar-latest.js')}"></script>
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script>
+<!--script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script-->
 <script type="text/javascript" src="${resource(dir: 'js', file: 'raphael-min.js')}"></script>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'morris.js')}"></script>
 
@@ -240,6 +241,8 @@
 
 //        jQuery('#searchForm').load('generics/hqlSearchForm/T')
 
+        jQuery('#centralArea').load('generics/recentRecords')
+
 //        jQuery('#quickAddTextField').select();
 //        jQuery('#quickAddTextField').focus();
 
@@ -292,8 +295,8 @@
         Mousetrap.bindGlobal('esc', function (e) {
 //            jQuery("html, body").animate({ scrollTop: 0 }, "fast");
             jQuery('#centralArea').html('');
-            jQuery('#quickAddTextField').focus();
-            jQuery('#quickAddTextField').select();
+            jQuery('#quickAddTextFieldBottomTop').focus();
+            jQuery('#quickAddTextFieldBottomTop').select();
 //            jQuery('#quickAddTextField').scrollTop(0);
         });
 

@@ -153,6 +153,17 @@
 
         </li>
         
+        
+<li>
+        <g:remoteLink controller="report" action="homepageSavedSearches"
+                    
+                      update="centralArea" title="Homepage saved searches">
+            <span class="ui-icon ui-icon-calendar"></span>
+
+            Homepage saved searched
+        </g:remoteLink>
+
+        </li>
 
 
 

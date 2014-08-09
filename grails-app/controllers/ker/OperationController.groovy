@@ -496,12 +496,12 @@ class OperationController {
 
         if (f.exists()) {
             response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/octet-stream")
+            //response.setContentType("application/octet-stream")
 //            response.setHeader("Content-disposition", "attachment; filename=\"" + finaln + "\"")
 //            response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + finaln);
 
             response.setHeader("Content-Disposition",
-                    "attachment;filename*=UTF-8''${URLEncoder.encode(finaln, 'UTF-8').replaceAll(/\+/, '%20')}")
+                    "inline;filename*=UTF-8''${URLEncoder.encode(finaln, 'UTF-8').replaceAll(/\+/, '%20')}")
 
             // todo post
 //                response.setHeader("Content-disposition", "attachment; filename=\"${filename}\"")

@@ -324,5 +324,8 @@ class ReportController {
      render(template: '/layouts/achtung', model: [message: "The full card will be shown in future listings"])
     }
 
+    def homepageSavedSearches(){
+      render (template: '/reports/homepageSavedSearches')
+    }
 
 } // end of class

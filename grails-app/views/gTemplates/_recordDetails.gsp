@@ -12,6 +12,109 @@
 
 <div class="recordDetailsBody" style="margin-left: 5px;" id="detailsRegion${entityCode}${record.id}">
 
+
+
+<g:if test="${entityCode.length() == 1}">
+<div id="relationshipRegion${entityCode}${record.id}">
+    <g:render template="/gTemplates/relationships" model="[record: record, entity: entityCode]"/>
+</div>
+    </g:if>
+
+
+
+
+%{-- todo check <g:each in="${app.IndexCard.findAllByEntityCodeAndRecordId(entityCode, record.id)}" var="c">--}%
+    %{--<g:render template="/gTemplates/recordSummary" model="[record: c]"/>--}%
+%{--</g:each>--}%
+
+
+<g:if test="${entityCode == 'L'}">
+
+    <g:render template="/gTemplates/recordListing"
+              model="[list: Payment.findAllByCategory(record, [sort: 'date', order: 'desc'])]"/>
+
+</g:if>
+
+<g:elseif test="${entityCode == 'K'}">
+
+    <div id="graph${record.id}" style="width: 500px; height: 200px; margin: 3px auto 0 auto;"></div>
+
+    <script type="text/javascript">
+
+        var day_data = [
+            <% IndicatorData.findAllByIndicator(record).eachWithIndex(){ h, i -> if (i != IndicatorData.countByIndicator(record) - 1) { %>
+            {"date": "${h.date.format('yyyy-MM-dd')}", "Value": ${h.value}},
+            <% } else { %>
+            {"date": "${h.date.format('yyyy-MM-dd')}", "Value": ${h.value}}
+            <% }}  %>
+            //        {"period":"2012-09-10", "pln total":12, "pln completed":10}
+        ];
+        Morris.Line({
+            element: 'graph${record.id}',
+            data: day_data,
+            xkey: 'date',
+            ykeys: ['Value'],
+            ymin: 'auto',
+            hideHover: 'true',
+            labels: ['Value'],
+            /* custom label formatting with `xLabelFormat` */
+            xLabelFormat: function (d) {
+                return  d.getDate() + '.' + (d.getMonth() + 1) //+ '/' + d.getDate() + '/' + d.getFullYear();
+            },
+            /* setting `xLabels` is recommended when using xLabelFormat */
+            xLabels: 'day'
+        });
+
+    </script>
+
+
+    <g:render template="/gTemplates/recordListing"
+              model="[list: IndicatorData.findAllByIndicator(record, [sort: 'date', order: 'desc'])]"/>
+
+</g:elseif>
+
+<g:elseif test="${entityCode == 'P'}">
+
+    <g:if test="${record.completedOn}">
+        Completed on: ${record.completedOn?.format('dd.MM.yyyy')}
+    </g:if>
+    <g:if test="${record.task}">
+        <g:render template="/gTemplates/recordSummary" model="[record: record.task]"/>
+    </g:if>
+    <g:if test="${record.goal}">
+        <g:render template="/gTemplates/recordSummary" model="[record: record.goal]"/>
+    </g:if>
+</g:elseif>
+
+<g:elseif test="${entityCode == 'T'}">
+    <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByTask(record)]"/>
+    <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByTask(record)]"/>
+</g:elseif>
+
+<g:elseif test="${entityCode == 'R'}">
+ 
+ 
+        <g:render template="/gTemplates/recordListing" model="[list: Excerpt.findAllByBook(record)]"/>
+    <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByBook(record)]"/>
+    <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByBook(record)]"/>
+
+</g:elseif>
+
+<g:elseif test="${entityCode == 'E'}">
+    <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByExcerpt(record)]"/>
+    <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByExcerpt(record)]"/>
+
+</g:elseif>
+
+<g:elseif test="${entityCode == 'G'}">
+    %{--<h4>J & P</h4>--}%
+    <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByGoal(record)]"/>
+    <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByGoal(record)]"/>
+
+</g:elseif>
+
+
+
        <table style="border-collapse: collapse; width: 99%" border="0">
            <tr style="width: 99%">
                <td style="width: 60%; vertical-align: top">
@@ -19,25 +122,43 @@
                
                
 
-    <g:if test="${record.entityCode() == 'R' && record.type.code == 'sns'}">
+    <g:if test="${record.entityCode() == 'R'}">
 <pkm:listPictures fileClass="snsFile"
-                  folder="${app.parameters.ResourceType.findByCode('sns').newFilesPath}/${(record.id / 100).toInteger()}/${record.id}"
+                  folder="${record.type.newFilesPath}/${(record.id / 100).toInteger()}/${record.id}"
                   initial=""/>
 
+                  <pkm:listPictures fileClass="snsFile"
+                  folder="${record.type.repositoryPath}/${(record.id / 100).toInteger()}/${record.id}"
+                  initial=""/>
+
+                  
                   </g:if>
 
                   
-                  <pkm:listPictures fileClass="snsFile"
-                  
+                  <pkm:listPictures fileClass="snsFile"                  
                   folder="${OperationController.getPath('module.sandbox.' + record.entityCode() + '.path')}/${record.id}"
                   initial=""/>
                   
+                 <pkm:listPictures fileClass="snsFile"                  
+                  folder="${OperationController.getPath('module.repository.' + record.entityCode() + '.path')}/${record.id}"
+                  initial="${record.id}"/>
+                  
+
+       
+                  <pkm:listPictures fileClass="snsFile"                  
+                  folder="${OperationController.getPath('module.sandbox.' + record.entityCode() + '.path')}"
+                  initial="${record.id}"/>
+                  
+                 <pkm:listPictures fileClass="snsFile"                  
+                  folder="${OperationController.getPath('module.repository.' + record.entityCode() + '.path')}"
+                  initial="${record.id}"/>
                   
 
                   
                   
+                  
                      <g:if test="${'N'.contains(entityCode)}">
-                   Source: <a  href="${record.sourceFree}">${StringUtils.abbreviate(record.sourceFree,30)} </a>
+                   <i> <a  href="${record.sourceFree}">${StringUtils.abbreviate(record.sourceFree,30)} </a></i>
                      </g:if>
 
 <g:if test="${'T'.contains(entityCode)}">
@@ -63,6 +184,11 @@
 <div id="panelComments${entityCode}Record${record.id}">
 <g:render template="/indexCard/add" model="[recordId: record.id, recordEntityCode: entityCode]"/>
 </div>
+
+
+<g:set var="entityCode"
+       value="${record.metaClass.respondsTo(record, 'entityCode') ? record.entityCode() : record.class?.name?.split(/\./).last()}"/>
+
 
 
 
@@ -262,7 +388,7 @@
 </g:if>
 
            <g:if test="${entityCode.length() == 1}">
-<b>Relate</b>
+<br/><b>Relate</b>
 <br/>
 <span id="addRelationship${record.id}" style="display: inline;">
     <g:render template="/gTemplates/addRelationships"
@@ -450,104 +576,7 @@
 
 </div>
 
-<g:if test="${entityCode.length() == 1}">
-<div id="relationshipRegion${entityCode}${record.id}">
-    <g:render template="/gTemplates/relationships" model="[record: record, entity: entityCode]"/>
-</div>
-    </g:if>
 
-
-
-
-%{-- todo check <g:each in="${app.IndexCard.findAllByEntityCodeAndRecordId(entityCode, record.id)}" var="c">--}%
-    %{--<g:render template="/gTemplates/recordSummary" model="[record: c]"/>--}%
-%{--</g:each>--}%
-
-
-<g:if test="${entityCode == 'L'}">
-
-    <g:render template="/gTemplates/recordListing"
-              model="[list: Payment.findAllByCategory(record, [sort: 'date', order: 'desc'])]"/>
-
-</g:if>
-
-<g:if test="${entityCode == 'K'}">
-
-    <div id="graph${record.id}" style="width: 500px; height: 200px; margin: 3px auto 0 auto;"></div>
-
-    <script type="text/javascript">
-
-        var day_data = [
-            <% IndicatorData.findAllByIndicator(record).eachWithIndex(){ h, i -> if (i != IndicatorData.countByIndicator(record) - 1) { %>
-            {"date": "${h.date.format('yyyy-MM-dd')}", "Value": ${h.value}},
-            <% } else { %>
-            {"date": "${h.date.format('yyyy-MM-dd')}", "Value": ${h.value}}
-            <% }}  %>
-            //        {"period":"2012-09-10", "pln total":12, "pln completed":10}
-        ];
-        Morris.Line({
-            element: 'graph${record.id}',
-            data: day_data,
-            xkey: 'date',
-            ykeys: ['Value'],
-            ymin: 'auto',
-            hideHover: 'true',
-            labels: ['Value'],
-            /* custom label formatting with `xLabelFormat` */
-            xLabelFormat: function (d) {
-                return  d.getDate() + '.' + (d.getMonth() + 1) //+ '/' + d.getDate() + '/' + d.getFullYear();
-            },
-            /* setting `xLabels` is recommended when using xLabelFormat */
-            xLabels: 'day'
-        });
-
-    </script>
-
-
-    <g:render template="/gTemplates/recordListing"
-              model="[list: IndicatorData.findAllByIndicator(record, [sort: 'date', order: 'desc'])]"/>
-
-</g:if>
-
-<g:if test="${entityCode == 'P'}">
-
-    <g:if test="${record.completedOn}">
-        Completed on: ${record.completedOn?.format('dd.MM.yyyy')}
-    </g:if>
-    <g:if test="${record.task}">
-        <g:render template="/gTemplates/recordSummary" model="[record: record.task]"/>
-    </g:if>
-    <g:if test="${record.goal}">
-        <g:render template="/gTemplates/recordSummary" model="[record: record.goal]"/>
-    </g:if>
-</g:if>
-
-<g:if test="${entityCode == 'T'}">
-    <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByTask(record)]"/>
-    <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByTask(record)]"/>
-</g:if>
-
-<g:if test="${entityCode == 'R'}">
- %{--<h4>J & P</h4>--}%
-    <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByBook(record)]"/>
-    <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByBook(record)]"/>
-
-</g:if>
-
-
-<g:if test="${entityCode == 'E'}">
-    %{--<h4>J & P</h4>--}%
-    <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByExcerpt(record)]"/>
-    <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByExcerpt(record)]"/>
-
-</g:if>
-
-<g:if test="${entityCode == 'G'}">
-    %{--<h4>J & P</h4>--}%
-    <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByGoal(record)]"/>
-    <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByGoal(record)]"/>
-
-</g:if>
 
 %{--<g:render template="/indexCard/add"--}%
 %{--model="[indexCardInstance: new IndexCard(), recordEntityCode: entityCode, recordId: record.id]"/>--}%

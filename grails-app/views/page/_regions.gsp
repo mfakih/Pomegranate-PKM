@@ -124,7 +124,7 @@
 %{--//                    this.options.appendTo = ".autoCompleterItem";--}%
 %{--//                </script>--}%
 
-                <g:render template='/reports/homepageSavedSearches'/>
+                <!--g:render template='/reports/homepageSavedSearches'/-->
 
             </div>
 

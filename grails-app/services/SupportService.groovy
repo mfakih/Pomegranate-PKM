@@ -529,7 +529,7 @@ class SupportService {
                 }
 
             }
-            println b.id + ': ' + b.dump()
+            //println b.id + ': ' + b.dump()
             addCover(b.id)
 
             if (b.isbn) {
