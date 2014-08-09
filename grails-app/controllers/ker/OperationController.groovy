@@ -942,7 +942,7 @@ puts "Hello, World!"
             }
         }
          else if (field == 'course') {
-            Course.findAll([sort: 'code']).each() {
+            Course.findAll([sort: 'summary']).each() {
                 responce += [value: it.id,
                         text: it.summary]
             }

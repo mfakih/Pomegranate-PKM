@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'fg.menu.css')}"/>
 
 
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main2.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}"/>
 
 
     <script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'fg.menu.js')}">

@@ -26,7 +26,7 @@
 
     <!-- To make the page refresh every 120 seconds -->
 
-    <meta http-equiv="refresh" content="120">
+    <meta http-equiv="refresh" content="1200">
 
 
 
