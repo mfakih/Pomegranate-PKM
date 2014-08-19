@@ -94,7 +94,7 @@ Selected
     &nbsp;
     &nbsp;
         <g:remoteLink controller="generics" action="deselectAll"
-                      update="centralArea"
+                      update="notificationAreaHidden"
                       before="if(!confirm('Are you sure you want to deselect all selected records from all current and previous listings? Click on Selected records to see your selections')) return false"
                       title="Clear all current and past selections">
             clear

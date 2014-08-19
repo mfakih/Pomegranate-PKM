@@ -72,7 +72,7 @@ class PkmTagLib {
                     OperationController.getPath('module.repository.' + module + '.path')
             ]
             folders.each() { folder ->
-                if (new File(folder).exists()) {
+                if (folder && new File(folder).exists()) {
                     new File(folder).eachFileMatch(~/${recordId}[a-z][\S\s]*\.[\S\s]*/) {
                         filesList.add(it)
                     }
@@ -84,7 +84,7 @@ class PkmTagLib {
                      OperationController.getPath('pictures.repository.path') + '/' + module + '/' + recordId
             ]
             folders.each() { folder ->
-                if (new File(folder).exists()) {
+                if (folder && new File(folder).exists()) {
                     new File(folder).eachFileMatch(~/[\S\s]*\.[\S\s]*/) {
                         filesList.add(it)
                     }
@@ -140,7 +140,7 @@ class PkmTagLib {
         }
         catch (Exception e) {
             out << ''
-            e.printStackTrace()
+            print 'Problem in listing record folder: ' + e.printStackTrace()
         }
         def output = "<ul style='padding: 5px; line-height: 20px;list-style: none; font-weight: normal; font-family: tahoma; font-size: 12px; text-decoration: none;'>"
         def c = 1
@@ -219,7 +219,7 @@ ${prettySizeMethod(i.size())}
         }
         catch (Exception e) {
             out << ''
-            e.printStackTrace()
+            print 'Problem: ' + e.printStackTrace()
 
         }
 
@@ -277,8 +277,8 @@ source src="${createLink(controller: 'operation', action: 'download', id: fileId
             out << ''
         }
         catch (Exception e) {
-            out << 'ing folder ' + folder
-            e.printStackTrace()
+            out << 'Problem in folder ' + folder
+            print 'Problem ' + e
 
         }
 
@@ -336,8 +336,8 @@ source src="${createLink(controller: 'operation', action: 'download', id: fileId
             out << ''
         }
         catch (Exception e) {
-            out << 'ing folder ' + folder
-            e.printStackTrace()
+            out << 'Problem in folder ' + folder
+            print 'Problem ' + e
 
         }
 
@@ -401,8 +401,8 @@ source src="${createLink(controller: 'operation', action: 'download', id: fileId
             out << ''
         }
         catch (Exception e) {
-            out << 'Folder: ' + folder
-            e.printStackTrace()
+            out << 'Folder: ' + folder + ' has problem ' + e
+
 
         }
 
@@ -561,7 +561,7 @@ source src="${createLink(controller: 'operation', action: 'download', id: fileId
                 out << count
             }
         } catch (Exception e) {
-            println e.printStackTrace()
+            print 'Problem ' + e
             out << '?'
         }
         out << '<br/>'

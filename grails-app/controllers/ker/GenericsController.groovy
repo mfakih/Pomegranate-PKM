@@ -2818,7 +2818,10 @@ def addContactToRecord() {
                                     core.matches(/^\d\d\d[\_][0-9]{1,4}[\.][0-9]{2}$/)){
                                 properties[dateField] = OperationController.fromWeekDateAsDateTimeFullSyntax(core)
                             }
-                            else {
+                            else if (core.contains('_')){
+                                def format = Setting.findByName('datetime.add.format')
+                                properties[dateField] = Date.parse(format ? format.value : 'dd.MM.yyyy_HHmm', core)
+                            } else {
                             def format = Setting.findByName('date.format')
                             properties[dateField] = Date.parse(format ? format.value: 'dd.MM.yyyy', core)
                             }

@@ -49,7 +49,7 @@
 %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'ui.achtung-min.css')}"/>--}%
 
 
-<!--link rel="stylesheet" href="${resource(dir: 'css', file: 'prettyPhoto.css')}"/-->
+%{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'prettyPhoto.css')}"/>--}%
 
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-1.11.0_min.js')}"></script>
@@ -84,7 +84,7 @@
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'icheck.js')}"></script>--}%
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.continuousCalendar-latest.js')}"></script>
 
-<!--script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script-->
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.prettyPhoto.js')}"></script>--}%
 <script type="text/javascript" src="${resource(dir: 'js', file: 'raphael-min.js')}"></script>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'morris.js')}"></script>
 

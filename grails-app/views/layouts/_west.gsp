@@ -93,11 +93,10 @@
     <h4><a href="#">Main reports</a></h4>
     <div>
 
-    <ul>
+    <ul style="padding-left: 17px; list-style-type: circle">
     
         <g:if test="${OperationController.getPath('kanban.enabled')?.toLowerCase() == 'yes' ? true : false}">
     <li>        <g:link controller="page" action="kanbanCrs"
-                    class=" fg-button fg-button-icon-left ui-widget ui-state-default ui-corner-all"
                     target="_blank"
                     title="Kanban">
                 <span class="ui-icon ui-icon-check"></span>
