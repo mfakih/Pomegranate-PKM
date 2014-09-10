@@ -11,7 +11,7 @@
 .northRegion {
     padding: 0px; 
     margin: 0px;
-    background: #2F4F4F !important;
+    background: #606666 !important;
 }
 
 .commandBarRegion {
@@ -19,7 +19,7 @@
 }
 
 .southRegion {
-    background: #2F4F4F !important;
+    background: #606666 !important;
     color: white;
 }
 

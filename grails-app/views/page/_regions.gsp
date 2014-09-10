@@ -1,4 +1,4 @@
-<%@ page import="ker.OperationController" %>
+<%@ page import="mcs.Course; mcs.Journal; mcs.Planner; app.IndexCard; mcs.Task; ker.OperationController" %>
 <!-- manually attach allowOverflow method to pane -->
 <div class="ui-layout-north northRegion">
     <g:render template="/layouts/north" model="[]"/>
@@ -43,8 +43,36 @@
                 </div>
 
 
-            	<h3><a href="#">Help</a></h3>
+            	<h3><a href="#">Dashboard</a></h3>
 			<div>
+                <h1>Active courses</h1>
+
+                <g:each in="${Course.findAllByBookmarked(true)}" var="c">
+                    <b>${c.code}</b>
+                    ${c.summary}
+                    <br/>
+                </g:each>
+
+                <h1>Last 24 hours' records</h1>
+
+                ${Task.countByDateCreatedGreaterThan(new Date() - 1)} new tasks <br/>
+                ${Task.countByCompletedOnGreaterThan(new Date() - 1)} completed tasks <br/>
+                ${IndexCard.countByDateCreatedGreaterThan(new Date() - 1)} notes <br/>
+                ${Journal.countByDateCreatedGreaterThan(new Date() - 1)} journal<br/>
+                ${Planner.countByDateCreatedGreaterThan(new Date() - 1)} planner
+                   <h1>Last 7 days' records</h1>
+
+                ${Task.countByDateCreatedGreaterThan(new Date() - 7)} new tasks <br/>
+                ${Task.countByCompletedOnGreaterThan(new Date() - 7)} completed tasks <br/>
+                ${IndexCard.countByDateCreatedGreaterThan(new Date() - 7)} notes <br/>
+                ${Journal.countByDateCreatedGreaterThan(new Date() - 7)} journal<br/>
+                ${Planner.countByDateCreatedGreaterThan(new Date() - 7)} planner
+
+
+
+
+
+
                 <h1>Shortcut Keys</h1>
 
 
@@ -95,7 +123,7 @@
 
             <div style="-moz-column-count: 3">
 
-                <div id="hintArea" style="font-size: 10px; color: #255b17; font-style: italic; height: 40px;"></div>
+                <div id="hintArea" style="font-size: 10px; color: #255b17; font-style: italic; height: 20px;"></div>
             </div>
 
             <div id="logRegion"></div>

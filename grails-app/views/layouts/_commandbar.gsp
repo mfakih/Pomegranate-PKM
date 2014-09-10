@@ -1,6 +1,10 @@
 <%@ page import="app.parameters.CommandPrefix" %>
-<div id="commandBars">
 
+
+<a style="font-size: smaller; color: gray; float: right;" onclick="jQuery('#commandBars').removeClass('navHidden')">Show&nbsp; </a>
+
+<div id="commandBars">
+    <a onclick="jQuery('#commandBars').addClass('navHidden')" style="font-size: smaller; color: gray; float: right;">Hide &nbsp;</a>
     <div id="top"></div>
 
     <g:formRemote name="batchAdd2"

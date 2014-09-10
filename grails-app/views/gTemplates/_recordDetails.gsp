@@ -124,11 +124,11 @@
 
     <g:if test="${record.entityCode() == 'R'}">
 <pkm:listPictures fileClass="snsFile"
-                  folder="${record.type.newFilesPath}/${(record.id / 100).toInteger()}/${record.id}"
+                  folder="${record.type?.newFilesPath}/${(record.id / 100).toInteger()}/${record.id}"
                   initial=""/>
 
                   <pkm:listPictures fileClass="snsFile"
-                  folder="${record.type.repositoryPath}/${(record.id / 100).toInteger()}/${record.id}"
+                  folder="${record.type?.repositoryPath}/${(record.id / 100).toInteger()}/${record.id}"
                   initial=""/>
 
                   

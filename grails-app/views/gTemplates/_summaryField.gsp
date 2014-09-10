@@ -67,14 +67,15 @@
 
 <g:if test="${record.class.declaredFields.name.contains('type') && entityCode.length() == 1}">
     <g:set value="type" var="field"></g:set>
-
+<span style="min-width: 60px;">
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
-       style="${record.type ? record.type?.style : ''};font-size: 11px; font-weight: bold"
+       style="${record.type ? record.type?.style : ''};font-size: 11px; font-weight: bold; float: right; margin-left: 5px;"
        data-name="${field}-${entityCode}"
        data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field]?.code ?: 'No ' + field}
     </a>
+    </span>
     <script>
         $('#${field}${record.id}').editable();
     </script>
@@ -317,7 +318,7 @@
 
 
 <g:if test="${record.class.declaredFields.name.contains('description')}">
-    <span style="font-size: 12px; font-style: italic; color: #4A5C69">
+<br/>    <span style="font-size: 12px; font-style: italic; color: #4A5C69">
         <pkm:summarize text="${record?.description?.replace('Product Description', '')?.replaceAll("\\<.*?>", "")}"
                        length="60"/>
     </span>
@@ -364,7 +365,7 @@
 
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
        data-name="${field}-${entityCode}"
-       style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic"
+       style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic;  float: right; padding-right: 4px;"
        data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field] ? record[field]?.summary : 'No ' + field}
@@ -381,7 +382,7 @@
 
     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
        data-name="${field}-${entityCode}"
-       style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic"
+       style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic;  float: right; padding-right: 4px;"
        data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
         ${record[field] ? record[field]?.summary : 'g'}
@@ -409,14 +410,14 @@
 
     <g:set value="course" var="field"></g:set>
 
-    <a href="#" id="${field}${record.id}" class="${field}"
+    <a href="#" id="${field}${record.id}" class="${field}" 
 
        data-type="select" data-value="${record[field]?.id}"
 
        data-name="${field}-${record.entityCode()}"
        data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}"
-       style="font-size: 11px; font-weight: bold;">
+       style="font-size: 11px; font-weight: bold; float: right; padding-right: 4px;">
         ${record[field]?.code ?: '?'}
 
     </a>

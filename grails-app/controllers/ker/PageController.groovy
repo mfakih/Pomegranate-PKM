@@ -180,7 +180,7 @@ My in-progress book at [LeanPub](https://leanpub.com/pomegranate) outlines the m
 
     def calendar() {
 
-        render(view: '/reports/calendar', model: [])
+        render(view: '/reports/calendar', model: [savedSearchId: params.id])
     }
 
     def kanban() {

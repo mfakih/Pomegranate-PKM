@@ -36,7 +36,7 @@
                 defaultEventMinutes: 60,
                 firstDay: 1,
                 slotMinutes: 60,
-                defaultView: 'agendaWeek',
+                defaultView: 'month',
                 weekNumbers: true,
                 
                 axisFormat: 'HH(:mm)',

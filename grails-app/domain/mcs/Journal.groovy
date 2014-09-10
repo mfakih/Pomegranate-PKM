@@ -100,7 +100,7 @@ class Journal implements Comparable {  // entity id = 125
         level(inList: ['l', 'y', 'e', 'M', 'r', 'w', 'd', 'm', 'i'])
         startDate(nullable: false)
         summary()
-        description(nullable: false, blank: false)
+        description()
 
         notes()
         dateCreated()

@@ -69,7 +69,7 @@ environments {
     }
     development {
         grails.logging.jul.usebridge = true
-        grails.serverURL = "https://localhost:2015/${appName}"
+        grails.serverURL = "https://localhost:2014/${appName}"
     }
     test {
 //        grails.serverURL = "http://localhost:2008/${appName}"
