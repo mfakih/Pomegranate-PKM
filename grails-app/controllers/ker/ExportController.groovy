@@ -170,12 +170,18 @@ class ExportController {
 
     def calendarEvents3() {
         def events = []
+
         def savedSearch = SavedSearch.get(params.id)
-        Task.executeQuery(savedSearch.query + " between ? and ?",
+
+        if ('JP'.contains(savedSearch.entity)){
+        Task.executeQuery(savedSearch.query + " and startDate between ? and ?",
                 [new Date(Long.parseLong(params.start) * 1000), new Date(Long.parseLong(params.end) * 1000)]).each() {
+
+
             def title = //' [' + it.type?.code + '] ' +
-                    (it.task ? 'T-' + StringUtils.abbreviate(it.task?.summary, 60) : '') +
-                    (it.goal ? 'G-' + it.goal?.code + ' ' + StringUtils.abbreviate(it.goal?.summary, 80) : '') +
+                    (it.task ? 'T-' + StringUtils.abbreviate(it.task?.summary, 60) + ' ' : '') +
+                    (it.goal ? 'G-' + it.goal?.code + ' ' + StringUtils.abbreviate(it.goal?.summary, 80) + ' ' : '') +
+                    (it.course ? '[' + it.course?.code  + '] ' : '') +
                     (it.summary ? it.summary + ' / ' : '') +
                     (it.description ? StringUtils.abbreviate(it.description, 40) : ' ')
             events.add([id: it.id,
@@ -185,12 +191,17 @@ class ExportController {
                     title: title,
                     backgroundColor: it.type?.color ?: '#3A87AD',
                     textColor: '#ffffff',
-                    url: OperationController.getPath('app.URL') + '/page/record/' + it.id + '?entityCode=J',
+                    url: OperationController.getPath('app.URL') + '/page/record/' + it.id + '?entityCode=' + savedSearch.entity,
                     allDay: (it.level != 'm' || it.startDate.hours < 6 ? true : false)])
         }
+
+        }
+
+
         render events as JSON
+
     }
-    def calendarEvents2() {
+ def calendarEvents2() {
         def events = []
 
 //        if (params.jp == 'J') {

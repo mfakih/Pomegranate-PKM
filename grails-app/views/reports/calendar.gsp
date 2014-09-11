@@ -19,7 +19,7 @@
 
     <script type="text/javascript" src="${resource(dir: 'js', file: 'fullcalendar.js')}"></script>
 
-    <title>Cal ${title}</title>
+    <title>${title}</title>
 
     <script language="javascript" type="text/javascript">
         jQuery(document).ready(function () {

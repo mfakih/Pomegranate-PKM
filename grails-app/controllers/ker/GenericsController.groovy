@@ -3281,6 +3281,7 @@ def addContactToRecord() {
 
                 if (params.reportType == 'cal')
                     render(view: '/reports/calendar', model: [
+                            id: id,
                             savedSearchId: id,
                             title: savedSearch.summary])
             else if (params.reportType == 'tab'){

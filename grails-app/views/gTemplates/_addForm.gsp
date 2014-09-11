@@ -327,6 +327,13 @@
         </td>
     </g:if>
 
+    <g:if test="${fields.contains('metaType')}">
+        <td>
+
+            <g:textField id="metaType" name="metaType" placeholder="metaType" style="width: 50px;" value="${record?.metaType}"/>
+        </td>
+    </g:if>
+
 <g:if test="${fields.contains('blog')}">
         <td>
             %{-- todo <g:select name="blog.id" style="width: 150px;"--}%
@@ -394,7 +401,7 @@
 
         <g:if test="${fields.contains('entity')}">
             <td>
-            <g:textField id="entity" name="entity" placeholder="Panel" style="width: 50px;" value="${record?.entity}"/>
+            <g:textField id="entity" name="entity" placeholder="Entity" style="width: 50px;" value="${record?.entity}"/>
             </td>
         </g:if>
 

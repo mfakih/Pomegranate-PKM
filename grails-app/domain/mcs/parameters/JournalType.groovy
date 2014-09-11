@@ -30,7 +30,7 @@ class JournalType implements Comparable {  // entity id = 141
     String color
     String style
     String name
-    Integer type
+    Integer metaType
 
     Integer category
     String indicatorCode
