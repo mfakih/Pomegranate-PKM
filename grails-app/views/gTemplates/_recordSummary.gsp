@@ -145,6 +145,24 @@
 
 
     <td class="actionTd">
+
+        <a name="bookmark${record.id}${entityCode}" title="priority++"
+           value="${record.priority}"
+           onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/increasePriority/${entityCode}${record.id}')">
+            +
+        </a>
+
+<g:if test="${record.class.declaredFields.name.contains('isPrivate')}">
+
+        <a name="bookmark${record.id}${entityCode}" title="Toggle privacy"
+           value="${record.isPrivate}"
+           onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/togglePrivacy/${entityCode}-${record.id}')">
+            &empty;
+        </a>
+
+    </g:if>
+        %{--<span id="priorityRegion${entityCode}${record.id}">${record.priority}</span>--}%
+
         <g:if test="${record.class.declaredFields.name.contains('bookmarked')}">
             <g:if test="${!record.bookmarked}">
                 <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"

@@ -63,6 +63,13 @@
 
 
 
+<g:if test="${record.class.declaredFields.name.contains('isPrivate')}">
+<g:if test="${record.isPrivate}">
+    &notin;
+</g:if>
+</g:if>
+
+
 
 
 <g:if test="${record.class.declaredFields.name.contains('type') && entityCode.length() == 1}">
