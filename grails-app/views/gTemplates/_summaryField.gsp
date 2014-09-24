@@ -98,16 +98,16 @@
     </span>
 </g:if>
 
-<g:if test="${record.class.declaredFields.name.contains('dueDate') && record.dueDate}">
-    <span title="${record.dueDate?.format(OperationController.getPath('datetime.format'))}">
-    ${record.dueDate?.format(OperationController.getPath('date.format'))}
+<g:if test="${record.class.declaredFields.name.contains('endDate') && record.endDate}">
+    <span title="${record.endDate?.format(OperationController.getPath('datetime.format'))}">
+   >${record.endDate?.format(OperationController.getPath('date.format'))}
     </span>
 </g:if>
 
 
 <g:if test="${record.class.declaredFields.name.contains('completedOn') && record.completedOn}">
-  >> <span title="${record.completedOn?.format(OperationController.getPath('datetime.format'))}">
-        ${record.completedOn?.format(OperationController.getPath('date.format'))}
+  <span title="${record.completedOn?.format(OperationController.getPath('datetime.format'))}">
+       .${record.completedOn?.format(OperationController.getPath('date.format'))}
     </span>
 </g:if>
 
@@ -363,15 +363,15 @@
 
 <g:if test="${'N'.contains(entityCode)}">
 
-    <g:if test="${record.book}">
+    %{--<g:if test="${record.book}">--}%
 
-        <g:remoteLink controller="generics" action="showSummary" id="${record.book.id}"
-                      params="[entityCode: 'R']"
-                      update="below${entityCode}Record${record.id}"
-                      title="Show book">
-            ~ R-${record.book.id} ${record.book.title}.
-        </g:remoteLink>
-    </g:if>
+        %{--<g:remoteLink controller="generics" action="showSummary" id="${record.book.id}"--}%
+                      %{--params="[entityCode: 'R']"--}%
+                      %{--update="below${entityCode}Record${record.id}"--}%
+                      %{--title="Show book">--}%
+            %{--~ R-${record.book.id} ${record.book.title}.--}%
+        %{--</g:remoteLink>--}%
+    %{--</g:if>--}%
     <g:if test="${record.pages}">
         <i>pg. ${record.pages}</i>
     </g:if>

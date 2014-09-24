@@ -2320,10 +2320,10 @@ def addContactToRecord() {
 
 
         }
-//        Book.findAll([sort: 'title']).each() {
-//            responce += [id: it.id, value: 'r ' + it.id + ' ' + it.title, text:  'r ' + '' + it.id + '\n']
-//        }
-
+        Book.findAllByStatus(ResourceStatus.get(1), [sort: 'title']).each() { // only textbooks
+            responce += [id: it.id, value: 'r ' + it.id + ' ' + it.title, text:  'r ' + '' + it.id + '\n']
+        }
+//
         render responce as JSON
     }
 
