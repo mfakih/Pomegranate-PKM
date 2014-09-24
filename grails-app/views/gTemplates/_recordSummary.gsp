@@ -144,13 +144,33 @@
     </g:if>
 
 
-    <td class="actionTd">
+    <td class="actionTd showhim">
 
+
+
+        <div class="actionsButtons">
+<g:if test="${record.class.declaredFields.name.contains('priority')}">
         <a name="bookmark${record.id}${entityCode}" title="priority++"
            value="${record.priority}"
            onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/increasePriority/${entityCode}${record.id}')">
             +
         </a>
+    </g:if>
+            
+            <g:if test="${record.class.declaredFields.name.contains('endDate')}">
+        <a name="bookmark${record.id}${entityCode}" title="endDate today"
+           value="${record.endDate}"
+           onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/setEndDateToday/${entityCode}${record.id}')">
+            >
+        </a>
+    </g:if>
+<g:if test="${record.class.declaredFields.name.contains('percentCompleted')}">
+  <a name="bookmark${record.id}${entityCode}" title="percent++"
+           value="${record.percentCompleted}"
+           onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/increasePercentCompleted/${entityCode}${record.id}')">
+            %
+        </a>
+    </g:if>
 
 <g:if test="${record.class.declaredFields.name.contains('isPrivate')}">
 
@@ -161,6 +181,8 @@
         </a>
 
     </g:if>
+
+            </div>
         %{--<span id="priorityRegion${entityCode}${record.id}">${record.priority}</span>--}%
 
         <g:if test="${record.class.declaredFields.name.contains('bookmarked')}">

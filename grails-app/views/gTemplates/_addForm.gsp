@@ -172,6 +172,17 @@
         </td>
     </g:if>
     
+    <g:if test="${fields.contains('endDate')}">
+        <td>
+            <pkm:datePicker name="endDate" placeholder="Due date" value="${record?.endDate}"/>
+        </td>
+    </g:if>
+    <g:if test="${fields.contains('actualEndDate')}">
+        <td>
+            <pkm:datePicker name="actualEndDate" placeholder="End date" id="asdfasdfasf" value="${record?.actualEndDate}"/>
+        </td>
+    </g:if>
+    
      <g:if test="${fields.contains('publicationDate')}">
         <td>
             <g:textField name="publicationDate" placeholder="Publication date" value="${record?.publicationDate}"/>
@@ -424,6 +435,14 @@
             p<g:select name="priority" placeholder="Priority" style="width: 50px;"
                        from="${[1, 2, 3, 4]}"
                        value="${record?.priority}"/>
+          </td>
+        </g:if>  
+    
+    <g:if test="${fields.contains('percentCompleted')}">
+          <td>
+            %<g:select name="percentCompleted" placeholder="percentCompleted" style="width: 50px;"
+                       from="${[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}"
+                       value="${record?.percentCompleted}"/>
           </td>
         </g:if>
 

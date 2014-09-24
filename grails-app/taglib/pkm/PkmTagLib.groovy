@@ -456,26 +456,26 @@ source src="${createLink(controller: 'operation', action: 'download', id: fileId
       <input type="text" name="${fieldName}" id="${fieldId}" value="${formattedValue}" style="width:90px;" placeholder="${attrs.placeholder}" />
       <script>
     var pickerOpts = {
-    showOn: "both",
-    buttonImage: '${cal}',
-    buttonImageOnly: true,
+//    showOn: "both",
+//    buttonImage: '${cal}',
+//    buttonImageOnly: true,
     //appendText: " (dd.mm.yyyy)",
     dateFormat: "dd.mm.yy",
-    firstDay:1,
-    changeFirstDay: false,
-    changeMonth: true,
-    changeYear: true,
-    closeAtTop: true,
-    constrainInput: true,
-    duration: "fast",
+    firstDay:1
+//    changeFirstDay: false,
+//    changeMonth: true,
+//    changeYear: true,
+//    closeAtTop: true,
+//    constrainInput: true,
+//    duration: "fast",
     //minDate: "01.01.2003",
     //maxDate: "12.12.2011",
-    navigationAsDateFormat: true,
-    numberOfMonths: 1,
-    showOtherMonths: true,
-    showStatus: true,
-    showWeeks: true,
-    yearRange:"-35+3"
+//    navigationAsDateFormat: true,
+//    numberOfMonths: 1,
+//    showOtherMonths: true,
+//    showStatus: true,
+//    showWeeks: true,
+//    yearRange:"-35+3"
 
  };
     // onSelect: function(dateText, inst) { console.log('valude entered is: ' + dateText); this.value = dateText}

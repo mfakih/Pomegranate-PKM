@@ -645,7 +645,7 @@
 
 
 
-<td style="width :12px; line-height: 0.4em;">
+<td style="width :12px; line-height: 0.4em; display: none;">
 
     <g:remoteLink controller="generics" action="showIndexCards" style="display: inline;"
                   params="${[id: record.id, entityCode: entityCode]}"

@@ -59,6 +59,34 @@
 <g:render template="/gTemplates/filesListing" model="[record: record, entityCode: record.entityCode()]"/>
 
 
+<pkm:listPictures fileClass="snsFile"
+                  folder="${OperationController.getPath('module.sandbox.' + record.entityCode() + '.path')}/${record.id}"
+                  initial=""/>
+
+<pkm:listPictures fileClass="snsFile"
+                  folder="${OperationController.getPath('module.repository.' + record.entityCode() + '.path')}/${record.id}"
+                  initial="${record.id}"/>
+
+<pkm:listPictures fileClass="snsFile"
+                  folder="${OperationController.getPath('module.sandbox.' + record.entityCode() + '.path')}"
+                  initial="${record.id}"/>
+
+<pkm:listPictures fileClass="snsFile"
+                  folder="${OperationController.getPath('module.repository.' + record.entityCode() + '.path')}"
+                  initial="${record.id}"/>
+
+<pkm:listPictures fileClass="snsFile"
+                  folder="${OperationController.getPath('jrn.sns.path') + '/' + record.entityCode() + '/' + record.id}"
+                  initial=""/>
+    <pkm:listAudios fileClass="rcdFile"
+                  folder="${OperationController.getPath('jrn.rcd.path') + '/' + record.entityCode() + '/' + record.id}"
+                  initial=""/>
+    <pkm:listVideos fileClass="videoFile"
+                  folder="${OperationController.getPath('jrn.vjr.path') + '/' + record.entityCode() + '/' + record.id}"
+                  initial=""/>
+
+
+
 <g:if test="${record.entityCode().length() == 1}">
     <div style="display: inline; text-align: right;">
         <table border=0>

@@ -15,14 +15,37 @@
 </g:formRemote>
 
 <script type="text/javascript">
-    jQuery("#newRelationshipField${entity}${record.id}").find('input').autocomplete("generics/autoCompleteMainEntities", {
-        mustMatch: false, minChars: 4, highlight: false, autoFill: false,
-        delay: 100, matchSubset: 0, matchContains: 1, selectFirst: false,
-//        cacheLength:100,
-        multiple: false,
-        formatResult: function (data, p, l) {
-            return data[1]
-        }
+    %{--jQuery("#newRelationshipField${entity}${record.id}").find('input').autocomplete("generics/autoCompleteMainEntities", {--}%
+        %{--mustMatch: false, minChars: 4, highlight: false, autoFill: false,--}%
+        %{--delay: 100, matchSubset: 0, matchContains: 1, selectFirst: false,--}%
+%{--//        cacheLength:100,--}%
+        %{--multiple: false,--}%
+        %{--formatResult: function (data, p, l) {--}%
+            %{--return data[1]--}%
+        %{--}--}%
+    %{--});--}%
+
+
+    var bestPictures = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: '/pkm/generics/autoCompleteMainEntities?date=${new Date().format('ddMMyyyHHMMss')}',
+        remote: '/pkm/generics/autoCompleteMainEntities'
     });
+
+    bestPictures.initialize();
+
+    $('#newRelationshipField${entity}${record.id}').typeahead({
+        hint: true,
+        highlight: true,
+        minLength: 1
+    }, {
+        name: 'id',
+        displayKey: 'value',
+        source: bestPictures.ttAdapter()
+    });
+
+
+
 
 </script>

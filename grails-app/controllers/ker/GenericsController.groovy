@@ -773,6 +773,29 @@ ll
         render(template: '/gTemplates/recordSummary', model: [record: record])
     }
 
+    def setEndDateToday() {
+        def entityCode = params.id.substring(0, 1)
+        def id = params.id.substring(1).toLong()
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+
+       record.endDate = new Date()
+        render(template: '/gTemplates/recordSummary', model: [record: record])
+    }
+  def increasePercentCompleted() {
+        def entityCode = params.id.substring(0, 1)
+        def id = params.id.substring(1).toLong()
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+
+        if (!record.percentCompleted) {
+            record.percentCompleted = 10
+        } else if (record.percentCompleted != 100) {
+            record.percentCompleted = record.percentCompleted + 10
+        } else{
+            record.percentCompleted = 90
+        }
+        render(template: '/gTemplates/recordSummary', model: [record: record])
+    }
+
 
 
     def setRecordBlog() { //Long id, String entityCode, String blogCode
@@ -2240,11 +2263,26 @@ def addContactToRecord() {
 
 
     def autoCompleteMainEntities() {
+//        println params.dump()
         def input = params.q
-        if (input && input.contains(' ') && input.split(/[ ]+/).size() >= 2) {
+        def responce = []
+
+        Writing.findAllBySummaryLike(filter, [sort: 'summary']).each() {
+            responce += [value: 'w ' + it.id + ' ' + it.summary]
+        }
+        Goal.findAllBySummaryLike(filter, [sort: 'summary']).each() {
+            responce += [value: 'g ' + it.id + ' ' + it.summary]
+        }
+        Task.findAllBySummaryLike(filter, [sort: 'summary']).each() {
+//            responce += (it.summary + '|t' + '' + it.id + '\n')
+            responce += [value: 't ' + it.id + ' ' + it.summary]
+        }
+
+
+
+        if (1 == 2 && input && input.contains(' ') && input.split(/[ ]+/).size() >= 2) {
             def entityCode = input.split(/[ ]+/)[0].toUpperCase()
             def lastCharacter = input.split(/[ ]+/).last().substring(0, 1)
-            def responce = ''
 
             def filter
             if (input.length() > 2)
@@ -2280,9 +2318,13 @@ def addContactToRecord() {
                     break
             }
 
-            render responce
-        }
 
+        }
+//        Book.findAll([sort: 'title']).each() {
+//            responce += [id: it.id, value: 'r ' + it.id + ' ' + it.title, text:  'r ' + '' + it.id + '\n']
+//        }
+
+        render responce as JSON
     }
 
     def addRelationship = {
@@ -2297,7 +2339,7 @@ def addContactToRecord() {
         // the parent
         def parentEntityCode = params.recordB.substring(0, 1).toUpperCase()
         r.entityB = entityMapping[parentEntityCode]
-        r.recordB = params.recordB.substring(1).toLong()
+        r.recordB = params.recordB.split(' ')[1]//substring(1).toLong()
 
         def parent = grailsApplication.classLoader.loadClass(r.entityB).get(r.recordB)
 

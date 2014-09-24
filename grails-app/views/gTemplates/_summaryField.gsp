@@ -98,6 +98,20 @@
     </span>
 </g:if>
 
+<g:if test="${record.class.declaredFields.name.contains('dueDate') && record.dueDate}">
+    <span title="${record.dueDate?.format(OperationController.getPath('datetime.format'))}">
+    ${record.dueDate?.format(OperationController.getPath('date.format'))}
+    </span>
+</g:if>
+
+
+<g:if test="${record.class.declaredFields.name.contains('completedOn') && record.completedOn}">
+  >> <span title="${record.completedOn?.format(OperationController.getPath('datetime.format'))}">
+        ${record.completedOn?.format(OperationController.getPath('date.format'))}
+    </span>
+</g:if>
+
+
 
 <g:if test="${record.class.declaredFields.name.contains('book') && record.book}">
 

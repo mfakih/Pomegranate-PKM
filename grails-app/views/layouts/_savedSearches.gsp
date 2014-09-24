@@ -18,7 +18,7 @@
 
 
             <g:remoteLink controller="generics" action="executeSavedSearch"
-                          style=" color: #${count > 0 ? '003366' : (count == 0 ? 'ccc' : 'aaa')}"
+                          style=" color: #${count > 0 ? '003366' : (count == 0 ? 'ccc' : 'bbb')}"
                           id="${i.id}"
                           before="jQuery.address.value(jQuery(this).attr('href'));"
                           update="centralArea">
@@ -66,7 +66,6 @@
             </g:if>
 
 
-       <br/>
        <br/>
 
     </g:each>

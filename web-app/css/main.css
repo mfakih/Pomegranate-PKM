@@ -1552,3 +1552,10 @@ ul.ui-autocomplete.ui-menu {
 .commandMode{
     background: #ffcabf !important;
 }
+
+.actionsButtons{
+    display: none;
+}
+.showhim:hover .actionsButtons{
+    display : block;
+}
