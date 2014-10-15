@@ -1350,6 +1350,34 @@ border-radius: 2px;
     .printOnly {
         visibility: visible;
     }
+
+    .fg-button {
+        visibility: hidden;
+        display: none !important;
+    }
+    .actionTd{
+        visibility: hidden !important;
+        display: none !important;
+    }
+    .record-selection{
+        visibility: hidden !important;
+        display: none !important;
+    }
+    .status{
+        visibility: hidden !important;
+        display: none !important;
+    }
+    .course{
+        visibility: hidden !important;
+        display: none !important;
+    }
+    .writing{
+        visibility: hidden !important;
+        display: none !important;
+    }
+    .idCell {
+        visibility: hidden !important;
+    }
 }
 
 #purr-container {

@@ -212,8 +212,7 @@
         <i style="font-size: smaller"><pkm:summarize text="${record.source}" length="30"/></i>
     </g:if>
     <g:if test="${!record.summary}">
-
-        Untitled
+        ...
     </g:if>
     
      <g:if test="${record.sourceFree}">
@@ -339,10 +338,20 @@
 
 
 <g:if test="${record.class.declaredFields.name.contains('description')}">
-<br/>    <span style="font-size: 12px; font-style: italic; color: #4A5C69">
-        <pkm:summarize text="${record?.description?.replace('Product Description', '')?.replaceAll("\\<.*?>", "")}"
-                       length="60"/>
-    </span>
+<br/>
+
+        <g:if test="${params.action == 'record' && record.entityCode() == 'N'}">
+            ${record?.description?.replaceAll("\\<.*?>", "")?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}
+    </g:if>
+    <g:else>
+        <span style="font-size: 12px; font-style: italic; color: #4A5C69">
+            <pkm:summarize text="${record?.description?.replace('Product Description', '')?.replaceAll("\\<.*?>", "")}"
+                           length="60"/>
+        </span>
+    </g:else>
+
+
+
 </g:if>
 
 

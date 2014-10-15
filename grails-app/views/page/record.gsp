@@ -15,7 +15,7 @@
   - along with this program.  If not, see <http://www.gnu.org/licenses/>
   --}%
 
-<%@ page import="cmn.DataChangeAudit; ker.OperationController; app.Indicator; mcs.Goal; mcs.Task; mcs.Journal; mcs.Writing; app.IndexCard; mcs.Excerpt; mcs.Book; mcs.Course;" %>
+<%@ page import="mcs.Planner; cmn.DataChangeAudit; ker.OperationController; app.Indicator; mcs.Goal; mcs.Task; mcs.Journal; mcs.Writing; app.IndexCard; mcs.Excerpt; mcs.Book; mcs.Course;" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -32,17 +32,23 @@
 
     <r:require modules="application"/>
     %{--<r:require module="fileuploader"/>--}%
-    <r:require modules="jquery"/>
-    <r:require modules="jquery-ui"/>
+    %{--<r:require modules="jquery"/>--}%
+    %{--<r:require modules="jquery-ui"/>--}%
+%{----}%
+
+    %{--<r:layoutResources/>--}%
 
 
-    <r:layoutResources/>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-1.11.0_min.js')}"></script>
+
+
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.10.4.custom.min.js')}"></script>
 
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery-ui-1.8.22.custom.css')}"/>
 
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'raphael-min.js')}"></script>
-    <script type="text/javascript" src="${resource(dir: 'js', file: 'morris.js')}"></script>
+    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'raphael-min.js')}"></script>--}%
+    %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'morris.js')}"></script>--}%
 
 
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'fg.menu.css')}"/>
@@ -51,16 +57,8 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}"/>
 
 
-    <script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'fg.menu.js')}">
 
-    </script>
-
-        %{--jQuery(document).ready(function () {--}%
 %{----}%
-            %{--jQuery("#tabsTask${record.id}").tabs({      });--}%
-        %{--});--}%
-%{--//    </script>--}%
-
 </head>
 
 <body style="margin:10px;">
@@ -82,7 +80,7 @@
 <br/>
 <br/>
 <g:if test="${record.entityCode() == 'R'}">
-    <h2>Book page</h2>
+    <h2>Book highlights</h2>
 </g:if>
 
 <g:if test="${record.entityCode() == 'G'}">
@@ -104,7 +102,7 @@
 <br/>
 
 
-<div id="tabsTask${record.id}">
+<div id="tabsTask">
     <ul>
         <li><a href="#type-1"><span>Description</span></a></li>
 <g:if test="${record.entityCode() == 'C'}">
@@ -120,13 +118,13 @@
     </g:if>
 
 <g:if test="${record.entityCode() == 'R'}">
-        <li><a href="#type-4"><span>Excerpts (0)</span></a></li>
+        <li><a href="#type-4"><span>Excerpts (${Excerpt.countByBook(record)})</span></a></li>
 </g:if>
-        <li><a href="#type-5"><span>Notes (0)</span></a></li>
-        <li><a href="#type-7"><span>J & P (0)</span></a></li>
+        <li><a href="#type-5"><span>Notes (${app.IndexCard.countByEntityCodeAndRecordId(record.entityCode(), record.id)})</span></a></li>
+        <li><a href="#type-8"><span>J & P (${Journal.countByBook(record) + Planner.countByBook(record)})</span></a></li>
 
-        <li><a href="#type-6"><span>Sort records</span></a></li>
-        <li><a href="#type-7"><span>Log of changes</span></a></li>
+        <li><a href="#type-6"><span>Linked records</span></a></li>
+        <li><a href="#type-7"><span>Changes</span></a></li>
 
 
 
@@ -231,9 +229,8 @@
     <div id="type-4" style="">
 
         <g:if test="${'R'.contains(record.entityCode())}">
-        %{--<h4>Notes</h4>--}%
 
-            <h4>Excerpts</h4>
+            %{--<h4>Excerpts</h4>--}%
             <g:each in="${Excerpt.findAllByBook(record)}" var="r">
 
                 <g:render template="/gTemplates/recordSummary" model="[record: r, expandedView: false]"/>
@@ -274,7 +271,7 @@
 <div id="type-5" style="">
         <span id="commentArea${record.entityCode()}${record.id}" style="display: inline;  margin-left: 10px;">
 
-            <h4>Notes</h4>
+            %{--<h4>Notes</h4>--}%
             <g:each in="${app.IndexCard.findAllByEntityCodeAndRecordId(record.entityCode(), record.id)}" var="c">
                 <g:render template="/gTemplates/recordSummary" model="[record: c, expandedView: false]"/>
             </g:each>
@@ -311,7 +308,23 @@
 
 </div>
 
-<div id="type-6" style="">
+
+<div id="type-8" style="">
+
+<g:if test="${record.entityCode() == 'R'}">
+<g:each in="${mcs.Journal.findAllByBook(record, [sort: 'startDate', order: 'asc'])}"
+        var="c">
+<g:render template="/gTemplates/recordSummary" model="[record: c, expandedView: false]"/>
+</g:each>
+
+<g:each in="${mcs.Planner.findAllByBook(record, [sort: 'startDate', order: 'asc'])}"
+        var="c">
+    <g:render template="/gTemplates/recordSummary" model="[record: c, expandedView: false]"/>
+</g:each>
+    </g:if>
+</div>
+
+    <div id="type-6" style="">
 
     <g:if test="${record.entityCode() == 'W'}">
 
@@ -517,5 +530,22 @@
 <r:layoutResources/>
 
 </body>
+
+
+<script type="text/javascript">
+
+    %{--</script>--}%
+
+//    jQuery(document).ready(function () {
+
+
+//    });
+
+//    $(function() {
+        jQuery("#tabsTask").tabs();
+//        $( "#tabs" ).tabs();
+//    });
+
+</script>
 
 </html>
