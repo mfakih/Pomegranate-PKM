@@ -197,7 +197,7 @@ class GenericsController {
 
         if (prefixRecord.multiLine){
              block.eachLine(){
-                 batchAdd(prefix + it.trim())
+                 batchAdd(prefix + it)
              }
         }
         else
@@ -2847,7 +2847,9 @@ def addContactToRecord() {
                             dateField = 'date'
 	   if ('R'.contains(entityCode))
                             dateField = 'publicationDate'
-                     
+       if ('N'.contains(entityCode))
+                            dateField = 'writtenOn'
+
                         def core = it.substring(1)
                         if (it.startsWith('<+') || it.startsWith('<-') || it.startsWith('(+') || it.startsWith('(-')) {
                             properties[dateField] = new Date() + core.toInteger()

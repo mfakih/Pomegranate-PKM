@@ -525,6 +525,11 @@
             </td>
         </g:if>
 
+        <g:if test="${fields.contains('writtenOn')}">
+            <td>        <pkm:datePicker placeholder="Written on" name="writtenOn" value="${record?.writtenOn}"/>
+            </td>
+        </g:if>
+
 
 
         <g:if test="${fields.contains('date')}">
