@@ -144,7 +144,7 @@
 
 
         %{--<g:if test="${record.class.declaredFields.name.contains('shortDescription')}">--}%
-            %{--<span style="font-size: 12px; font-style: italic; color: #4A5C69">--}%
+            %{--<span style="font-size: 12px; font-style: normal; color: #4A5C69">--}%
                 %{--<b>Summary:</b> ${record?.shortDescription?.replaceAll('\n', '<br/>')}--}%
             %{--</span>--}%
         %{--</g:if>--}%
@@ -155,9 +155,9 @@
   
             <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px; text-align: justify" class="${record.class.declaredFields.name.contains('language') && record.language == 'ar' ? 'arabicText' : ''}">
                 <span id="descriptionBloc${record.id}">
-               <i>
+               
                    ${record.description?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}
-                   </i>
+                  
                     %{--${?.encodeAsHTML()?.replaceAll('\n', '<br/>')}--}%
                 </span>
 

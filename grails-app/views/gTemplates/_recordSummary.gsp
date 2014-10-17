@@ -22,7 +22,7 @@
 %{--${justUpdated ? 'justUpdated' : ''} todo--}%
 
 <div class="recordContainer"
-     style="background: #f2f2f2;  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2); padding: 0px;  margin: 3px; border-radius: 2px; margin-top: 15px;">
+     style="background: #f2f2f2;  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2); padding: 0px;  margin: 3px; border-radius: 0px; margin-top: 15px;">
 
 <table class="fixed-layout recordLine">
 <tbody>
@@ -61,21 +61,40 @@
 
 </td>
 
-    <g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
-
-        <td rowspan="2">
+   	 <g:if test="${new File(OperationController.getPath('module.sandbox.' + record.entityCode() + '.path') + '/' + record.id + 'j.jpg')?.exists() || new File(OperationController.getPath('module.sandbox.' + record.entityCode() + '.path') + '/' + record.id + 'n.jpg')?.exists()}">
+        
+<td style="width: 65px;">		 
+            
+		        <a href="${createLink(controller: 'generics', action: 'viewRecordImage', id: record.id)}"
+                   target="_blank">
+                    <img class="Photo" style="width: 60; height: 80; display:inline"
+                         src="${createLink(controller: 'generics', action: 'viewRecordImage', id: record.id, params: [entityCode: record.entityCode(), date: new Date()])}"/>
+                </a>
+				
+				
+				</td>
+				
+				
+				
+             </g:if>
+			 
+			 
+			 <g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
+	<td style="width: 65px;">		 
             <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
                     record?.type?.code + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + record.id + '.jpg')?.exists())}">
 
                 <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
                    target="_blank">
-                    <img class="Photo" style="width: 30px; height:40px; display:inline"
+                    <img class="Photo" style="width: 60px; height:80px; display:inline"
                          src="${createLink(controller: 'book', action: 'viewImage', id: record.id, params: [date: new Date()])}"/>
                 </a>
-            </g:if>
-
-        </td>
-    </g:if>
+            </g:if> 
+			
+			</td>
+ </g:if>
+       
+   
 
     <g:if test="${entityCode == 'E'}">
 
@@ -248,7 +267,17 @@
 
     <td  style="width: 8px; margin-top: 4px; padding: 0; ">
         <div class="idCell" style="font-size: 10px; -moz-transform:rotate(-90deg); -moz-transform-origin: middle right; -webkit-transform: rotate(-90deg); -webkit-transform-origin: middle right; -o-transform: rotate(-90deg); -o-transform-origin:  middle right; ;">
-        ${record.id}
+		
+		
+<g:remoteLink controller="generics" action="showDetails"
+              params="${[id: record.id, entityCode: entityCode]}"
+              update="below${entityCode}Record${record.id}"
+              title="Details">
+    ${record.id}
+
+    </g:remoteLink>
+	
+    
         </div>
     </td>
 
@@ -259,7 +288,7 @@
 
 
 
-<g:if test="${'CGR'.contains(entityCode) && record.percentCompleted}">
+<g:if test="${'CTGR'.contains(entityCode) && record.percentCompleted}">
 <tr>
 <td colspan="8" style="padding: 0px; margin: 0px;">
 <pkm:progressBar percent="${record.percentCompleted}"/>
@@ -366,10 +395,20 @@
             
             
             
-              <g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
+              
 
 <td rowspan="2">
             
+			 <g:if test="${new File(OperationController.getPath('module.sandbox.' + record.entityCode() + '.path') + '/' + record.id + 'j.jpg')?.exists()}">
+                <a href="${createLink(controller: 'book', action: 'viewRecordImage', id: record.id)}"
+                   target="_blank">
+                    <img class="Photo" style="width: 100; height: 130; display:inline"
+                         src="${createLink(controller: 'book', action: 'viewRecordImage', id: record.id, params: [date: new Date()])}"/>
+                </a>
+             </g:if>
+			 
+			 
+			 <g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
              <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
              record?.type?.code + '/' + params.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + params.id + '.jpg')?.exists())}">
                
@@ -379,9 +418,9 @@
                          src="${createLink(controller: 'book', action: 'viewImage', id: record.id, params: [date: new Date()])}"/>
                 </a>
              </g:if>
-          
+           </g:if>
           </td>
-            </g:if> 
+            
             
 
             

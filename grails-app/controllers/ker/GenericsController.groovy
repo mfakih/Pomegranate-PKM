@@ -2266,6 +2266,8 @@ def addContactToRecord() {
 //        println params.dump()
         def input = params.q
         def responce = []
+		def filter = '%'
+		
 
         Writing.findAllBySummaryLike(filter, [sort: 'summary']).each() {
             responce += [value: 'w ' + it.id + ' ' + it.summary]
@@ -2284,7 +2286,7 @@ def addContactToRecord() {
             def entityCode = input.split(/[ ]+/)[0].toUpperCase()
             def lastCharacter = input.split(/[ ]+/).last().substring(0, 1)
 
-            def filter
+        //    def filter
             if (input.length() > 2)
                 filter = '%' + input.substring(2) + '%'
             else
@@ -2339,7 +2341,7 @@ def addContactToRecord() {
         // the parent
         def parentEntityCode = params.recordB.substring(0, 1).toUpperCase()
         r.entityB = entityMapping[parentEntityCode]
-        r.recordB = params.recordB.split(' ')[1]//substring(1).toLong()
+        r.recordB = params.recordB.split(' ')[1].toLong()
 
         def parent = grailsApplication.classLoader.loadClass(r.entityB).get(r.recordB)
 
@@ -2898,7 +2900,7 @@ def addContactToRecord() {
                     }
                     if (it.startsWith('/')) {
                         properties['url'] = it.substring(1)
-                        queryCriteria.add("url like '" + it.substring(1) + "'")
+                        queryCriteria.add("url like '%" + it.substring(1) + "%'")
                     }
                     if ((it.startsWith('*') || it.startsWith('x')) && it.length() == 1) {
                         properties['bookmarked'] = true
@@ -3707,4 +3709,34 @@ def addContactToRecord() {
                 
       
     }
+	
+	
+	def viewRecordImage() {
+
+        
+        def f
+		def f2
+        def record = grailsApplication.classLoader.loadClass(entityMapping[params.entityCode]).get(params.id)
+
+
+        f = new File(OperationController.getPath('module.sandbox.' + record.entityCode() + '.path') + '/' + record.id + 'j.jpg')
+        
+		f2 = new File(OperationController.getPath('module.sandbox.' + record.entityCode() + '.path') + '/' + record.id + 'n.jpg')
+        
+		
+        if (f?.exists()) {
+            byte[] image = f.readBytes()
+            response.outputStream << image
+        }
+		else if (f2?.exists()) {
+            byte[] image = f2.readBytes()
+            response.outputStream << image
+        }
+        //  else println 'cover not there for book ' + params.id
+
+    }
+
+
+
+	
 }

@@ -4,12 +4,12 @@
               style="display: inline;">
     <g:hiddenField name="id" value="${record.id}"/>
     <g:hiddenField name="entityCode" value="${entity}"/>
-    <g:select name="type" style="width: 80px;"
+    <g:select name="type" style="width: 90px; display: inline;"
               from="${mcs.parameters.RelationshipType.list()}" optionKey="id" optionValue="name"/>
-
+<br/>
     <g:textField id="newRelationshipField${entity}${record.id}" name="recordB" class="ui-corner-all"
                  title="[type][id] ([type] [summary] for autocomplete)" placeholder="[type] [summary] to start autocomplete"
-                 style="width:140px; display: inline; " value=""/>
+                 style="width:150px; display: inline; " value=""/>
     <g:submitButton name="add" value="add" style="display:none;"
                     class="fg-button  ui-widget ui-state-default ui-corner-all"/>
 </g:formRemote>

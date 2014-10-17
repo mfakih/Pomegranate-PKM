@@ -297,6 +297,9 @@
             jQuery('#centralArea').html('');
             jQuery('#quickAddTextFieldBottomTop').focus();
             jQuery('#quickAddTextFieldBottomTop').select();
+//			jQuery('#commandBars').addClass('navHidden');
+			jQuery('#accordionEast').accordion({ active: 3});
+			jQuery('#accordionWest').accordion({ active: 3});
 //            jQuery('#quickAddTextField').scrollTop(0);
         });
 

@@ -1267,13 +1267,13 @@ background: #d8f7da;
 }
   
 .actionLink{
-background: #4c61fe;
+/*background: #4c61fe;*/
 border-radius: 2px;
-    border: 1px solid;
-    margin: 3px;
-    padding: 3px;
-    font-weight: bold;
-    color: white !important;
+    border: 0px solid;
+    margin: 2px;
+    padding: 2px;
+    font-weight: normal;
+    color: gray !important;
 }
 
 .arabicText {

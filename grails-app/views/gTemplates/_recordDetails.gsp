@@ -122,6 +122,8 @@
                
                
 
+  <g:if test="${1 == 2}">
+
     <g:if test="${record.entityCode() == 'R'}">
 <pkm:listPictures fileClass="snsFile"
                   folder="${record.type?.newFilesPath}/${(record.id / 100).toInteger()}/${record.id}"
@@ -154,7 +156,7 @@
                   initial="${record.id}"/>
                   
 
-                  
+       </g:if>           
                   
                   
                      <g:if test="${'N'.contains(entityCode)}">
@@ -374,7 +376,7 @@
                style="width: 70px;"
                value="${mcs.Utils.toWeekDate(new Date())}"/>
         <input type="text" name="summary" title="" placeholder="Summary"
-               style="width: 200px;"
+               style="width: 180px;"
                value=""/>
 
 
@@ -388,7 +390,7 @@
 </g:if>
 
            <g:if test="${entityCode.length() == 1}">
-<br/><b>Relate</b>
+<!--br/><b>Relate</b-->
 <br/>
 <span id="addRelationship${record.id}" style="display: inline;">
     <g:render template="/gTemplates/addRelationships"

@@ -80,7 +80,7 @@
        data-name="${field}-${entityCode}"
        data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
-        ${record[field]?.code ?: 'No ' + field}
+        ${record[field]?.code ?: '?type'}
     </a>
     </span>
     <script>
@@ -281,7 +281,7 @@
 
     <g:if test="${record.url}">
         
-        <i style="font-size: smaller"><pkm:summarize text="${record.url}" length="30"/></i>
+        <a style="font-size: smaller" href="${record.url}" target="_blank"><pkm:summarize text="${record.url}" length="30"/></a>
     </g:if>
 
 </g:if>
@@ -398,7 +398,7 @@
        style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic;  float: right; padding-right: 4px;"
        data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
-        ${record[field] ? record[field]?.summary : 'No ' + field}
+        ${record[field] ? record[field]?.summary : '?wrt'}
     </a>
     <script>
         $('#${field}${record.id}').editable();
@@ -415,7 +415,7 @@
        style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic;  float: right; padding-right: 4px;"
        data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
-        ${record[field] ? record[field]?.summary : 'g'}
+        ${record[field] ? record[field]?.summary : '?goal'}
     </a>
 
             <g:if test="${record.goal}">
@@ -448,7 +448,7 @@
        data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}"
        style="font-size: 11px; font-weight: bold; float: right; padding-right: 4px;">
-        ${record[field]?.code ?: '?'}
+        ${record[field]?.code ?: '?crs'}
 
     </a>
     <script>
@@ -471,7 +471,7 @@
        style="${record.status ? record.status?.style : ''}; float: right; border: 0.5px solid #808080; border-radius: 3px; font-size: 11px; text-decoration: italic; padding-left: 2px; padding-right: 2px;"
        data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
-        ${record[field] ? record[field]?.code : 'No ' + field}
+        ${record[field] ? record[field]?.code : '?st'}
     </a>
     <script>
         $('#${field}${record.id}').editable();
