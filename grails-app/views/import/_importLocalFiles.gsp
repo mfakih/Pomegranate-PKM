@@ -27,6 +27,47 @@
         <g:if test="${Setting.findByName('smartFiles.sandbox.path') && new File(OperationController.getPath('smartFiles.sandbox.path')).exists()}">
 
             %{--<ul>--}%
+
+        <g:each in="${new java.io.File(OperationController.getPath('smartFiles.sandbox.path')).listFiles()}"
+                var="i">
+            <g:if test="${i.isDirectory()}">
+
+                <div id="file${i.name.encodeAsMD5()}">
+                <g:formRemote name="importIndividualFolder"
+                              url="[controller: 'import', action: 'importIndividualFolder']"
+
+                              update="file${i.name.encodeAsMD5()}"
+
+                              onComplete="jQuery('#quickAddXcdField').val('')"
+                              method="post">
+                    <g:hiddenField name="entityCode" value="${i.name?.substring(0,1)?.toUpperCase()}"></g:hiddenField>
+                    <g:hiddenField name="type" value="${null}"></g:hiddenField>
+                    <g:hiddenField name="name" value="${i.name}"></g:hiddenField>
+                    <g:hiddenField name="smart" value="yes"></g:hiddenField>
+                    <g:hiddenField name="path"
+                                   value="${OperationController.getPath('smartFiles.sandbox.path') + '/' + i.name}">
+
+                    </g:hiddenField>
+                    <g:actionSubmit value="+"/>
+
+                    <span id="${i.name.encodeAsMD5()}">   ${i.name}
+                    </span>
+                    <br/><br/>
+                    <script>
+                        jQuery("#notificationAreaHidden").load('generics/verifySmartFileName', {'line': "${i.name}"}, function( response, status, xhr ) {jQuery("#${i.name.encodeAsMD5()}").attr('class', response);})
+
+                    </script>
+
+
+
+                </g:formRemote>
+            </g:if>
+
+            </div>
+        </g:each>
+
+
+
                 <g:each in="${new java.io.File(OperationController.getPath('smartFiles.sandbox.path')).listFiles()}"
                         var="i">
                     <g:if test="${i.isFile()}">

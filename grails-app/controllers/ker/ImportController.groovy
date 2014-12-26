@@ -655,6 +655,56 @@ class ImportController {
         }
 
     }
+  def importIndividualFolder() {
+
+        def entityCode = params.entityCode
+        def path = params.path
+        def parentPath = params.parentPath
+        def count = 0
+        def folder = new File(path)
+        def name = params.name
+        def type
+    def finalName = ''
+
+
+     java.util.regex.Matcher matcher2 = name =~ /(?i)([\S\s ;-_]*)/
+//                def id = matcher[0][1]
+
+                    def title = matcher2[0][1]
+                   // def ext = matcher2[0][2]
+
+
+        def b
+
+
+            b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).newInstance()
+    b.properties = GenericsController.transformMcsNotation(title)['properties']
+
+
+         finalName = entityCode.toLowerCase()
+
+
+
+              b.notes = 'Imported on ' + new Date().format(OperationController.getPath('date.format') ?: 'dd.MM.yyyy')
+
+        if (!b.hasErrors() && b.save(flush: true)) {
+            render(template: '/gTemplates/recordSummary', model: [record: b])
+            def ant = new AntBuilder()
+            if (entityCode == 'R') {
+                type = b.type
+                ant.move(file: path, tofile: type.newFilesPath + '/' + (b.id / 100).toInteger() + '/' + b.id + '' + finalName)
+            }
+            else
+            ant.move(file: path, tofile: OperationController.getPath('module.sandbox.' + entityCode + '.path') + '/' + b.id + '' + finalName)
+
+        } else {
+            b.errors.each() {
+                println 'error ' + it
+            }
+            println 'Error saving the resource'
+        }
+
+    }
 
     String importResources(Long typeId) {
 
