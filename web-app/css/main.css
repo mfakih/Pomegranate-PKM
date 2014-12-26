@@ -1280,6 +1280,10 @@ border-radius: 2px;
     direction: rtl !important;
     text-align: right !important;
 }
+.textar {
+    direction: rtl !important;
+    text-align: right !important;
+}
 .newFile{
     color: green !important;
 }

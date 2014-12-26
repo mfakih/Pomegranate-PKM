@@ -1,4 +1,4 @@
-<%@ page import="mcs.Course; mcs.Journal; mcs.Planner; app.IndexCard; mcs.Task; ker.OperationController" %>
+<%@ page import="cmn.Setting; mcs.Course; mcs.Journal; mcs.Planner; app.IndexCard; mcs.Task; ker.OperationController" %>
 <!-- manually attach allowOverflow method to pane -->
 <div class="ui-layout-north northRegion">
     <g:render template="/layouts/north" model="[]"/>
@@ -36,13 +36,13 @@
 			<div id='tagsPanel'>
 
                 </div>
-
+<g:if test="${Setting.findByName('contacts.enabled')?.value ==  'yes'}">
 	<h3><a href="#">Contacts</a></h3>
 			<div id='contactsPanel'>
 
                 </div>
-
-
+           </g:if>
+<g:if test="${Setting.findByName('dashboard.enabled')?.value ==  'yes'}">
             	<h3><a href="#">Dashboard</a></h3>
 			<div>
                 <h1>Active courses</h1>
@@ -94,7 +94,7 @@
 
                 </div>
 			</div>
-
+    </g:if>
 			</div>
         %{--<g:if test="${ker.OperationController.getPath('twoPanels') == 'on'}">--}%
         %{--<g:render template="/layouts/east"/>--}%

@@ -19,7 +19,7 @@
 
     <span style="font-size: 12px; font-style: italic; color: #4A5C69">
         <pkm:summarize text="${record?.description?.replace('Product Description', '')?.replaceAll("\\<.*?>", "")}"
-                       length="60"/>
+                       length="200"/>
     </span>
 
     <span style="${record.status?.style}; font-size: 11px; border: 0px solid; text-decoration: #808080 underline;  border-radius: 3px; padding: 1px; margin-right: 3px;">
@@ -338,16 +338,24 @@
 
 
 <g:if test="${record.class.declaredFields.name.contains('description')}">
-<br/>
+    <g:if test="${record.class.declaredFields.name.contains('summary') && record.summary}">
+        <br/>
+    </g:if>
 
         <g:if test="${params.action == 'record' && record.entityCode() == 'N'}">
             ${record?.description?.replaceAll("\\<.*?>", "")?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}
     </g:if>
     <g:else>
-        <span style="font-size: 12px; font-style: italic; color: #4A5C69">
+        <g:if test="${record.class.declaredFields.name.contains('language')}">
+            <div class="text${record.language}">
+        </g:if>
+        <div style="font-size: 12px; font-style: italic; color: #4A5C69">
             <pkm:summarize text="${record?.description?.replace('Product Description', '')?.replaceAll("\\<.*?>", "")}"
-                           length="60"/>
-        </span>
+                           length="200"/>
+        </div>
+        <g:if test="${record.class.declaredFields.name.contains('language')}">
+            </div>
+        </g:if>
     </g:else>
 
 

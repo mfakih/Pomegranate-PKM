@@ -184,7 +184,7 @@
 <h4>Notes</h4>
 
 <div id="panelComments${entityCode}Record${record.id}">
-<g:render template="/indexCard/add" model="[recordId: record.id, recordEntityCode: entityCode]"/>
+<g:render template="/indexCard/add" model="[recordId: record.id, recordEntityCode: entityCode, language: (entityCode == 'R' ? record.language : 'ar')]"/>
 </div>
 
 
@@ -638,6 +638,19 @@
                       title="Logical undelete">
             <span class="ui-icon ui-icon-circle-close"></span>
         </g:remoteLink>
+    </g:if>
+
+    <g:if test="${entityCode == 'N'}">
+        &nbsp; &nbsp;Convert to &nbsp;
+        <g:each in="${['J', 'P', 'R', 'W']}" var="t">
+
+        <g:remoteLink controller="generics" action="convertNoteToRecord"
+                      params="${[id: record.id, entityCode: entityCode, type: t]}"
+                      update="${entityCode}Record${record.id}"
+                      title="Convert note to ${t}">
+            ${t}
+        </g:remoteLink>
+        </g:each>
     </g:if>
 
 

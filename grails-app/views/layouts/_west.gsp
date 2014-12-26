@@ -191,12 +191,14 @@
         <g:render template="/layouts/modulesAccordion"/>
 
     </div>
+
+<g:if test="${Setting.findByName('courses.enabled')?.value ==  'yes'}">
  <h4><a href="#">Courses</a></h4>
     <div>
-
         <g:render template="/layouts/coursesAccordion"/>
-
     </div>
+
+    </g:if>
 
 
  <h4><a href="#">Administration</a></h4>

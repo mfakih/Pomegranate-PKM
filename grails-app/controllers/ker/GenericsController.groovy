@@ -648,6 +648,28 @@ ll
             render(template: '/layouts/achtung', model: [message: "Record with ID ${id} could not be deleted"])
         }
     }
+ def convertNoteToRecord() {
+        def oldRecord = grailsApplication.classLoader.loadClass(entityMapping[params.entityCode]).get(params.id)
+        try {
+            def newRecord
+        if (params.type == 'J'){
+            newRecord = new Journal()
+            newRecord.title = oldRecord.title
+            newRecord.description = oldRecord.description
+            newRecord.startDate = oldRecord.writtenOn
+            newRecord.priority = oldRecord.priority
+            newRecord.bookmarked = oldRecord.bookmarked
+            newRecord.save()
+//            newRecord.dateCreated = oldRecord.dateCreated
+
+        }
+//        render(template: '/layouts/achtung', model: [message: "Record with ID ${id} deleted"])
+            render(template: '/gTemplates/recordSummary', model: [record: newRecord])
+        }
+        catch (Exception) {
+            render(template: '/layouts/achtung', model: [message: "Record with ID ${id} could not be deleted"])
+        }
+    }
 
     def logicalUndelete(Long id, String entityCode) {
         def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)

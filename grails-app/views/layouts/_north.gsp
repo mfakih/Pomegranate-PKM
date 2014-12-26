@@ -73,7 +73,7 @@
         Tags...
     </g:remoteLink>
 
-
+<g:if test="${Setting.findByName('contacts.enabled')?.value ==  'yes'}">
 &nbsp;
 &nbsp;
     <g:remoteLink controller="report" action="contactCloud"
@@ -84,7 +84,7 @@
         Contacts...
     </g:remoteLink>
 
-
+       </g:if>
 
 
 

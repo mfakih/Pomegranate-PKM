@@ -1,4 +1,4 @@
-<%@ page import="mcs.Course; mcs.parameters.WritingType; mcs.parameters.ResourceStatus; mcs.Book; app.IndexCard" %>
+<%@ page import="cmn.Setting; mcs.Course; mcs.parameters.WritingType; mcs.parameters.ResourceStatus; mcs.Book; app.IndexCard" %>
 
 
 %{--<g:hiddenField name="entityCode" value="${recordEntityCode}"></g:hiddenField>--}%
@@ -12,6 +12,9 @@
 
         %{--<label for="description">Description--}%
         %{--</label>--}%
+
+        <pkm:datePicker name="writtenOn" placeholder="Written on" value="${indexCardInstance?.writtenOn}"/>
+
                <g:select name="type.id" class="ui-corner-all" style="width: 100px"
                               from="${WritingType.list([sort: 'name'])}" optionKey="id" optionValue="name"
                               value="${indexCardInstance?.type?.id ?: (session['lastIcdTypeId'] ?: null)}"
@@ -20,13 +23,18 @@
         <g:select name="writing.id" from="${mcs.Writing.list([sort: 'summary'])}" style="width: 100px;"
                   optionKey="id" value="${indexCardInstance?.writing?.id ?: (writingId ?: null)}"
                   noSelection="['null': 'No writing']"/>
+
+<g:if test="${Setting.findByName('course.enabled')?.value ==  'yes'}">
         <g:select name="course.id" style="width: 100px;" from="${Course.list([sort: 'code'])}"
                   value="${indexCardInstance?.course?.id}" optionKey="id" noSelection="${['null': 'No course']}"/>
+    </g:if>
 
         <g:textField placeholder="Page" id="pages" name="pages" style="width: 50px" class="ui-corner-all"
                      value="${indexCardInstance?.pages}"/>
 
-        <g:textField placeholder="Lang." name="language" style="width: 50px" value="${indexCardInstance?.language}"/>
+        <g:select name="language" from="${['ar', 'en', 'fr']}"
+        style="width: 50px" value="${language ?: indexCardInstance?.language}"/>
+
         %{--<g:textField name="orderNumber"  value="${indexCardInstance?.orderNumber}" style="width: 50px;"/>--}%
 
         <br/>

@@ -11,7 +11,7 @@
 <g:if test="${writingId || bookId}">
 
      <div class="dialog">
-   <g:render template="/indexCard/form" model="[indexCardInstance: indexCardInstance, writingId: writingId, bookId: bookId]"/>
+   <g:render template="/indexCard/form" model="[indexCardInstance: indexCardInstance, writingId: writingId, bookId: bookId, language: language]"/>
     </div>
     
     
