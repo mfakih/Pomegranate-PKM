@@ -611,10 +611,18 @@ ll
         def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
         render(template: '/gTemplates/recordComment', model: [record: record])
     }
+   def showComments(Long id, String entityCode) {
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+        render(template: '/gTemplates/recordComments', model: [record: record])
+    }
 
     def showRelate(Long id, String entityCode) {
         def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
         render(template: '/gTemplates/recordRelate', model: [record: record])
+    }
+  def showRelated(Long id, String entityCode) {
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+        render(template: '/gTemplates/relationships', model: [record: record])
     }
 
     def showAppend(Long id, String entityCode) {
@@ -3590,7 +3598,7 @@ def addContactToRecord() {
 
         def list = []
 
-        allClasses.each() {
+        [mcs.Task, mcs.Goal, mcs.Writing, app.IndexCard, mcs.Book, mcs.Journal, mcs.Planner].each() {
             list += it.createCriteria().list() { contacts { idEq(params.id.toLong()) } }
         }
         render(template: '/gTemplates/recordListing', model: [list: list, title: 'Contact: ' + Contact.get(params.id).summary])

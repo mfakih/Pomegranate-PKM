@@ -378,17 +378,23 @@
              Tag...  &nbsp;&nbsp;
          </g:remoteLink>
 
-             <g:remoteLink controller="generics" action="showRelateForm"
+             <g:remoteLink controller="generics" action="showRelate"
                        params="${[id: record.id, entityCode: entityCode]}"
                        update="below${entityCode}Record${record.id}"
                        title="Details">
              Relate...  &nbsp;&nbsp;
          </g:remoteLink>
-   <g:remoteLink controller="generics" action="showChildren"
+   <g:remoteLink controller="generics" action="showRelated"
                        params="${[id: record.id, entityCode: entityCode]}"
                        update="below${entityCode}Record${record.id}"
                        title="Details">
              Related...  &nbsp;&nbsp;
+         </g:remoteLink>
+   <g:remoteLink controller="generics" action="showChildren"
+                       params="${[id: record.id, entityCode: entityCode]}"
+                       update="below${entityCode}Record${record.id}"
+                       title="Details">
+             Children...  &nbsp;&nbsp;
          </g:remoteLink>
 
 
@@ -428,7 +434,7 @@
 
 
          %{--update="commentArea${entityCode}${record.id}"--}%
-             <g:remoteLink controller="generics" action="showIndexCards" style="display: inline;"
+             <g:remoteLink controller="generics" action="showComments" style="display: inline;"
                            params="${[id: record.id, entityCode: entityCode]}"
                            update="3rdPanel"
                            before="jQuery('#accordionEast').accordion({ active: 0});"
