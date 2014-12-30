@@ -151,7 +151,7 @@
 
             <g:textField name="input" id="quickAddTextFieldBottomTop" value=""
                         autocomplete="off"
-                         style="display: inline;  width: 300px !important"
+                         style="display: inline;  width: 500px !important"
                         placeholder="Command bar"
                         onkeyup="if (jQuery('#quickAddTextFieldBottomTop').val().search(';')== -1){jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextFieldBottomTop').val()))}"
                         onfocus="jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextFieldBottomTop').val()))"

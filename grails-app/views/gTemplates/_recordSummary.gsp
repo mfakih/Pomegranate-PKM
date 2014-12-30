@@ -389,7 +389,7 @@
                  <a name="bookmark${record.id}${entityCode}" title="priority++"
                     value="${record.priority}"
                     onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/increasePriority/${entityCode}${record.id}')">
-                     + pr
+                     Priority++ &nbsp;
                  </a>
              </g:if>
 
@@ -397,14 +397,14 @@
                  <a name="bookmark${record.id}${entityCode}" title="endDate today"
                     value="${record.endDate}"
                     onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/setEndDateToday/${entityCode}${record.id}')">
-                     Today!
+                     Today! &nbsp;
                  </a>
              </g:if>
              <g:if test="${record.class.declaredFields.name.contains('percentCompleted')}">
                  <a name="bookmark${record.id}${entityCode}" title="percent++"
                     value="${record.percentCompleted}"
                     onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/increasePercentCompleted/${entityCode}${record.id}')">
-                     + percent
+                     Percent++ &nbsp;
                  </a>
              </g:if>
 
@@ -413,7 +413,7 @@
                  <a name="bookmark${record.id}${entityCode}" title="Toggle privacy"
                     value="${record.isPrivate}"
                     onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/togglePrivacy/${entityCode}-${record.id}')">
-                 Private
+                 Private! &nbsp;
                  </a>
 
              </g:if>

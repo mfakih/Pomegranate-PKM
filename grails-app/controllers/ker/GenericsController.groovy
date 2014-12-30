@@ -2159,11 +2159,11 @@ def addContactToRecord() {
 
             if (!n.hasErrors() && n.save()) {
                 render(template: '/gTemplates/recordSummary', model: [
-                        record: n, expandedView: true])
+                        record: n])
             } else {
                 render 'Errors when saving the record<br/>'
                 render(template: '/gTemplates/recordSummary', model: [
-                        record: n, expandedView: true])
+                        record: n])
 //            n.errors.each() {
 //                render it
 //            }
@@ -2500,12 +2500,12 @@ def addContactToRecord() {
 
             if (!record.hasErrors() && record.save()) {
                 render(template: '/gTemplates/recordSummary', model: [
-                        expandedView: true,
+                        
                         record: record])
             } else {
                 render 'Errors when saving the record<br/>'
                 render(template: '/gTemplates/recordSummary', model: [
-                        expandedView: true,
+                        
                         record: record])
                 record.errors.each() {
                     render it
@@ -2560,12 +2560,12 @@ def addContactToRecord() {
 
             if (!record.hasErrors() && record.save()) {
                 render(template: '/gTemplates/recordSummary', model: [
-                        expandedView: true,
+                        
                         record: record])
             } else {
                 render 'Errors when saving the record<br/>'
                 render(template: '/gTemplates/recordSummary', model: [
-                        expandedView: true,
+                
                         record: record])
                 record.errors.each() {
                     render it
@@ -2598,7 +2598,7 @@ def addContactToRecord() {
         record.description += ('\n' + params.text + ' (' + new Date().format('dd.MM.yyyy') + ')')
 
         render(template: '/gTemplates/recordSummary', model: [record: record])
-        render(template: '/gTemplates/recordDetails', model: [record: record])
+        //render(template: '/gTemplates/recordDetails', model: [record: record])
 
     }
 
@@ -3508,8 +3508,8 @@ def addContactToRecord() {
         def recentRecords = []
 
         allClasses.each() {
-            recentRecords += it.findAll([sort: 'lastUpdated', order: 'desc', max: 7])
-	//    recentRecords += it.findAllByLastUpdatedGreaterThan(new Date() - 7, [max: 12])
+            recentRecords += it.findAll([sort: 'lastUpdated', order: 'desc', max: 4])
+	//    recentRecords += it.findAllByLastUpdatedGreaterThan(new Date() - 7, [max: 7])
         }
         
         recentRecords = recentRecords.sort({it.lastUpdated}).reverse()

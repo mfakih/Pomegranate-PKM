@@ -1,5 +1,3 @@
-%{--<h4>Add tag</h4>--}%
-
 
 <g:formRemote name="addTag" url="[controller: 'generics', action: 'addTagToRecord']"
               onComplete="jQuery('#newTagField${entity}${instance.id}').val('')"
@@ -19,10 +17,12 @@
     var bestPictures = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace
-        ,prefetch: '/pkm/operation/autoCompleteTagsJSON}'
-        //?date=${new Date().format('ddMMyyyHHMMss')
-//       , remote: '/pkm/operation/autoCompleteTagsJSON2'
+		, remote: '/pkm/operation/autoCompleteTagsJSON2'
+        ,prefetch: '/pkm/operation/autoCompleteTagsJSON?date=${new Date().format('ddMMyyyHHMMss')}'
     });
+
+	//?date={new Date().format('ddMMyyyHHMMss')
+//       
 
     bestPictures.initialize();
 

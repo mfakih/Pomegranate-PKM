@@ -1,4 +1,4 @@
-%{--<h4>Add contact</h4>--}%
+
 <g:formRemote name="addContact" url="[controller: 'generics', action: 'addContactToRecord']"
               onComplete="jQuery('#newContactField${entity}${instance.id}').val('')" update="contacts${entity}${instance.id}"
               style="display: inline;">
@@ -15,9 +15,8 @@
     var bestPictures = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace
-        ,prefetch: '/pkm/operation/autoCompleteContactsJSON'
-        //?date=${new Date().format('ddMMyyyHHMMss')}
-//       , remote: '/pkm/operation/autoCompleteTagsJSON2'
+        ,prefetch: '/pkm/operation/autoCompleteContactsJSON?date=${new Date().format('ddMMyyyHHMMss')}'
+       , remote: '/pkm/operation/autoCompleteTagsJSON2'
     });
 
     bestPictures.initialize();
