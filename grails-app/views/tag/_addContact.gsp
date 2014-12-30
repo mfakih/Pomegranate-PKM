@@ -14,8 +14,9 @@
 
     var bestPictures = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: '/pkm/operation/autoCompleteContactsJSON?date=${new Date().format('ddMMyyyHHMMss')}'
+        queryTokenizer: Bloodhound.tokenizers.whitespace
+        ,prefetch: '/pkm/operation/autoCompleteContactsJSON'
+        //?date=${new Date().format('ddMMyyyHHMMss')}
 //       , remote: '/pkm/operation/autoCompleteTagsJSON2'
     });
 

@@ -974,9 +974,9 @@ class SupportService {
         c.set(java.util.Calendar.WEEK_OF_YEAR, week)
         int javaDay = (day == 7) ? 1 : (day + 1)
         c.set(java.util.Calendar.DAY_OF_WEEK, javaDay)
-        c.set(java.util.Calendar.YEAR, year.toInteger())
+//      c.set(java.util.Calendar.YEAR, year.toInteger())
 
-        Date.parse("yyyy-MM-dd HH:mm", c.get(Calendar.YEAR) + '-' + (c.get(Calendar.MONTH) + 1) + '-' + c.get(Calendar.DATE) + ' ' + time)
+        Date.parse("yyyy-MM-dd HH:mm", year + '-' + (c.get(Calendar.MONTH) + 1) + '-' + c.get(Calendar.DATE) + ' ' + time)
         //        return c.get(Calendar.YEAR) + '-' + (c.get(Calendar.MONTH) + 1) + '-' + c.get(Calendar.DATE)
 
     }

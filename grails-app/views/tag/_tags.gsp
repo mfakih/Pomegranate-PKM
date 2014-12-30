@@ -1,4 +1,4 @@
-<div id="tags${entity}${instance.id}" style="display: inline; float: right;">
+<div id="tags${entity}${instance.id}" style="display: inline; ">
     <g:if test="${instance.tags}">
         <g:each in="${instance.tags?.sort(){i,j -> i.name.toLowerCase().compareTo(j.name.toLowerCase())}}" var="t">
             &nbsp;  <div style=" display:inline; padding: 1px; margin-right: 3px; font-size: 11px; border: 1px solid #808080; border-radius: 4px;" class="ui-corner-all">

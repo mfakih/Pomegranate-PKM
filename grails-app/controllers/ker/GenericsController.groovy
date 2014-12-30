@@ -604,7 +604,7 @@ ll
 
     def showTags(Long id, String entityCode) {
         def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
-        render(template: '/gTemplates/recordTags', model: [record: record])
+        render(template: '/gTemplates/recordTag', model: [record: record])
     }
 
     def showComment(Long id, String entityCode) {

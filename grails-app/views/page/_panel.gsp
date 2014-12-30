@@ -153,7 +153,7 @@
 
         <g:if test="${record.class.declaredFields.name.contains('description')}">
   
-            <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px; text-align: justify" class="${record.class.declaredFields.name.contains('language') && record.language == 'ar' ? 'arabicText' : ''}">
+            <div style="padding: 3px; font-size: 12px; font-family: tahoma; margin: 5px; line-height: 20px; text-align: justify" class="${record.class.declaredFields.name.contains('language') && record.language == 'ar' ? 'arabicText' : ''}">
                 <span id="descriptionBloc${record.id}">
                
                    ${record.description?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}
@@ -249,7 +249,7 @@
 <g:if test="${'R'.contains(entityCode)}">
 %{--<b>${record.title?.encodeAsHTML()?.replaceAll('\n', '<br/>')}</b>--}%
 %{--<br/>--}%
-    <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
+    <div style="padding: 3px; font-size: 12px; font-family: tahoma; margin: 5px; line-height: 20px">
         <g:if test="${record.legacyTitle}">
             <span style="font-size: small">
                 <br/>    <b>Legacy title:</b>  ${record.legacyTitle}

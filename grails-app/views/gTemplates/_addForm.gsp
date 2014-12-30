@@ -334,8 +334,14 @@
             <g:select name="type.id" style="width: 150px;"
                       from="${types}" optionKey="id" optionValue="name"
                       value="${record?.type?.id}"
+                      id="chosenType${record?.id}"
                       noSelection="${['null': 'Any type']}"/>
         </td>
+
+        <script type="text/javascript">
+            jQuery("#chosenType${record?.id}).chosen({allow_single_deselect: true, no_results_text: "None found"})
+        </script>
+
     </g:if>
 
     <g:if test="${fields.contains('metaType')}">
@@ -381,9 +387,17 @@
         <g:if test="${fields.contains('status')}">
             <td>      <g:select name="status.id" style="width: 150px;"
                       from="${statuses}" optionKey="id" optionValue="name"
+                      id="chosenStatus${record?.id}"
+                      data-placeholder="Any status"
                       value="${record?.status?.id}"
                       noSelection="${['null': 'Any status']}"/>
 </td>
+
+            <script type="text/javascript">
+                jQuery("#chosenStatus${record?.id}).chosen({allow_single_deselect: true, no_results_text: "None found"})
+            </script>
+
+
         </g:if>
 
 

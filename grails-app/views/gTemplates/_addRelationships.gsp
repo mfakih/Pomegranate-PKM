@@ -1,3 +1,4 @@
+
 <g:formRemote name="addRelationship" url="[controller: 'generics', action: 'addRelationship']"
               onComplete="jQuery('#newRelationshipField${entity}${record.id}').val('')"
               update="relationshipRegion${entity}${record.id}"

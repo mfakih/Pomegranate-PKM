@@ -59,11 +59,16 @@
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.10.4.custom.min.js')}"></script>
 
 
+
+
 %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'select2.css')}"/>--}%
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'select2.min.js')}"></script>--}%
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'jqueryui-editable.css')}"/>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jqueryui-editable.min.js')}"></script>
+
 <script type="text/javascript" src="${resource(dir: 'js', file: 'typeahead.bundle.js')}"></script>
+
+
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'fileuploader.js')}"></script>--}%
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.flipcountdown.js')}"></script>--}%
 <script type="text/javascript" src="${resource(dir: 'js', file: 'mousetrap.min.js')}"></script>
@@ -79,6 +84,13 @@
 %{--<link rel="stylesheet" href="${resource(dir: 'css/minimal', file: 'minimal.css')}"/>--}%
 %{--<link rel="stylesheet" href="${resource(dir: 'css/minimal', file: 'grey.css')}"/>--}%
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.continuousCalendar.css')}"/>
+
+
+<link rel="stylesheet" href="${resource(dir: 'css', file: 'chosen.css')}"/>
+
+<script type="text/javascript" src="${resource(dir: 'js/jquery', file: 'chosen.jquery.min.js')}"></script>
+
+
 
 
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'icheck.js')}"></script>--}%
@@ -152,7 +164,7 @@
             // do something with localStorage.getItem(localStorage.key(i));
             var key = localStorage.key(i)
             var value = localStorage[key]
-            console.log('key ' + key + 'value' + value)
+//            console.log('key ' + key + 'value' + value)
 //            if ((typeof value == 'string' || value instanceof String) && !value.contains('datum'))
 //            if (value.contains('pkm-'))
 //            document.getElementById('commandHistory').options.add(new Option(value, localStorage.key(i)))

@@ -379,19 +379,20 @@ class TaskController { // entity id = 127
             //Date.parse('dd.MM.yyyy HH:mm', supportService.fromWeekDate(date) + etime)
 
 //        def t = Task.get(params.id)
+        def jp
         if (params.type == 'P')
-        new Planner([description: '', startDate: startDate, endDate: endDate, book: book, level: level, summary: summary,
+        jp = new Planner([description: '', startDate: startDate, endDate: endDate, book: book, level: level, summary: summary,
                 type: PlannerType.findByCode('assign'),
                 status: WorkStatus.findByCode('not-started'),
                 excerpt: excerpt, task: task, goal: goal]).save()
         else {
-            def j = new Journal([description: '?', startDate: startDate, endDate: endDate, book: book, level: level, summary: summary,
+            jp = new Journal([description: '?', startDate: startDate, endDate: endDate, book: book, level: level, summary: summary,
                     type: JournalType.findByCode('act'), task: task, goal: goal,  excerpt: excerpt])
                     j.save()
         }
 
 //        render(template: '/layouts/achtung', model: [message: 'Record assigned to date ' + params.date])
-        render(template: '/gTemplates/recordDetails', model: [record: task ?: (goal ?: (book ?: excerpt))])
+        render(template: '/gTemplates/recordSummary', model: [record: jp])
     }
 
 

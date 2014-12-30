@@ -132,6 +132,65 @@
     </td>
 
 
+<td class="actionTd">
+
+
+
+    <g:if test="${record.class.declaredFields.name.contains('status')}">
+        <g:set value="status" var="field"></g:set>
+
+        <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+           data-name="${field}-${entityCode}"
+           style="${record.status ? record.status?.style : ''}; border: 0.5px solid #808080; border-radius: 3px; font-size: 11px; font-style: italic; padding-left: 2px; padding-right: 2px;"
+           data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+           data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
+            ${record[field] ? record[field]?.code : ''}
+        </a>
+        <script>
+            %{--$('#${field}${record.id}').editable();--}%
+        </script>
+    </g:if>
+
+
+
+    <g:if test="${record.class.declaredFields.name.contains('type') && entityCode.length() == 1}">
+        <g:set value="type" var="field"></g:set>
+        <span style="min-width: 60px;">
+            <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+               style="${record.type ? record.type?.style : ''};font-size: 11px; font-weight: bold;margin-left: 5px;"
+               data-name="${field}-${entityCode}"
+               data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+               data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
+                <br/>  ${record[field]?.code ?: ''}
+            </a>
+        </span>
+        <script>
+            %{--$('#${field}${record.id}').editable();--}%
+        </script>
+    </g:if>
+
+
+
+%{--<span style="float: right">--}%
+%{--<a class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"--}%
+%{--onclick="jQuery('#appendRow${entityCode}-${record.id}').removeClass('navHidden'); jQuery('#appendTextFor${entityCode}${record.id}').select(); jQuery('#appendTextFor${entityCode}${record.id}').focus();">--}%
+%{--<span class="ui-icon ui-icon-arrowreturn-1-e"></span>--}%
+%{--</a>--}%
+
+
+%{--<g:remoteLink controller="page" action="panel"--}%
+%{--params="${[id: record.id, entityCode: entityCode]}"--}%
+%{--update="3rdPanel"--}%
+%{--before="jQuery('#accordionEast').accordion({ active: 0});"--}%
+%{--class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"--}%
+%{--title="Go to page">--}%
+%{--<span class="ui-icon ui-icon-extlink"></span>--}%
+
+%{--</g:remoteLink>--}%
+
+</td>
+
+
 <td class="actionTd" style="${justUpdated ? 'background: YellowGreen !important' : ''}">
     <g:remoteLink controller="generics" action="getAddForm" id="${record.id}"
                   params="[entityController: record.class.name,
@@ -152,27 +211,7 @@
 </td>
 
 
-
-    <g:if test="${'TPGRE'.contains(entityCode)}">
-
-        <td class="actionTd">
-            <g:remoteLink controller="generics" action="markCompleted" id="${record.id}"
-                          params="[entityCode: entityCode]"
-                          class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-                          update="${entityCode}Record${record.id}"
-                          title="Mark completed">
-                <span class="ui-icon ui-icon-check"></span>
-            </g:remoteLink>
-        </td>
-    </g:if>
-
-
-
-
-
-
-
-    <td class="record-selection">
+<td class="record-selection">
 
         %{--onchange="jQuery('#logRegion').load('/pkm/generics/select/${entityCode}${record.id}')"--}%
         <g:checkBox name="select-${record.id}-${entityCode}" title="Select record"
@@ -210,27 +249,6 @@
 
 
     </td>
-    <td class="actionTd">
-
-    %{--<span style="float: right">--}%
-    %{--<a class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"--}%
-    %{--onclick="jQuery('#appendRow${entityCode}-${record.id}').removeClass('navHidden'); jQuery('#appendTextFor${entityCode}${record.id}').select(); jQuery('#appendTextFor${entityCode}${record.id}').focus();">--}%
-    %{--<span class="ui-icon ui-icon-arrowreturn-1-e"></span>--}%
-    %{--</a>--}%
-
-
-        <g:remoteLink controller="page" action="panel"
-                      params="${[id: record.id, entityCode: entityCode]}"
-                      update="3rdPanel"
-                      before="jQuery('#accordionEast').accordion({ active: 0});"
-                      class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
-                      title="Go to page">
-            <span class="ui-icon ui-icon-extlink"></span>
-
-        </g:remoteLink>
-
-    </td>
-
 
 
     <td  style="width: 8px; margin-top: 4px; padding: 0; ">
@@ -262,21 +280,7 @@
 
 
 
-             <g:if test="${record.class.declaredFields.name.contains('type') && entityCode.length() == 1}">
-                 <g:set value="type" var="field"></g:set>
-                 <span style="min-width: 60px;">
-                     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
-                        style="${record.type ? record.type?.style : ''};font-size: 11px; font-weight: bold; float: right; margin-left: 5px;"
-                        data-name="${field}-${entityCode}"
-                        data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
-                        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
-                         ${record[field]?.code ?: '?type'}
-                     </a>
-                 </span>
-                 <script>
-                     $('#${field}${record.id}').editable();
-                 </script>
-             </g:if>
+
 
 
 
@@ -292,7 +296,7 @@
                      ${record[field] ? record[field]?.summary : '?wrt'}
                  </a>
                  <script>
-                     $('#${field}${record.id}').editable();
+                     %{--$('#${field}${record.id}').editable();--}%
                  </script>
 
              </g:if>
@@ -319,7 +323,7 @@
                  </g:if>
 
                  <script>
-                     $('#${field}${record.id}').editable();
+                     %{--$('#${field}${record.id}').editable();--}%
                  </script>
 
                  &nbsp;
@@ -343,32 +347,15 @@
 
                  </a>
                  <script>
-                     $('#${field}${record.id}').editable({
-//            typeahead: {
-//                name: 'value'
-//            }
-                     });
+                     %{--$('#${field}${record.id}').editable({--}%
+//                     });
                  </script>
 
              </g:if>
 
 
 
-             <g:if test="${1 ==2 && record.class.declaredFields.name.contains('status')}">
-                 <g:set value="status" var="field"></g:set>
 
-                 <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
-                    data-name="${field}-${entityCode}"
-                    style="${record.status ? record.status?.style : ''}; float: right; border: 0.5px solid #808080; border-radius: 3px; font-size: 11px; text-decoration: italic; padding-left: 2px; padding-right: 2px;"
-                    data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
-                    data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
-                     ${record[field] ? record[field]?.code : '?st'}
-                 </a>
-                 <script>
-                     $('#${field}${record.id}').editable();
-                 </script>
-
-             </g:if>
 
 
              <g:remoteLink controller="generics" action="showTags"
@@ -485,8 +472,21 @@
                        params="${[id: record.id, entityCode: entityCode]}"
                        update="below${entityCode}Record${record.id}"
                        title="Details">
-             Append...
+             Append...    &nbsp;&nbsp;
          </g:remoteLink>
+
+
+         <g:if test="${'TPGRE'.contains(entityCode)}">
+
+                 <g:remoteLink controller="generics" action="markCompleted" id="${record.id}"
+                               params="[entityCode: entityCode]"
+                               update="${entityCode}Record${record.id}"
+                               title="Mark completed">
+                     Done!   &nbsp;&nbsp;
+                 </g:remoteLink>
+         </g:if>
+
+
          </div>
      %{--<span id="priorityRegion${entityCode}${record.id}">${record.priority}</span>--}%
 

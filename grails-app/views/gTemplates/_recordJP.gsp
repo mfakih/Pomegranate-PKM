@@ -2,9 +2,12 @@
        value="${record.metaClass.respondsTo(record, 'entityCode') ? record.entityCode() : record.class?.name?.split(/\./).last()}"/>
 
 
+<div class="recordDetailsBody" style="margin-left: 5px;" id="detailsRegion${entityCode}${record.id}">
+
+
 <g:if test="${'TGRE'.contains(entityCode)}">
         <g:formRemote name="scheduleTask" url="[controller: 'task', action: 'assignRecordToDate']"
-                      style="display: inline;" update="below${entityCode}Record${record.id}"
+                      style="display: inline;" update="detailsRegion${entityCode}${record.id}"
                       method="post">
             <!-- Type/Level/Weight -->
 
@@ -26,3 +29,5 @@
         </g:formRemote>
 
     </g:if>
+
+</div>
