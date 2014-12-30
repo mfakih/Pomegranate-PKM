@@ -15,7 +15,7 @@
   - along with this program.  If not, see <http://www.gnu.org/licenses/>
   --}%
 
-<%@ page import="cmn.DataChangeAudit; ker.OperationController; app.Indicator; mcs.Goal; mcs.Task; mcs.Journal; mcs.Writing; app.IndexCard; mcs.Excerpt; mcs.Book; mcs.Course;" %>
+<%@ page import="org.ocpsoft.prettytime.PrettyTime; cmn.DataChangeAudit; ker.OperationController; app.Indicator; mcs.Goal; mcs.Task; mcs.Journal; mcs.Writing; app.IndexCard; mcs.Excerpt; mcs.Book; mcs.Course;" %>
 
     %{--<r:require modules="application"/>--}%
     <r:require module="fileuploader"/>
@@ -243,7 +243,139 @@
     %{--</g:each>--}%
 %{--</g:if>--}%
 
-</div>
+
+
+
+<g:if test="${'R'.contains(entityCode)}">
+%{--<b>${record.title?.encodeAsHTML()?.replaceAll('\n', '<br/>')}</b>--}%
+%{--<br/>--}%
+    <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px">
+        <g:if test="${record.legacyTitle}">
+            <span style="font-size: small">
+                <br/>    <b>Legacy title:</b>  ${record.legacyTitle}
+                <br/>
+            </span>
+        </g:if>
+        <g:if test="${record.author}">
+            <b>Author</b>   : ${record.author}
+            <br/>
+        </g:if>
+        <g:if test="${record.isbn}">
+            <b>ISBN</b>   : ${record.isbn}
+            <br/>
+        </g:if>
+        <g:if test="${record.nbPages}">
+            <b>Nb pages</b>   : ${record.nbPages}
+            <br/>
+        </g:if>
+    %{--Extension: ${record.ext}--}%
+    %{--<br/>--}%
+        <g:if test="${record.publisher}">
+            <b>Publisher</b>: ${record.publisher}
+            <br/>
+        </g:if>
+        <g:if test="${record.publicationDate}">
+            <b>Publication date</b>: ${record.publicationDate}
+            <br/>
+        </g:if>
+        <g:if test="${record.edition}">
+            <b>Edition</b>: ${record.edition}
+            <br/>
+        </g:if>
+
+        <g:if test="${record.url}">
+            <span style="">
+                <b>Link:</b>
+                <span id="linkBloc${record.id}"
+                ${record.url}
+            </span>
+        %{--${record.author},${record.title ?: record.legacyTitle} ${record.edition} ed--}%
+        %{--(${record.publisher},--}%
+        %{--${record.publicationDate})--}%
+        </g:if>
+
+    %{--<g:if test="${record?.type?.code == 'link'}">--}%
+        <g:if test="${record?.url}">
+            <br/>
+            <g:remoteLink controller="import" action="scrapHtmlPage" id="${record.id}"
+                          update="RRecord${record.id}"
+                          class="actionLink"
+                          title="Scrap HTML">
+                Scrape HTML page
+            </g:remoteLink>
+            <br/>
+            <br/>
+        </g:if>
+
+        <g:if test="${record.citationHtml}">
+            <span style="">
+                <b>Citation:</b>
+                <span id="citationBloc${record.id}"
+                ${record.citationHtml}
+            </span>
+        %{--${record.author},${record.title ?: record.legacyTitle} ${record.edition} ed--}%
+        %{--(${record.publisher},--}%
+        %{--${record.publicationDate})--}%
+
+
+            <br/>
+        </g:if>
+        <g:if test="${record.isbn}">
+            <g:remoteLink controller="import" action="generateCitation" id="${record.id}"
+                          update="citationBloc${record.id}"
+                          class="actionLink"
+                          title="Update metadata">
+                Generate citations
+            </g:remoteLink>
+            <br/>
+            <br/>
+        </g:if>
+
+
+    %{--Amazon tags: ${record.tags}--}%
+        <span id="bibTexBloc${record.id}">
+            <g:if test="${record.bibEntry}">
+                <b>Bib entry:</b>
+
+                <br/>
+                ${record.bibEntry}
+
+            </g:if>
+        </span>
+
+        <br/>
+        <g:if test="${record.isbn}">
+            <g:remoteLink controller="operation" action="addBibtex" id="${record.id}"
+                          update="bibTexBloc${record.id}"
+                          class="actionLink"
+                          title="Update metadata">
+                Fetch Bib entry
+            </g:remoteLink>
+        </g:if>
+    %{--Amazon tags: ${record.tags}--}%
+
+        <g:if test="${record.withAudiobook}">
+            <br/><i>With audiobook</i>
+        </g:if>
+        <g:if test="${record.isAudiobook}">
+            <br/><i>Is audiobook</i>
+        </g:if>
+        <g:if test="${record.isPaperOnly}">
+            <br/><i>Paper format only</i>
+        </g:if>
+
+        <g:if test="${record.isRead}">
+            <br/><i>Has been read</i>
+        </g:if>
+
+        <g:if test="${record.isPublic}">
+            <br/><i>To be shared</i>
+        </g:if>
+    </div>
+</g:if>
+
+
+
 
 
 <g:if test="${record.entityCode() == 'todoR'}">
@@ -411,6 +543,109 @@
 </div>
 
 
+
+
+
+<g:if test="${record.class.declaredFields.name.contains('notes')}">
+    <div id="notes${entityCode}${record.id}" style="display: inline;">
+
+        <g:if test="${record.notes}">
+        %{--<br/>--}%
+            <g:render template="/gTemplates/recordNotes" model="[record: record]"/>
+
+        </g:if>
+    </div>
+</g:if>
+
+
+
+<div style="font-size: 11px;">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <b>Updated</b> ${record.lastUpdated?.format(OperationController.getPath('date.format') ? OperationController.getPath('date.format') + ' HH:mm' : 'dd.MM.yyyy HH:mm')} (<prettytime:display
+        date="${record.lastUpdated}"/>)
+    <br/>
+    %{--(<prettytime:display--}%
+    %{--date="${record.dateCreated}"/>)--}%
+    %{--by ${record.insertedBy}--}%
+    %{--editedBy ${record.editedBy}--}%
+    <b>Created</b> ${record.dateCreated?.format(OperationController.getPath('date.format') ? OperationController.getPath('date.format') + ' HH:mm' : 'dd.MM.yyyy HH:mm')}
+(${new PrettyTime()?.format(record.dateCreated)})
+    <br/>
+    <b>Version</b> <span style="font-weight: normal">${record.version}</span>
+</div>
+
+
+
+&nbsp;
+<br/>
+<br/>
+<br/>
+%{--todo; case of x ,y--}%
+<g:if test="${entityCode.size() >= 1 || (record.class.declaredFields.name.contains('deletedOn') && record.deletedOn != null)}">
+    <g:remoteLink controller="generics" action="physicalDelete"
+                  params="${[id: record.id, entityCode: entityCode]}"
+                  update="${entityCode}Record${record.id}"
+                  class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                  before="if(!confirm('Are you sure you want to permanantly physically delete the record?')) return false"
+                  title="Physical delete">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </g:remoteLink>
+</g:if>
+
+
+<g:if test="${entityCode.size() == 1 && record.class.declaredFields.name.contains('deletedOn')}">
+    <g:if test="${!record.deletedOn}">
+
+        <g:remoteLink controller="generics" action="logicalDelete"
+                      params="${[id: record.id, entityCode: entityCode]}"
+                      update="${entityCode}Record${record.id}"
+                      before="if(!confirm('Are you sure you want to delete the record?')) return false"
+                      class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                      title="Logical delete">
+            <span class="ui-icon ui-icon-trash"></span>
+        </g:remoteLink>
+    </g:if>
+
+
+    <g:else>
+
+        <g:remoteLink controller="generics" action="logicalUndelete"
+                      params="${[id: record.id, entityCode: entityCode]}"
+                      update="${entityCode}Record${record.id}"
+                      class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                      title="Logical undelete">
+            <span class="ui-icon ui-icon-closethick"></span>
+        </g:remoteLink>
+    </g:else>
+
+    &nbsp;
+</g:if>
+
+<g:if test="${entityCode.size() > 1}">
+    <g:remoteLink controller="generics" action="physicalDelete"
+                  params="${[id: record.id, entityCode: entityCode]}"
+                  update="${entityCode}Record${record.id}"
+                  class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                  title="Logical undelete">
+        <span class="ui-icon ui-icon-circle-close"></span>
+    </g:remoteLink>
+</g:if>
+
+<g:if test="${entityCode == 'N'}">
+    &nbsp; &nbsp;Convert to &nbsp;
+    <g:each in="${['J', 'P', 'R', 'W']}" var="t">
+
+        <g:remoteLink controller="generics" action="convertNoteToRecord"
+                      params="${[id: record.id, entityCode: entityCode, type: t]}"
+                      update="${entityCode}Record${record.id}"
+                      title="Convert note to ${t}">
+            ${t}
+        </g:remoteLink>
+    </g:each>
+</g:if>
 
 
 <div id="notificationArea"></div>

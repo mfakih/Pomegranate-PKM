@@ -602,6 +602,34 @@ ll
         //  render(template: "/${record.entityController()}/edit", model: ["${record.entityController()}Instance": record, update: '${record.entityCode()}Record${record.id}'])
     }
 
+    def showTags(Long id, String entityCode) {
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+        render(template: '/gTemplates/recordTags', model: [record: record])
+    }
+
+    def showComment(Long id, String entityCode) {
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+        render(template: '/gTemplates/recordComment', model: [record: record])
+    }
+
+    def showRelate(Long id, String entityCode) {
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+        render(template: '/gTemplates/recordRelate', model: [record: record])
+    }
+
+    def showAppend(Long id, String entityCode) {
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+        render(template: '/gTemplates/recordAppend', model: [record: record])
+    }
+   def showJP(Long id, String entityCode) {
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+        render(template: '/gTemplates/recordJP', model: [record: record])
+    }
+  def showChildren(Long id, String entityCode) {
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+        render(template: '/gTemplates/recordChildren', model: [record: record])
+    }
+
     def showIndexCards(Long id, String entityCode) {
 
 //        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
@@ -855,6 +883,28 @@ ll
 
         render(template: '/gTemplates/recordListing', model: [list: results, title: 'Records with course ' + course])
     }
+       def recordsByDepartment() {
+
+        def department = Department.get(params.id)
+        def results = []
+
+
+       for (c in Course.findAllByDepartment(department)){
+           results += [c]
+           allClassesWithCoursesMinusBW.each() {
+            results += it.findAllByCourse(c)
+           }
+           results += Writing.findAllByCourse(c, [sort: 'orderInCourse', order: 'asc'])
+           results += Book.findAllByCourse(c, [sort: 'orderInCourse', order: 'asc'])
+
+       }
+
+
+
+        render(template: '/gTemplates/recordListing', model: [list: results, title: 'Records with department ' + department])
+    }
+
+
 
     def dotTextDump() {
         def results = []

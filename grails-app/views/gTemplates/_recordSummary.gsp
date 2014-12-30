@@ -89,12 +89,10 @@
                     <img class="Photo" style="width: 60px; height:80px; display:inline"
                          src="${createLink(controller: 'book', action: 'viewImage', id: record.id, params: [date: new Date()])}"/>
                 </a>
-            </g:if> 
-			
-			</td>
- </g:if>
-       
-   
+            </g:if>
+
+        </td>
+    </g:if>
 
     <g:if test="${entityCode == 'E'}">
 
@@ -117,15 +115,21 @@
     style="font-family: Arial; font-size: 13px; color: #105CB6; line-height: 17px; ">
 
 
-<g:remoteLink controller="generics" action="showDetails"
-              params="${[id: record.id, entityCode: entityCode]}"
-              update="below${entityCode}Record${record.id}"
-              title="Details">
-<g:render template="/gTemplates/summaryField" model="[record: record, entityCode: entityCode]"/>
+%{--<g:remoteLink controller="generics" action="showDetails"--}%
+              %{--params="${[id: record.id, entityCode: entityCode]}"--}%
+              %{--update="below${entityCode}Record${record.id}"--}%
+              %{--title="Details">--}%
+%{--<g:render template="/gTemplates/summaryField" model="[record: record, entityCode: entityCode]"/>--}%
+%{----}%
+    %{--</g:remoteLink>--}%
 
-    </g:remoteLink>
 
-</td>
+            <g:render template="/gTemplates/summaryField" model="[record: record, entityCode: entityCode]"/>
+
+
+
+
+    </td>
 
 
 <td class="actionTd" style="${justUpdated ? 'background: YellowGreen !important' : ''}">
@@ -163,67 +167,6 @@
     </g:if>
 
 
-    <td class="actionTd showhim">
-
-
-
-        <div class="actionsButtons">
-<g:if test="${record.class.declaredFields.name.contains('priority')}">
-        <a name="bookmark${record.id}${entityCode}" title="priority++"
-           value="${record.priority}"
-           onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/increasePriority/${entityCode}${record.id}')">
-            +
-        </a>
-    </g:if>
-            
-            <g:if test="${record.class.declaredFields.name.contains('endDate')}">
-        <a name="bookmark${record.id}${entityCode}" title="endDate today"
-           value="${record.endDate}"
-           onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/setEndDateToday/${entityCode}${record.id}')">
-            >
-        </a>
-    </g:if>
-<g:if test="${record.class.declaredFields.name.contains('percentCompleted')}">
-  <a name="bookmark${record.id}${entityCode}" title="percent++"
-           value="${record.percentCompleted}"
-           onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/increasePercentCompleted/${entityCode}${record.id}')">
-            %
-        </a>
-    </g:if>
-
-<g:if test="${record.class.declaredFields.name.contains('isPrivate')}">
-
-        <a name="bookmark${record.id}${entityCode}" title="Toggle privacy"
-           value="${record.isPrivate}"
-           onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/togglePrivacy/${entityCode}-${record.id}')">
-            &empty;
-        </a>
-
-    </g:if>
-
-            </div>
-        %{--<span id="priorityRegion${entityCode}${record.id}">${record.priority}</span>--}%
-
-        <g:if test="${record.class.declaredFields.name.contains('bookmarked')}">
-            <g:if test="${!record.bookmarked}">
-                <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"
-                   value="${record.bookmarked}"
-                   onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/quickBookmark/${entityCode}-${record.id}')">
-                    <span class="icon-star-gm"></span>
-                </a>
-            </g:if>
-
-            <g:if test="${record.bookmarked}">
-                <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"
-                   value="${record.bookmarked}"
-                   onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/quickBookmark/${entityCode}-${record.id}')">
-                    <span class="icon-starred-gm"></span>
-                </a>
-
-            </g:if>
-        </g:if>
-
-    </td>
 
 
 
@@ -242,6 +185,31 @@
     </td>
 
 
+    <td class="actionTd">
+
+        <g:if test="${record.class.declaredFields.name.contains('bookmarked')}">
+            <g:if test="${!record.bookmarked}">
+                <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"
+                   value="${record.bookmarked}"
+                   onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/quickBookmark/${entityCode}-${record.id}')">
+                    <span class="icon-star-gm"></span>
+                </a>
+
+
+            </g:if>
+
+            <g:if test="${record.bookmarked}">
+                <a name="bookmark${record.id}${entityCode}" title="Toggle bookmark"
+                   value="${record.bookmarked}"
+                   onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/quickBookmark/${entityCode}-${record.id}')">
+                    <span class="icon-starred-gm"></span>
+                </a>
+
+            </g:if>
+        </g:if>
+
+
+    </td>
     <td class="actionTd">
 
     %{--<span style="float: right">--}%
@@ -285,7 +253,241 @@
 
 </tr>
 
+ <tr>
+     <td class="actionTd showhim" colspan="8">
 
+
+
+         <div class="actionsButtons">
+
+
+
+             <g:if test="${record.class.declaredFields.name.contains('type') && entityCode.length() == 1}">
+                 <g:set value="type" var="field"></g:set>
+                 <span style="min-width: 60px;">
+                     <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+                        style="${record.type ? record.type?.style : ''};font-size: 11px; font-weight: bold; float: right; margin-left: 5px;"
+                        data-name="${field}-${entityCode}"
+                        data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+                        data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
+                         ${record[field]?.code ?: '?type'}
+                     </a>
+                 </span>
+                 <script>
+                     $('#${field}${record.id}').editable();
+                 </script>
+             </g:if>
+
+
+
+
+             <g:if test="${record.class.declaredFields.name.contains('writing') && entityCode == 'N'}">
+                 <g:set value="writing" var="field"></g:set>
+
+                 <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+                    data-name="${field}-${entityCode}"
+                    style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic;  float: right; padding-right: 4px;"
+                    data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+                    data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
+                     ${record[field] ? record[field]?.summary : '?wrt'}
+                 </a>
+                 <script>
+                     $('#${field}${record.id}').editable();
+                 </script>
+
+             </g:if>
+
+             <g:if test="${record.class.declaredFields.name.contains('goal')}">
+                 &nbsp;
+                 <g:set value="goal" var="field"></g:set>
+
+                 <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+                    data-name="${field}-${entityCode}"
+                    style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic;  float: right; padding-right: 4px;"
+                    data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+                    data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
+                     ${record[field] ? record[field]?.summary : '?goal'}
+                 </a>
+
+                 <g:if test="${record.goal}">
+                     <g:remoteLink controller="generics" action="showSummary" id="${record.goal?.id}"
+                                   params="[entityCode: 'G']"
+                                   update="below${entityCode}Record${record.id}"
+                                   title="Show goal">
+                         <i>G-${record.goal?.id}</i>
+                     </g:remoteLink>
+                 </g:if>
+
+                 <script>
+                     $('#${field}${record.id}').editable();
+                 </script>
+
+                 &nbsp;
+             </g:if>
+
+
+
+             <g:if test="${record.class.declaredFields.name.contains('course')}">
+
+                 <g:set value="course" var="field"></g:set>
+
+                 <a href="#" id="${field}${record.id}" class="${field}"
+
+                    data-type="select" data-value="${record[field]?.id}"
+
+                    data-name="${field}-${record.entityCode()}"
+                    data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
+                    data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}"
+                    style="font-size: 11px; font-weight: bold; float: right; padding-right: 4px;">
+                     ${record[field]?.code ?: '?crs'}
+
+                 </a>
+                 <script>
+                     $('#${field}${record.id}').editable({
+//            typeahead: {
+//                name: 'value'
+//            }
+                     });
+                 </script>
+
+             </g:if>
+
+
+
+             <g:if test="${1 ==2 && record.class.declaredFields.name.contains('status')}">
+                 <g:set value="status" var="field"></g:set>
+
+                 <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
+                    data-name="${field}-${entityCode}"
+                    style="${record.status ? record.status?.style : ''}; float: right; border: 0.5px solid #808080; border-radius: 3px; font-size: 11px; text-decoration: italic; padding-left: 2px; padding-right: 2px;"
+                    data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
+                    data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
+                     ${record[field] ? record[field]?.code : '?st'}
+                 </a>
+                 <script>
+                     $('#${field}${record.id}').editable();
+                 </script>
+
+             </g:if>
+
+
+             <g:remoteLink controller="generics" action="showTags"
+                       params="${[id: record.id, entityCode: entityCode]}"
+                       update="below${entityCode}Record${record.id}"
+                       title="Details">
+             Tag...  &nbsp;&nbsp;
+         </g:remoteLink>
+
+             <g:remoteLink controller="generics" action="showRelateForm"
+                       params="${[id: record.id, entityCode: entityCode]}"
+                       update="below${entityCode}Record${record.id}"
+                       title="Details">
+             Relate...  &nbsp;&nbsp;
+         </g:remoteLink>
+   <g:remoteLink controller="generics" action="showChildren"
+                       params="${[id: record.id, entityCode: entityCode]}"
+                       update="below${entityCode}Record${record.id}"
+                       title="Details">
+             Related...  &nbsp;&nbsp;
+         </g:remoteLink>
+
+
+         <g:if test="${record.class.declaredFields.name.contains('priority')}">
+                 <a name="bookmark${record.id}${entityCode}" title="priority++"
+                    value="${record.priority}"
+                    onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/increasePriority/${entityCode}${record.id}')">
+                     + pr
+                 </a>
+             </g:if>
+
+             <g:if test="${record.class.declaredFields.name.contains('endDate')}">
+                 <a name="bookmark${record.id}${entityCode}" title="endDate today"
+                    value="${record.endDate}"
+                    onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/setEndDateToday/${entityCode}${record.id}')">
+                     Today!
+                 </a>
+             </g:if>
+             <g:if test="${record.class.declaredFields.name.contains('percentCompleted')}">
+                 <a name="bookmark${record.id}${entityCode}" title="percent++"
+                    value="${record.percentCompleted}"
+                    onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/increasePercentCompleted/${entityCode}${record.id}')">
+                     + percent
+                 </a>
+             </g:if>
+
+             <g:if test="${record.class.declaredFields.name.contains('isPrivate')}">
+
+                 <a name="bookmark${record.id}${entityCode}" title="Toggle privacy"
+                    value="${record.isPrivate}"
+                    onclick="jQuery('#${entityCode}Record${record.id}').load('/pkm/generics/togglePrivacy/${entityCode}-${record.id}')">
+                 Private
+                 </a>
+
+             </g:if>
+
+
+
+         %{--update="commentArea${entityCode}${record.id}"--}%
+             <g:remoteLink controller="generics" action="showIndexCards" style="display: inline;"
+                           params="${[id: record.id, entityCode: entityCode]}"
+                           update="3rdPanel"
+                           before="jQuery('#accordionEast').accordion({ active: 0});"
+                           title="show index cards">
+
+                 <g:if test="${app.IndexCard.countByEntityCodeAndRecordId(entityCode, record.id) > 0 || (entityCode == 'W' ? app.IndexCard.countByWriting(Writing.get(record.id)) > 0 : false) || (entityCode == 'R' ? app.IndexCard.countByBook(Book.get(record.id)) > 0 : false)}">
+
+                 %{--<span class="ui-icon ui-icon-comment"></span>--}%
+                     (<span>
+
+                         <g:if test="${entityCode == 'W'}">
+                             ${app.IndexCard.countByWriting(Writing.get(record.id)) + app.IndexCard.countByEntityCodeAndRecordId(entityCode, record.id)}
+                         </g:if>
+                         <g:elseif test="${entityCode == 'R'}">
+                             ${app.IndexCard.countByBook(Book.get(record.id)) + app.IndexCard.countByEntityCodeAndRecordId(entityCode, record.id)}
+                         </g:elseif>
+                         <g:else>
+                             ${app.IndexCard.countByEntityCodeAndRecordId(entityCode, record.id)}
+                         </g:else>
+
+                     </span>
+                     comments)
+                 </g:if>
+                 <g:else>
+                 %{--<span class="ui-icon ui-icon-comment"></span>--}%
+
+
+
+                 </g:else>
+                 <g:remoteLink controller="generics" action="showComment"
+                               params="${[id: record.id, entityCode: entityCode]}"
+                               update="below${entityCode}Record${record.id}"
+                               title="Details">
+                     Comment...
+                 </g:remoteLink>
+
+             </g:remoteLink>
+
+
+
+         <g:remoteLink controller="generics" action="showJP"
+                       params="${[id: record.id, entityCode: entityCode]}"
+                       update="below${entityCode}Record${record.id}"
+                       title="Details">
+             Assign...
+         </g:remoteLink>
+       <g:remoteLink controller="generics" action="showAppend"
+                       params="${[id: record.id, entityCode: entityCode]}"
+                       update="below${entityCode}Record${record.id}"
+                       title="Details">
+             Append...
+         </g:remoteLink>
+         </div>
+     %{--<span id="priorityRegion${entityCode}${record.id}">${record.priority}</span>--}%
+
+
+     </td>
+
+ </tr>
 
 
 <g:if test="${'CTGR'.contains(entityCode) && record.percentCompleted}">

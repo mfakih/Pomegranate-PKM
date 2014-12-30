@@ -21,8 +21,15 @@
 
             <a>
 
+            <g:remoteLink controller="generics" action="recordsByDepartment" id="${d.id}"
+                          before="jQuery.address.value(jQuery(this).attr('href'));"
+                          update="centralArea">
                 ${d.summary}
+            </g:remoteLink>
+
+
                 <span class="moduleCount">
+
 
                     <b> ${d.code}  </b> (${d.courses.size()})
                 </span>
