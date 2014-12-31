@@ -16,6 +16,7 @@
 
         <g:hiddenField name="sth2" value="${new java.util.Date()}"/>
         <table style="width: 98%; padding: 0px; margin: 0px;">
+        <tr>
             <td style=" padding: 0px; margin: 0px; width: 60%">
               Choose action:
                 <g:select name="commandPrefix"
@@ -42,6 +43,7 @@
                 %{--(Add, update, search, assign records...) Type ? for more info--}%
                 <g:textArea cols="80" rows="5" name="block" id="quickAddTextField" value=""
                             autocomplete="off"
+                            dir="auto"
                             placeholder="Command bar"
                             onkeyup="if (jQuery('#quickAddTextField').val().search(';')== -1){jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))}"
                             onfocus="jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextField').val()))"
@@ -51,7 +53,7 @@
             </td>
             %{--<td style="width: 25px !important ; padding: 0px; margin: 0px;">--}%
 
-
+          </tr>
             %{--</td>--}%
         </table>
 

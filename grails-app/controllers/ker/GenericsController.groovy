@@ -1583,8 +1583,8 @@ def addContactToRecord() {
         def locations = []
         def contexts = []
         def categories = []
-        def resourceTypes = []
         def writings = []
+        def goals = []
 
         def indicators = app.Indicator.executeQuery('from Indicator  order by code')
         //where category != null
@@ -1599,15 +1599,17 @@ def addContactToRecord() {
                     statuses = WorkStatus.list([sort: 'name'])
                     locations = Location.list([sort: 'name'])
                     contexts = Context.list([sort: 'name'])
+                    goals = Goal.list([sort: 'summary'])
                     break
                 case 'mcs.Goal':
                     statuses = WorkStatus.list([sort: 'name'])
                     types = GoalType.list([sort: 'name'])
-
+                    writings = Writing.list([sort: 'summary'])
                     break
                 case 'mcs.Planner':
                     statuses = WorkStatus.list([sort: 'name'])
 
+                    goals = Goal.list([sort: 'summary'])
                     types = PlannerType.list([sort: 'name'])
 
                     break
@@ -1637,6 +1639,7 @@ def addContactToRecord() {
             if (params.id)
                 record = grailsApplication.classLoader.loadClass(params.entityController).get(params.id)
 
+
             render(template: '/gTemplates/addForm', model: [entityController: params.entityController,
                     fields: grailsApplication.classLoader.loadClass(params.entityController).declaredFields.name,
                     updateRegion: params.updateRegion,
@@ -1644,6 +1647,7 @@ def addContactToRecord() {
                     types: types,
                     statuses: statuses,
                     writings: writings,
+                    goals: goals,
                     topcis: topics,
                     priorities: priorities,
                     sources: sources,
@@ -1787,7 +1791,7 @@ def addContactToRecord() {
                     groups = Department.list([sort: 'code'])
                     break
                 case 'course':
-                    groups = Course.list([sort: 'title'])
+                    groups = Course.list([sort: 'summary'])
                     break
                 case 'type':
                     if (input.contains('from mcs.Goal')) {

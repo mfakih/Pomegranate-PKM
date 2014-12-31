@@ -8,9 +8,9 @@
 <g:formRemote name="genericSearch" url="[controller: 'generics', action: 'saveViaForm']"
               update="${updateRegion}" method="post" style="display: inline;" onComplete="">
 
-<b>${entityController?.split(/\./).last()}</b>
+%{--<b>${entityController?.split(/\./).last()}</b>--}%
 
-     <br/>
+     %{--<br/>--}%
      <br/>
 
 <g:submitButton class="fg-button ui-icon-left ui-widget ui-state-default ui-corner-all" name="submit" style="width: 100%; height: 30px;"
@@ -29,6 +29,116 @@
 <tr>
 
 
+    <g:if test="${fields.contains('department')}">
+        <td>
+            <g:select name="department.id" style="width: 200px;" from="${departments}"
+                      value="${record?.department?.id}" optionKey="id"
+                      noSelection="${['null': 'No department']}"/>
+        </td>
+    </g:if>
+
+    <g:if test="${fields.contains('course')}">
+        <td>
+            <g:select name="course.id" style="width: 200px;" from="${courses}"
+                          id="chosenCourse${record?.id}"
+                          value="${record?.course?.id}"
+                          optionKey="id" noSelection="${['null': 'No course']}"/>
+
+
+
+            <script type="text/javascript">
+                jQuery("#chosenCourse${record?.id}").chosen({allow_single_deselect: true, no_results_text: "None found"})
+            </script>
+
+
+        </td>
+    </g:if>
+
+</tr>
+
+<tr>
+
+
+
+    <g:if test="${fields.contains('queryType')}">
+        <td>
+            <g:select name="queryType" from="${['hql', 'lucene', 'adhoc']}" value="${record?.queryType}"/>
+        </td>
+    </g:if>
+
+
+    <g:if test="${fields.contains('type')}">
+        <td>
+
+            <g:select name="type.id" style="width: 150px;"
+                      from="${types}" optionKey="id" optionValue="name"
+                      value="${record?.type?.id}"
+                      id="chosenType${record?.id}"
+                      noSelection="${['null': 'No type']}"/>
+        </td>
+
+        <script type="text/javascript">
+            jQuery("#chosenType${record?.id}").chosen({allow_single_deselect: true, no_results_text: "None found"})
+        </script>
+
+    </g:if>
+
+
+
+    <g:if test="${fields.contains('status')}">
+        <td>      <g:select name="status.id" style="width: 150px;"
+                            from="${statuses}" optionKey="id" optionValue="name"
+                            id="chosenStatus${record?.id}"
+                            data-placeholder="No status"
+                            value="${record?.status?.id}"
+                            noSelection="${['null': 'No status']}"/>
+        </td>
+
+        <script type="text/javascript">
+            jQuery("#chosenStatus${record?.id}").chosen({allow_single_deselect: true, no_results_text: "None found"})
+        </script>
+
+
+    </g:if>
+
+    <g:if test="${fields.contains('goal')}">
+        <td>    <g:select name="goal.id" from="${goals}" style="width: 150px;"
+                          optionKey="id" optionValue="summary"
+                           data-placeholder="No goal"
+                           id="chosenGoal${record?.id}"
+                           value="${record?.goal?.id ?: (session['goalId'] ?: null)}"
+                           noSelection="['null': 'No goal']"/>
+
+
+            <script type="text/javascript">
+                jQuery("#chosenGoal${record?.id}").chosen({allow_single_deselect: true, no_results_text: "None found"})
+            </script>
+
+        </td>
+    </g:if>
+
+    <g:if test="${fields.contains('location')}">
+        <td>
+            <g:select name="location.id" style="width: 150px;"
+                      from="${locations}" optionKey="id" optionValue="name"
+                      value="${record?.location?.id}"
+                      noSelection="${['null': 'No location']}"/>
+        </td>
+    </g:if>
+
+    <g:if test="${fields.contains('context')}">
+        <td>
+            <g:select name="context.id" style="width: 150px;"
+                      from="${contexts}" optionKey="id" optionValue="name"
+                      value="${record?.context?.id}"
+                      noSelection="${['null': 'No context']}"/>
+        </td>
+    </g:if>
+
+</tr>
+<tr>
+
+
         <g:if test="${fields.contains('numberCode')}">
             <td>          <g:textField name="numberCode" placeholder="Number Code" class="ui-corner-all" value="${record?.numberCode}"/>
             </td>
@@ -43,18 +153,13 @@
             <g:textField name="username" placeholder="Username" class="ui-corner-all" value="${record?.username}"/>
             </td>
         </g:if>
-
-
-        <g:if test="${fields.contains('password')}">
+       <g:if test="${fields.contains('password')}">
             <td>
             <g:textField name="password" placeholder="Password" class="ui-corner-all" value="${record?.password}"/>
             </td>
         </g:if>
 
-    
-    
-
-        <g:if test="${fields.contains('code')}">
+          <g:if test="${fields.contains('code')}">
             <td>
             <g:textField name="code" placeholder="Code" class="ui-corner-all" value="${record?.code}"/>
             </td>
@@ -125,6 +230,77 @@
     </g:if>
 
 </tr>
+
+
+<tr>
+    <g:if test="${fields.contains('source')}">
+        <td>
+            <g:select name="source.id" class="ui-corner-all"
+                      from="${sources}" optionKey="id"
+                      value="${record?.source?.id}"
+                      noSelection="${['null': 'No person']}"/>
+        </td>
+    </g:if>
+
+
+
+    <g:if test="${fields.contains('indicator')}">
+        <td>
+            <g:select name="indicator.id" class="ui-corner-all"
+                      from="${indicators}"
+                      optionKey="id" optionValue="code"
+                      value="${record?.indicator?.id ?: (session['lastIndicatorId'] ?: null)}"
+                      noSelection="${['null': '']}"/>
+        </td>
+    </g:if>
+
+
+
+    <g:if test="${fields.contains('category') && entityCode == 'Q'}">
+        <td>
+            <g:select name="category.id" class="ui-corner-all"
+                      from="${app.PaymentCategory.list()}" optionKey="id"
+                      value="${record?.category?.id}"
+                      noSelection="${['null': '']}"/>
+        </td>
+    </g:if>
+
+
+
+
+
+
+
+
+    <g:if test="${fields.contains('writing')}">
+        <td>     <g:select name="writing.id" from="${writings}" style="width: 150px;"
+                           optionKey="id" optionValue="summary"
+                           id="chosenWriting${record?.id}"
+                           value="${record?.writing?.id ?: (session['writingId'] ?: null)}"
+                           noSelection="['null': 'No writing']"/>
+
+
+            <script type="text/javascript">
+                jQuery("#chosenWriting${record?.id}").chosen({allow_single_deselect: true, no_results_text: "None found"})
+            </script>
+
+        </td>
+    </g:if>
+
+
+
+
+    <g:if test="${fields.contains('book')}">
+        <td>    <g:textField placeholder="Book ID" id="book.id" name="book.id" style="width: 60px"
+                             class="ui-corner-all"
+                             value="${record?.book?.id ?: (bookId ?: null)}"/>
+        </td>
+    </g:if>
+
+
+</tr>
+
+
 <tr>
 
 
@@ -174,12 +350,14 @@
     
     <g:if test="${fields.contains('endDate')}">
         <td>
-            <pkm:datePicker name="endDate" placeholder="Due date" value="${record?.endDate}"/>
+            <pkm:datePicker name="endDate" placeholder="End date" id="asdfasdf" value="${record?.endDate}"/>
+            <g:textField name="endTime" style="width:60px;" placeholder="Time"
+                         value="${record?.endDate ? record?.endDate?.format('HH.mm') : '00.00'}"/>
         </td>
     </g:if>
     <g:if test="${fields.contains('actualEndDate')}">
         <td>
-            <pkm:datePicker name="actualEndDate" placeholder="End date" id="asdfasdfasf" value="${record?.actualEndDate}"/>
+            <pkm:datePicker name="actualEndDate" placeholder="Actual end date" id="234rsdfsdf" value="${record?.actualEndDate}"/>
         </td>
     </g:if>
     
@@ -227,85 +405,6 @@
 </tr>
 
 
-<tr>
-
-
-        <g:if test="${fields.contains('department')}">
-            <td>
-            <g:select name="department.id" style="width: 200px;" from="${departments}"
-                      value="${record?.department?.id}" optionKey="id"
-                      noSelection="${['null': 'No department']}"/>
-</td>
-        </g:if>
-
-    <g:if test="${fields.contains('course')}">
-        <td>    <g:select name="course.id" style="width: 200px;" from="${courses}"
-                          value="${record?.course?.id}"
-                          optionKey="id" noSelection="${['null': 'No course']}"/>
-        </td>
-    </g:if>
-
-</tr>
-<tr>
-        <g:if test="${fields.contains('source')}">
-            <td>
-            <g:select name="source.id" class="ui-corner-all"
-                      from="${sources}" optionKey="id"
-                      value="${record?.source?.id}"
-                      noSelection="${['null': 'No person']}"/>
-            </td>
-        </g:if>
-
-
-
-        <g:if test="${fields.contains('indicator')}">
-            <td>
-            <g:select name="indicator.id" class="ui-corner-all"
-                      from="${indicators}"
-                      optionKey="id" optionValue="code"
-                      value="${record?.indicator?.id ?: (session['lastIndicatorId'] ?: null)}"
-                      noSelection="${['null': '']}"/>
-            </td>
-        </g:if>
-
-
-
-        <g:if test="${fields.contains('category') && entityCode == 'Q'}">
-          <td>
-            <g:select name="category.id" class="ui-corner-all"
-                      from="${app.PaymentCategory.list()}" optionKey="id"
-                      value="${record?.category?.id}"
-                      noSelection="${['null': '']}"/>
-            </td>
-        </g:if>
-
-
-
-
-
-
-
-
-        <g:if test="${fields.contains('writing')}">
-            <td>     <g:select name="writing.id" from="${writings}" style="width: 150px;"
-                      optionKey="id"
-                      value="${record?.writing?.id ?: (session['writingId'] ?: null)}"
-                      noSelection="['null': 'No writing']"/>
-            </td>
-        </g:if>
-
-
-
-        <g:if test="${fields.contains('book')}">
-            <td>    <g:textField placeholder="Book ID" id="book.id" name="book.id" style="width: 60px"
-                         class="ui-corner-all"
-                         value="${record?.book?.id ?: (bookId ?: null)}"/>
-            </td>
-        </g:if>
-
-
-</tr>
-
 
 <tr>
 
@@ -328,21 +427,6 @@
 
 
 
-    <g:if test="${fields.contains('type')}">
-        <td>
-
-            <g:select name="type.id" style="width: 150px;"
-                      from="${types}" optionKey="id" optionValue="name"
-                      value="${record?.type?.id}"
-                      id="chosenType${record?.id}"
-                      noSelection="${['null': 'Any type']}"/>
-        </td>
-
-        <script type="text/javascript">
-            jQuery("#chosenType${record?.id}).chosen({allow_single_deselect: true, no_results_text: "None found"})
-        </script>
-
-    </g:if>
 
     <g:if test="${fields.contains('metaType')}">
         <td>
@@ -368,56 +452,6 @@
                       noSelection="${['null': 'No pomegranate']}"/>
         </td>
     </g:if>
-
-</tr>
-<tr>
-
-
-
-    <g:if test="${fields.contains('queryType')}">
-        <td>
-            <g:select name="queryType" from="${['hql', 'lucene', 'adhoc']}" value="${record?.queryType}"/>
-        </td>
-    </g:if>
-
-
-
-
-
-        <g:if test="${fields.contains('status')}">
-            <td>      <g:select name="status.id" style="width: 150px;"
-                      from="${statuses}" optionKey="id" optionValue="name"
-                      id="chosenStatus${record?.id}"
-                      data-placeholder="Any status"
-                      value="${record?.status?.id}"
-                      noSelection="${['null': 'Any status']}"/>
-</td>
-
-            <script type="text/javascript">
-                jQuery("#chosenStatus${record?.id}).chosen({allow_single_deselect: true, no_results_text: "None found"})
-            </script>
-
-
-        </g:if>
-
-
-        <g:if test="${fields.contains('location')}">
-<td>
-            <g:select name="location.id" style="width: 150px;"
-                      from="${locations}" optionKey="id" optionValue="name"
-                      value="${record?.location?.id}"
-                      noSelection="${['null': 'Any location']}"/>
-</td>
-        </g:if>
-
-        <g:if test="${fields.contains('context')}">
-<td>
-            <g:select name="context.id" style="width: 150px;"
-                      from="${contexts}" optionKey="id" optionValue="name"
-                      value="${record?.context?.id}"
-                      noSelection="${['null': 'Any context']}"/>
-</td>
-        </g:if>
 
 </tr>
 <tr>
@@ -468,7 +502,7 @@
         <g:if test="${fields.contains('level')}">
           <td>  <g:select name="level" value="${record?.level}"
                       from="${['i', 'd', 'w', 'm', 'y', 'e', 'l']}"
-                      noSelection="${['null': 'Any level']}"/>
+                      noSelection="${['null': 'No level']}"/>
           </td>
         </g:if>
 
@@ -558,12 +592,6 @@
 
 
 
-        <g:if test="${fields.contains('endDate')}">
-            <td>    <pkm:datePicker placeholder="End date" name="endDate" value="${record?.endDate}"/>
-            <g:textField name="endTime" style="width:60px;" placeholder="Time"
-                         value="${record?.endDate ? record?.endDate?.format('HH.mm') : '00.00'}"/>
-            </td>  </g:if>
-
 
 
 
@@ -609,12 +637,12 @@
 
 </tr>
 <tr>
-      <g:if test="${fields.contains('bookmarked')}">
-    <td>
-        <g:checkBox id="bookmarked" name="bookmarked" value="${record?.bookmarked}"
-                        style="width: 15px;"/> Bookmarked?
-    </td>
-      </g:if>
+      %{--<g:if test="${fields.contains('bookmarked')}">--}%
+    %{--<td>--}%
+        %{--<g:checkBox id="bookmarked" name="bookmarked" value="${record?.bookmarked}"--}%
+                        %{--style="width: 15px;"/> Bookmarked?--}%
+    %{--</td>--}%
+      %{--</g:if>--}%
 
         <g:if test="${fields.contains('onMobile')}">
         <td>    <g:checkBox id="onMobile" name="onMobile" value="${record?.onMobile}"

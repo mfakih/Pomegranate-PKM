@@ -56,6 +56,63 @@
 <g:else>
 
 
+<g:if test="${record.class.declaredFields.name.contains('goal')}">
+    &nbsp;
+    <g:set value="goal" var="field"></g:set>
+
+    %{--<a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"--}%
+       %{--data-name="${field}-${entityCode}"--}%
+       %{--style="border-bottom: 0.5px solid #808080; font-size: 11px; text-decoration: italic;  float: right; padding-right: 4px;"--}%
+       %{--data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"--}%
+       %{--data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">--}%
+        %{--${record[field] ? record[field]?.summary : ''}--}%
+    %{--</a>--}%
+
+    <g:if test="${record.goal}">
+        <g:remoteLink controller="generics" action="showSummary" id="${record.goal?.id}"
+                      params="[entityCode: 'G']"
+                      update="below${entityCode}Record${record.id}"
+                      title="Show goal">
+            <i>d</i>
+            <b>${record.goal?.department?.code}</b>
+            <i>${record.goal?.summary}</i>
+
+        </g:remoteLink>
+        <br/>
+    </g:if>
+
+    <script>
+        %{--$('#${field}${record.id}').editable();--}%
+    </script>
+
+    &nbsp;
+</g:if>
+
+
+
+<g:if test="${record.class.declaredFields.name.contains('course')}">
+
+    <g:set value="course" var="field"></g:set>
+
+    <a href="#" id="${field}${record.id}" class="${field}"
+
+       data-type="select" data-value="${record[field]?.id}"
+
+       data-name="${field}-${record.entityCode()}"
+       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
+       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}"
+       style="font-size: 11px; font-weight: bold; float: right; padding-right: 4px;">
+        ${record[field]?.code ?: ''}
+    </a>
+    <script>
+        %{--$('#${field}${record.id}').editable({--}%
+        //                     });
+    </script>
+
+</g:if>
+
+
+
 <g:remoteLink controller="page" action="panel"
               params="${[id: record.id, entityCode: entityCode]}"
               update="3rdPanel"
