@@ -448,6 +448,12 @@ p4"""
 
                         }
                             break
+							
+							case ']':   ResourceType.findAllByCodeLike(filter, [sort: 'name']).each() {
+                                responce += ('' + it.name + '|' + finalPart + ' #' + it.code + '\n')
+                                hintResponce += ('' + it.code + '\n')
+                            }
+                                break
 
                         case '!': switch (entityCode) {
                             case 'I': Indicator.findAllByCodeLike(filter, [sort: 'summary']).each() {

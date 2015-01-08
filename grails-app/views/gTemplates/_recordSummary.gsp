@@ -61,14 +61,14 @@
 
 </td>
 
-   	 <g:if test="${new File(OperationController.getPath('module.sandbox.' + record.entityCode() + '.path') + '/' + record.id + 'j.jpg')?.exists() || new File(OperationController.getPath('module.sandbox.' + record.entityCode() + '.path') + '/' + record.id + 'n.jpg')?.exists()}">
+   	 <g:if test="${new File(OperationController.getPath('module.sandbox.' + entityCode + '.path') + '/' + record.id + 'j.jpg')?.exists() || new File(OperationController.getPath('module.sandbox.' + entityCode + '.path') + '/' + record.id + 'n.jpg')?.exists()}">
         
 <td style="width: 65px;">		 
             
 		        <a href="${createLink(controller: 'generics', action: 'viewRecordImage', id: record.id)}"
                    target="_blank">
                     <img class="Photo" style="width: 60; height: 80; display:inline"
-                         src="${createLink(controller: 'generics', action: 'viewRecordImage', id: record.id, params: [entityCode: record.entityCode(), date: new Date()])}"/>
+                         src="${createLink(controller: 'generics', action: 'viewRecordImage', id: record.id, params: [entityCode: entityCode, date: new Date()])}"/>
                 </a>
 				
 				
@@ -255,10 +255,11 @@
         <div class="idCell" style="font-size: 10px; -moz-transform:rotate(-90deg); -moz-transform-origin: middle right; -webkit-transform: rotate(-90deg); -webkit-transform-origin: middle right; -o-transform: rotate(-90deg); -o-transform-origin:  middle right; ;">
 		
 		
-<g:remoteLink controller="generics" action="showDetails"
+<g:remoteLink controller="page" action="panel"
               params="${[id: record.id, entityCode: entityCode]}"
-              update="below${entityCode}Record${record.id}"
-              title="Details">
+              update="3rdPanel"
+              before="jQuery('#accordionEast').accordion({ active: 0});"
+              title="Go to page">
     ${record.id}
 
     </g:remoteLink>
@@ -468,6 +469,8 @@
 
                 <pkm:summarize text="${record.description?.replace('Product Description', '')}" length="300"/>
 
+				 <i><pkm:summarize text="${record.fullText}" length="300"/></i>
+
 
 
                 %{--<g:if test="${'T'.contains(entityCode)}">--}%
@@ -551,7 +554,7 @@
 
 <td rowspan="2">
             
-			 <g:if test="${new File(OperationController.getPath('module.sandbox.' + record.entityCode() + '.path') + '/' + record.id + 'j.jpg')?.exists()}">
+			 <g:if test="${new File(OperationController.getPath('module.sandbox.' + entityCode + '.path') + '/' + record.id + 'j.jpg')?.exists()}">
                 <a href="${createLink(controller: 'book', action: 'viewRecordImage', id: record.id)}"
                    target="_blank">
                     <img class="Photo" style="width: 100; height: 130; display:inline"

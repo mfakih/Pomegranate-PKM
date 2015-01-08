@@ -21,6 +21,13 @@
         <pkm:summarize text="${record?.description?.replace('Product Description', '')?.replaceAll("\\<.*?>", "")}"
                        length="200"/>
     </span>
+	
+	 <span style="font-size: 12px; font-style: italic; color: #8A5C69">
+         <pkm:summarize text="${record.fullText}" length="200"/>
+    </span>
+	
+	
+		
 
     <span style="${record.status?.style}; font-size: 11px; border: 0px solid; text-decoration: #808080 underline;  border-radius: 3px; padding: 1px; margin-right: 3px;">
         ${record.status?.code}
@@ -94,16 +101,11 @@
 
     <g:set value="course" var="field"></g:set>
 
-    <a href="#" id="${field}${record.id}" class="${field}"
-
-       data-type="select" data-value="${record[field]?.id}"
-
-       data-name="${field}-${record.entityCode()}"
-       data-source="/pkm/operation/getQuickEditValues?entity=${record.entityCode()}&field=${field}&date=${new Date().format('hhmmssMMyyyydd')}"
-       data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}"
+ <span title="${record.course?.summary}"
        style="font-size: 11px; font-weight: bold; float: right; padding-right: 4px;">
         ${record[field]?.code ?: ''}
-    </a>
+		${record[field]?.codeString ?: ''}
+    </span>
     <script>
         %{--$('#${field}${record.id}').editable({--}%
         //                     });
@@ -318,6 +320,10 @@
 %{--Read ${record.readOn?.format('dd.MM.yyyy')}--}%
 </g:if>
 
+<g:if test="${record.class.declaredFields.name.contains('reviewCount') && record.reviewCount}">
+   <sup> ${record.reviewCount}</sup>
+</g:if>
+
 <g:if test="${record.class.declaredFields.name.contains('chapters') && record.chapters}">
     &nbsp; -
      ch ${record.chapters}
@@ -397,6 +403,8 @@
     <g:if test="${record.class.declaredFields.name.contains('summary') && record.summary}">
         <br/>
     </g:if>
+	
+	
 
     <g:if test="${params.action == 'record' && record.entityCode() == 'N'}">
         ${record?.description?.replaceAll("\\<.*?>", "")?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}
@@ -419,6 +427,20 @@
 </g:if>
 
 
+
+	<g:if test="${record.class.declaredFields.name.contains('fullText')}">
+	 <span style="font-size: 11px; font-style: italic; color: #8A5C69">
+         <pkm:summarize text="${record.fullText}" length="200"/>
+    </span>
+	</g:if>
+	
+	
+	<g:if test="${record.class.declaredFields.name.contains('password')}">
+	 <span style="font-size: 12px; color: #8A5C69">
+         ${record.password}
+    </span>
+	</g:if>
+	
 
 %{--<g:if test="${record.class.declaredFields.name.contains('query')}">--}%
 %{--${record.query}--}%

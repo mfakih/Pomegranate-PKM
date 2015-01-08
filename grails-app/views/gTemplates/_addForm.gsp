@@ -33,6 +33,7 @@
         <td>
             <g:select name="department.id" style="width: 200px;" from="${departments}"
                       value="${record?.department?.id}" optionKey="id"
+					   optionValue="summary"
                       noSelection="${['null': 'No department']}"/>
         </td>
     </g:if>
@@ -42,7 +43,9 @@
             <g:select name="course.id" style="width: 200px;" from="${courses}"
                           id="chosenCourse${record?.id}"
                           value="${record?.course?.id}"
-                          optionKey="id" noSelection="${['null': 'No course']}"/>
+                          optionKey="id"
+ optionValue="summary"
+ noSelection="${['null': 'No course']}"/>
 
 
 
@@ -242,6 +245,11 @@
         </td>
     </g:if>
 
+	 <g:if test="${fields.contains('author')}">
+            <td>
+            <g:textField name="author" placeholder="Author" class="ui-corner-all" value="${record?.author}"/>
+            </td>
+        </g:if>
 
 
     <g:if test="${fields.contains('indicator')}">
@@ -482,7 +490,8 @@
           <td>
             p<g:select name="priority" placeholder="Priority" style="width: 50px;"
                        from="${[1, 2, 3, 4]}"
-                       value="${record?.priority}"/>
+					   
+                       value="${record?.priority ?: 2}"/>
           </td>
         </g:if>  
     
@@ -490,7 +499,8 @@
           <td>
             %<g:select name="percentCompleted" placeholder="percentCompleted" style="width: 50px;"
                        from="${[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}"
-                       value="${record?.percentCompleted}"/>
+					   noSelection="${['null': '0']}"
+                       value="${record?.percentCompleted ?: 0}"/>
           </td>
         </g:if>
 
