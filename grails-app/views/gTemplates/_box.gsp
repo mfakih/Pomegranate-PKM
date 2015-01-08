@@ -123,8 +123,8 @@
 
                         <br/>
                     </g:link>
-                <div style="line-height: 20px;">
-                   ${record.description?.replaceAll('\n', '<br/>')?.decodeHTML()}
+                <div style="line-height: 20px;" dir="auto">
+                   ${record.description?.encodeAsHTML()?.replaceAll('\n', '<br/>')}
                     </div>
 
                 </td>
@@ -142,3 +142,7 @@
         </table>
     </g:if>
 </div>
+
+<br/>
+<center>***</center>
+<br/><p style="page-break-before: always"></p>

@@ -123,6 +123,7 @@
             ssId: ssId,
             searchResultsTotal: searchResultsTotal,
             totalHits: totalHits,
+            box: 1,
             list: list,
             title: title]"/>
 </g:if>

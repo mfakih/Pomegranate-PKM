@@ -690,7 +690,7 @@ ll
             def newRecord
         if (params.type == 'J'){
             newRecord = new Journal()
-            newRecord.title = oldRecord.title
+            newRecord.summary = oldRecord.title
             newRecord.description = oldRecord.description
             newRecord.startDate = oldRecord.writtenOn
             newRecord.priority = oldRecord.priority
@@ -698,12 +698,29 @@ ll
             newRecord.save()
 //            newRecord.dateCreated = oldRecord.dateCreated
 
+
+        }
+
+            if (params.type == 'R'){
+            newRecord = new Book()
+            newRecord.title = oldRecord.summary
+            newRecord.type = ResourceType.findByCode('art')
+            newRecord.description = oldRecord.description
+            newRecord.publicationDate = oldRecord.writtenOn
+            newRecord.priority = oldRecord.priority
+            newRecord.bookmarked = oldRecord.bookmarked
+            newRecord.save()
+                oldRecord.delete()
+//            newRecord.dateCreated = oldRecord.dateCreated
+
         }
 //        render(template: '/layouts/achtung', model: [message: "Record with ID ${id} deleted"])
             render(template: '/gTemplates/recordSummary', model: [record: newRecord])
         }
-        catch (Exception) {
-            render(template: '/layouts/achtung', model: [message: "Record with ID ${id} could not be deleted"])
+        catch (Exception e) {
+            render(template: '/layouts/achtung', model: [message: "Record with ID ${params.id} could not be deleted"])
+            e.printStackTrace()
+
         }
     }
 

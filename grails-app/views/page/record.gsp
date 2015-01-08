@@ -118,10 +118,14 @@
     </g:if>
 
 <g:if test="${record.entityCode() == 'R'}">
+
         <li><a href="#type-4"><span>Excerpts (${Excerpt.countByBook(record)})</span></a></li>
+    <li><a href="#type-8"><span>J & P (${Journal.countByBook(record) + Planner.countByBook(record)})</span></a></li>
+
 </g:if>
+
         <li><a href="#type-5"><span>Notes (${app.IndexCard.countByEntityCodeAndRecordId(record.entityCode(), record.id)})</span></a></li>
-        <li><a href="#type-8"><span>J & P (${Journal.countByBook(record) + Planner.countByBook(record)})</span></a></li>
+
 
         <li><a href="#type-6"><span>Linked records</span></a></li>
         <li><a href="#type-7"><span>Changes</span></a></li>

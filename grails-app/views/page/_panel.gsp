@@ -582,6 +582,18 @@
 &nbsp;
 <br/>
 <br/>
+
+<g:link controller="page" action="record" target="_blank"
+        params="${[id: record.id, entityCode: entityCode]}"
+        class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+        title="Go to page">
+    <span class="ui-icon ui-icon-extlink"></span>
+
+</g:link>
+
+<br/>
+<br/>
+
 <br/>
 %{--todo; case of x ,y--}%
 <g:if test="${entityCode.size() >= 1 || (record.class.declaredFields.name.contains('deletedOn') && record.deletedOn != null)}">

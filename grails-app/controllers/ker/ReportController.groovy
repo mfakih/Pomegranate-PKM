@@ -21,6 +21,7 @@ package ker
 import mcs.Book
 import mcs.Course
 import mcs.Department
+import mcs.Goal
 import mcs.Writing
 import mcs.parameters.ResourceStatus
 
@@ -328,4 +329,24 @@ class ReportController {
       render (template: '/reports/homepageSavedSearches')
     }
 
+
+
+    def coursePercentages(){
+        Goal.list().each(){
+            if (!it.percentCompleted)
+                it.percentCompleted = 30
+        }
+        def total = 0
+        def ps = 0
+        for (c in Course.list()){
+            total = 0
+            ps = 0
+              total = Goal.countByCourseAndDeletedOnIsNull(c)
+            for (g in Goal.findAllByCourseAndDeletedOnIsNull(c)){
+                ps += g.percentCompleted
+            }
+            c.percentCompleted = total != 0 ? ps / total : 0
+
+        }
+    }
 } // end of class

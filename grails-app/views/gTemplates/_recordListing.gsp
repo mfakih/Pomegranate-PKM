@@ -125,10 +125,19 @@
 %{--<g:if test="${!list}">--}%
 %{--<i>No record.</i>--}%
 %{--</g:if>--}%
+
+<g:if test="${box == 1}">
 <g:each in="${list}" status="i" var="record">
-    <g:render template="/gTemplates/recordSummary" model="[record: record,
-            context: (highlights && highlights[i] ? highlights[i] : null)]"/>
+    <g:render template="/gTemplates/box" model="[record: record ]"/>
 </g:each>
+</g:if>
+<g:else>
+    <g:each in="${list}" status="i" var="record">
+        <g:render template="/gTemplates/recordSummary" model="[record: record,
+                context: (highlights && highlights[i] ? highlights[i] : null)]"/>
+    </g:each>
+
+</g:else>
 
 
 
