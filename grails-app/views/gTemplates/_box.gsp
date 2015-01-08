@@ -123,9 +123,23 @@
 
                         <br/>
                     </g:link>
-                <div style="line-height: 20px;" dir="auto">
-                   ${record.description?.encodeAsHTML()?.replaceAll('\n', '<br/>')}
-                    </div>
+
+
+
+                    <g:if test="${record.class.declaredFields.name.contains('language')}">
+                        <div class="text${record.language}">
+                    </g:if>
+                <div style="line-height: 20px; dir: auto !important;">
+                    ${record.description?.encodeAsHTML()?.replaceAll('\n', '<br/>')}
+                </div>
+                    <g:if test="${record.class.declaredFields.name.contains('language')}">
+                        </div>
+                    </g:if>
+
+
+
+
+
 
                 </td>
 

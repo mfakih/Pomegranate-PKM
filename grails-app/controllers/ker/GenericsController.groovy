@@ -690,12 +690,27 @@ ll
             def newRecord
         if (params.type == 'J'){
             newRecord = new Journal()
-            newRecord.summary = oldRecord.title
+            newRecord.summary = oldRecord.summary
             newRecord.description = oldRecord.description
             newRecord.startDate = oldRecord.writtenOn
             newRecord.priority = oldRecord.priority
             newRecord.bookmarked = oldRecord.bookmarked
             newRecord.save()
+//            newRecord.dateCreated = oldRecord.dateCreated
+            oldRecord.delete()
+
+        }
+
+            if (params.type == 'W'){
+            newRecord = new Writing()
+            newRecord.summary = oldRecord.summary
+            newRecord.description = oldRecord.description
+            newRecord.priority = oldRecord.priority
+          // todo  newRecord.language = oldRecord.language
+            newRecord.bookmarked = oldRecord.bookmarked
+            newRecord.save()
+            oldRecord.delete()
+
 //            newRecord.dateCreated = oldRecord.dateCreated
 
 
@@ -709,6 +724,7 @@ ll
             newRecord.publicationDate = oldRecord.writtenOn
             newRecord.priority = oldRecord.priority
             newRecord.bookmarked = oldRecord.bookmarked
+                newRecord.language = oldRecord.language
             newRecord.save()
                 oldRecord.delete()
 //            newRecord.dateCreated = oldRecord.dateCreated
