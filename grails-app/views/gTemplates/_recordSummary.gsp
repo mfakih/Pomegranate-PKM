@@ -603,4 +603,9 @@
     // bug of reformating if pomegranate is replaced by contextPath
     //    jQuery('.schedule').editable('pomegranate/task/schedule', { id   : 'id', name : 'newvalue'});
 
+    jQuery('#summary').val('')
+    jQuery('#description').val('')
+    //jQuery('#approximateDate').clear()
+    jQuery('#chosenTags').val('').trigger('chosen:updated');
+    jQuery('#chosenTags').val('').trigger('liszt:updated');
 </script>

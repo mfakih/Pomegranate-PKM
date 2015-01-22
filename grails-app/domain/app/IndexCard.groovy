@@ -86,6 +86,7 @@ class IndexCard implements Comparable {  // entity id = 16
 
 
     Date writtenOn
+    Boolean approximateDate = false
 
     Integer orderInArticle
 

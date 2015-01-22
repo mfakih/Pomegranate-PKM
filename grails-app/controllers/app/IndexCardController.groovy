@@ -246,4 +246,19 @@ recordId = indexCardInstance?.book?.id
             }
         }
 
+
+    def addXcdFormNgs(){
+        if (params.description){
+            def n = new IndexCard(params)
+            params.chosenTags.each(){
+            n.addToTags(Tag.get(it))
+            }
+            n.save()
+            render(template: "/gTemplates/recordSummary", model: [record: n])
+        }
+        else {
+            render 'No description entered'
+        }
+    }
+
 } // end of class
