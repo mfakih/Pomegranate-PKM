@@ -247,16 +247,21 @@ recordId = indexCardInstance?.book?.id
         }
 
 
-    def addXcdFormNgs(){
-        if (params.description){
+    def addXcdFormNgs() {
+        if (params.description) {
             def n = new IndexCard(params)
-            params.chosenTags.each(){
-            n.addToTags(Tag.get(it))
+            if (params.chosenTags.class == String) {
+                n.addToTags(Tag.get(params.chosenTags))
+            } else {
+                params.chosenTags.each() {
+                    n.addToTags(Tag.get(it))
+                }
             }
             n.save()
             render(template: "/gTemplates/recordSummary", model: [record: n])
         }
-        else {
+        else
+        {
             render 'No description entered'
         }
     }
