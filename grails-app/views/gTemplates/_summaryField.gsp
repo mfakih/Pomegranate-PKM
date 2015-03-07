@@ -50,12 +50,12 @@
         &nbsp; <g:render template="/tag/tags" model="[instance: record, entity: entityCode]"/>
         &nbsp; <g:render template="/tag/contacts" model="[instance: record, entity: entityCode]"/>
 
-        <g:remoteLink controller="generics" action="showTagForm"
-                      params="${[id: record.id, entityCode: entityCode]}"
-                      update="below${entityCode}Record${record.id}"
-                      title="Details">
-            +
-        </g:remoteLink>
+        %{--<g:remoteLink controller="generics" action="showTagForm"--}%
+                      %{--params="${[id: record.id, entityCode: entityCode]}"--}%
+                      %{--update="below${entityCode}Record${record.id}"--}%
+                      %{--title="Details">--}%
+            %{--+--}%
+        %{--</g:remoteLink>--}%
 
     </g:if>
 
@@ -93,6 +93,17 @@
     </script>
 
     &nbsp;
+</g:if>
+
+
+
+
+
+
+<g:if test="${record.class.declaredFields.name.contains('department')}">
+
+   <b>${record?.department?.code}</b>
+
 </g:if>
 
 
@@ -165,6 +176,16 @@
 <g:if test="${record.class.declaredFields.name.contains('completedOn') && record.completedOn}">
     <span title="${record.completedOn?.format(OperationController.getPath('datetime.format'))}">
         .${record.completedOn?.format(OperationController.getPath('date.format'))}
+    </span>
+</g:if>
+
+<g:if test="${record.class.declaredFields.name.contains('approximateDate') && record.approximateDate}">
+    ~~~
+</g:if>
+
+<g:if test="${record.class.declaredFields.name.contains('writtenOn') && record.writtenOn}">
+    <span title="${record.writtenOn?.format(OperationController.getPath('datetime.format'))}">
+        .${record.writtenOn?.format(OperationController.getPath('date.format'))}
     </span>
 </g:if>
 

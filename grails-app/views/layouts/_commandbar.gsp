@@ -111,4 +111,6 @@
 
 <script type="text/javascript">
     jQuery("#chosenTags").chosen({allow_single_deselect: true,  no_results_text: "None found", width: 200})
+
+    jQuery('#commandBars').addClass('navHidden')
 </script>

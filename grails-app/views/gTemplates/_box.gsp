@@ -130,7 +130,8 @@
                         <div class="text${record.language}">
                     </g:if>
                 <div style="line-height: 20px; dir: auto !important;">
-                    ${record.description?.encodeAsHTML()?.replaceAll('\n', '<br/>')}
+                     %{-- ${record.description?.encodeAsHTML()?.replaceAll('\n', '<br/>')}
+					  --}%
                 </div>
                     <g:if test="${record.class.declaredFields.name.contains('language')}">
                         </div>
@@ -157,6 +158,5 @@
     </g:if>
 </div>
 
-<br/>
-<center>***</center>
+
 <br/><p style="page-break-before: always"></p>

@@ -65,12 +65,18 @@
         
 <td style="width: 65px;">		 
             
-		        <a href="${createLink(controller: 'generics', action: 'viewRecordImage', id: record.id)}"
-                   target="_blank">
-                    <img class="Photo" style="width: 60; height: 80; display:inline"
+			<ul class="product-gallery">
+ 
+<li class="gallery-img" id="recordImage${record.id}">
+                    <img  class="Photo" style="width: 60; height: 80; display:inline"
                          src="${createLink(controller: 'generics', action: 'viewRecordImage', id: record.id, params: [entityCode: entityCode, date: new Date()])}"/>
-                </a>
-				
+              
+			
+</li> 
+</ul>
+<script type="text/javascript">
+jQuery('#recordImage${record.id}').Am2_SimpleSlider();
+</script>			
 				
 				</td>
 				
@@ -112,7 +118,7 @@
 
 
     <td class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
-    style="font-family: Arial; font-size: 13px; color: #105CB6; line-height: 17px; ">
+    style="font-family: Arial; font-size: 13px; color: #105CB6;  ">
 
 
 %{--<g:remoteLink controller="generics" action="showDetails"--}%

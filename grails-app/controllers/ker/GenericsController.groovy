@@ -883,6 +883,18 @@ ll
         def id = params.id.substring(1).toLong()
         def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
 
+      if (record.class.declaredFields.name.contains('totalSteps')){
+          record.actualSteps++
+          if (!record.percentCompleted) {
+              record.percentCompleted = 10
+          } else if (record.percentCompleted != 100) {
+              record.percentCompleted = (10 * Math.floor(( 10 * (record.actualSteps / record.totalSteps))).toInteger())
+          } else{
+              record.percentCompleted = 90
+          }
+      }
+
+      else {
         if (!record.percentCompleted) {
             record.percentCompleted = 10
         } else if (record.percentCompleted != 100) {
@@ -890,6 +902,10 @@ ll
         } else{
             record.percentCompleted = 90
         }
+
+      }
+
+
         render(template: '/gTemplates/recordSummary', model: [record: record])
     }
 
@@ -1665,6 +1681,7 @@ def addContactToRecord() {
                     statuses = WritingStatus.list([sort: 'name'])
                     types = WritingType.list([sort: 'code'])
                     writings = Writing.list([sort: 'summary'])
+                    sources = Contact.list([sort: 'summary'])
                     break
                 case 'mcs.Book':
                     statuses = ResourceStatus.list([sort: 'name'])
@@ -1829,9 +1846,13 @@ def addContactToRecord() {
                 case 'department':
                     groups = Department.list([sort: 'code'])
                     break
-                case 'course':
-                    groups = Course.list([sort: 'summary'])
-                    break
+             //   case 'course':
+             //       groups = Course.list([sort: 'summary'])
+             //       break
+			    case 'course':
+                        groups = Course.findAllByBookmarked(true, [sort: 'summary'])
+                       break             
+
                 case 'type':
                     if (input.contains('from mcs.Goal')) {
                         groups = GoalType.list([sort: 'name'])
@@ -1897,9 +1918,13 @@ def addContactToRecord() {
                 case 'department':
                     groups = Department.list([sort: 'code'])
                     break
-                case 'course':
-                    groups = Course.list([sort: 'summary'])
-                    break
+              //  case 'course':
+              //      groups = Course.list([sort: 'summary'])
+              //      break
+			 case 'course':
+                        groups = Course.findAllByBookmarked(true, [sort: 'summary'])
+                        break             
+                   
                 case 'type':
                     if (input.contains('from mcs.Goal')) {
                         groups = GoalType.list([sort: 'name'])
@@ -2007,9 +2032,13 @@ def addContactToRecord() {
                     case 'department':
                         groups = Department.list([sort: 'code'])
                         break
-                    case 'course':
-                        groups = Course.list([sort: 'summary'])
-                        break
+                 //   case 'course':
+                //        groups = Course.list([sort: 'summary'])
+                //        break
+						 case 'course':
+                        groups = Course.findAllByBookmarked(true, [sort: 'summary'])
+                        break             
+                   
                     case 'type':
                         if (input.contains('from mcs.Goal')) {
                             groups = GoalType.list([sort: 'name'])
@@ -2921,14 +2950,14 @@ def addContactToRecord() {
                     if (it.startsWith('@') && 'N'.contains(entityCode)) {
 
                         if (it.trim().length() == 1) {
-//                              properties['type'] = null
-                            queryCriteria.add("source = null")
+                              properties['contact'] = null
+                            queryCriteria.add("contact = null")
                         } else {
+//println 'here' + it.substring(1)
+                            def id = Contact.findByCode(it.substring(1)).id
 
-                            def id = WordSource.findBySummary(it.substring(1)).id
-
-                            properties['source.id'] = id
-                            queryCriteria.add("source.code = '" + it.substring(1) + "'")
+                            properties['contact.id'] = id
+                            queryCriteria.add("contact.code = '" + it.substring(1) + "'")
                         }
                     }
 
@@ -3375,9 +3404,12 @@ def addContactToRecord() {
                     case 'department':
                         groups = Department.list([sort: 'code'])
                         break
-                    case 'course':
-                        groups = Course.list([sort: 'summary'])
-                        break
+                 //   case 'course':
+                 //       groups = Course.list([sort: 'summary'])
+                   //     break
+				    case 'course':
+                        groups = Course.findAllByBookmarked(true, [sort: 'summary'])
+                        break             
                     case 'type':
                         if (input.contains('from mcs.Goal')) {
                             groups = GoalType.list([sort: 'name'])
@@ -3860,6 +3892,9 @@ def addContactToRecord() {
     }
 
 
-
+    def setPageMax(){
+        Setting.findByNameLike('savedSearch.pagination.max.link').value = params.id
+        render 'Records per page set to ' + params.id
+    }
 	
 }

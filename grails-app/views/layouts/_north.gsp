@@ -38,9 +38,6 @@
 &nbsp;
 
 
-&nbsp;
-&nbsp;
-&nbsp;
 
     <g:remoteLink controller="report" action="detailedAdd"
                   update="centralArea"
@@ -51,7 +48,6 @@
     </g:remoteLink>
 
 
-&nbsp;
 &nbsp;
 
     <g:if test="${OperationController.getPath('import.enabled')?.toLowerCase() == 'yes' ? true : false}">
@@ -64,7 +60,7 @@
         </g:remoteLink>
     </g:if>
 &nbsp;
-&nbsp;
+
     <g:remoteLink controller="report" action="tagCloud"
                   update="tagsPanel"
         before="jQuery('#accordionEast').accordion({ active: 1});"
@@ -75,7 +71,7 @@
 
 <g:if test="${Setting.findByName('contacts.enabled')?.value ==  'yes'}">
 &nbsp;
-&nbsp;
+
     <g:remoteLink controller="report" action="contactCloud"
                   update="contactsPanel"
         before="jQuery('#accordionEast').accordion({ active: 2});"
@@ -111,7 +107,6 @@
 
 &nbsp;
 &nbsp;
-&nbsp;
 
 
     <sec:ifLoggedIn>
@@ -145,13 +140,13 @@
 
     <g:hiddenField name="sth2" value="${new java.util.Date()}"/>
         <g:submitButton name="batch" value="Execute"
-                        style="height: 20px; margin: 0px; width: 200px !important; display: none"
+                        style="height: 20px; margin: 0px; width: 150px !important; display: none"
                         id="quickAddXcdSubmitTop"
                         class="fg-button ui-widget ui-state-default"/>
 
             <g:textField name="input" id="quickAddTextFieldBottomTop" value=""
                         autocomplete="off"
-                         style="display: inline;  width: 500px !important"
+                         style="display: inline;  width: 400px !important"
                         placeholder="Command bar"
                         onkeyup="if (jQuery('#quickAddTextFieldBottomTop').val().search(';')== -1){jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextFieldBottomTop').val()))}"
                         onfocus="jQuery('#hintArea').load('${createLink(controller: 'generics', action: 'commandBarAutocomplete')}?hint=1&q=' + encodeURIComponent(jQuery('#quickAddTextFieldBottomTop').val()))"

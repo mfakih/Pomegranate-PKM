@@ -494,7 +494,20 @@
                        value="${record?.priority ?: 2}"/>
           </td>
         </g:if>  
-    
+
+        <g:if test="${fields.contains('totalSteps')}">
+          <td>
+              Total steps<g:textField name="totalSteps" value="${fieldValue(bean: record, field: 'totalSteps')}"
+                           placeholder="# total steps"
+                           style="width: 20px;"/>
+              <br/>
+              Completed steps<g:textField name="completedSteps" value="${fieldValue(bean: record, field: 'completedSteps')}"
+                                      placeholder="# actual steps"
+                                      style="width: 20px;"/>
+
+          </td>
+        </g:if>
+
     <g:if test="${fields.contains('percentCompleted')}">
           <td>
             %<g:select name="percentCompleted" placeholder="percentCompleted" style="width: 50px;"
@@ -586,6 +599,7 @@
         <g:if test="${fields.contains('writtenOn')}">
             <td>
                 <pkm:datePicker placeholder="Written on" name="writtenOn" value="${record?.writtenOn}"/>
+                <g:checkBox name="approximateDate" id="approximateDate" value="${record?.approximateDate}"/> ~ ?
             </td>
         </g:if>
 

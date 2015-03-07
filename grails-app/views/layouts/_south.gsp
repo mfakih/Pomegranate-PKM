@@ -183,6 +183,19 @@ Selected
 
     </li>
 
+    <li>
+
+      r/p <g:select name="resultType"
+                                from="${[3,5,10,15,20,15,50,100]}"
+                                style="direction: ltr; text-align: left; padding: 0; margin: 0"
+                                noSelection="${['null': '']}"
+                                onchange="jQuery('#notificationArea').load('generics/setPageMax/' + this.value);"
+                                value="${Setting.findByNameLike('savedSearch.pagination.max.link').value}"/>
+
+
+
+    </li>
+
 
 
 </ul>

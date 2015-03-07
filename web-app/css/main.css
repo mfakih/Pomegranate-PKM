@@ -39,7 +39,7 @@ body {
     background: #D8D4C9;
     color: #333;
     /*line-height: 1.4;*/
-    font: 12px arial;
+    font: 11px arial;
 
     /*todo*/
     padding-left: 15px !important;
@@ -1052,7 +1052,7 @@ background: #d8f7da;
 
 .recordLine td {
     vertical-align: middle;
-    padding: 3px;
+    padding: 1px;
 }
 
 .D-bkg {
@@ -1313,7 +1313,7 @@ border-radius: 2px;
 .actionTd a{
     font-size: small;
     color: dimgray;
-	padding:2px;
+	/*padding:0px;*/
 
 
 }

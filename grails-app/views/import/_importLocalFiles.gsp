@@ -199,8 +199,8 @@
 
 
 
-
-<g:each in="${['G', 'T', 'P', 'J', 'I', 'Q', 'W', 'N', 'E']}" var="m">
+%{--<g:each in="${['G', 'T', 'P', 'J', 'I', 'Q', 'W', 'N', 'E']}" var="m">--}%
+<g:each in="${['W', 'N']}" var="m">
 
     %{--<b>Excerpts</b> @ ${OperationController.getPath('excerpts.sandbox.path')}<br/>--}%
 

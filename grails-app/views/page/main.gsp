@@ -38,6 +38,10 @@
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}"/>
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'layout-mine.css')}"/>
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'personalization.css')}"/>
+
+<link rel="stylesheet" href="${resource(dir: 'css', file: 'SimpleSlider.css')}"/>
+
+
 %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.autocomplete.css')}"/>--}%
 
 
@@ -57,6 +61,10 @@
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.address-1.5.min.js?autoUpdate=0')}"></script>
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.10.4.custom.min.js')}"></script>
+
+
+<script type="text/javascript" src="${resource(dir: 'js', file: 'Am2_SimpleSlider.js')}"></script>
+
 
 
 
@@ -253,7 +261,7 @@
 
 //        jQuery('#searchForm').load('generics/hqlSearchForm/T')
 
-        jQuery('#centralArea').load('generics/recentRecords')
+// jQuery('#centralArea').load('generics/recentRecords')
 
 //        jQuery('#quickAddTextField').select();
 //        jQuery('#quickAddTextField').focus();
@@ -310,8 +318,8 @@
             jQuery('#quickAddTextFieldBottomTop').focus();
             jQuery('#quickAddTextFieldBottomTop').select();
 //			jQuery('#commandBars').addClass('navHidden');
-			jQuery('#accordionEast').accordion({ active: 3});
-			jQuery('#accordionWest').accordion({ active: 3});
+		//	jQuery('#accordionEast').accordion({ active: 3});
+		//	jQuery('#accordionWest').accordion({ active: 3});
 //            jQuery('#quickAddTextField').scrollTop(0);
         });
 
@@ -416,8 +424,6 @@
             success: function () {
                 $('#spinner2').hide();
             }
-
-
         });
 
         jQuery(document).ajaxComplete(function () {

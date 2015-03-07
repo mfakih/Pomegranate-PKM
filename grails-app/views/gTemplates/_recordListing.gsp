@@ -25,7 +25,7 @@
 
     <br/> <div class="paginateButtons" style="display:inline !important;">
     <util:remotePaginate controller="generics" action="executeSavedSearch" total="${searchResultsTotal}"
-                         maxsteps="5"
+                         maxsteps="${params.max}"
                          params="[id: ssId]" update="centralArea"/>
 </div>
 </g:if>
@@ -36,6 +36,7 @@
     <br/>
     <br/>  <div class="paginateButtons" style="display:inline !important;">
     <util:remotePaginate controller="generics" action="hqlSearch" total="${searchResultsTotal}"
+                         maxsteps="${params.max}"
 
                          update="centralArea"/>
 </div>
@@ -48,7 +49,7 @@
 
     <div class="paginateButtons" style="display:inline !important;">
         <util:remotePaginate controller="generics" action="findRecords" total="${totalHits}"
-                             maxsteps="5"
+                             maxsteps="${params.max}"
                              params="[input: queryKey]" update="centralArea"/>
     </div>
 
@@ -56,7 +57,7 @@
 <g:if test="${queryKey2}">
     <div class="paginateButtons" style="display:inline !important;">
         <util:remotePaginate controller="generics" action="queryRecords" total="${totalHits}"
-                             maxsteps="5"
+                             maxsteps="${params.max}"
                              params="[input: queryKey2]" update="centralArea"/>
     </div>
 

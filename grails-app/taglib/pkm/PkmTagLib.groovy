@@ -55,7 +55,7 @@ class PkmTagLib {
             def text = attrs.text ? attrs.text.encodeAsHTML() : ''
             def length = attrs.length
 
-            out << StringUtils.abbreviate(text, length.toInteger()).replaceAll('>', ' ').replaceAll('<', ' ').encodeAsHTML().decodeHTML()
+            out << StringUtils.abbreviate(text, length.toInteger())?.replaceAll('>', ' ')?.replaceAll('<', ' ')?.encodeAsHTML()?.decodeHTML()
         } else {
             out << ''
         }

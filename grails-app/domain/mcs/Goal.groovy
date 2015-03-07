@@ -57,6 +57,8 @@ class Goal implements Comparable {  // entity id = 126
 
     Integer priority = 2
     Integer percentCompleted
+    Integer totalSteps
+    Integer completedSteps
 
     Float plannedDuration
     Float actualDuration
