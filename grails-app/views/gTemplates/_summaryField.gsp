@@ -382,6 +382,18 @@
 </g:if>
 
 
+<g:if test="${'J'.contains(entityCode) && new File(OperationController.getPath('jrn.sns.path') + '/J/' + record.id).exists()}">
+       <b style="color: darkgreen">sns</b> &nbsp;
+</g:if>
+
+<g:if test="${'J'.contains(entityCode) && new File(OperationController.getPath('jrn.rcd.path') + '/J/' + record.id).exists()}">
+       <b style="color: darkgreen">rcd</b> &nbsp;
+</g:if>
+<g:if test="${'J'.contains(entityCode) && new File(OperationController.getPath('jrn.vjr.path') + '/J/' + record.id).exists()}">
+       <b style="color: darkgreen">vjr</b> &nbsp;
+</g:if>
+
+
 
 
 

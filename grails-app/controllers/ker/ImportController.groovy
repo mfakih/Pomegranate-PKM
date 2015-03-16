@@ -909,7 +909,7 @@ class ImportController {
 
             def path
 
-            path = OperationController.getPath('jrn.' + params.folderType + '.path') + '/' +
+            path = OperationController.getPath('jrn.' + params.folderType + '.path') + '/J/' +
                     params.recordId + '/' + params.qqfile
 
             def ant = new AntBuilder()
