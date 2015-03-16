@@ -615,7 +615,7 @@
                       params="${[id: record.id, entityCode: entityCode]}"
                       update="${entityCode}Record${record.id}"
                       before="if(!confirm('Are you sure you want to delete the record?')) return false"
-                      class=" fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
+                      class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
                       title="Logical delete">
             <span class="ui-icon ui-icon-trash"></span>
         </g:remoteLink>

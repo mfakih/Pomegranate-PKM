@@ -3893,7 +3893,11 @@ def addContactToRecord() {
 
 
     def setPageMax(){
-        Setting.findByNameLike('savedSearch.pagination.max.link').value = params.id
+        def d = Setting.findByNameLike('savedSearch.pagination.max.link')
+        if (d)
+        d.value = params.id
+        else
+            new Setting([name: 'savedSearch.pagination.max.link', value: params.id]).save(flush: true)
         render 'Records per page set to ' + params.id
     }
 	

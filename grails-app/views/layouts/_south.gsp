@@ -190,7 +190,7 @@ Selected
                                 style="direction: ltr; text-align: left; padding: 0; margin: 0"
                                 noSelection="${['null': '']}"
                                 onchange="jQuery('#notificationArea').load('generics/setPageMax/' + this.value);"
-                                value="${Setting.findByNameLike('savedSearch.pagination.max.link').value}"/>
+                                value="${Setting.findByNameLike('savedSearch.pagination.max.link')?.value ?: 5}"/>
 
 
 

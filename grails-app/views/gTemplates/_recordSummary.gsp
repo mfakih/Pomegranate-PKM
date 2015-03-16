@@ -61,6 +61,21 @@
 
 </td>
 
+
+<td  style="width: 8px; margin-top: 4px; padding: 0; ">
+    <div class="idCell" style="font-size: 11px; font-weight: bold; color: #003C78; -moz-transform:rotate(-80deg); -moz-transform-origin: middle right; -webkit-transform: rotate(-80deg); -webkit-transform-origin: middle right; -o-transform: rotate(-80deg); -o-transform-origin:  middle right; ;">
+
+      <g:if test="${record.class.declaredFields.name.contains('course')}">
+            <span title="${record.course?.summary}"
+                  style="font-size: 12px; font-weight: bold;padding-right: 2px;">
+                ${record?.course?.code ? record?.course?.numberCode : ''}
+            </span>
+        </g:if>
+
+</div>
+</td>
+
+
    	 <g:if test="${new File(OperationController.getPath('module.sandbox.' + entityCode + '.path') + '/' + record.id + 'j.jpg')?.exists() || new File(OperationController.getPath('module.sandbox.' + entityCode + '.path') + '/' + record.id + 'n.jpg')?.exists()}">
         
 <td style="width: 65px;">		 
@@ -197,7 +212,7 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 </td>
 
 
-<td class="actionTd" style="${justUpdated ? 'background: YellowGreen !important' : ''}">
+<td class="actionTd showhim" style="${justUpdated ? 'background: YellowGreen !important' : ''}" onmouseout="jQuery('#actionsButtons${record.id}').removeClass('actionsButtons')">
     <g:remoteLink controller="generics" action="getAddForm" id="${record.id}"
                   params="[entityController: record.class.name,
                           updateRegion:  entityCode + 'Record' + record.id,
@@ -259,9 +274,9 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 
     <td  style="width: 8px; margin-top: 4px; padding: 0; ">
         <div class="idCell" style="font-size: 10px; -moz-transform:rotate(-90deg); -moz-transform-origin: middle right; -webkit-transform: rotate(-90deg); -webkit-transform-origin: middle right; -o-transform: rotate(-90deg); -o-transform-origin:  middle right; ;">
-		
-		
-<g:remoteLink controller="page" action="panel"
+
+
+            <g:remoteLink controller="page" action="panel"
               params="${[id: record.id, entityCode: entityCode]}"
               update="3rdPanel"
               before="jQuery('#accordionEast').accordion({ active: 0});"
@@ -279,18 +294,11 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 </tr>
 
  <tr>
-     <td class="actionTd showhim" colspan="8">
+     <td class="actionTd " colspan="8">
 
 
 
-         <div class="actionsButtons">
-
-
-
-
-
-
-
+         <div id="actionsButtons${record.id}" class="actionsButtons">
 
              <g:if test="${record.class.declaredFields.name.contains('writing') && entityCode == 'N'}">
                  <g:set value="writing" var="field"></g:set>

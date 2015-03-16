@@ -1596,7 +1596,7 @@ ul.ui-autocomplete.ui-menu {
 .actionsButtons{
     display: none;
 }
-.showhim:hover .actionsButtons{
-    display : block;
-		background: #ddd;
-}
+/*.recordContainer .showhim:hover~.actionsButtons{*/
+    /*display : block;*/
+		/*background: #ddd;*/
+/*}*/

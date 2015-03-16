@@ -592,15 +592,19 @@ class ImportController {
                         b.legacyTitle = title
                     }
 //                    b.isbn = isbn
-                }
-                b.legacyTitle = title
+                } else {
+				b = new Book()
+				
+                b.title = title
+				}
+				
                 b.type = type
                 finalName = params.type + '.' + ext
             }
             else {
                 b = grailsApplication.classLoader.loadClass(entityMapping[entityCode.toUpperCase()]).newInstance()
     b.summary = title
-                finalName = ' ' + title
+                finalName = entityCode.toLowerCase() + '.' + ext
                 
                 
                
