@@ -899,5 +899,29 @@ class ImportController {
 
     }
 
+ def addToJRecordFolder() {
+
+        def status = ''
+        try {
+
+            def tmpFilename = new Date().format('ddMMyyyyHHmmss') + (Math.random() * 1000).toInteger()
+            def f = new File(OperationController.getPath('tmp.path') + '/' + tmpFilename) << request.inputStream
+
+            def path
+
+            path = OperationController.getPath('jrn.' + params.folderType + '.path') + '/' +
+                    params.recordId + '/' + params.qqfile
+
+            def ant = new AntBuilder()
+            ant.move(file: f.path, tofile: path)
+                return render(['Ok'] as JSON)
+        } catch (Exception e) {
+            println 'problem uploading the file ' + params.qqfile
+            status = 'File could not be saved!'
+            e.printStackTrace()
+        }
+
+    }
+
 
 } // end of class

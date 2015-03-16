@@ -353,6 +353,27 @@ class TaskController { // entity id = 127
             case 't': task = Task.get(params.recordId)
                 break
             case 'g': goal = Goal.get(params.recordId)
+                if (goal.totalSteps){
+                    goal.completedSteps += params.weight
+                    if (!goal.percentCompleted) {
+                        goal.percentCompleted = 10
+                    } else if (goal.percentCompleted != 100) {
+                        goal.percentCompleted = (10 * Math.floor(( 10 * (goal.completedSteps / goal.totalSteps))).toInteger())
+                    } else{
+                        goal.percentCompleted = 90
+                    }
+                }
+
+                else {
+                    if (!goal.percentCompleted) {
+                        goal.percentCompleted = 10
+                    } else if (goal.percentCompleted != 100) {
+                        goal.percentCompleted = goal.percentCompleted + 10
+                    } else{
+                        goal.percentCompleted = 90
+                    }
+                }
+                
                 break
           case 'e': excerpt = Excerpt.get(params.recordId)
                 break

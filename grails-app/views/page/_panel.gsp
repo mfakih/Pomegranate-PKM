@@ -110,6 +110,35 @@
                                        params="${[recordId: record.id, entityCode: record.entityCode()]}">
                         Add to record folder
                     </uploader:uploader>
+
+                    <g:if test="record.entityCode() == 'J'">
+                    Add to <b>sns</b> folder:
+                    <uploader:uploader id="addToRecordSnsFolder${record.id}"
+                                       url="${[controller: 'import', action: 'addToJRecordFolder']}"
+                                       params="${[recordId: record.id, entityCode: record.entityCode(), folderType: 'sns']}">
+                        Add to sns folder
+                    </uploader:uploader>
+                    <br/>
+
+                      Add to <b>rcd</b> folder:
+                    <uploader:uploader id="addToRecordRcdFolder${record.id}"
+                                       url="${[controller: 'import', action: 'addToJRecordFolder']}"
+                                       params="${[recordId: record.id, entityCode: record.entityCode(), folderType: 'rcd']}">
+                        Add to rcd folder
+                    </uploader:uploader>
+                    <br/>
+
+                      Add to <b>vjr</b> folder:
+                    <uploader:uploader id="addToRecordVjrFolder${record.id}"
+                                       url="${[controller: 'import', action: 'addToJRecordFolder']}"
+                                       params="${[recordId: record.id, entityCode: record.entityCode(), folderType: 'vjr']}">
+                        Add to vjr folder
+                    </uploader:uploader>
+                    <br/>
+
+
+
+                    </g:if>
                 </td>
             </tr>
         </table>

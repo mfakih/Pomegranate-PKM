@@ -883,12 +883,16 @@ ll
         def id = params.id.substring(1).toLong()
         def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
 
-      if (record.class.declaredFields.name.contains('totalSteps')){
-          record.actualSteps++
+      if (record.class.declaredFields.name.contains('totalSteps') && record.totalSteps){
+          if (record.completedSteps)
+            record.completedSteps = record.completedSteps + 10
+          else
+                record.completedSteps = 10
+
           if (!record.percentCompleted) {
               record.percentCompleted = 10
           } else if (record.percentCompleted != 100) {
-              record.percentCompleted = (10 * Math.floor(( 10 * (record.actualSteps / record.totalSteps))).toInteger())
+              record.percentCompleted = (10 * Math.floor(( 10 * (record.completedSteps / record.totalSteps))).toInteger())
           } else{
               record.percentCompleted = 90
           }

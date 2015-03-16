@@ -11,9 +11,9 @@
                       method="post">
             <!-- Type/Level/Weight -->
 
-            <g:select name="type" from="['J', 'P']" value="P"/>
+            <g:select name="type" from="['J', 'P']" value="J"/>
             <g:select name="level" from="['e', 'y', 'M', 'W', 'd', 'm']" value="d"/>
-            <g:select name="weight" from="${1..4}" value="1"/>
+            <g:select name="weight" from="${1..4}" value="1" title="weight"/>
             <input type="text" name="date" title="Format: wwd [hh]" placeholder="Date"
                    style="width: 70px;"
                    value="${mcs.Utils.toWeekDate(new Date())}"/>
