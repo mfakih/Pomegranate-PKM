@@ -1593,10 +1593,17 @@ ul.ui-autocomplete.ui-menu {
     background: #ffcabf !important;
 }
 
+.testhide{
+    display: none;
+}
 .actionsButtons{
     display: none;
 }
-/*.recordContainer .showhim:hover~.actionsButtons{*/
+/*.showhim:hover .actionsButtons{*/
     /*display : block;*/
 		/*background: #ddd;*/
 /*}*/
+.showhim:hover .testhide{
+    display : inline;
+		background: #ddd;
+}
