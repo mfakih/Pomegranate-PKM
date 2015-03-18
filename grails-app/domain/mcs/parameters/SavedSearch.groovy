@@ -44,7 +44,8 @@ class SavedSearch implements Comparable {  // entity id = 451
   String reportType = 'list'
   Boolean ownTab = false
 
-  String summary 
+  String code
+  String summary
 
   String query 
   String countQuery

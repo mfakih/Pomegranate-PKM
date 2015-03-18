@@ -1,4 +1,4 @@
-<%@ page import="mcs.Book; mcs.Writing; ker.OperationController" %>
+<%@ page import="mcs.Planner; mcs.Journal; mcs.Book; mcs.Writing; ker.OperationController" %>
 <g:if test="${entityCode == '11111111'}">
 
 
@@ -200,7 +200,18 @@
         ${record.book?.id}b
         <i>${record.book?.title}</i>
     </g:remoteLink>
+    <br/>
+</g:if>
+<g:if test="${record.class.declaredFields.name.contains('course') && record.course}">
 
+    <g:remoteLink controller="generics" action="showSummary" id="${record.course?.id}"
+                  params="[entityCode: 'C']"
+                  update="below${entityCode}Record${record.id}"
+                  title="Show course">
+        <b>${record.course?.code ?: record.course?.numberCode}</b>
+        <i>${record.course?.summary}</i>
+    </g:remoteLink>
+      <br/>
 </g:if>
 
 
@@ -265,6 +276,17 @@
 
 <g:if test="${entityCode == 'C'}">
     <b>${record.numberCode}</b>
+
+  <i style="float: right">
+    <g:if test="${Planner.countByCourse(record) > 0}">
+        ${Planner.countByCourse(record)}p
+    </g:if>
+    <g:if test="${Journal.countByCourse(record) > 0}">
+        ${Journal.countByCourse(record)}j
+    </g:if>
+  </i>
+
+
 </g:if>
 
 

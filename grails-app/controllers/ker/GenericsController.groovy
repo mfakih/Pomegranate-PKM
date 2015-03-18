@@ -179,8 +179,10 @@ class GenericsController {
                             break
                         case 'v': convertDate(commandBody)
                             break
+                        case '.': executeSavedSearch(SavedSearch.findByCode(commandBody)?.id)
+                            break
                         default:
-                            render '<br/>Wrong input!'
+                            render '<br/><b>Wrong input!</b>'
                     }
                 }
             }

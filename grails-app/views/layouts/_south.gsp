@@ -104,7 +104,23 @@ Selected
     </li>
 
 
+      <li>
 
+
+          <input type="radio" name="myRadios" onchange="singleDisplay();" value="Single" />
+          <input type="radio" name="myRadios" onchange="dualDisplay();" value="dual display" />
+
+          %{--<a id="singleDisplay"--}%
+             %{--title="Single display">--}%
+              %{--Single--}%
+
+          %{--&nbsp;--}%
+          %{--&nbsp;--}%
+          %{--<a id="dualDisplay"--}%
+             %{--title="Dual display">--}%
+              %{--dual display--}%
+          %{--</a>--}%
+      </li>
 
 
 
@@ -210,6 +226,21 @@ Selected
 
 <script>
 //    $("#dialog").dialog();
+
+function dualDisplay() {
+    document.getElementById("centralArea").id = "temp1q";
+    document.getElementById("sandboxPanel").id = "centralArea";
+    console.log('dual')
+    jQuery('#accordionEast').accordion({ active: 4});
+
+}
+
+function singleDisplay() {
+    document.getElementById("temp1q").id = "centralArea";
+    document.getElementById("centralArea").id = "sandboxPanel";
+    console.log('single')
+}
+
 
 $('#selectAll').click(function (e) {
     $("input[name^='select-']").each(function () {

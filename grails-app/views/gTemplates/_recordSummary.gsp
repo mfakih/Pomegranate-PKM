@@ -419,14 +419,15 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 
              </g:remoteLink>
 
-
+<g:if test="${'CTGRE'.contains(entityCode)}">
 
          <g:remoteLink controller="generics" action="showJP"
                        params="${[id: record.id, entityCode: entityCode]}"
                        update="below${entityCode}Record${record.id}"
                        title="Details">
-             Assign...
+             +JP...
          </g:remoteLink>
+    </g:if>
        <g:remoteLink controller="generics" action="showAppend"
                        params="${[id: record.id, entityCode: entityCode]}"
                        update="below${entityCode}Record${record.id}"

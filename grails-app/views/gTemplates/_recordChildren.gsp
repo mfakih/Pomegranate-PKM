@@ -68,6 +68,10 @@
     <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByTask(record)]"/>
     <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByTask(record)]"/>
 </g:elseif>
+<g:elseif test="${entityCode == 'C'}">
+    <g:render template="/gTemplates/recordListing" model="[list: Planner.findAllByCourse(record)]"/>
+    <g:render template="/gTemplates/recordListing" model="[list: Journal.findAllByCourse(record)]"/>
+</g:elseif>
 
 <g:elseif test="${entityCode == 'R'}">
 

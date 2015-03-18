@@ -111,7 +111,9 @@
                         Add to record folder
                     </uploader:uploader>
 
-                    <g:if test="record.entityCode() == 'J'">
+
+                    <g:if test="${record.entityCode() == 'J'}">
+
                     Add to <b>sns</b> folder:
                     <uploader:uploader id="addToRecordSnsFolder${record.id}"
                                        url="${[controller: 'import', action: 'addToJRecordFolder']}"

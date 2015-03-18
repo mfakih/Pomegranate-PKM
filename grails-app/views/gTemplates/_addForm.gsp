@@ -5,7 +5,7 @@
 </g:if>
 
 %{--<g:if test="${hideForm}">--}%
-<g:formRemote name="genericSearch" url="[controller: 'generics', action: 'saveViaForm']"
+<g:formRemote name="genericSearch"  id="genericSearch22" url="[controller: 'generics', action: 'saveViaForm']"
               update="${updateRegion}" method="post" style="display: inline;" onComplete="">
 
 %{--<b>${entityController?.split(/\./).last()}</b>--}%

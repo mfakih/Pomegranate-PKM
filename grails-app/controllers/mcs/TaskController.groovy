@@ -1,5 +1,6 @@
 package mcs
 
+import ker.OperationController
 import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
 
 import cmn.DataChangeAudit
@@ -345,6 +346,7 @@ class TaskController { // entity id = 127
         def task
         def excerpt
         def goal
+        def course
 
 
         switch(params.recordType.toLowerCase()){
@@ -353,29 +355,34 @@ class TaskController { // entity id = 127
             case 't': task = Task.get(params.recordId)
                 break
             case 'g': goal = Goal.get(params.recordId)
-                if (goal.totalSteps){
-                    goal.completedSteps += params.weight
-                    if (!goal.percentCompleted) {
-                        goal.percentCompleted = 10
-                    } else if (goal.percentCompleted != 100) {
-                        goal.percentCompleted = (10 * Math.floor(( 10 * (goal.completedSteps / goal.totalSteps))).toInteger())
-                    } else{
-                        goal.percentCompleted = 90
+                if (params.type == 'J'){
+                    if (goal.totalSteps){
+                        goal.completedSteps += params.weight
+                        if (!goal.percentCompleted) {
+                            goal.percentCompleted = 10
+                        } else if (goal.percentCompleted != 100) {
+                            goal.percentCompleted = (10 * Math.floor(( 10 * (goal.completedSteps / goal.totalSteps))).toInteger())
+                        } else{
+                            goal.percentCompleted = 90
+                        }
                     }
-                }
 
-                else {
-                    if (!goal.percentCompleted) {
-                        goal.percentCompleted = 10
-                    } else if (goal.percentCompleted != 100) {
-                        goal.percentCompleted = goal.percentCompleted + 10
-                    } else{
-                        goal.percentCompleted = 90
+                    else {
+                        if (!goal.percentCompleted) {
+                            goal.percentCompleted = 10
+                        } else if (goal.percentCompleted != 100) {
+                            goal.percentCompleted = goal.percentCompleted + 10
+                        } else{
+                            goal.percentCompleted = 90
+                        }
                     }
+
                 }
                 
                 break
           case 'e': excerpt = Excerpt.get(params.recordId)
+                break
+        case 'c': course = Course.get(params.recordId)
                 break
         }
         def level = params.level
@@ -394,7 +401,7 @@ class TaskController { // entity id = 127
 
 	def summary = params.summary ?: 'No summary'
 
-        def startDate = SupportService.fromWeekDateAsDateTimeFullSyntax(date)
+        def startDate = OperationController.fromWeekDateAsDateTimeFullSyntax(date)
             //Date.parse('dd.MM.yyyy HH:mm', supportService.fromWeekDate(date) + stime)
         def endDate = new Date(startDate.time + 3600000)
             //Date.parse('dd.MM.yyyy HH:mm', supportService.fromWeekDate(date) + etime)
@@ -405,11 +412,11 @@ class TaskController { // entity id = 127
         jp = new Planner([description: '', startDate: startDate, endDate: endDate, book: book, level: level, summary: summary,
                 type: PlannerType.findByCode('assign'),
                 status: WorkStatus.findByCode('not-started'),
-                excerpt: excerpt, task: task, goal: goal]).save()
+                excerpt: excerpt, task: task, goal: goal, course: course]).save()
         else {
             jp = new Journal([description: '?', startDate: startDate, endDate: endDate, book: book, level: level, summary: summary,
-                    type: JournalType.findByCode('act'), task: task, goal: goal,  excerpt: excerpt])
-                    j.save()
+                    type: JournalType.findByCode('act'), task: task, goal: goal,  excerpt: excerpt, course: course])
+                    jp.save()
         }
 
 //        render(template: '/layouts/achtung', model: [message: 'Record assigned to date ' + params.date])

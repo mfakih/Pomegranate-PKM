@@ -95,7 +95,13 @@
                 </div>
 			</div>
     </g:if>
-			</div>
+
+<h3><a href="#">Sandbox</a></h3>
+<div id='sandboxPanel'>
+
+        </div>
+
+</div>
         %{--<g:if test="${ker.OperationController.getPath('twoPanels') == 'on'}">--}%
         %{--<g:render template="/layouts/east"/>--}%
     %{--</g:if>--}%

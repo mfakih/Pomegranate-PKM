@@ -1560,7 +1560,7 @@ ul.ui-autocomplete.ui-menu {
 }
 .tt-dropdown-menu {
     /*width: 422px;*/
-    z-index:1000,
+    z-index:1000;
     /*margin-top: 12px;*/
     padding: 4px 0;
     background: #ffffff !important;
@@ -1600,10 +1600,10 @@ ul.ui-autocomplete.ui-menu {
     display: none;
 }
 /*.showhim:hover .actionsButtons{*/
-    /*display : block;*/
-		/*background: #ddd;*/
+/*display : block;*/
+/*background: #ddd;*/
 /*}*/
 .showhim:hover .testhide{
     display : inline;
-		background: #ddd;
+    background: #ddd;
 }

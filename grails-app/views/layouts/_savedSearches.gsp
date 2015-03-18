@@ -14,14 +14,13 @@
                           id="${i.id}"
                           before="jQuery.address.value(jQuery(this).attr('href'));"
                           update="centralArea">
-                ${i.summary} ${count != null ? '(' + count + ')' : null}
+                ${i.summary} <b>${i.code}</b> ${count != null ? '(' + count + ')' : null}
 
             </g:remoteLink>
 
        <span class="showhim">
-	    <br/>				
-		<span class="testhide">
-		
+	    	<span class="testhide">
+
 		  <g:remoteLink controller="generics" action="getAddForm" id="${i.id}"
                           params="[entityController: 'mcs.parameters.SavedSearch',
                                   updateRegion: 'centralArea',
@@ -73,7 +72,8 @@
 		       </g:if>
           
             </g:if>
-  </span>
+
+       </span>
   &nbsp;
 			</span>
 
