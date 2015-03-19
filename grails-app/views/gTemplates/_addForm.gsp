@@ -236,11 +236,11 @@
 
 
 <tr>
-    <g:if test="${fields.contains('source')}">
+    <g:if test="${fields.contains('contact')}">
         <td>
-            <g:select name="source.id" class="ui-corner-all"
+            <g:select name="contact.id" class="ui-corner-all"
                       from="${sources}" optionKey="id"
-                      value="${record?.source?.id}"
+                      value="${record?.contact?.id}"
                       noSelection="${['null': 'No person']}"/>
         </td>
     </g:if>
