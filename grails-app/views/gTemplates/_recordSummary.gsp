@@ -298,7 +298,7 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 
 
 
-         <div id="actionsButtons${record.id}" class="actionsButtons">
+         <div id="actionsButtons${record.id}" class="actionsButtons" style="background: none; font-size: 9px !important;">
 
              <g:if test="${record.class.declaredFields.name.contains('writing') && entityCode == 'N'}">
                  <g:set value="writing" var="field"></g:set>

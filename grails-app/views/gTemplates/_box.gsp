@@ -4,20 +4,20 @@
 <div class="" style="margin-bottom: 5px; margin-top: 5px;max-width: 550px;">
     <g:if test="${record}">
         <table width="99%;" border="0"
-               style="background: #F8FBFE; border-collapse: collapse; -moz-border-radius: 6px; margin: 2px; border: 1px solid #cccccc; padding-bottom: 2px;">
+               style="background: #F8FBFE; border-collapse: collapse; -moz-border-radius: 6px; margin: 1px; border-bottom: 0.5px solid #cccccc; padding-bottom: 1px;">
 
             %{--<!--Id: ${plannerInstance.id} -->--}%
 
             <tr style="" class="${'GTP'.contains(record.entityCode()) ? 'workStatus-' + record.status?.code : ''}">
 
-                <td style="width: 100%; font-size: 12px;padding: 2px;">
+                <td style="width: 100%; font-size: 12px;padding: 1px;">
 
                     <div class="${record.entityCode()}-bkg ID-bkg" style="display: inline">
-                        <g:link controller="page" action="record" target="_blank"
+                        <g:remoteLink controller="generics" action="showSummary" update="underBox${record.entityCode()}${record.id}"
                                 params="${[id: record.id, entityCode: record.entityCode()]}"
                                 title="${record?.description}">
                             ${record.entityCode()}
-                        </g:link>
+                        </g:remoteLink>
                     </div>
 
                     %{--<sup>${record.priority}</sup>--}%
@@ -43,9 +43,9 @@
 
 
 
-                    <g:link controller="page" action="record" target="_blank"
-                            params="${[id: record.id, entityCode: record.entityCode()]}"
-                            title="${record?.description?.encodeAsHTML()}">
+                    <g:remoteLink controller="generics" action="showSummary" update="underBox${record.entityCode()}${record.id}"
+                                  params="${[id: record.id, entityCode: record.entityCode()]}"
+                                  title="${record?.description?.encodeAsHTML()}">
 
                         <span style="color: #003399;">
 
@@ -122,7 +122,7 @@
                         %{--</g:if>--}%
 
                         <br/>
-                    </g:link>
+                    </g:remoteLink>
 
 
 
@@ -160,3 +160,5 @@
 
 
 <br/><p style="page-break-before: always"></p>
+
+<div id="underBox${record.entityCode()}${record.id}"></div>

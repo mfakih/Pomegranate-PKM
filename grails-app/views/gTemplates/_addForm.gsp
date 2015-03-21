@@ -192,7 +192,7 @@
 
     <g:if test="${fields.contains('summary')}">
         <td colspan="3">
-            <g:textField placeholder="Summary" name="summary" value="${record?.summary}" style="width: 95%;"/>
+            <g:textField  id="sumamryField" name="summary" value="${record?.summary}" style="width: 95%;"/>
         </td>
     </g:if>
 
