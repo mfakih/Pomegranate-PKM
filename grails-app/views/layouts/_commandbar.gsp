@@ -1,5 +1,4 @@
-<%@ page import="app.Tag; app.parameters.CommandPrefix" %>
-
+<%@ page import="mcs.parameters.WritingType; app.Tag; app.parameters.CommandPrefix" %>
 
 <a style="font-size: smaller; color: gray; float: right;" onclick="jQuery('#commandBars').removeClass('navHidden')">Show&nbsp; </a>
 
@@ -58,7 +57,8 @@
         </table>
 
     </g:formRemote>
-
+     <br/>
+     <br/>
 
 
 <g:formRemote name="addXcdFormNgs"
@@ -66,7 +66,7 @@
               update="centralArea"
               method="post">
 
-    <table style="border: 0; width: 99%">
+    <table style="border: 0.5px lightgrey dashed; background: #f3fcf1; width: 98%">
         <tr>
     <td colspan="2">
         <g:textField placeholder="Summary" name="summary" id="summary" value="" style="width: 95%;" dir="auto"/>
@@ -75,6 +75,13 @@
             <td>
                 <pkm:datePicker name="writtenOn" placeholder="Date" id="34563453" value="${new Date()}"/>
                 <g:checkBox name="approximateDate" id="approximateDate" value=""/> ~ ?
+
+                <br/>
+
+                <g:select name="type" from="${WritingType.list()}"
+                          optionKey="id"  class="chosen chosen-rtl" id="type"
+                          optionValue="name"
+                          noSelection="${['null': '']}"/>
             </td>
         </tr>
 
@@ -82,16 +89,18 @@
             <td colspan="2" style="width: 66% !important;">
                 <g:textArea cols="80" rows="5" placeholder="Description" name="description" id="description"
                             value="" dir="auto"
-                            style="width: 95%; height: 80px;"/>
+                            style="width: 98%; height: 80px;"/>
 
             </td>
             <td>
-            %{--<g:textField placeholder="link" name="link" value="" style="width: 150px;"/>--}%
-            %{--<br/>--}%
+            <g:textField placeholder="link" name="link" value="" style="width: 150px;"/>
+            <br/>
             <g:select name="chosenTags" from="${Tag.list()}" multiple="" size="80" style="min-width: 200px; min-height: 50px;"
-                      value="" optionKey="id"  class="chosen chosen-rtl" id="chosenTags"
+                      value="1" optionKey="id"  class="chosen chosen-rtl" id="chosenTags"
                       optionValue="name"
                       noSelection="${['null': '']}"/>
+
+
         </td>
 
         </tr>

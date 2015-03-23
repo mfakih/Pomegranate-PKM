@@ -21,8 +21,6 @@
 <g:if test="${queryKey}">
 
 
-
-
     <div class="paginateButtons" style="display:inline !important;">
         <util:remotePaginate controller="generics" action="findRecords" total="${totalHits}"
                              params="[input: queryKey]" update="centralArea"/>

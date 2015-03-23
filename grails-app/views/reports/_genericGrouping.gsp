@@ -1,6 +1,6 @@
 <%@ page import="cmn.Setting" %>
 <h2>${title}</h2>
-    <div style="-moz-column-count: ${Setting.findByNameLike('grouping-colmns') ? Setting.findByNameLike('grouping-colmns').value.toInteger() : 4}">
+    <div style="-moz-column-count: ${Setting.findByNameLike('grouping-colmns') ? Setting.findByNameLike('grouping-colmns').value.toInteger() : 2}; -webkit-column-count: ${Setting.findByNameLike('grouping-colmns') ? Setting.findByNameLike('grouping-colmns').value.toInteger() : 2}">
 <g:each in="${groups}" var="g">
     <g:if test="${items[groupBy].contains(g)}">
         %{--<div >--}%

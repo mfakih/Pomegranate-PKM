@@ -49,7 +49,7 @@
                     </g:each>
                 </ul>
                 <g:each in="${types}" var="e">
-                    <div id="type-${e.id}" style="-moz-column-count:3">
+                    <div id="type-${e.id}" style="-moz-column-count:2; ">
                         <g:findAll in="${Goal.list()}" expr="it.goalType == e">
                             <h4><a class="fg-button fg-button-icon-solo ui-widget ui-state-default ui-corner-all"
                                    tooltip="Edit"

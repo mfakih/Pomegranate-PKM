@@ -116,7 +116,6 @@
                 <img src="${resource(dir: 'images/spinners', file: 'pmg-grain.gif')}" alt="Spinner2"
                      style="z-index: 10000 !important"/>
             </div>
-
 <sec:ifNotGranted roles="ROLE_ADMIN">
     <g:if test="${OperationController.getPath('commandBar.enabled')?.toLowerCase() == 'yes' ? true : false}">
             <g:render template="/layouts/commandbar" model="[]"/>
