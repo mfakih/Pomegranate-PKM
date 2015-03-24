@@ -66,7 +66,7 @@
 <script type="text/javascript" src="${resource(dir: 'js', file: 'Am2_SimpleSlider.js')}"></script>
 
 
-
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.relatedselects.min.js')}"></script>
 
 
 %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'select2.css')}"/>--}%
@@ -289,7 +289,7 @@
             heightStyle: "fill",
             header: "h3",
             event: "click",
-            active: 3,
+            active: 5,
             collapsible: true,
             icons: {
                 header: "ui-icon-circle-arrow-e",

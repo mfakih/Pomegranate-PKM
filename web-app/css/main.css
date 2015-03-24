@@ -1598,6 +1598,16 @@ ul.ui-autocomplete.ui-menu {
 }
 .actionsButtons{
     display: none;
+}
+.actionsButtonsStyle a{
+    font-size: 10px;
+    padding-right: 6px;
+
+}
+.actionsButtonsStyle{
+    padding: 3px;
+    margin-top: 2px;
+    background: floralwhite;
 
 }
 /*.showhim:hover .actionsButtons{*/
@@ -1607,4 +1617,8 @@ ul.ui-autocomplete.ui-menu {
 .showhim:hover .testhide{
     display : inline;
     background: #ddd;
+}
+
+.width95{
+    width: 95% !important;
 }

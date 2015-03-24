@@ -21,7 +21,7 @@
 
 %{--${justUpdated ? 'justUpdated' : ''} todo--}%
 
-<div class="recordContainer"
+<div class="recordContainer" onmouseover="jQuery('.temp44').addClass('actionsButtons'); jQuery('#actionsButtons${record.id}').removeClass('actionsButtons')"
      style="background: #f2f2f2;  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2); padding: 0px;  margin: 3px; border-radius: 0px; margin-top: 15px;">
 
 <table class="fixed-layout recordLine">
@@ -157,7 +157,7 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 
 
 
-    <g:if test="${record.class.declaredFields.name.contains('status')}">
+    <g:if test="${record.class.declaredFields.name.contains('status') && record.status}">
         <g:set value="status" var="field"></g:set>
 
         <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
@@ -212,7 +212,8 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 </td>
 
 
-<td class="actionTd showhim" style="${justUpdated ? 'background: YellowGreen !important' : ''}" onmouseout="jQuery('#actionsButtons${record.id}').removeClass('actionsButtons')">
+<td class="actionTd showhim" style="${justUpdated ? 'background: YellowGreen !important' : ''}"
+    >
     <g:remoteLink controller="generics" action="getAddForm" id="${record.id}"
                   params="[entityController: record.class.name,
                           updateRegion:  entityCode + 'Record' + record.id,
@@ -294,11 +295,11 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 </tr>
 
  <tr>
-     <td class="actionTd " colspan="8">
+     <td class="actionTd " colspan="8" style="background: white">
 
 
 
-         <div id="actionsButtons${record.id}" class="actionsButtons" style="background: none; font-size: 9px !important;">
+         <div id="actionsButtons${record.id}" class="temp44 actionsButtons actionsButtonsStyle" style="background: none; font-size: 9px !important;">
 
              <g:if test="${record.class.declaredFields.name.contains('writing') && entityCode == 'N'}">
                  <g:set value="writing" var="field"></g:set>
@@ -473,133 +474,6 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
    <g:render template="/gTemplates/2ndLine" model="[record: record, entityCode: entityCode]"/>
 </g:if>
 
-<g:if test="${1 == 2}">
-    <g:if test="${context || 'CRW'.contains(entityCode)}">
-        <tr style="background: #f6f6f6 !important">
-            <td colspan="12" style="font-size: 12px; font-style: normal; padding-bottom: 10px; padding-left: 30px;">
-                <g:if test="${context}">
-                    ${context} <br/>
-                </g:if>
-
-
-                <pkm:summarize text="${record.description?.replace('Product Description', '')}" length="300"/>
-
-				 <i><pkm:summarize text="${record.fullText}" length="300"/></i>
-
-
-
-                %{--<g:if test="${'T'.contains(entityCode)}">--}%
-                    %{--<g:if test="${record.goal}">--}%
-                        %{--<g:remoteLink controller="generics" action="showSummary" id="${record.goal.id}"--}%
-                                      %{--params="[entityCode: 'G']"--}%
-                                      %{--update="below${entityCode}Record${record.id}"--}%
-                                      %{--title="Show goal">--}%
-                            %{--<span style="color: #004499; font-weight: bold">--}%
-                            %{--xx ${record.goal?.summary}</span>--}%
-                        %{--</g:remoteLink>--}%
-
-                    %{--</g:if>--}%
-                %{--</g:if>--}%
-                %{--<g:if test="${'JP'.contains(entityCode)}">--}%
-                    %{--<g:if test="${record.goal}">--}%
-                        %{--<g:remoteLink controller="generics" action="showSummary" id="${record.goal.id}"--}%
-                                      %{--params="[entityCode: 'G']"--}%
-                                      %{--update="below${entityCode}Record${record.id}"--}%
-                                      %{--title="Show goal">--}%
-                            %{--<br/><i>G-${record.goal?.id}</i>--}%
-                            %{--<span style="color: #004499; font-weight: bold">${record.goal?.summary}</span>--}%
-
-                        %{--</g:remoteLink>--}%
-
-                    %{--</g:if>--}%
-                %{--</g:if>--}%
-
-                <g:if test="${'C'.contains(entityCode)}">
-
-                    <g:if test="${record.book}">
-                        <br/>
-                        <g:remoteLink controller="generics" action="showSummary" id="${record.book.id}"
-                                      params="[entityCode: 'R']"
-                                      update="below${entityCode}Record${record.id}"
-                                      title="Show book">
-                            ~ R-${record.book.id} ${record.book.title}
-                        </g:remoteLink>
-                    </g:if>
-                    <g:if test="${record.pages}">
-                        <u>page ${record.pages}</u>
-                    </g:if>
-                </g:if>
-
-
-            &nbsp;
-                <g:if test="${'JWC'.contains(entityCode)}">
-
-                    <g:if test="${record.blogCode && record.publishedNodeId}">
-                        <div style="display: inline; padding: 2px; background: #004499; color: #ffffff;" class=""
-                             title="ID ${record.publishedNodeId ?: '?'} ${record.publishedOn ? ' on ' + record.publishedOn?.format('dd.MM.yyyy HH:mm') : ''}">
-                            ${record.blogCode}
-                        </div>
-
-                    </g:if>
-
-                    <g:if test="${record.blogCode && !record.publishedNodeId}">
-                        <div style="display: inline; padding: 2px; background: #ff0000; color: #ffffff;" class=""
-                             title="ID ${record.publishedNodeId ?: '?'} ${record.publishedOn ? ' on ' + record.publishedOn?.format('dd.MM.yyyy HH:mm') : ''}">
-                            ${record.blogCode}
-                        </div>
-
-                    </g:if>
-
-
-
-                %{--<g:if test="${record.publishedNodeId}">--}%
-                %{--<br/>--}%
-                %{----}%
-                %{--<br/>--}%
-                %{--</g:if>--}%
-
-                </g:if>
-
-            </td>
-            
-            
-            
-            
-              
-
-<td rowspan="2">
-            
-			 <g:if test="${new File(OperationController.getPath('module.sandbox.' + entityCode + '.path') + '/' + record.id + 'j.jpg')?.exists()}">
-                <a href="${createLink(controller: 'book', action: 'viewRecordImage', id: record.id)}"
-                   target="_blank">
-                    <img class="Photo" style="width: 100; height: 130; display:inline"
-                         src="${createLink(controller: 'book', action: 'viewRecordImage', id: record.id, params: [date: new Date()])}"/>
-                </a>
-             </g:if>
-			 
-			 
-			 <g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
-             <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
-             record?.type?.code + '/' + params.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + params.id + '.jpg')?.exists())}">
-               
-                <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
-                   target="_blank">
-                    <img class="Photo" style="width: 100; height: 130; display:inline"
-                         src="${createLink(controller: 'book', action: 'viewImage', id: record.id, params: [date: new Date()])}"/>
-                </a>
-             </g:if>
-           </g:if>
-          </td>
-            
-            
-
-            
-            
-            
-        </tr>
-    </g:if>
-</g:if>
-
 
 <div id="below${entityCode}Record${record.id}">
 <g:if test="${expandedView == true}">
@@ -621,6 +495,6 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
     jQuery('#summary').val('')
     jQuery('#description').val('')
     //jQuery('#approximateDate').clear()
-    jQuery('#chosenTags').val('').trigger('chosen:updated');
-    jQuery('#chosenTags').val('').trigger('liszt:updated');
+//    jQuery('#chosenTags').val('').trigger('chosen:updated');
+//    jQuery('#chosenTags').val('').trigger('liszt:updated');
 </script>

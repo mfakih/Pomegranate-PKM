@@ -87,72 +87,6 @@
 
 
 
-<g:if test="${record.entityCode().length() == 1}">
-    <div style="display: inline; text-align: right;">
-        <table border=0>
-            <tr>
-                <td>
-                    Attach files:
-                    <uploader:uploader id="uploadAsNoteWithAttachment${record.id}"
-                                       url="${[controller: 'import', action: 'upload']}"
-                                       params="${[recordId: record.id, entityCode: record.entityCode()]}">
-                        <uploader:onComplete>
-                            jQuery('#subUploadInPanel').load('generics/showSummary/' + responseJSON.id + '?entityCode=' +  responseJSON.entityCode)
-                        </uploader:onComplete>
-                        Attach...
-                    </uploader:uploader>
-                </td>
-
-                <td>
-                    Add to record folder:
-                    <uploader:uploader id="addToRecordFolder${record.id}"
-                                       url="${[controller: 'import', action: 'addToRecordFolder']}"
-                                       params="${[recordId: record.id, entityCode: record.entityCode()]}">
-                        Add to record folder
-                    </uploader:uploader>
-
-
-                    <g:if test="${record.entityCode() == 'J'}">
-
-                    Add to <b>sns</b> folder:
-                    <uploader:uploader id="addToRecordSnsFolder${record.id}"
-                                       url="${[controller: 'import', action: 'addToJRecordFolder']}"
-                                       params="${[recordId: record.id, entityCode: record.entityCode(), folderType: 'sns']}">
-                        Add to sns folder
-                    </uploader:uploader>
-                    <br/>
-
-                      Add to <b>rcd</b> folder:
-                    <uploader:uploader id="addToRecordRcdFolder${record.id}"
-                                       url="${[controller: 'import', action: 'addToJRecordFolder']}"
-                                       params="${[recordId: record.id, entityCode: record.entityCode(), folderType: 'rcd']}">
-                        Add to rcd folder
-                    </uploader:uploader>
-                    <br/>
-
-                      Add to <b>vjr</b> folder:
-                    <uploader:uploader id="addToRecordVjrFolder${record.id}"
-                                       url="${[controller: 'import', action: 'addToJRecordFolder']}"
-                                       params="${[recordId: record.id, entityCode: record.entityCode(), folderType: 'vjr']}">
-                        Add to vjr folder
-                    </uploader:uploader>
-                    <br/>
-
-
-
-                    </g:if>
-                </td>
-            </tr>
-        </table>
-
-
-
-
-    </div>
-        <div id="subUploadInPanel"></div>
-</g:if>
-
- <br/>
 
 
 <g:if test="${record.entityCode() == 'R'}">
@@ -589,6 +523,75 @@
 </g:if>
 
 
+
+
+
+<g:if test="${record.entityCode().length() == 1}">
+    <div style="display: inline; text-align: right;">
+        <table border=0>
+            <tr>
+                <td>
+                    Attach files:
+                    <uploader:uploader id="uploadAsNoteWithAttachment${record.id}"
+                                       url="${[controller: 'import', action: 'upload']}"
+                                       params="${[recordId: record.id, entityCode: record.entityCode()]}">
+                        <uploader:onComplete>
+                            jQuery('#subUploadInPanel').load('generics/showSummary/' + responseJSON.id + '?entityCode=' +  responseJSON.entityCode)
+                        </uploader:onComplete>
+                        Attach...
+                    </uploader:uploader>
+                </td>
+
+                <td>
+                    Add to record folder:
+                    <uploader:uploader id="addToRecordFolder${record.id}"
+                                       url="${[controller: 'import', action: 'addToRecordFolder']}"
+                                       params="${[recordId: record.id, entityCode: record.entityCode()]}">
+                        Add to record folder
+                    </uploader:uploader>
+
+
+                    <g:if test="${record.entityCode() == 'J'}">
+
+                        Add to <b>sns</b> folder:
+                        <uploader:uploader id="addToRecordSnsFolder${record.id}"
+                                           url="${[controller: 'import', action: 'addToJRecordFolder']}"
+                                           params="${[recordId: record.id, entityCode: record.entityCode(), folderType: 'sns']}">
+                            Add to sns folder
+                        </uploader:uploader>
+                        <br/>
+
+                        Add to <b>rcd</b> folder:
+                        <uploader:uploader id="addToRecordRcdFolder${record.id}"
+                                           url="${[controller: 'import', action: 'addToJRecordFolder']}"
+                                           params="${[recordId: record.id, entityCode: record.entityCode(), folderType: 'rcd']}">
+                            Add to rcd folder
+                        </uploader:uploader>
+                        <br/>
+
+                        Add to <b>vjr</b> folder:
+                        <uploader:uploader id="addToRecordVjrFolder${record.id}"
+                                           url="${[controller: 'import', action: 'addToJRecordFolder']}"
+                                           params="${[recordId: record.id, entityCode: record.entityCode(), folderType: 'vjr']}">
+                            Add to vjr folder
+                        </uploader:uploader>
+                        <br/>
+
+
+
+                    </g:if>
+                </td>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+    <div id="subUploadInPanel"></div>
+</g:if>
+
+<br/>
 
 <div style="font-size: 11px;">
     <br/>

@@ -6,12 +6,13 @@
 
 .qq-upload-button {
     display:block;
+    color: #00008b;
     /*or inline-block */
     width: 80px;
     padding: 2px 0;
     text-align:center;
     margin: 4px;
-    background: #5e3c00;
+    background: #f8f6df;
     border-bottom:1px solid #ddd;color:#fff;
     z-index: 1000;
 }

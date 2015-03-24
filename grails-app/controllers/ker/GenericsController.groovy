@@ -3907,4 +3907,18 @@ def addContactToRecord() {
         render 'Records per page set to ' + params.id
     }
 	
+
+def getCoursesForDepartment = {
+    def parentArray = [:]
+    if (params['department.id'] && params['department.id'] != 'null' && params['department.id'] != '0' && params['department.id'] != ''){
+        Course.findAllByDepartment(Department.get(params['department.id'].toLong())).each(){
+            parentArray[it.id] = it.toString()
+        }
+    }
+    render parentArray as JSON
+
+}
+
+
+
 }

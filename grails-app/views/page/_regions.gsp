@@ -1,4 +1,4 @@
-<%@ page import="cmn.Setting; mcs.Course; mcs.Journal; mcs.Planner; app.IndexCard; mcs.Task; ker.OperationController" %>
+<%@ page import="mcs.Department; mcs.parameters.WritingType; app.Tag; cmn.Setting; mcs.Course; mcs.Journal; mcs.Planner; app.IndexCard; mcs.Task; ker.OperationController" %>
 <!-- manually attach allowOverflow method to pane -->
 <div class="ui-layout-north northRegion">
     <g:render template="/layouts/north" model="[]"/>
@@ -101,6 +101,70 @@
 
         </div>
 
+            <h3><a href="#">Add Xcd</a></h3>
+<div id='addXcd'>
+
+
+    <g:formRemote name="addXcdFormNgs" id="addXcdFormNgs"
+                  url="[controller: 'indexCard', action: 'addXcdFormNgs']"
+                  update="centralArea"
+                  method="post">
+
+        <g:select name="language" from="${['ar', 'fr', 'en', 'de', 'fa']}"
+                  class="chosen chosen-rtl" id="language"
+                  value="ar"
+                  noSelection="${['null': '']}"/>
+
+
+                    <g:select name="department.id" from="${Department.list()}"
+                              optionKey="id"  class="chosen" id="department"
+                              optionValue="code"
+                              noSelection="${['null': '']}"/>
+
+                    <g:select name="course.id" from="${Course.list()}"
+                              optionKey="id"  class="chosen" id="course"
+                              optionValue="summary"
+                              noSelection="${['null': '']}"/>
+        <br/>
+        <pkm:datePicker name="writtenOn" placeholder="Date" id="34563453" value="${new Date()}"/>
+        ~<g:checkBox name="approximateDate" id="approximateDate" value=""/>
+
+        <g:select name="type.id" from="${WritingType.list()}"
+                              optionKey="id"  class="chosen chosen-rtl" id="type"
+                              optionValue="name"
+                              noSelection="${['null': '']}"/>
+        <br/>
+        <br/>
+        <g:textField placeholder="Summary" name="summary" id="summary" value="" style="background: #e8efe7; width: 95%;" dir="auto"/>
+
+                    <g:textArea cols="80" rows="5" placeholder="Description" name="description" id="description"
+                                value="" dir="auto"
+                                style="background: #f7fff6; width: 95%; height: 80px;"/>
+        <br/>
+
+        <g:textField placeholder="link" name="link" value="" style="width: 95%;"/>
+                    <br/>
+                    <br/>
+                    <g:select name="chosenTags" from="${Tag.list()}" multiple="" size="80" style="min-width: 200px; min-height: 50px;"
+                              value="1" optionKey="id"  class="chosen chosen-rtl" id="chosenTags"
+                              optionValue="name"
+                              noSelection="${['null': '']}"/>
+
+         <br/>
+         <br/>
+
+        <g:submitButton name="save" value="Save"
+                        style="height: 20px; margin: 0px; width: 95% !important; background: #efece0"
+                        id="45634523"
+                        class="fg-button ui-widget ui-state-default"/>
+
+
+    </g:formRemote>
+
+
+
+        </div>
+
 </div>
         %{--<g:if test="${ker.OperationController.getPath('twoPanels') == 'on'}">--}%
         %{--<g:render template="/layouts/east"/>--}%
@@ -165,3 +229,19 @@
     </div>
 
 
+<script type="text/javascript">
+//    jQuery(".chosen").chosen({allow_single_deselect: true,  no_results_text: "None found"});
+    jQuery("#chosenTags").chosen({allow_single_deselect: true,  no_results_text: "None found"});
+
+jQuery("#addXcdFormNgs").relatedSelects({
+    onChangeLoad: '/pkm/generics/getCoursesForDepartment',
+    defaultOptionText: '',
+    selects: {
+        'department.id':		{ loadingMessage:'' },
+        'course.id':		{ loadingMessage:'' }
+    }
+});
+
+    jQuery('#chosenTags_chzn').addClass('width95')
+
+</script>

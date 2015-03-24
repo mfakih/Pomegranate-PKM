@@ -61,65 +61,12 @@
      <br/>
 
 
-<g:formRemote name="addXcdFormNgs"
-              url="[controller: 'indexCard', action: 'addXcdFormNgs']"
-              update="centralArea"
-              method="post">
 
-    <table style="border: 0.5px lightgrey dashed; background: #f3fcf1; width: 98%">
-        <tr>
-    <td colspan="2">
-        <g:textField placeholder="Summary" name="summary" id="summary" value="" style="width: 95%;" dir="auto"/>
-
-    </td>
-            <td>
-                <pkm:datePicker name="writtenOn" placeholder="Date" id="34563453" value="${new Date()}"/>
-                <g:checkBox name="approximateDate" id="approximateDate" value=""/> ~ ?
-
-                <br/>
-
-                <g:select name="type" from="${WritingType.list()}"
-                          optionKey="id"  class="chosen chosen-rtl" id="type"
-                          optionValue="name"
-                          noSelection="${['null': '']}"/>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="2" style="width: 66% !important;">
-                <g:textArea cols="80" rows="5" placeholder="Description" name="description" id="description"
-                            value="" dir="auto"
-                            style="width: 98%; height: 80px;"/>
-
-            </td>
-            <td>
-            <g:textField placeholder="link" name="link" value="" style="width: 150px;"/>
-            <br/>
-            <g:select name="chosenTags" from="${Tag.list()}" multiple="" size="80" style="min-width: 200px; min-height: 50px;"
-                      value="1" optionKey="id"  class="chosen chosen-rtl" id="chosenTags"
-                      optionValue="name"
-                      noSelection="${['null': '']}"/>
-
-
-        </td>
-
-        </tr>
-
-    </table>
-
-    <g:submitButton name="save" value="Save"
-                    style="height: 20px; margin: 0px; width: 80px !important;"
-                    id="45634523"
-                    class="fg-button ui-widget ui-state-default"/>
-
-
-</g:formRemote>
 </div>
 
 
 
 <script type="text/javascript">
-    jQuery("#chosenTags").chosen({allow_single_deselect: true,  no_results_text: "None found", width: 200})
 
-    jQuery('#commandBars').addClass('navHidden')
+ //   jQuery('#commandBars').addClass('navHidden')
 </script>

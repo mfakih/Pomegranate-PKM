@@ -356,7 +356,7 @@ source src="${createLink(controller: 'operation', action: 'download', id: fileId
 
             if (!initial || initial.toString().trim() == '')
                 initial = ''
-            if (new File(folder).exists()) {
+            if (folder && new File(folder)?.exists()) {
                 new File(folder).eachFileMatch(~/${initial}[\S\s]*.jpg/) {
                     filesList.add(it)
                 }

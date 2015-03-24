@@ -1,66 +1,4 @@
 <%@ page import="mcs.Planner; mcs.Journal; mcs.Book; mcs.Writing; ker.OperationController" %>
-<g:if test="${entityCode == '11111111'}">
-
-
-    <g:if test="${record.priority == 3}">
-        &gt;
-    </g:if>
-    <g:elseif test="${record.priority == 4}">
-        <b>&gt;&gt; </b>
-    </g:elseif>
-    <g:elseif test="${record.priority == 1}">
-        <b>&darr; </b>
-    </g:elseif>
-
-
-
-
-    <pkm:summarize text="${record.summary}" length="80"/>
-
-    <span style="font-size: 12px; font-style: italic; color: #4A5C69">
-        <pkm:summarize text="${record?.description?.replace('Product Description', '')?.replaceAll("\\<.*?>", "")}"
-                       length="200"/>
-    </span>
-	
-	 <span style="font-size: 12px; font-style: italic; color: #8A5C69">
-         <pkm:summarize text="${record.fullText}" length="200"/>
-    </span>
-	
-	
-		
-
-    <span style="${record.status?.style}; font-size: 11px; border: 0px solid; text-decoration: #808080 underline;  border-radius: 3px; padding: 1px; margin-right: 3px;">
-        ${record.status?.code}
-    </span>
-
-
-
-
-    <g:if test="${record.orderInCourse}">
-        <span styl="font-size: 12px;">#${record.orderInCourse}</span>
-    </g:if>
-
-
-
-    <span style="color:#7588b2 ">
-        ${record.notes}
-    </span>
-
-    <g:if test="${record.class.declaredFields.name.contains('tags')}">
-        &nbsp; <g:render template="/tag/tags" model="[instance: record, entity: entityCode]"/>
-        &nbsp; <g:render template="/tag/contacts" model="[instance: record, entity: entityCode]"/>
-
-        %{--<g:remoteLink controller="generics" action="showTagForm"--}%
-                      %{--params="${[id: record.id, entityCode: entityCode]}"--}%
-                      %{--update="below${entityCode}Record${record.id}"--}%
-                      %{--title="Details">--}%
-            %{--+--}%
-        %{--</g:remoteLink>--}%
-
-    </g:if>
-
-</g:if>
-<g:else>
 
 
 <g:if test="${record.class.declaredFields.name.contains('goal')}">
@@ -88,15 +26,32 @@
         <br/>
     </g:if>
 
-    <script>
-        %{--$('#${field}${record.id}').editable();--}%
-    </script>
+
+
 
     &nbsp;
 </g:if>
 
 
+<g:if test="${entityCode == 'N' && record.recordId}">
 
+    <g:remoteLink controller="generics" action="showSummary" id="${record.recordId}"
+                  params="[entityCode: record.entityCode]"
+                  update="below${entityCode}Record${record.id}"
+                  title="Show parent entity">
+
+        <b>${record.entityCode}</b>
+        <i>${record.recordId}</i>
+
+    </g:remoteLink>
+
+    <br/>
+
+</g:if>
+
+<script>
+    %{--$('#${field}${record.id}').editable();--}%
+</script>
 
 
 
@@ -108,21 +63,34 @@
 
 
 
-<g:if test="${record.class.declaredFields.name.contains('course')}">
 
-    <g:set value="course" var="field"></g:set>
+<g:if test="${record.class.declaredFields.name.contains('writtenOn') && record.writtenOn}">
 
- <span title="${record.course?.summary}"
-       style="font-size: 11px; font-weight: bold; float: right; padding-right: 4px;">
-        ${record[field]?.code ?: ''}
-		${record[field]?.codeString ?: ''}
+    <span style="font-size: 11px; font-weight: bold; float: right; padding-right: 4px;"
+          title="${record.writtenOn?.format(OperationController.getPath('datetime.format'))}">
+    <g:if test="${record.class.declaredFields.name.contains('approximateDate') && record.approximateDate}">
+        ~
+    </g:if>
+
+     ${record.writtenOn?.format(OperationController.getPath('date.format'))}
     </span>
-    <script>
-        %{--$('#${field}${record.id}').editable({--}%
-        //                     });
-    </script>
+    </g:if>
 
-</g:if>
+%{--<g:if test="${record.class.declaredFields.name.contains('course')}">--}%
+
+    %{--<g:set value="course" var="field"></g:set>--}%
+
+ %{--<span title="${record.course?.summary}"--}%
+       %{--style="font-size: 11px; font-weight: bold; float: right; padding-right: 4px;">--}%
+        %{--${record[field]?.code ?: ''}--}%
+		%{--${record[field]?.codeString ?: ''}--}%
+    %{--</span>--}%
+    %{--<script>--}%
+        %{--$('#${field}${record.id}').editable({--}%
+        %{--//                     });--}%
+    %{--</script>--}%
+
+%{--</g:if>--}%
 
 
 
@@ -170,6 +138,7 @@
     <span title="${record.endDate?.format(OperationController.getPath('datetime.format'))}">
         >${record.endDate?.format(OperationController.getPath('date.format'))}
     </span>
+    <br/>
 </g:if>
 
 
@@ -179,15 +148,9 @@
     </span>
 </g:if>
 
-<g:if test="${record.class.declaredFields.name.contains('approximateDate') && record.approximateDate}">
-    ~~~
-</g:if>
 
-<g:if test="${record.class.declaredFields.name.contains('writtenOn') && record.writtenOn}">
-    <span title="${record.writtenOn?.format(OperationController.getPath('datetime.format'))}">
-        .${record.writtenOn?.format(OperationController.getPath('date.format'))}
-    </span>
-</g:if>
+
+
 
 
 
@@ -202,16 +165,19 @@
     </g:remoteLink>
     <br/>
 </g:if>
+
+
 <g:if test="${record.class.declaredFields.name.contains('course') && record.course}">
 
     <g:remoteLink controller="generics" action="showSummary" id="${record.course?.id}"
                   params="[entityCode: 'C']"
+        style="font-size: small; padding: 2px; color: #003366"
                   update="below${entityCode}Record${record.id}"
                   title="Show course">
         <b>${record.course?.code ?: record.course?.numberCode}</b>
-        <i>${record.course?.summary}</i>
+        %{--<i>${record.course?.summary}</i>--}%
     </g:remoteLink>
-      <br/>
+      %{--<br/>--}%
 </g:if>
 
 
@@ -238,6 +204,16 @@
 
 
 <g:if test="${record.class.declaredFields.name.contains('summary')}">
+
+<g:remoteLink  controller="page" action="panel"
+               params="${[id: record.id, entityCode: entityCode]}"
+               update="3rdPanel"
+               style="padding: 2px; font-size: 14px;"
+               before="jQuery('#accordionEast').accordion({ active: 0});">
+
+    <g:if test="${!record.summary}">
+        ...
+    </g:if>
     <span title="${record.summary}">
         <g:if test="${entityCode == 'E'}">
             <br/>
@@ -248,6 +224,7 @@
     %{--</bdi>--}%
 
     </span>
+    </g:remoteLink>
 
 </g:if>
 
@@ -312,9 +289,7 @@
     <g:if test="${record.source}">
         <i style="font-size: smaller"><pkm:summarize text="${record.source}" length="30"/></i>
     </g:if>
-    <g:if test="${!record.summary}">
-        ...
-    </g:if>
+
 
     <g:if test="${record.sourceFree}">
         <i style="font-size: smaller"><pkm:summarize text="${record.sourceFree}" length="30"/></i>
@@ -468,9 +443,14 @@
         <g:if test="${record.class.declaredFields.name.contains('language')}">
             <div class="text${record.language}">
         </g:if>
-        <div style="font-size: 12px; font-style: italic; color: #4A5C69">
+        <div style="font-size: 13px; color: #4A5C69; padding: 3px;">
+            <g:if test="${record.description?.length() < 250}">
+                ${record?.description?.replaceAll("\\<.*?>", "")?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}
+            </g:if>
+            <g:else>
             <pkm:summarize text="${record?.description?.replace('Product Description', '')?.replaceAll("\\<.*?>", "")}"
                            length="200"/>
+            </g:else>
         </div>
         <g:if test="${record.class.declaredFields.name.contains('language')}">
             </div>
@@ -541,8 +521,6 @@
 </span>
 
 </g:remoteLink>
-
-</g:else>
 
 %{--</span>--}%
 
