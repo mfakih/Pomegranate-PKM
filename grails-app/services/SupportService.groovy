@@ -913,7 +913,8 @@ class SupportService {
 
 
     void pdfTitleUpdate(String path, String filename, String title) {
-        PdfReader reader = new PdfReader(path + '/' + filename)
+        if (new File(path + '/' + filename).exists()){
+            PdfReader reader = new PdfReader(path + '/' + filename)
         def tempFile = new File(path + '/_' + filename)
         println ' now doing ' + tempFile.path
         PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(tempFile))
@@ -927,6 +928,7 @@ class SupportService {
         xmp.close()
         stamper.setXmpMetadata(baos.toByteArray())
         stamper.close()
+        }
 
 //        File f1 = new File(path)
         //f1.delete()

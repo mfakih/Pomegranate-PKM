@@ -486,7 +486,8 @@ class OperationController {
         }
     */
 
-        def fileName = f.getName().split(/\./)[0] + ' _ ' + new Date().format('yy') + 'y-' + getSupportService().toWeekDate(new Date()) + '.' + f.getName().split(/\./)[1]
+        def fileName = f.getName().split(/\./)[0]?.replaceAll('\.', '-') + '_' //+ new Date().format('yy') + 'y-' + getSupportService().toWeekDate(new Date())
+                             + '.' + f.getName().split(/\./)[1]
         // + ' _ ' + title
 
 //        println title + '  sad ' + entityCode + ' 2nd  ' + URLEncoder.encode(filename, "UTF-8")

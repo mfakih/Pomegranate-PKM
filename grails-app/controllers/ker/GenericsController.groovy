@@ -769,9 +769,12 @@ ll
         } else
             record.bookmarked = false
 
-        if (entityCode == 'E')
-            supportService.pdfTitleUpdate(OperationController.getPath('module.sandbox.E.path') + '/' + record.id + 'e.pdf',
-                    record?.course?.code + ' ' + record.summary + ' ' + (record?.book ? ' @ ' + record?.book?.title : ''), '')
+        if (entityCode == 'E'){
+            supportService.pdfTitleUpdate(OperationController.getPath('module.sandbox.E.path'), record.id + 'e.pdf',
+                    record?.course?.code + ' ' + record.summary + ' ' + (record.book ? (' @ ' + record?.book?.title) : ''))
+            supportService.pdfTitleUpdate(OperationController.getPath('module.repository.E.path'), record.id + 'e.pdf',
+                    record?.course?.code + ' ' + record.summary + ' ' + (record.book ? (' @ ' + record?.book?.title) : ''))
+        }
 
         render(template: '/gTemplates/recordSummary', model: [record: record])
     }
@@ -2754,7 +2757,7 @@ def addContactToRecord() {
                         queryCriteria.add('chapters = ' + it.substring(1))
                     }
 
-                    if (it.startsWith(':')) {
+                    if (it.startsWith("'")) {
                         properties['language'] = it.substring(1)
                         queryCriteria.add("language = '" + it.substring(1) + "'")
                     }
@@ -2902,8 +2905,8 @@ def addContactToRecord() {
                         }
                     }
 
-                    if (it.startsWith('?') && entityCode == 'N') {
-                        def id = WordType.findByCode(it.substring(1)).id
+                    if (it.startsWith('@') && entityCode == 'N') {
+                        def id = WritingType.findByCode(it.substring(1)).id
                         properties['sourceType.id'] = id
 
                         queryCriteria.add("sourceType.code = '" + it.substring(1) + "'")
@@ -2957,7 +2960,7 @@ def addContactToRecord() {
 //                        properties['source.id'] = id
 //                        queryCriteria.add("source.code = '" + it.substring(1) + "'")
 //                    }
-                    if (it.startsWith('@') && 'N'.contains(entityCode)) {
+                    if (it.startsWith('k') && 'N'.contains(entityCode)) {
 
                         if (it.trim().length() == 1) {
                               properties['contact'] = null
