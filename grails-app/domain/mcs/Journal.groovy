@@ -49,7 +49,7 @@ class Journal implements Comparable {  // entity id = 125
 
     Integer weight
     String summary
-    String description
+    String description = '?'
 
 
     JournalType type

@@ -12,7 +12,17 @@
 
         %{--<label for="description">Description--}%
         %{--</label>--}%
+        <g:textField placeholder="Summary"  id="summary" name="summary" style="width: 99%;" class="ui-corner-all"
+                     value="${indexCardInstance?.summary}"/>
 
+        <g:textArea placeholder="Description"  id="description" name="description" style="width: 99%; height: 70px;"
+                    class="ui-corner-all"
+                    cols="40" rows="5" value="${indexCardInstance?.description}"/>
+
+        <g:textField placeholder="sourceFree"  id="sourceFree" name="sourceFree" style="width: 99%;" class="ui-corner-all"
+                     value="${indexCardInstance?.sourceFree}"/>
+
+        <br/>
         <pkm:datePicker name="writtenOn" placeholder="Written on" value="${indexCardInstance?.writtenOn}"/>
 
                <g:select name="type.id" class="ui-corner-all" style="width: 100px"
@@ -39,16 +49,6 @@
 
         %{--<g:textField name="orderNumber"  value="${indexCardInstance?.orderNumber}" style="width: 50px;"/>--}%
 
-        <br/>
-        <g:textField placeholder="Summary"  id="summary" name="summary" style="width: 99%;" class="ui-corner-all"
-                     value="${indexCardInstance?.summary}"/>
-
-        <g:textArea placeholder="Description"  id="description" name="description" style="width: 99%; height: 70px;"
-                    class="ui-corner-all"
-                    cols="40" rows="5" value="${indexCardInstance?.description}"/>
-
-        <g:textField placeholder="sourceFree"  id="sourceFree" name="sourceFree" style="width: 99%;" class="ui-corner-all"
-                     value="${indexCardInstance?.sourceFree}"/>
 
        %{--<br/>--}%
         %{--<g:textField placeholder="Source"  id="sourceFree" name="sourceFree" style="width: 99%;" class="ui-corner-all"--}%
