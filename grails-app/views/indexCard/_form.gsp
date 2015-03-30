@@ -17,7 +17,9 @@
 
                <g:select name="type.id" class="ui-corner-all" style="width: 100px"
                               from="${WritingType.list([sort: 'name'])}" optionKey="id" optionValue="name"
-                              value="${indexCardInstance?.type?.id ?: (session['lastIcdTypeId'] ?: null)}"
+                              value="${indexCardInstance?.type?.id ?: (session['lastIcdTypeId'] ?: WritingType.findByCode('hgl').id)}"
+
+
                               noSelection="${['null': 'No type']}"/>
 
         <g:select name="writing.id" from="${mcs.Writing.list([sort: 'summary'])}" style="width: 100px;"

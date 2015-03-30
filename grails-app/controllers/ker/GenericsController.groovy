@@ -769,6 +769,10 @@ ll
         } else
             record.bookmarked = false
 
+        if (entityCode == 'E')
+            supportService.pdfTitleUpdate(OperationController.getPath('module.sandbox.E.path') + '/' + record.id + 'e.pdf',
+                    record?.course?.code + ' ' + record.summary + ' ' + (record?.book ? ' @ ' + record?.book?.title : ''), '')
+
         render(template: '/gTemplates/recordSummary', model: [record: record])
     }
 

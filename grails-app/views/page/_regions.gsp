@@ -132,6 +132,7 @@
         <g:select name="type.id" from="${WritingType.list()}"
                               optionKey="id"  class="chosen chosen-rtl" id="type"
                               optionValue="name"
+                              value="${WritingType.findByCode('note').id}"
                               noSelection="${['null': '']}"/>
         <br/>
         <br/>
