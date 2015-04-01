@@ -685,7 +685,7 @@ class ImportController {
     b.properties = GenericsController.transformMcsNotation(title)['properties']
 
 
-         finalName = entityCode.toLowerCase()
+         finalName = ''//entityCode.toLowerCase()
 
 
 

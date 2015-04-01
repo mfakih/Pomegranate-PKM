@@ -149,20 +149,29 @@ class PkmTagLib {
             c++
             session[fileId] = i.path
             output += """<li>
+			<div class="showhim">
 <a href="${createLink(controller: 'operation', action: 'download', id: fileId)}" class="${fileClass}"
                           target="_blank"
                           title="${i.path}">
   ${i.name} <span style="font-size: smaller; color: gray;">
 ${prettySizeMethod(i.size())}
-</span>
+</span> 
             </a>
 	    
-	    <a href="${createLink(controller: 'operation', action: 'generateCover', id: recordId, params: [path: i, module: module, type: type])}"
+	    	<span class="testhide">
+
+
+		<a href="${createLink(controller: 'operation', action: 'generateCover', id: recordId, params: [path: i, module: module, type: type])}"
                           target="_blank"
                           title="${i.path}">
   cvr
 </span>
             </a>
+
+			
+			${i.path}
+			</span>
+			</div>
 </li>"""
         }
         output += "</ul>"

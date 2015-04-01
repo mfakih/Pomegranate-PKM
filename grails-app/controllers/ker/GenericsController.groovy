@@ -769,13 +769,7 @@ ll
         } else
             record.bookmarked = false
 
-        if (entityCode == 'E'){
-            supportService.pdfTitleUpdate(OperationController.getPath('module.sandbox.E.path'), record.id + 'e.pdf',
-                    record?.course?.code + ' ' + record.summary + ' ' + (record.book ? (' @ ' + record?.book?.title) : ''))
-            supportService.pdfTitleUpdate(OperationController.getPath('module.repository.E.path'), record.id + 'e.pdf',
-                    record?.course?.code + ' ' + record.summary + ' ' + (record.book ? (' @ ' + record?.book?.title) : ''))
-        }
-
+       
         render(template: '/gTemplates/recordSummary', model: [record: record])
     }
 
@@ -856,9 +850,28 @@ ll
 
         if (!record.bookmarked) {
             record.bookmarked = true
+			
+				
+			 if (entityCode == 'E'){
+		
+            supportService.pdfTitleUpdateNewPath(OperationController.getPath('module.sandbox.E.path'), record.id + 'e.pdf',
+			record.id + 'e_.pdf',
+			OperationController.getPath('onyx.path'),
+                    record?.book?.course?.code + ' ' + record.summary + ' ' + (record.book ? (' @ ' + record?.book?.title) : ''))
+            supportService.pdfTitleUpdateNewPath(OperationController.getPath('module.repository.E.path'), record.id + 'e.pdf', 
+			record.id + 'e_.pdf',
+			OperationController.getPath('onyx.path'),
+                    record?.book?.course?.code + ' ' + record.summary + ' ' + (record.book ? (' @ ' + record?.book?.title) : ''))
+			}
+		
+		
         } else
             record.bookmarked = false
 
+		
+
+		
+		
         render(template: '/gTemplates/recordSummary', model: [record: record])
     }
 

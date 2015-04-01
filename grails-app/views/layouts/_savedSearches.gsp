@@ -18,7 +18,7 @@
 
             </g:remoteLink>
 
-       <span class="showhim">
+       <div class="showhim">
 	    	<span class="testhide">
 
 		  <g:remoteLink controller="generics" action="getAddForm" id="${i.id}"
@@ -75,9 +75,8 @@
 
        </span>
   &nbsp;
-			</span>
+			</div>
 
-       <br/>
-
+     
     </g:each>
 </g:if>

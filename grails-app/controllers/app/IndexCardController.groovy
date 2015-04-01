@@ -241,12 +241,15 @@ class IndexCardController { // entity id = 16
     def addXcdFormNgs() {
         if (params.description) {
             def n = new IndexCard(params)
-            if (params.chosenTags.class == String) {
+if (params.chosenTags)
+{
+if (params.chosenTags && params.chosenTags.class == String) {
                 n.addToTags(Tag.get(params.chosenTags))
             } else {
                 params.chosenTags.each() {
                     n.addToTags(Tag.get(it))
                 }
+            }
             }
             n.save()
             render(template: "/gTemplates/recordSummary", model: [record: n])

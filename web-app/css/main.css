@@ -1284,6 +1284,11 @@ border-radius: 2px;
     direction: rtl !important;
     text-align: right !important;
 }
+
+.textfa {
+    direction: rtl !important;
+    text-align: right !important;
+}
 .newFile{
     color: green !important;
 }
@@ -1615,7 +1620,7 @@ ul.ui-autocomplete.ui-menu {
 /*background: #ddd;*/
 /*}*/
 .showhim:hover .testhide{
-    display : inline;
+    display : block;
     background: #ddd;
 }
 

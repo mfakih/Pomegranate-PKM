@@ -352,6 +352,14 @@
 <g:if test="${entityCode == 'R'}">
 
 %{--<bdi>--}%
+
+
+<g:remoteLink  controller="page" action="panel"
+               params="${[id: record.id, entityCode: entityCode]}"
+               update="3rdPanel"
+               style="padding: 2px; font-size: 14px;"
+               before="jQuery('#accordionEast').accordion({ active: 0});">
+
     <pkm:summarize text="${(record.title ?: '') + ' ' + (record.author ?: '')}" length="100"/>
 
 %{--</bdi>--}%
@@ -363,6 +371,8 @@
 
         <a style="font-size: smaller" href="${record.url}" target="_blank"><pkm:summarize text="${record.url}" length="30"/></a>
     </g:if>
+    
+    </g:remoteLink>
 
 </g:if>
 

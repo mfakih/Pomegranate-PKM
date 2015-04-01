@@ -21,7 +21,8 @@
 
 %{--${justUpdated ? 'justUpdated' : ''} todo--}%
 
-<div class="recordContainer" onmouseover="jQuery('.temp44').addClass('actionsButtons'); jQuery('#actionsButtons${record.id}').removeClass('actionsButtons')"
+<div class="recordContainer"
+
      style="background: #f2f2f2;  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2); padding: 0px;  margin: 3px; border-radius: 0px; margin-top: 15px;">
 
 <table class="fixed-layout recordLine">
@@ -29,7 +30,7 @@
 
 <tr style="background: #f5f5f5 !important">
 
-<td class="record-id" style="width: 15px">
+<td class="record-id" style="width: 15px" onmouseover="jQuery('.temp44').addClass('actionsButtons'); jQuery('#actionsButtons${record.id}').removeClass('actionsButtons')">
 
 %{--<g:remoteLink controller="generics" action="toggleSelection"--}%
 %{--params="${[id: record.id, entityCode: (record.class.declaredFields.name.contains('entityCode') ? record.entityCode : record.class.name)]}"--}%
@@ -62,18 +63,7 @@
 </td>
 
 
-<td  style="width: 8px; margin-top: 4px; padding: 0; ">
-    <div class="idCell" style="font-size: 11px; font-weight: bold; color: #003C78; -moz-transform:rotate(-80deg); -moz-transform-origin: middle right; -webkit-transform: rotate(-80deg); -webkit-transform-origin: middle right; -o-transform: rotate(-80deg); -o-transform-origin:  middle right; ;">
 
-      <g:if test="${record.class.declaredFields.name.contains('course')}">
-            <span title="${record.course?.summary}"
-                  style="font-size: 12px; font-weight: bold;padding-right: 2px;">
-                ${record?.course?.code ? record?.course?.numberCode : ''}
-            </span>
-        </g:if>
-
-</div>
-</td>
 
 
    	 <g:if test="${new File(OperationController.getPath('module.sandbox.' + entityCode + '.path') + '/' + record.id + 'j.jpg')?.exists() || new File(OperationController.getPath('module.sandbox.' + entityCode + '.path') + '/' + record.id + 'n.jpg')?.exists()}">
@@ -214,7 +204,9 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 </td>
 
 
-<td class="actionTd showhim" style="${justUpdated ? 'background: YellowGreen !important' : ''}"
+<td class="actionTd showhim"
+ onmouseover="jQuery('.temp44').addClass('actionsButtons'); jQuery('#actionsButtons${record.id}').removeClass('actionsButtons')"
+ style="${justUpdated ? 'background: YellowGreen !important' : ''}"
     >
     <g:remoteLink controller="generics" action="getAddForm" id="${record.id}"
                   params="[entityController: record.class.name,
@@ -496,6 +488,7 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 
     jQuery('#summary').val('')
     jQuery('#description').val('')
+   //jQuery('#link').val('')
     //jQuery('#approximateDate').clear()
 //    jQuery('#chosenTags').val('').trigger('chosen:updated');
 //    jQuery('#chosenTags').val('').trigger('liszt:updated');

@@ -143,11 +143,13 @@
                                 style="background: #f7fff6; width: 95%; height: 80px;"/>
         <br/>
 
-        <g:textField placeholder="link" name="link" value="" style="width: 95%;"/>
+        <g:textField placeholder="link" name="link" id="link" value="" style="width: 95%;"/>
                     <br/>
                     <br/>
-                    <g:select name="chosenTags" from="${Tag.list()}" multiple="" size="80" style="min-width: 200px; min-height: 50px;"
-                              value="" optionKey="id"  class="chosen chosen-rtl" id="chosenTags"
+                    <g:select name="chosenTags" from="${Tag.list()}" multiple=""
+					size="80" style="min-width: 200px; min-height: 50px;"
+                              value="" optionKey="id"  
+							  class="chosen chosen-rtl" id="chosenTags"
                               optionValue="name"
                               noSelection="${['null': '']}"/>
 

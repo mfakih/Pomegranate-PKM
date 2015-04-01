@@ -118,7 +118,7 @@
 
         <g:if test="${record.class.declaredFields.name.contains('description')}">
   
-            <div style="padding: 3px; font-size: 12px; font-family: tahoma; margin: 5px; line-height: 20px; text-align: justify" class="${record.class.declaredFields.name.contains('language') && record.language == 'ar' ? 'arabicText' : ''}">
+            <div style="padding: 3px; font-size: 13px; font-family: tahoma; margin: 5px; line-height: 20px; text-align: justify" class="${record.class.declaredFields.name.contains('language') ? 'text' + record.language : ''}">
                 <span id="descriptionBloc${record.id}">
                
                    ${record.description?.replaceAll('\n', '<br/>')?.decodeHTML()?.replaceAll('\n', '<br/>')?.replace('Product Description', '')}

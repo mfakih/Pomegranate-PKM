@@ -107,8 +107,8 @@
 }
 
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
-    font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
-    font-size: 0.95em;
+    font-family: Arial,  Lucida Grande, Lucida Sans, sans-serif;
+    font-size: 1em;
 }
 
 .ui-widget-content {

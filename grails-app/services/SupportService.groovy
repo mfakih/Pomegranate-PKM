@@ -914,6 +914,7 @@ class SupportService {
 
     void pdfTitleUpdate(String path, String filename, String title) {
         if (new File(path + '/' + filename).exists()){
+		
             PdfReader reader = new PdfReader(path + '/' + filename)
         def tempFile = new File(path + '/_' + filename)
         println ' now doing ' + tempFile.path
@@ -940,6 +941,37 @@ class SupportService {
 
     } // end of method
 
+	
+	 void pdfTitleUpdateNewPath(String path, String filename, String newName, String newPath, String title) {
+        if (new File(path + '/' + filename).exists()){
+		
+        PdfReader reader = new PdfReader(path + '/' + filename)
+        def tempFile = new File(newPath + '/' + newName)
+        println 'Now stamping ' + tempFile.path
+        PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(tempFile))
+
+        HashMap info = reader.getInfo()
+        info.put("Title", title)
+        stamper.setMoreInfo(info)
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        XmpWriter xmp = new XmpWriter(baos, info)
+        xmp.close()
+        stamper.setXmpMetadata(baos.toByteArray())
+        stamper.close()
+        }
+
+//        File f1 = new File(path)
+        //f1.delete()
+//        if (f1.exists())
+//            println 'f1 exiss'
+//        f1.renameTo(new File('~' + path))
+
+//        tempFile.renameTo(new File('_' + path))
+
+    } // end of method
+	
+	
     // this is the method to use - mcs notation implementation
     static Date fromWeekDateAsDateTimeFullSyntax(String weekDate) {
 
