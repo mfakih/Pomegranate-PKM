@@ -195,9 +195,9 @@
             , south__spacing_closed: 0		// big resizer-bar when open (zero height)
 
             , east__spacing_open: 5		// no resizer-bar when open (zero height)
-            , east__spacing_closed: 15		// big resizer-bar when open (zero height)
+            , east__spacing_closed: 10		// big resizer-bar when open (zero height)
             , west__spacing_open: 5		// no resizer-bar when open (zero height)
-            , west__spacing_closed: 15		// big resizer-bar when open (zero height)
+            , west__spacing_closed: 10		// big resizer-bar when open (zero height)
 
 
         });

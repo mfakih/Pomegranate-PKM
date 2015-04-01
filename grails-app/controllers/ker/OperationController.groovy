@@ -27,6 +27,7 @@ import cmn.Setting
 import grails.converters.JSON
 import mcs.*
 import mcs.parameters.*
+import org.apache.pdfbox.PDFToImage
 import org.asciidoctor.Asciidoctor
 import security.User
 import security.UserRole
@@ -486,7 +487,7 @@ class OperationController {
         }
     */
 
-        def fileName = f.getName().split(/\./)[0]?.replaceAll('\.', '-') + '_' //+ new Date().format('yy') + 'y-' + getSupportService().toWeekDate(new Date())
+        def fileName = f.getName().split(/\./)[0]?.replaceAll(/\./, '-') + '_' //+ new Date().format('yy') + 'y-' + getSupportService().toWeekDate(new Date())
                              + '.' + f.getName().split(/\./)[1]
         // + ' _ ' + title
 
@@ -1064,5 +1065,32 @@ puts "Hello, World!"
         render(['ok'] as JSON)
     }
 
+    
+    
+    def generateCover(){
+
+        String pdfPath = params.path
+
+        //config option 2:convert page 1 in pdf to image
+        String [] args_2 = new String[7];
+        args_2[0] = "-startPage";
+        args_2[1] = "1"
+        args_2[2] = "-endPage";
+        args_2[3] = "1";
+        args_2[4] = "-outputPrefix"
+        args_2[5] = "/bdl/mcd/cvr/" + '/' + (params.type ? '/' + params.type : '') + '/' + params.id;
+        args_2[6] = pdfPath;
+
+               try {
+           // will output "my_image_2.jpg"
+           PDFToImage.main(args_2);
+                   def ant = new AntBuilder()
+                   ant.move(file: args_2[5] + '1.jpg', tofile: (args_2[5] + '.jpg'))
+
+            }
+        catch (Exception e) { 
+            e.printStackTrace()
+        }
+    }
 
 } // end of class

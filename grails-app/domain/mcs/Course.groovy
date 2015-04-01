@@ -69,6 +69,7 @@ class Course implements Comparable {  // entity id = 130
     //long getNumberOfTasks() { return tasks ? tasks.size() : 0 }
 
     static constraints = {
+        code(unique: true)
         department(nullable: false)
 //        c(unique: true)
         code(unique: true)

@@ -65,7 +65,8 @@ class Contact implements Comparable {  // entity id = 26
 
 
     static constraints = {
-        summary()
+        code(unique: true)
+
         summary(blank: false, nullable: false)
 
         notes()

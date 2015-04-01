@@ -100,34 +100,36 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
              </g:if>
 			 
 			 
-			 <g:if test="${entityCode == 'R' && record?.type?.code == 'ebk'}">
-	<td style="width: 65px;">		 
+			 <g:if test="${entityCode == 'R'}">
+
             <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
                     record?.type?.code + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + record.id + '.jpg')?.exists())}">
-
-                <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
+                <td style="width: 65px;">
+                                <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
                    target="_blank">
                     <img class="Photo" style="width: 60px; height:80px; display:inline"
                          src="${createLink(controller: 'book', action: 'viewImage', id: record.id, params: [date: new Date()])}"/>
                 </a>
+                </td>
             </g:if>
 
-        </td>
+
     </g:if>
 
     <g:if test="${entityCode == 'E'}">
 
-        <td>
             <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
                     record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists())}">
+                <td>
 
-                <a href="${createLink(controller: 'book', action: 'viewImage', id: record?.book?.id)}"
+                              <a href="${createLink(controller: 'book', action: 'viewImage', id: record?.book?.id)}"
                    target="_blank">
                     <img class="Photo" style="width: 30px; height:40px; display:inline"
                          src="${createLink(controller: 'book', action: 'viewImage', id: record?.book?.id, params: [date: new Date()])}"/>
                 </a>
+                </td>
             </g:if>
-        </td>
+
     </g:if>
 
 

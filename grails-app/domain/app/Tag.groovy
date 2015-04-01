@@ -39,7 +39,7 @@ class Tag implements Comparable {  // entity id = 12
     Date deletedOn
 
     static constraints = {
-        name(nullable: false, blank: false)
+        name(unique: true, nullable: false, blank: false)
 
         notes()
         dateCreated()

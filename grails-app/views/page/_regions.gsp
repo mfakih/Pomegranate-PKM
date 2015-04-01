@@ -147,7 +147,7 @@
                     <br/>
                     <br/>
                     <g:select name="chosenTags" from="${Tag.list()}" multiple="" size="80" style="min-width: 200px; min-height: 50px;"
-                              value="1" optionKey="id"  class="chosen chosen-rtl" id="chosenTags"
+                              value="" optionKey="id"  class="chosen chosen-rtl" id="chosenTags"
                               optionValue="name"
                               noSelection="${['null': '']}"/>
 

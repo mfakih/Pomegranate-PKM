@@ -47,7 +47,7 @@ class Department {  // entity id = 131
     //long getNumberOfTasks() { return tasks ? tasks.size() : 0 }
 
     static constraints = {
-        code()
+        code(unique: true)
         summary(nullable: false, blank: false)
         courses()
 

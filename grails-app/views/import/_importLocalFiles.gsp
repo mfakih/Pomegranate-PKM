@@ -3,11 +3,12 @@
 
 
 %{--<h3>Import smart files</h3>--}%
+<g:if test="${OperationController.getPath('remote.import.enabled')?.toLowerCase() == 'yes' ? true : false}">
        <g:render template="/import/uploadFiles"/>
+    <br/>
+    <br/>
+</g:if>
 
-
-<br/>
-<br/>
 
 
 
@@ -129,7 +130,7 @@
 </tr>
 
 
-
+<g:if test="${OperationController.getPath('bulk.import.enabled')?.toLowerCase() == 'yes' ? true : false}">
 %{--<thead>--}%
     %{--<th>Resources and excerpts</th>--}%
     %{--<th>Smart files</th>--}%
@@ -259,6 +260,6 @@
 </td>
   </tr>
 
-
+ </g:if>
 </table>
 

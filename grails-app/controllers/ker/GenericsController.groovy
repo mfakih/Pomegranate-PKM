@@ -993,7 +993,7 @@ ll
         csvContents = ''
         csvContents += "Tb,ID,Version,Priority,Created,Updated,Summary,Description,Notes,Course,Type,Status,Location,Start,End,Level,Reality,Indicator,Date,Value,Title,Published,Book\n"
 
-        for (C in ['G', 'T', 'P', 'W', 'N', 'J', 'E']) {
+        for (C in ['R', 'G', 'T', 'P', 'W', 'N', 'J', 'E']) {
 
             def c = grailsApplication.classLoader.loadClass(entityMapping[C])
             f = new File(path + '/' + C + '.txt')
@@ -1016,7 +1016,15 @@ ll
                 array.add('Date created:' + r.dateCreated?.format('dd.MM.yyyy')) //HH:mm:ss
                 array.add('Last updated:' + r.lastUpdated?.format('dd.MM.yyyy'))
 
-                array.add('Summary: ' + r.summary)
+
+
+                if ('GTJPWIN'.contains(C)) {
+                    array.add('Summary: ' + r.summary)
+                    csvArray.add(r.summary.toString())
+                } else
+                    csvArray.add(none)
+
+
                 array.add('Description: ' + r.description)
                 array.add('Notes: ' + r.notes)
 
@@ -1028,7 +1036,10 @@ ll
                 csvArray.add(r.dateCreated?.format('dd.MM.yyyy HH:mm:ss'))
                 csvArray.add(r.lastUpdated?.format('dd.MM.yyyy HH:mm:ss'))
 
+                if ('GTJPWIN'.contains(C))
                 csvArray.add(StringUtils.abbreviate(r.summary, 120)) //r.summary?.replaceAll('\n',' -- ')
+
+
                 csvArray.add(StringUtils.abbreviate(r.description, 120))
                 csvArray.add(StringUtils.abbreviate(r.notes, 120))
 

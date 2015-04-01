@@ -42,8 +42,8 @@ body {
     font: 11px arial;
 
     /*todo*/
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 
 
 
@@ -1496,7 +1496,7 @@ h3, h4 {
     /*background: #D8D4C9;*/
     border-bottom: 1px solid #BBB;
     border-width: 0 0 1px;
-    padding: 3px 10px;
+    padding: 5px 5px;
     margin: 0;
 }
 

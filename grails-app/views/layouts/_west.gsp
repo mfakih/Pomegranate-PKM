@@ -304,12 +304,12 @@
             <br/>
 
                 <g:remoteLink controller="generics" action="updateTagCount" update="notificationArea">
-                    Update tag count (todo quartz)
+                    Update tag count
                 </g:remoteLink>
             <br/>
 
                 <g:remoteLink controller="generics" action="dotTextDump" update="notificationArea">
-                    Export records to plain text files (in todo)
+                    Export records to plain text files
                 </g:remoteLink>
 
                 <br/>

@@ -42,8 +42,8 @@ class ResourceType implements Comparable {  // entity id = 29
     Date deletedOn
 
     static constraints = {
-        code(nullable: false, blank: false)
-        name(nullable: false, blank: false)
+        code(unique: true, nullable: false, blank: false)
+        name(unique: true, nullable: false, blank: false)
 
         notes()
         dateCreated()

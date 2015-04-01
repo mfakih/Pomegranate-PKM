@@ -80,7 +80,7 @@ a {
     position: relative;
 }
 #products > ul > li:hover > a {
-    background: url("../Images/product/resource/link-hover.png") repeat-x right 50% transparent;
+    background: url("../images/link-hover.png") repeat-x right 50% transparent;
     color: #494949;
     border-color: #dcdcdd;
     height: 34px;
@@ -133,7 +133,7 @@ a {
     width: auto;
     padding: 0 16px 0 0;
     color: #70ac2a;
-    background: url(../Images/product/resource/cat_all_icon.png) no-repeat right 7px;
+    background: url(../images/cat_all_icon.png) no-repeat right 7px;
 }
 .product-sub-category a:hover {
     color: #75890c;

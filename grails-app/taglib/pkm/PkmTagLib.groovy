@@ -156,6 +156,13 @@ class PkmTagLib {
 ${prettySizeMethod(i.size())}
 </span>
             </a>
+	    
+	    <a href="${createLink(controller: 'operation', action: 'generateCover', id: recordId, params: [path: i, module: module, type: type])}"
+                          target="_blank"
+                          title="${i.path}">
+  cvr
+</span>
+            </a>
 </li>"""
         }
         output += "</ul>"

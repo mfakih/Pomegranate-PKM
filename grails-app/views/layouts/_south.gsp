@@ -8,7 +8,7 @@
                       before="jQuery.address.value(jQuery(this).attr('href'));"
                       title="Data entry activities">
 
-            Where is my data?
+            My data
         </g:remoteLink>
 
 

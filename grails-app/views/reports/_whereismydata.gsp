@@ -17,6 +17,13 @@
         <td colspan="4">${org.codehaus.groovy.grails.commons.ConfigurationHolder.config.dataSource.url}</td>
 
     </tr>
+   <tr>
+        <td style="padding: 3px;">
+            dbt</td>
+        <td colspan="4">${OperationController.getPath('export.recordsToText.path')}</td>
+
+
+    </tr>
 
     <g:each in="${[[code: 'G', name: 'Goals'],
     [code: 'T', name: 'Tasks'],
