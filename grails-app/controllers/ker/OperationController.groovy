@@ -1078,7 +1078,7 @@ puts "Hello, World!"
         args_2[2] = "-endPage";
         args_2[3] = "1";
         args_2[4] = "-outputPrefix"
-        args_2[5] = "/bdl/mcd/cvr/" + '/' + (params.type ? '/' + params.type : '') + '/' + params.id;
+        args_2[5] = OperationController.getPath('covers.sandbox.path') + '/' + (params.type ? '/' + params.type : '') + '/' + params.id;
         args_2[6] = pdfPath;
 
                try {

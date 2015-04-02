@@ -161,11 +161,11 @@ ${prettySizeMethod(i.size())}
 	    	<span class="testhide">
 
 
-		<a href="${createLink(controller: 'operation', action: 'generateCover', id: recordId, params: [path: i, module: module, type: type])}"
-                          target="_blank"
+		<a href="#" onclick="jQuery('#logArea').load('${createLink(controller: 'operation', action: 'generateCover', id: recordId, params: [path: i, module: module, type: type])}')"
+
                           title="${i.path}">
   cvr
-</span>
+
             </a>
 
 			
