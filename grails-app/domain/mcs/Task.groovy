@@ -74,7 +74,7 @@ class Task implements Comparable {  // entity id = 127
 
     String notes
 
-    Date startDate = new Date()
+    Date startDate// = new Date()
     Date actualStartDate
 
     String startTime
