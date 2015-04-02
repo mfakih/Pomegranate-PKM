@@ -64,18 +64,6 @@
 
 
 
-<g:if test="${record.class.declaredFields.name.contains('writtenOn') && record.writtenOn}">
-
-    <span style="font-size: 11px; font-weight: bold; float: right; padding-right: 4px;"
-          title="${record.writtenOn?.format(OperationController.getPath('datetime.format'))}">
-    <g:if test="${record.class.declaredFields.name.contains('approximateDate') && record.approximateDate}">
-        ~
-    </g:if>
-
-     ${record.writtenOn?.format(OperationController.getPath('date.format'))}
-    </span>
-    </g:if>
-
 %{--<g:if test="${record.class.declaredFields.name.contains('course')}">--}%
 
     %{--<g:set value="course" var="field"></g:set>--}%
@@ -100,19 +88,6 @@
               before="jQuery('#accordionEast').accordion({ active: 0});"
               title="Go to page">
 
-<g:if test="${record.class.declaredFields.name.contains('priority')}">
-    <span style="font-size: 10px; color: gray">
-        <g:if test="${record.priority == 3}">
-            &gt;
-        </g:if>
-        <g:elseif test="${record.priority == 4}">
-            <b>&gt;&gt;</b>
-        </g:elseif>
-        <g:elseif test="${record.priority == 1}">
-            <b>&darr;</b>
-        </g:elseif>
-    </span>
-</g:if>
 
 
 
@@ -128,13 +103,27 @@
 
 
 
+<g:if test="${record.class.declaredFields.name.contains('publishedOn') && record.publishedOn && record?.type?.code == 'nws'}">
+    <span title="${record.publishedOn?.format(OperationController.getPath('datetime.format'))}" style="font-size: 11px; text-weight: bold;">
+        ${record.publishedOn?.format(OperationController.getPath('date.format'))}
+    </span>
+</g:if>
+
+
+
 <g:if test="${record.class.declaredFields.name.contains('startDate') && record.startDate}">
-    <span title="${record.startDate?.format(OperationController.getPath('datetime.format'))}">
+    <span title="${record.startDate?.format(OperationController.getPath('datetime.format'))}" style="font-size: 11px; text-weight: bold;">
         ${record.startDate?.format(OperationController.getPath('date.format'))}
     </span>
 </g:if>
 
-<g:if test="${record.class.declaredFields.name.contains('endDate') && record.endDate}">
+<g:if test="${record.class.declaredFields.name.contains('startDate') && record.startDate}">
+    <span title="${record.startDate?.format(OperationController.getPath('datetime.format'))}" style="font-size: 11px; text-weight: bold;">
+        ${record.startDate?.format(OperationController.getPath('date.format'))}
+    </span>
+</g:if>
+
+<g:if test="${record.class.declaredFields.name.contains('endDate') && record.endDate}"  style="font-size: 11px; text-weight: bold;">
     <span title="${record.endDate?.format(OperationController.getPath('datetime.format'))}">
         >${record.endDate?.format(OperationController.getPath('date.format'))}
     </span>
@@ -143,7 +132,7 @@
 
 
 <g:if test="${record.class.declaredFields.name.contains('completedOn') && record.completedOn}">
-    <span title="${record.completedOn?.format(OperationController.getPath('datetime.format'))}">
+    <span title="${record.completedOn?.format(OperationController.getPath('datetime.format'))}"  style="font-size: 10px; font-style: italic;">
         .${record.completedOn?.format(OperationController.getPath('date.format'))}
     </span>
 </g:if>
@@ -159,8 +148,9 @@
     <g:remoteLink controller="generics" action="showSummary" id="${record.book?.id}"
                   params="[entityCode: 'R']"
                   update="below${entityCode}Record${record.id}"
+        style="font-style: italic; font-size: 11px;"
                   title="Show book">
-        ${record.book?.id}b
+        ${record.book?.id}r
         <i>${record.book?.title}</i>
     </g:remoteLink>
     <br/>
@@ -171,7 +161,7 @@
 
     <g:remoteLink controller="generics" action="showSummary" id="${record.course?.id}"
                   params="[entityCode: 'C']"
-        style="font-size: small; padding: 2px; color: #003366"
+        style="font-size: 9px; text-style: italic; padding: 2px; color: #003366"
                   update="below${entityCode}Record${record.id}"
                   title="Show course">
         <b>${record.course?.code ?: record.course?.numberCode}</b>
@@ -203,6 +193,24 @@
 </g:if>
 
 
+
+
+<g:if test="${record.class.declaredFields.name.contains('priority')}">
+    <span style="font-size: 10px; color: gray">
+        <g:if test="${record.priority == 3}">
+            &gt;
+        </g:if>
+        <g:elseif test="${record.priority == 4}">
+            <b>&gt;&gt;</b>
+        </g:elseif>
+        <g:elseif test="${record.priority == 1}">
+            <b>&darr;</b>
+        </g:elseif>
+    </span>
+</g:if>
+
+
+
 <g:if test="${record.class.declaredFields.name.contains('summary')}">
 
 <g:remoteLink  controller="page" action="panel"
@@ -226,7 +234,25 @@
     </span>
     </g:remoteLink>
 
+
+
+
 </g:if>
+
+
+
+<g:if test="${record.class.declaredFields.name.contains('writtenOn') && record.writtenOn}">
+
+    <span style="font-size: 11px; font-weight: bold; float: right; padding-right: 4px;"
+          title="${record.writtenOn?.format(OperationController.getPath('datetime.format'))}">
+        <g:if test="${record.class.declaredFields.name.contains('approximateDate') && record.approximateDate}">
+            ~
+        </g:if>
+
+        ${record.writtenOn?.format(OperationController.getPath('date.format'))}
+    </span>
+</g:if>
+
 
 <g:if test="${record.class.declaredFields.name.contains('1111')}">
     <span title="${record.code}">
@@ -278,7 +304,7 @@
 <g:if test="${'N'.contains(entityCode)}">
     <g:if test="${record.fileName}">
         <a href="${createLink(controller: 'operation', action: 'downloadNoteFile', id: record.id)}" target="_blank">
-            <span style="font-size: 12px;">
+            <span style="font-size: 10px; font-style: italic; text-decoration: underline">
                 ${record.fileName}
             </span>
         </a>
@@ -364,12 +390,19 @@
 
 %{--</bdi>--}%
     <g:if test="${!record.title && record.legacyTitle}">
-        _ ${record.legacyTitle}
+        _ <i>${record.legacyTitle}</i>
     </g:if>
 
     <g:if test="${record.url}">
 
         <a style="font-size: smaller" href="${record.url}" target="_blank"><pkm:summarize text="${record.url}" length="30"/></a>
+    </g:if>
+
+
+    <g:if test="${record.class.declaredFields.name.contains('publicationDate') && record.publicationDate}">
+        <span style="font-size: 11px; text-weight: bold;">
+            &nbsp;    ${record.publicationDate}
+        </span>
     </g:if>
     
     </g:remoteLink>

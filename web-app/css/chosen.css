@@ -296,8 +296,8 @@
 
 .chzn-container .chzn-results li {
     display: none;
-    line-height: 15px;
-    padding: 5px 6px;
+    line-height: 20px;
+    padding: 3px 3px;
     margin: 0;
     list-style: none;
 }

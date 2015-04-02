@@ -900,6 +900,14 @@ ll
        record.endDate = new Date()
         render(template: '/gTemplates/recordSummary', model: [record: record])
     }
+    def setArabic() {
+        def entityCode = params.entityCode//.substring(0, 1)
+        def id = params.id.toLong()
+        def record = grailsApplication.classLoader.loadClass(entityMapping[entityCode]).get(id)
+
+       record.language = 'ar'
+        render(template: '/gTemplates/recordSummary', model: [record: record])
+    }
   def increasePercentCompleted() {
         def entityCode = params.id.substring(0, 1)
         def id = params.id.substring(1).toLong()
@@ -3037,7 +3045,7 @@ def addContactToRecord() {
                         if ('Q'.contains(entityCode))
                             dateField = 'date'
 	   if ('R'.contains(entityCode))
-                            dateField = 'publicationDate'
+                            dateField = 'publishedOn'
        if ('N'.contains(entityCode))
                             dateField = 'writtenOn'
 

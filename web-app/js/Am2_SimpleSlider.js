@@ -16,7 +16,7 @@
 
         //on image click   
         $(this).click(function () {
-            $('.product-gallery-popup').fadeIn(500);
+            $('.product-gallery-popup').fadeIn(0);
             $('body').css({ 'overflow': 'hidden' });
             $('.product-popup-content .product-image img').attr('src', $(this).find('img').attr('src'));
             $('.product-popup-content .product-information p').text($(this).find('div').attr('data-desc'));
@@ -58,7 +58,7 @@
         });
         //Close Popup
         $('.cross,.popup-overlay').click(function () {
-            $('.product-gallery-popup').fadeOut(500);
+            $('.product-gallery-popup').fadeOut(0);
             $('body').css({ 'overflow': 'initial' });
         });
 
@@ -66,7 +66,7 @@
         $(document).on('keyup', function (e) {
             e.preventDefault();
             //Close popup on esc
-            if (e.keyCode === 27) { $('.product-gallery-popup').fadeOut(500); $('body').css({ 'overflow': 'initial' }); }
+            if (e.keyCode === 27) { $('.product-gallery-popup').fadeOut(0); $('body').css({ 'overflow': 'initial' }); }
             //Next Img On Right Arrow Click
             if (e.keyCode === 39) { NextProduct(); }
             //Prev Img on Left Arrow Click

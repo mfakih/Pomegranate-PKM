@@ -352,26 +352,26 @@
 
     <g:if test="${fields.contains('completedOn')}">
         <td>
-            <pkm:datePicker name="completedOn" placeholder="Completed on" value="${record?.completedOn}"/>
+            Comp. on<pkm:datePicker name="completedOn" placeholder="Completed on" value="${record?.completedOn}"/>
         </td>
     </g:if>
     
     <g:if test="${fields.contains('endDate')}">
         <td>
-            <pkm:datePicker name="endDate" placeholder="End date" id="asdfasdf" value="${record?.endDate}"/>
+            End on<pkm:datePicker name="endDate" placeholder="End date" id="asdfasdf" value="${record?.endDate}"/>
             <g:textField name="endTime" style="width:60px;" placeholder="Time"
                          value="${record?.endDate ? record?.endDate?.format('HH.mm') : '00.00'}"/>
         </td>
     </g:if>
     <g:if test="${fields.contains('actualEndDate')}">
         <td>
-            <pkm:datePicker name="actualEndDate" placeholder="Actual end date" id="234rsdfsdf" value="${record?.actualEndDate}"/>
+            Actual end date<pkm:datePicker name="actualEndDate" placeholder="Actual end date" id="234rsdfsdf" value="${record?.actualEndDate}"/>
         </td>
     </g:if>
     
      <g:if test="${fields.contains('publicationDate')}">
         <td>
-            <g:textField name="publicationDate" placeholder="Publication date" value="${record?.publicationDate}"/>
+            Publication date<g:textField name="publicationDate" placeholder="Publication date" value="${record?.publicationDate}"/>
         </td>
     </g:if>
     
@@ -439,7 +439,7 @@
     <g:if test="${fields.contains('metaType')}">
         <td>
 
-            <g:textField id="metaType" name="metaType" placeholder="metaType" style="width: 50px;" value="${record?.metaType}"/>
+            <g:textField id="metaType" name="metaType" placeholder="metaType" style="width: 150px;" value="${record?.metaType}"/>
         </td>
     </g:if>
 
@@ -468,13 +468,13 @@
 
         <g:if test="${fields.contains('entity')}">
             <td>
-            <g:textField id="entity" name="entity" placeholder="Entity" style="width: 50px;" value="${record?.entity}"/>
+            <g:textField id="entity" name="entity" placeholder="Entity" style="width: 150px;" value="${record?.entity}"/>
             </td>
         </g:if>
 
         <g:if test="${fields.contains('module')}">
             <td>
-            <g:textField id="module" name="module" placeholder="Module" style="width: 50px;" value="${record?.module}"/>
+            <g:textField id="module" name="module" placeholder="Module" style="width: 150px;" value="${record?.module}"/>
             </td>
         </g:if>
 
@@ -559,7 +559,7 @@
 
         <g:if test="${fields.contains('pages')}">
            <td>
-            <g:textField placeholder="Pages" id="pages" name="pages" style="width: 50px" class="ui-corner-all"
+            <g:textField placeholder="Pages" id="pages" name="pages" style="width: 150px" class="ui-corner-all"
                          value="${record?.pages}"/>
            </td>
         </g:if>
@@ -579,7 +579,16 @@
         <g:if test="${fields.contains('chapters')}">
        <td>
             <g:textField name="chapters" placeholder="Chap." value="${fieldValue(bean: record, field: 'chapters')}"/>
-            </td> </g:if>
+            </td>
+
+        </g:if>
+
+        <g:if test="${fields.contains('publisher')}">
+       <td>
+            <g:textField name="publisher" placeholder="Publisher" style="200px;" value="${fieldValue(bean: record, field: 'publisher')}"/>
+            </td>
+
+        </g:if>
 
 
 
@@ -590,7 +599,8 @@
 
 
         <g:if test="${fields.contains('startDate')}">
-            <td>        <pkm:datePicker placeholder="Start date" name="startDate" value="${record?.startDate}"/>
+            <td>
+                sd.<pkm:datePicker placeholder="Start date" name="startDate" value="${record?.startDate}"/>
             <g:textField name="startTime" style="width:60px;" placeholder="Time"
                          value="${record?.startDate ? record?.startDate?.format('HH.mm') : '00.00'}"/>
             </td>
@@ -598,8 +608,15 @@
 
         <g:if test="${fields.contains('writtenOn')}">
             <td>
-                <pkm:datePicker placeholder="Written on" name="writtenOn" value="${record?.writtenOn}"/>
+              w.on  <pkm:datePicker placeholder="Written on" name="writtenOn" value="${record?.writtenOn}"/>
                 <g:checkBox name="approximateDate" id="approximateDate" value="${record?.approximateDate}"/> ~ ?
+            </td>
+        </g:if>
+
+   <g:if test="${fields.contains('publishedOn')}">
+            <td>
+                pub. on<pkm:datePicker placeholder="Pub. on" name="publishedOn" value="${record?.publishedOn}"/>
+
             </td>
         </g:if>
 
@@ -607,7 +624,7 @@
 
         <g:if test="${fields.contains('date')}">
          <td>
-            <pkm:datePicker name="date" style="width: 70px;-moz-border-radius: 4px;" extraParams=""
+           date <pkm:datePicker name="date" style="width: 70px;-moz-border-radius: 4px;" extraParams=""
                              placeholder="Date"
                              value="${record?.date ?: (session['lastDate'] ?: new Date())}"/>
          </td>
@@ -621,7 +638,7 @@
 
         <g:if test="${fields.contains('amount')}">
         <td>
-            <g:textField id="amount" name="amount" placeholder="Amount" style="width: 90px;" class="ui-corner-all"
+            Amount <g:textField id="amount" name="amount" placeholder="Amount" style="width: 90px;" class="ui-corner-all"
                          value="${record?.amount}"/>
         </td>
         </g:if>

@@ -103,7 +103,7 @@ class Book implements Comparable {  // entity id = 134
     String imageUrl
     String publicationDate
 
-    Date publishedOn = new Date()
+    Date publishedOn
 
 
     Boolean bookmarked = false

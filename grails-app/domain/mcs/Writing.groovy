@@ -49,12 +49,17 @@ class Writing implements Comparable {  // entity id = 144
     String descriptionHTML
     String slug
 
+
+    String language
+
     Markup markup
 
     String source
     Department department
     Course course
     Book book
+
+
 
     WritingStatus writingStatus
 

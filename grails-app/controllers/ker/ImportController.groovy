@@ -133,7 +133,7 @@ class ImportController {
                     } else {
                         def ant = new AntBuilder()
 //                        if (entityCode.toUpperCase() == 'N') {
-                        def sandboxPath = OperationController.getPath('module.' + entityCode.toUpperCase() + '.sandbox.path')
+                        def sandboxPath = OperationController.getPath('module.sandbox.' + entityCode.toUpperCase() + '.path')
                         ant.move(file: path + '/' + it.name, tofile: sandboxPath + '/' + b.id + entityCode + '.' + ext)
                     }
 //                    println b.dump()
@@ -846,8 +846,8 @@ class ImportController {
         try {
             def a = new IndexCard([recordId: params.recordId, entityCode: params.entityCode, fileName: params.qqfile])
             a.type = WritingType.findByCode('doc')
-            a.summary = 'Doc'//params.qqfile//'File'
-            a.description = '?'
+            a.summary = params.qqfile//'File'
+            a.description = ''
             a.save(flush: true)
             new File(OperationController.getPath('module.sandbox.N.path') + '/' + a.id) << request.inputStream
 

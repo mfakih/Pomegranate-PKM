@@ -91,8 +91,8 @@ h2 {
     font-size: 14px;
     color: #144a6c;
     font-weight: bold;
-    line-height: 25px;
-    margin: 8px;
+    line-height: 15px;
+    margin: 5px;
 }
 
 h3 {
@@ -101,7 +101,7 @@ h3 {
     color: #799edd;
     font-weight: bold;
     line-height: 15px;
-    margin: 8px;
+    margin: 5px;
 }
 
 
@@ -897,7 +897,7 @@ ul.ui-tabs-nav {
 
 .fixed-layout {
     table-layout: auto;
-    width: 99%;
+    width: 100%;
     border-spacing: 0;
 }
 

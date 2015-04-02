@@ -280,13 +280,14 @@ a {
 .product-information,
 .product-image {
     float: left;
+    background: lightgray;
 }
 .product-information {
-    width: 28%;
+    width: 0%;
     margin: 4% 1%;
 }
 .product-image {
-    width: 70%;
+    width: 100%;
     height: 580px;
     overflow: hidden;
     position: relative;

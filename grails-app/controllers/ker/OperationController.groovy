@@ -979,6 +979,12 @@ puts "Hello, World!"
                         text: it.code]
             }
         }
+      else if ('R'.contains(entity) && field == 'status') {
+            ResourceStatus.findAll([sort: 'code']).each() {
+                responce += [value: it.id,
+                        text: it.code]
+            }
+        }
         else if('GTP'.contains(entity) && field == 'status') {
             WorkStatus.findAll([sort: 'code']).each() {
                 responce += [value: it.id,
@@ -1054,6 +1060,11 @@ puts "Hello, World!"
 
         else if ('GTP'.contains(entity) && field == 'status')
             record[field] = WorkStatus.get(newValue)
+   else if ('R'.contains(entity) && field == 'status'){
+            record[field] = ResourceStatus.get(newValue)
+     
+        }
+
 
         else if (field == 'plannedDuration')
             record[field] = newValue.toInteger()
@@ -1070,6 +1081,9 @@ puts "Hello, World!"
     def generateCover(){
 
         String pdfPath = params.path
+
+        if (params.module == 'E')
+            params.type = 'exr'
 
         //config option 2:convert page 1 in pdf to image
         String [] args_2 = new String[7];

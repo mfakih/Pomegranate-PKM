@@ -67,6 +67,5 @@
 
 
 <script type="text/javascript">
-
- //   jQuery('#commandBars').addClass('navHidden')
+   jQuery('#commandBars').addClass('navHidden')
 </script>

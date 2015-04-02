@@ -50,7 +50,9 @@
               <b style="color: white;">  ${entityCode}</b>
         </span>
         %{--<sup>${record.id}</sup>--}%
-
+        <div style="color: #001b1b; font-weight: bold; font-size: 10px; margin-top: 4px;">
+            ${record.class.declaredFields.name.contains('type') ? record?.type?.code : ''}
+        </div>
     </g:remoteLink>
     %{--<sup style="color: #6E6E6E; font-size: 10px; padding-top: 3px;">${record.id}</sup>--}%
 
@@ -94,12 +96,24 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 
             <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
                     record?.type?.code + '/' + record.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.type?.code + '/' + record.id + '.jpg')?.exists())}">
-                <td style="width: 65px;">
-                                <a href="${createLink(controller: 'book', action: 'viewImage', id: record.id)}"
-                   target="_blank">
-                    <img class="Photo" style="width: 60px; height:80px; display:inline"
-                         src="${createLink(controller: 'book', action: 'viewImage', id: record.id, params: [date: new Date()])}"/>
-                </a>
+                <td style="width: 55px;">
+
+
+                    <ul class="product-gallery">
+
+                        <li class="gallery-img" id="recordImageCover${record.id}">
+                            <img  class="Photo" style="width: 50; height: 70; display:inline"
+                                  src="${createLink(controller: 'book', action: 'viewImage', id: record.id, params: [date: new Date()])}"/>
+
+
+                        </li>
+                    </ul>
+                    <script type="text/javascript">
+                        jQuery('#recordImageCover${record.id}').Am2_SimpleSlider();
+                    </script>
+
+
+
                 </td>
             </g:if>
 
@@ -108,15 +122,24 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 
     <g:if test="${entityCode == 'E'}">
 
-            <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/' +
-                    record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/' + record?.book?.type?.code + '/' + record?.book?.id + '.jpg')?.exists())}">
+            <g:if test="${(new File(OperationController.getPath('covers.sandbox.path') + '/exr/' +
+                     record?.id + '.jpg')?.exists() || new File(OperationController.getPath('covers.repository.path') + '/exr/' + record?.id + '.jpg')?.exists())}">
                 <td>
 
-                              <a href="${createLink(controller: 'book', action: 'viewImage', id: record?.book?.id)}"
-                   target="_blank">
-                    <img class="Photo" style="width: 30px; height:40px; display:inline"
-                         src="${createLink(controller: 'book', action: 'viewImage', id: record?.book?.id, params: [date: new Date()])}"/>
-                </a>
+
+                    <ul class="product-gallery">
+
+                        <li class="gallery-img" id="recordImageCover${record.id}">
+                            <img  class="Photo" style="width: 50; height: 70; display:inline"
+                                  src="${createLink(controller: 'book', action: 'viewExcerptImage', id: record.id, params: [date: new Date()])}"/>
+
+
+                        </li>
+                    </ul>
+                    <script type="text/javascript">
+                        jQuery('#recordImageCover${record.id}').Am2_SimpleSlider();
+                    </script>
+
                 </td>
             </g:if>
 
@@ -124,8 +147,8 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 
 
 
-    <td class="record-summary ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
-    style="font-family: Arial; font-size: 13px; color: #105CB6;  ">
+    <td class="record-summary text${record.class.declaredFields.name.contains('language') ? record.language : ''} ${record.class.declaredFields.name.contains('status') && record.status ? 'status-' + record?.status?.code: ''}"
+    style="font-family: Arial; font-size: 13px; color: #105CB6; padding-right: 10px; padding-left: 10px; padding-bottom: 4px; padding-top: 4px;">
 
 
 %{--<g:remoteLink controller="generics" action="showDetails"--}%
@@ -145,11 +168,11 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
     </td>
 
 
-<td class="actionTd">
-
 
 
     <g:if test="${record.class.declaredFields.name.contains('status') && record.status}">
+        <td class="actionTd">
+
         <g:set value="status" var="field"></g:set>
 
         <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
@@ -160,27 +183,30 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
             ${record[field] ? record[field]?.code : ''}
         </a>
         <script>
-            %{--$('#${field}${record.id}').editable();--}%
+            $('#${field}${record.id}').editable();
         </script>
+
+        </td>
+
     </g:if>
 
 
 
-    <g:if test="${record.class.declaredFields.name.contains('type') && entityCode.length() == 1}">
-        <g:set value="type" var="field"></g:set>
-        <span style="min-width: 60px;">
-            <a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"
-               style="${record.type ? record.type?.style : ''};font-size: 11px; font-weight: bold;margin-left: 5px;"
-               data-name="${field}-${entityCode}"
-               data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"
-               data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">
-                <br/>  ${record[field]?.code ?: ''}
-            </a>
-        </span>
-        <script>
+    %{--<g:if test="${record.class.declaredFields.name.contains('type') && entityCode.length() == 1}">--}%
+        %{--<g:set value="type" var="field"></g:set>--}%
+        %{--<span style="min-width: 60px;">--}%
+            %{--<a href="#" id="${field}${record.id}" class="${field}" data-type="select" data-value="${record[field]?.id}"--}%
+               %{--style="${record.type ? record.type?.style : ''};font-size: 11px; font-weight: bold;margin-left: 5px;"--}%
+               %{--data-name="${field}-${entityCode}"--}%
+               %{--data-source="/pkm/operation/getQuickEditValues?entity=${entityCode}&field=${field}&date=${new Date().format('hhmmssDDMMyyyy')}"--}%
+               %{--data-pk="${record.id}" data-url="/pkm/operation/quickSave2" data-title="Edit ${field}">--}%
+                %{--<br/>  ${record[field]?.code ?: ''}--}%
+            %{--</a>--}%
+        %{--</span>--}%
+        %{--<script>--}%
             %{--$('#${field}${record.id}').editable();--}%
-        </script>
-    </g:if>
+        %{--</script>--}%
+    %{--</g:if>--}%
 
 
 
@@ -201,11 +227,10 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 
 %{--</g:remoteLink>--}%
 
-</td>
+
 
 
 <td class="actionTd showhim"
- onmouseover="jQuery('.temp44').addClass('actionsButtons'); jQuery('#actionsButtons${record.id}').removeClass('actionsButtons')"
  style="${justUpdated ? 'background: YellowGreen !important' : ''}"
     >
     <g:remoteLink controller="generics" action="getAddForm" id="${record.id}"
@@ -240,7 +265,7 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
     </td>
 
 
-    <td class="actionTd">
+    <td class="actionTd" onmouseover="jQuery('.temp44').addClass('actionsButtons'); jQuery('#actionsButtons${record.id}').removeClass('actionsButtons')">
 
         <g:if test="${record.class.declaredFields.name.contains('bookmarked')}">
             <g:if test="${!record.bookmarked}">
@@ -267,7 +292,7 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
     </td>
 
 
-    <td  style="width: 8px; margin-top: 4px; padding: 0; ">
+    <td  style="width: 8px; margin-top: 4px; padding: 4px; ; " onmouseover="jQuery('.temp44').addClass('actionsButtons'); jQuery('#actionsButtons${record.id}').removeClass('actionsButtons')">
         <div class="idCell" style="font-size: 10px; -moz-transform:rotate(-90deg); -moz-transform-origin: middle right; -webkit-transform: rotate(-90deg); -webkit-transform-origin: middle right; -o-transform: rotate(-90deg); -o-transform-origin:  middle right; ;">
 
 
@@ -289,11 +314,11 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 </tr>
 
  <tr>
-     <td class="actionTd " colspan="8" style="background: white">
+     <td class="actionTd " colspan="10" style="">
 
 
 
-         <div id="actionsButtons${record.id}" class="temp44 actionsButtons actionsButtonsStyle" style="background: none; font-size: 9px !important;">
+         <div id="actionsButtons${record.id}" class="temp44 actionsButtons actionsButtonsStyle" style="background: white; font-size: 9px !important;">
 
              <g:if test="${record.class.declaredFields.name.contains('writing') && entityCode == 'N'}">
                  <g:set value="writing" var="field"></g:set>
@@ -441,6 +466,16 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
                  </g:remoteLink>
          </g:if>
 
+  <g:if test="${'RWN'.contains(entityCode)}">
+
+                 <g:remoteLink controller="generics" action="setArabic" id="${record.id}"
+                               params="[entityCode: entityCode]"
+                               update="${entityCode}Record${record.id}"
+                               title="Mark arabic">
+                     Ar!   &nbsp;&nbsp;
+                 </g:remoteLink>
+         </g:if>
+
 
          </div>
      %{--<span id="priorityRegion${entityCode}${record.id}">${record.priority}</span>--}%
@@ -453,7 +488,7 @@ jQuery('#recordImage${record.id}').Am2_SimpleSlider();
 
 <g:if test="${'CTGR'.contains(entityCode) && record.percentCompleted}">
 <tr>
-<td colspan="8" style="padding: 0px; margin: 0px;">
+<td colspan="10" style="padding: 0px; margin: 0px;">
 <pkm:progressBar percent="${record.percentCompleted}"/>
 </td>
 </tr>

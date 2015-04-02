@@ -533,6 +533,23 @@ class BookController { // entity id = 134
 
     }
 
+    def viewExcerptImage() {
+
+        def f
+//        if (bookInstance.status == ResourceStatus.get(1))
+//        f = new File(OperationController.getPath('covers.sandbox.path') + '/' + params.id + '.jpg')
+        if(new File(OperationController.getPath('covers.sandbox.path')  + '/exr/'  + params.id + '.jpg')?.exists())
+            f = new File(OperationController.getPath('covers.sandbox.path') + '/exr/'  +  params.id + '.jpg')
+        else if(new File(OperationController.getPath('covers.repository.path') + '/exr/'  +  params.id + '.jpg')?.exists())
+        f = new File(OperationController.getPath('covers.repository.path') + '/exr/'  +  params.id + '.jpg')
+
+        if (f?.exists()) {
+            byte[] image = f.readBytes()
+            response.outputStream << image
+        }
+
+    }
+
 //    public static void addImage(Long id) {
 //        def b = Book.get(id)
 //        if (b.imageUrl) {
