@@ -25,13 +25,13 @@
       </g:if>
 
 &nbsp;
-
+<sec:ifAnyGranted roles="ROLE_ADMIN">
     <% Calendar c = new GregorianCalendar(); c.setLenient(false); c.setMinimalDaysInFirstWeek(4);
     c.setFirstDayOfWeek(java.util.Calendar.MONDAY)
     %>
     <b>Week ${c.get(Calendar.WEEK_OF_YEAR)}</b>
 &nbsp;
-
+  </sec:ifAnyGranted>
 
 &nbsp;
 &nbsp;

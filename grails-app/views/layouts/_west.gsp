@@ -200,12 +200,12 @@
 
     </g:if>
 
+<sec:ifAnyGranted roles="ROLE_ADMIN">
 
- <h4><a href="#">Administration</a></h4>
+<h4><a href="#">Administration</a></h4>
     <div>
 
 
-        <sec:ifAnyGranted roles="ROLE_ADMIN">
             <h3 class="">
 
                 <a>Parameters</a>
@@ -317,10 +317,10 @@
             <g:render template="/layouts/savedSearches" model="[entity: 'A']"/>
             </div>
 
-        </sec:ifAnyGranted>
 
 
     </div>
+</sec:ifAnyGranted>
 
 </div>
 

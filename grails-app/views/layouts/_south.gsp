@@ -2,6 +2,7 @@
 
 <ul id="rssList">
 
+<sec:ifAnyGranted roles="ROLE_ADMIN">
     <li>
         <g:remoteLink controller="report" action="whereIsMyData"
                       update="centralArea"
@@ -65,6 +66,8 @@
 
     </li>
 
+
+    </sec:ifAnyGranted>
     <li>
 
         <g:remoteLink controller="generics" action="showSelectedRecords"
@@ -103,7 +106,7 @@ Selected
 
     </li>
 
-
+<sec:ifAnyGranted roles="ROLE_ADMIN">
       <li>
 
 
@@ -124,15 +127,12 @@ Selected
 
 
 
-    <sec:ifLoggedIn>
-    <sec:ifAnyGranted roles="ROLE_ADMIN">
         <li>
             <a href="${createLink(controller: 'console')}" target="_blank">
                 Console
             </a>
         </li>
     </sec:ifAnyGranted>
-    </sec:ifLoggedIn>
 
 
     %{--<li><pkm:checkFolder folder="wrt" name='wrt.path' path="${OperationController.getPath('privateMode')}"/></li>--}%
@@ -177,6 +177,7 @@ Selected
 
         %{--</g:if>--}%
 
+<sec:ifAnyGranted roles="ROLE_ADMIN">
 
     <li>
 
@@ -196,8 +197,9 @@ Selected
             Show full card
         </g:remoteLink>
 
-
     </li>
+
+    </sec:ifAnyGranted>
 
     <li>
 

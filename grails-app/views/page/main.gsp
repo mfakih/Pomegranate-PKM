@@ -68,6 +68,7 @@
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.relatedselects.min.js')}"></script>
 
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.tablednd_0_5.js')}"></script>
 
 %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'select2.css')}"/>--}%
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'select2.min.js')}"></script>--}%

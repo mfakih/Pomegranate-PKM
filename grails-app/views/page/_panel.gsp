@@ -52,6 +52,9 @@
 
 
 
+
+
+
 %{--<h4>Files</h4>--}%
 
 
@@ -107,8 +110,136 @@
 
 
 
+<g:if test="${record.entityCode() == 'W'}">
 
-        %{--<g:if test="${record.class.declaredFields.name.contains('shortDescription')}">--}%
+    <div id="OrderTheFields" style="-moz-columns-count:1">
+
+        <table id="table1">
+        %{--<ul id="item_list" >--}%
+            <g:each in="${app.IndexCard.findAllByWriting(Writing.get(record.id), [sort: 'orderInWriting', order: 'asc'])}"
+                    var="c">
+                <tr id="${c.id}">
+                    <td>
+                        #${c.orderInWriting} C-${c.id} - ${c.summary} <pkm:summarize text="${c.description}"
+                                                                                     length="80"/>
+                    </td></tr>
+            </g:each>
+            <g:each in="${app.IndexCard.findAllByRecordIdAndEntityCode(record.id.toString(), 'W', [sort: 'orderInWriting', order: 'asc'])}"
+                    var="c">
+                <tr id="${c.id}">
+                    <td>
+                        #${c.orderInWriting} C-${c.id} - ${c.summary} <pkm:summarize text="${c.description}"
+                                                                                     length="80"/>
+                    </td></tr>
+            </g:each>
+        </table>
+        <input type="button" id="sortButton" value="Save sort"
+               onclick='jQuery("#OrderTheFields").load("operation/orderIcdInWrt?type=W&child=N&tableId=1", jQuery("#table1").tableDnDSerialize())'/>
+
+        <script type="text/javascript">
+            jQuery("#table1").tableDnD();
+        </script>
+    </div>
+
+</g:if>
+
+
+<g:if test="${record.entityCode() == 'C'}">
+    <div id="OrderTheFields" style="-moz-columns-count:1">
+        <table id="table1">
+        %{--<ul id="item_list" >--}%
+            <g:each in="${mcs.Goal.findAllByCourse(Course.get(record.id), [sort: 'orderInCourse', order: 'asc'])}"
+                    var="c">
+                <tr id="${c.id}">
+                    <td>
+                        #${c.orderInCourse} G-${c.id} - ${c.summary} <pkm:summarize text="${c.description}"
+                                                                                    length="80"/>
+                    </td></tr>
+            </g:each>
+        </table>
+        <input type="button" id="sortButton" value="Save sort"
+               onclick='jQuery("#OrderTheFields").load("operation/orderIcdInWrt?type=C&child=G&tableId=1", jQuery("#table1").tableDnDSerialize())'/>
+        <hr/>
+
+        <table id="table2">
+        %{--<ul id="item_list" >--}%
+            <g:each in="${mcs.Writing.findAllByCourse(Course.get(record.id), [sort: 'orderInCourse', order: 'asc'])}"
+                    var="c">
+                <tr id="${c.id}">
+                    <td>
+                        #${c.orderInCourse} W-${c.id} - <b>${c.summary}</b>
+
+                        %{--<pkm:summarize--}%
+                            %{--text="${c.description}"--}%
+                            %{--length="80"/>--}%
+                    </td>
+                </tr>
+            </g:each>
+        </table>
+        <input type="button" id="sortButton" value="Save sort"
+               onclick='jQuery("#OrderTheFields").load("${request.contextPath}/operation/orderIcdInWrt?type=C&child=W&tableId=2", jQuery("#table2").tableDnDSerialize())'/>
+        <hr/>
+
+        <table id="table3">
+            <g:each in="${mcs.Book.findAllByCourse(Course.get(record.id), [sort: 'orderInCourse', order: 'asc'])}"
+                    var="c">
+                <tr id="${c.id}">
+                    <td>
+                        #${c.orderInCourse} B-${c.id} - ${c.title} ${c.legacyTitle}<pkm:summarize
+                                text="${c.description}" length="80"/>
+                    </td></tr>
+            </g:each>
+        </table>
+        <input type="button" id="sortButton" value="Save sort"
+               onclick='jQuery("#OrderTheFields").load("operation/orderIcdInWrt?type=C&child=B&tableId=3", jQuery("#table3").tableDnDSerialize())'/>
+
+
+
+        <table id="table4">
+        %{--<ul id="item_list" >--}%
+            <g:each in="${mcs.Excerpt.executeQuery('from Excerpt r where r.book.course = ? order by orderInCourse asc', [Course.get(record.id)])}"
+                    var="c">
+                <tr id="${c.id}">
+                    <td>
+                        #${c.orderInCourse} R-${c.id} - <b>${c.book?.title} ${c.book?.legacyTitle}</b>:${c.chapters} ${c.summary}
+                    </td></tr>
+            </g:each>
+        </table>
+        <input type="button" id="sortButton" value="Save sort"
+               onclick='jQuery("#OrderTheFields").load("operation/orderIcdInWrt?type=C&child=R&tableId=4", jQuery("#table4").tableDnDSerialize())'/>
+
+        <table id="table5">
+        %{--<ul id="item_list" >--}%
+            <g:each in="${mcs.Excerpt.executeQuery('from Task r where r.course = ? and r.bookmarked = ? order by orderInCourse asc', [Course.get(record.id), true])}"
+                    var="c">
+                <tr id="${c.id}">
+                    <td>
+                        #${c.orderInCourse} T-${c.id} - <b>${c?.summary}
+                    </td></tr>
+            </g:each>
+        </table>
+        <input type="button" id="sortButton5" value="Save sort"
+               onclick='jQuery("#OrderTheFields").load("operation/orderIcdInWrt?type=C&child=T&tableId=5", jQuery("#table5").tableDnDSerialize())'/>
+
+
+
+
+
+
+        <script type="text/javascript">
+            jQuery("#table1").tableDnD();
+            jQuery("#table2").tableDnD();
+            jQuery("#table3").tableDnD();
+            jQuery("#table4").tableDnD();
+            jQuery("#table5").tableDnD();
+        </script>
+    </div>
+</g:if>
+
+
+
+
+%{--<g:if test="${record.class.declaredFields.name.contains('shortDescription')}">--}%
             %{--<span style="font-size: 12px; font-style: normal; color: #4A5C69">--}%
                 %{--<b>Summary:</b> ${record?.shortDescription?.replaceAll('\n', '<br/>')}--}%
             %{--</span>--}%
@@ -380,7 +511,7 @@
 
 
 
-            <g:if test="${record.notes}">
+            <g:if test="${record.class.declaredFields.name.contains('notes') && record.notes}">
                 <br/>
                 Notes: <i style="color: #1d806f">${record.notes?.replaceAll('\n', '<br/>')}</i>
                 <br/><hr/><br/>

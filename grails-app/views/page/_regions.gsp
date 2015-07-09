@@ -27,7 +27,7 @@
 
         <div id="accordionEast" class="basic">
 
-			<h3><a href="#">Details panel</a></h3>
+			<h3><a href="#">Details</a></h3>
 			   <div id="3rdPanel">
 
 			</div>
@@ -95,25 +95,27 @@
                 </div>
 			</div>
     </g:if>
-
+<sec:ifAnyGranted roles="ROLE_ADMIN">
 <h3><a href="#">Sandbox</a></h3>
 <div id='sandboxPanel'>
 
         </div>
-
-            <h3><a href="#">Add Xcd</a></h3>
-<div id='addXcd'>
+   </sec:ifAnyGranted>
 
 
-    <g:formRemote name="addXcdFormNgs" id="addXcdFormNgs"
-                  url="[controller: 'indexCard', action: 'addXcdFormNgs']"
-                  update="centralArea"
-                  method="post">
+            <h3><a href="#">Add note</a></h3>
+            <div id='addXcd'>
 
-        <g:select name="language" from="${['ar', 'fr', 'en', 'de', 'fa']}"
-                  class="chosen chosen-rtl" id="language"
-                  value="ar"
-                  noSelection="${['null': '']}"/>
+
+                <g:formRemote name="addXcdFormNgs" id="addXcdFormNgs"
+                              url="[controller: 'indexCard', action: 'addXcdFormNgs']"
+                              update="centralArea"
+                              method="post">
+
+                    <g:select name="language" from="${['ar', 'fr', 'en', 'de', 'fa']}"
+                              class="chosen chosen-rtl" id="language"
+                              value="ar"
+                              noSelection="${['null': '']}"/>
 
 
                     <g:select name="department.id" from="${Department.list()}"
@@ -125,50 +127,50 @@
                               optionKey="id"  class="chosen" id="course"
                               optionValue="summary"
                               noSelection="${['null': '']}"/>
-        <br/>
-        <pkm:datePicker name="writtenOn" placeholder="Date" id="34563453" value="${new Date()}"/>
-        ~<g:checkBox name="approximateDate" id="approximateDate" value=""/>
+                    <br/>
+                    <pkm:datePicker name="writtenOn" placeholder="Date" id="34563453" value="${new Date()}"/>
+                    ~<g:checkBox name="approximateDate" id="approximateDate" value=""/>
 
-        <g:select name="type.id" from="${WritingType.list()}"
+                    <g:select name="type.id" from="${WritingType.list()}"
                               optionKey="id"  class="chosen chosen-rtl" id="type"
                               optionValue="name"
-                              value="${WritingType.findByCode('note').id}"
+                              value="${WritingType.findByCode('note')?.id}"
                               noSelection="${['null': '']}"/>
-        <br/>
-        <br/>
-        <g:textField placeholder="Summary" name="summary" id="summary" value="" style="background: #e8efe7; width: 95%;" dir="auto"/>
+                    <br/>
+                    <br/>
+                    <g:textField placeholder="Summary" name="summary" id="summary" value="" style="background: #e8efe7; width: 95%;" dir="auto"/>
 
                     <g:textArea cols="80" rows="5" placeholder="Description" name="description" id="description"
                                 value="" dir="auto"
                                 style="background: #f7fff6; width: 95%; height: 80px;"/>
-        <br/>
+                    <br/>
 
-        <g:textField placeholder="link" name="link" id="link" value="" style="width: 95%;"/>
+                    <g:textField placeholder="link" name="link" id="link" value="" style="width: 95%;"/>
                     <br/>
                     <br/>
                     <g:select name="chosenTags" from="${Tag.list()}" multiple=""
-					size="80" style="min-width: 200px; min-height: 50px;"
-                              value="" optionKey="id"  
-							  class="chosen chosen-rtl" id="chosenTags"
+                              size="80" style="min-width: 200px; min-height: 50px;"
+                              value="" optionKey="id"
+                              class="chosen chosen-rtl" id="chosenTags"
                               optionValue="name"
                               noSelection="${['null': '']}"/>
 
-         <br/>
-         <br/>
+                    <br/>
+                    <br/>
 
-        <g:submitButton name="save" value="Save"
-                        style="height: 20px; margin: 0px; width: 95% !important; background: #efece0"
-                        id="45634523"
-                        class="fg-button ui-widget ui-state-default"/>
+                    <g:submitButton name="save" value="Save"
+                                    style="height: 20px; margin: 0px; width: 95% !important; background: #efece0"
+                                    id="45634523"
+                                    class="fg-button ui-widget ui-state-default"/>
+          </g:formRemote>
 
 
-    </g:formRemote>
+
+            </div>
 
 
 
         </div>
-
-</div>
         %{--<g:if test="${ker.OperationController.getPath('twoPanels') == 'on'}">--}%
         %{--<g:render template="/layouts/east"/>--}%
     %{--</g:if>--}%
@@ -194,7 +196,6 @@
     </sec:ifAnyGranted>
 
             <div style="-moz-column-count: 3">
-
                 <div id="hintArea" style="font-size: 10px; color: #255b17; font-style: italic; height: 20px;"></div>
             </div>
 
@@ -247,4 +248,6 @@ jQuery("#addXcdFormNgs").relatedSelects({
 
     jQuery('#chosenTags_chzn').addClass('width95')
 
+
+jQuery('#accordionEast').accordion({ active: 0});
 </script>

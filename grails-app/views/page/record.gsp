@@ -40,6 +40,7 @@
 
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-1.11.0_min.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.tablednd_0_5.js')}"></script>
 
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery-ui-1.10.4.custom.min.js')}"></script>
@@ -344,9 +345,18 @@
                                                                                          length="80"/>
                         </td></tr>
                 </g:each>
+
+                <g:each in="${app.IndexCard.findAllByRecordIdAndEntityCode(record.id.toString(), 'W', [sort: 'orderInWriting', order: 'asc'])}"
+                        var="c">
+                    <tr id="${c.id}">
+                        <td>
+                            #${c.orderInWriting} C-${c.id} - ${c.summary} <pkm:summarize text="${c.description}"
+                                                                                         length="80"/>
+                        </td></tr>
+                </g:each>
             </table>
             <input type="button" id="sortButton" value="Save sort"
-                   onclick='jQuery("#OrderTheFields").load("operation/orderIcdInWrt?type=W&child=C&tableId=1", jQuery("#table1").tableDnDSerialize())'/>
+                   onclick='jQuery("#OrderTheFields").load("http://localhost:2008/pkm/operation/orderIcdInWrt?type=W&child=N&tableId=1", jQuery("#table1").tableDnDSerialize())'/>
 
             <script type="text/javascript">
                 jQuery("#table1").tableDnD();

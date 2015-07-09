@@ -614,6 +614,7 @@ class OperationController {
                 i++
             } catch (Exception e) {
                 println 'Problem in sorting the records'
+                println e.printStackTrace()
             }
         }
 

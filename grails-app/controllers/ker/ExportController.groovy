@@ -705,7 +705,7 @@ class ExportController {
 
 
     def generateCourseWritingsAsHtml() {
-        def path = "/host/new/C/9155/book.adoc"
+        def path = "/mhi/tmp/book.adoc"
         def file = new File(path)
         def c = Course.get(params.id)
 
@@ -731,14 +731,14 @@ v0.3, 12.03.2014:
 
         org.asciidoctor.Asciidoctor asciidoctor = org.asciidoctor.Asciidoctor.Factory.create();
 
-        def header = new File("/host/todo/new/C/9155/header.txt").text
-        def footer = new File("/host/todo/new/C/9155/footer.txt").text
+//        def header = new File("/host/todo/new/C/9155/header.txt").text
+//        def footer = new File("/host/todo/new/C/9155/footer.txt").text
 
         Attributes attributes = attributes().tableOfContents(true).sectionNumbers(true).get();
 
         Options options = options().attributes(attributes).get();
 
-        render header + '\n' + asciidoctor.render(file.text, options) + '\n' + footer
+        render '' + '\n' + asciidoctor.render(file.text, options) + '\n' + ''
     }
 
     def generateCourseWritingsAsIs() {
